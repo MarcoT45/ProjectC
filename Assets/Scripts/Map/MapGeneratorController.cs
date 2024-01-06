@@ -11,11 +11,10 @@ public class MapGeneratorController : MonoBehaviour {
     public GameObject nodePrefab; // Prefab de Noeud
 
     public List<GameObject> mapNodes = new List<GameObject>(); // Liste des gameobject noeuds de la map
-    private List<int> usedNodes = new List<int>(); // Liste des numéros des noeuds utilisés
+    public List<int> usedNodes = new List<int>(); // Liste des numéros des noeuds utilisés
 
     public void GenerateNewMap () {
         ResetMap();
-        Debug.Log("On crée une nouvelle map !");
         GenerateNodes();
         GeneratePaths();
         DeleteUnusedNodes();
@@ -23,9 +22,10 @@ public class MapGeneratorController : MonoBehaviour {
 
     // On reset la map
     private void ResetMap() {
-        mapNodes = new List<GameObject>();
-        foreach (Transform child in this.gameObject.transform) {
-            Destroy(child.gameObject);
+        this.mapNodes = new List<GameObject>();
+        this.usedNodes = new List<int>();
+        while (this.transform.childCount > 0) {
+            DestroyImmediate(transform.GetChild(0).gameObject);
         }
     }
 
@@ -86,22 +86,18 @@ public class MapGeneratorController : MonoBehaviour {
                     currentNodeNumber = randomFirstNodeNumber;
                     currentNode = GameObject.Find("Node "+ currentNodeNumber);
                     lineRenderer.SetPosition(j, new Vector2(currentNode.transform.position.x, currentNode.transform.position.y));
-                    Debug.Log("First Node "+ currentNodeNumber);
                 } else {
 
                     var tmpValue = currentNodeNumber % this.largeur;
                     
                     switch (tmpValue) {
                         case 0:
-                            Debug.Log("Bord gauche");
                             nextNodeNumber = currentNodeNumber + largeur + Random.Range(0, 2);
                             break;
                         case 6:
-                            Debug.Log("Bord droit");
                             nextNodeNumber = currentNodeNumber + largeur + Random.Range(-1, 1);
                             break;
                         default:
-                            Debug.Log("Milieu");
                             nextNodeNumber = currentNodeNumber + largeur + Random.Range(-1, 2);
                             break;
                     }
@@ -113,14 +109,12 @@ public class MapGeneratorController : MonoBehaviour {
                     }
 
                     if (!usedNodes.Contains(currentNodeNumber)) {
-                        usedNodes.Add(currentNodeNumber);
+                        this.usedNodes.Add(currentNodeNumber);
                     }
 
                     if (!usedNodes.Contains(nextNodeNumber)) {
-                        usedNodes.Add(nextNodeNumber);
+                        this.usedNodes.Add(nextNodeNumber);
                     }
-
-                    Debug.Log("Next Node " + nextNodeNumber);
 
                     currentNode = GameObject.Find("Node "+ currentNodeNumber);
                     nextNode = GameObject.Find("Node "+ nextNodeNumber);
@@ -140,9 +134,9 @@ public class MapGeneratorController : MonoBehaviour {
     private void DeleteUnusedNodes() {
         GameObject tmpNode;
         for(int i = 0; i < hauteur*largeur; i++) {
-            if(!usedNodes.Contains(i)){
+            if(!this.usedNodes.Contains(i)){
                 tmpNode = GameObject.Find("Node "+ i);
-                mapNodes.Remove(tmpNode);
+                this.mapNodes.Remove(tmpNode);
                 Destroy(tmpNode);
             }
         }
