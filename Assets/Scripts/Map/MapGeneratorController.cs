@@ -18,6 +18,8 @@ public class MapGeneratorController : MonoBehaviour {
         GenerateNodes();
         GeneratePaths();
         DeleteUnusedNodes();
+        UpdateMapToEvent();
+        ConnectBossToLastFloor();
     }
 
     // On reset la map
@@ -138,6 +140,116 @@ public class MapGeneratorController : MonoBehaviour {
                 tmpNode = GameObject.Find("Node "+ i);
                 this.mapNodes.Remove(tmpNode);
                 Destroy(tmpNode);
+            }
+        }
+    }
+
+    // Fonction qui crée les evenements pour la carte
+    /*  REGLES
+        1 - All the Rooms on the 1st Floor with Monsters.
+        2 - Then all the Rooms on the 9th Floor with Treasure.
+        3 - And all the Rooms on the 15th Floor with Rest Sites.
+        4 - Elite and Rest Sites can’t be assigned below the 6th Floor.
+        5 - Rest Site cannot be on the 14th Floor.
+    */
+    private void UpdateMapToEvent() {
+
+        GameObject tmpNode;
+        bool canRest = true;
+        bool canElite = true;
+
+        this.usedNodes.Sort();
+        this.usedNodes.Reverse();
+
+        foreach (var n in this.usedNodes) {
+
+            tmpNode = GameObject.Find("Node "+ n);
+            Node node = (Node) tmpNode.GetComponent(typeof(Node));
+
+            if ( n < largeur ) { // REGLE 1
+                node.ChangeNodeEvent(0); 
+            } else if ( n >= 8*largeur && n < 9*largeur ) { // REGLE 2
+                node.ChangeNodeEvent(2); 
+            } else if ( n >= 14*largeur ) { // REGLE 3
+                node.ChangeNodeEvent(4); 
+            } else {
+
+                if ( n < 35 ) { // REGLE 4
+                    canRest = false;
+                    canElite = false;
+                } else {
+                    canRest = true;
+                    canElite = true;
+                    if ( n >= 13 * largeur ) { // REGLE 5
+                        canRest = false;
+                    }
+                }
+
+                int randomEventValue = Random.Range(0, 101);
+                
+                if (randomEventValue < 45) { 
+                    node.ChangeNodeEvent(0); // Ennemy 45%
+                } else if (randomEventValue < 60 && canElite) {
+                    node.ChangeNodeEvent(1); // Elite 15%
+                } else if (randomEventValue < 68) {
+                    node.ChangeNodeEvent(2); // Chest 8%
+                } else if (randomEventValue < 76) {
+                    node.ChangeNodeEvent(3); // Event 8%
+                } else if (randomEventValue < 84 && canRest) {
+                    node.ChangeNodeEvent(4); // Rest 8%
+                } else if (randomEventValue < 92) {
+                    node.ChangeNodeEvent(5); // Trade 8%
+                } else {
+                    node.ChangeNodeEvent(6); // Shop 8%
+                }
+            
+            }     
+        }
+    }
+
+    // Fonction qui crée et connecte le Node du Boss Final
+    private void ConnectBossToLastFloor() {
+
+        GameObject bossFloor;
+        GameObject bossNode;
+        
+        bossFloor = new GameObject("Floor Boss");
+        bossFloor.transform.parent = this.gameObject.transform;
+        
+        Vector2 bossNodePosition = new Vector2(((largeur-1)+(largeur-1)*0.5f)/2, hauteur+hauteur*0.5f+1.5f);
+        bossNode = Instantiate(nodePrefab, bossNodePosition, Quaternion.identity, bossFloor.gameObject.transform);
+        bossNode.name = "Node Boss";
+        
+        Node node = (Node) bossNode.GetComponent(typeof(Node));
+        node.SetPosition(bossNodePosition);
+        node.ChangeNodeEvent(7);
+        
+        mapNodes.Add(bossNode);
+
+        //On connecte les dernières lignes
+        GameObject tmpNode;
+        int i = 0;
+
+        foreach (var n in this.usedNodes) {
+            if ( n >= 14*largeur ) {
+                tmpNode = GameObject.Find("Node "+ n);
+                Node nodeToBoss = (Node) tmpNode.GetComponent(typeof(Node));
+                nodeToBoss.AddNodeLinkedNextFloor(bossNode);
+
+                //On crée une nouvelle ligne
+                var lineRenderer = new GameObject("Boss Line "+ i).AddComponent<LineRenderer>();
+                lineRenderer.transform.parent = this.gameObject.transform;
+                lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+                lineRenderer.startWidth = 0.1f;
+                lineRenderer.endWidth = 0.1f;
+                lineRenderer.positionCount = 2;
+                lineRenderer.useWorldSpace = true;
+                lineRenderer.startColor = Color.blue;
+                lineRenderer.endColor = Color.blue;
+
+                lineRenderer.SetPosition(0, new Vector2(tmpNode.transform.position.x, tmpNode.transform.position.y));
+                lineRenderer.SetPosition(1, new Vector2(bossNode.transform.position.x, bossNode.transform.position.y));
+                i++;
             }
         }
     }
