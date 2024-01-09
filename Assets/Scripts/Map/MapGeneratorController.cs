@@ -4,14 +4,36 @@ using UnityEngine;
 
 public class MapGeneratorController : MonoBehaviour {
 
-    private int hauteur = 15; // Hauteur max de la map générée
-    private int largeur = 7;  // Largeur max de la map générée
+    private int hauteur = 15;  // Hauteur max de la map générée
+    private int largeur = 7;   // Largeur max de la map générée
     private int nbChemins = 6; // Nombre de chemins générés dans la map
 
     public GameObject nodePrefab; // Prefab de Noeud
 
     public List<GameObject> mapNodes = new List<GameObject>(); // Liste des gameobject noeuds de la map
-    public List<int> usedNodes = new List<int>(); // Liste des numéros des noeuds utilisés
+    public List<int> usedNodes = new List<int>();              // Liste des numéros des noeuds utilisés
+
+    private Vector3 originPos;       // Pour pouvoir scroll la carte
+    private Vector3 targetPos;       // Pour pouvoir scroll la carte
+    private float maxHeightBoss = 0; // Pour pouvoir scroll la carte
+
+    private void Start() {
+        this.originPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        this.targetPos = new Vector3(originPos.x, originPos.y, originPos.z);
+    }
+
+    private void Update() {
+        while (this.transform.position != targetPos) {
+            this.transform.position = Vector3.MoveTowards(this.transform.position, this.targetPos, 1f * Time.deltaTime);
+        }
+
+        if ( Input.GetAxis("Mouse ScrollWheel") != 0 ) {
+            // On vérifie qu'on ne scroll pas trop loin
+            if ( !(this.transform.position.y + 7*Input.GetAxis("Mouse ScrollWheel") > originPos.y) && !(this.transform.position.y + 7*Input.GetAxis("Mouse ScrollWheel") < -this.maxHeightBoss) ) {
+                this.targetPos = new Vector3(originPos.x, this.transform.position.y + 7*Input.GetAxis("Mouse ScrollWheel"), originPos.z);
+            }
+        }
+    }
 
     public void GenerateNewMap () {
         ResetMap();
@@ -20,6 +42,7 @@ public class MapGeneratorController : MonoBehaviour {
         DeleteUnusedNodes();
         UpdateMapToEvent();
         ConnectBossToLastFloor();
+        UpdateFirstNodeStatus();
     }
 
     // On reset la map
@@ -41,10 +64,11 @@ public class MapGeneratorController : MonoBehaviour {
         
             newFloor = new GameObject("Floor "+h);
             newFloor.transform.parent = this.gameObject.transform;
+            newFloor.transform.position = new Vector3(0, 0, 0);
         
             for (int l = 0; l < this.largeur; l++) {
         
-                Vector2 nodePosition = new Vector2(l+l*0.5f, h+h*0.5f);
+                Vector2 nodePosition = new Vector2(l+l*0.5f, h+h*0.5f-3);
                 newNode = Instantiate(nodePrefab, nodePosition, Quaternion.identity, newFloor.gameObject.transform);
                 newNode.name = "Node "+(h*largeur+l);
         
@@ -74,12 +98,12 @@ public class MapGeneratorController : MonoBehaviour {
             var lineRenderer = new GameObject("Line "+ i).AddComponent<LineRenderer>();
             lineRenderer.transform.parent = this.gameObject.transform;
             lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
-            lineRenderer.startWidth = 0.1f;
-            lineRenderer.endWidth = 0.1f;
+            lineRenderer.startWidth = 0.05f;
+            lineRenderer.endWidth = 0.05f;
             lineRenderer.positionCount = 15;
-            lineRenderer.useWorldSpace = true;
-            lineRenderer.startColor = Color.blue;
-            lineRenderer.endColor = Color.blue;
+            lineRenderer.useWorldSpace = false;
+            lineRenderer.startColor = Color.cyan;
+            lineRenderer.endColor = Color.cyan;
 
             for (int j = 0; j < this.hauteur; j++) {
 
@@ -216,13 +240,15 @@ public class MapGeneratorController : MonoBehaviour {
         bossFloor = new GameObject("Floor Boss");
         bossFloor.transform.parent = this.gameObject.transform;
         
-        Vector2 bossNodePosition = new Vector2(((largeur-1)+(largeur-1)*0.5f)/2, hauteur+hauteur*0.5f+1.5f);
+        Vector2 bossNodePosition = new Vector2(((largeur-1)+(largeur-1)*0.5f)/2, hauteur+hauteur*0.5f-1.5f);
         bossNode = Instantiate(nodePrefab, bossNodePosition, Quaternion.identity, bossFloor.gameObject.transform);
         bossNode.name = "Node Boss";
+        this.maxHeightBoss = bossNodePosition.y;
         
         Node node = (Node) bossNode.GetComponent(typeof(Node));
         node.SetPosition(bossNodePosition);
         node.ChangeNodeEvent(7);
+        node.UpdateNodeState(NodeState.Bloque);
         
         mapNodes.Add(bossNode);
 
@@ -240,16 +266,30 @@ public class MapGeneratorController : MonoBehaviour {
                 var lineRenderer = new GameObject("Boss Line "+ i).AddComponent<LineRenderer>();
                 lineRenderer.transform.parent = this.gameObject.transform;
                 lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
-                lineRenderer.startWidth = 0.1f;
-                lineRenderer.endWidth = 0.1f;
+                lineRenderer.startWidth = 0.05f;
+                lineRenderer.endWidth = 0.05f;
                 lineRenderer.positionCount = 2;
-                lineRenderer.useWorldSpace = true;
-                lineRenderer.startColor = Color.blue;
-                lineRenderer.endColor = Color.blue;
+                lineRenderer.useWorldSpace = false;
+                lineRenderer.startColor = Color.cyan;
+                lineRenderer.endColor = Color.cyan;
 
                 lineRenderer.SetPosition(0, new Vector2(tmpNode.transform.position.x, tmpNode.transform.position.y));
                 lineRenderer.SetPosition(1, new Vector2(bossNode.transform.position.x, bossNode.transform.position.y));
                 i++;
+            }
+        }
+    }
+
+    // Fonction qui met les noeuds du 1ere étage en accessible
+    private void UpdateFirstNodeStatus() {
+        GameObject tmpNode;
+        foreach (var n in this.usedNodes) {
+            tmpNode = GameObject.Find("Node "+ n);
+            Node node = (Node) tmpNode.GetComponent(typeof(Node));
+            if ( n < largeur ) {
+                node.UpdateNodeState(NodeState.Accessible);
+            } else {
+                node.UpdateNodeState(NodeState.Bloque);
             }
         }
     }
