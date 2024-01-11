@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class MapGeneratorController : MonoBehaviour {
 
@@ -16,6 +17,10 @@ public class MapGeneratorController : MonoBehaviour {
     private Vector3 originPos;       // Pour pouvoir scroll la carte
     private Vector3 targetPos;       // Pour pouvoir scroll la carte
     private float maxHeightBoss = 0; // Pour pouvoir scroll la carte
+
+    public GameObject popUpInfos;               // Pour afficher/cacher les infos
+    public TextMeshProUGUI popUpTitre;          // Titre de la pop-up
+    public TextMeshProUGUI popUpDescription;    // Description de la pop-up
 
     private void Start() {
         this.originPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -68,7 +73,7 @@ public class MapGeneratorController : MonoBehaviour {
         
             for (int l = 0; l < this.largeur; l++) {
         
-                Vector2 nodePosition = new Vector2(l+l*0.5f, h+h*0.5f-3);
+                Vector2 nodePosition = new Vector2(l+l*0.5f-1.5f, h+h*0.5f-3);
                 newNode = Instantiate(nodePrefab, nodePosition, Quaternion.identity, newFloor.gameObject.transform);
                 newNode.name = "Node "+(h*largeur+l);
         
@@ -240,7 +245,7 @@ public class MapGeneratorController : MonoBehaviour {
         bossFloor = new GameObject("Floor Boss");
         bossFloor.transform.parent = this.gameObject.transform;
         
-        Vector2 bossNodePosition = new Vector2(((largeur-1)+(largeur-1)*0.5f)/2, hauteur+hauteur*0.5f-1.5f);
+        Vector2 bossNodePosition = new Vector2(((largeur-1)+(largeur-1)*0.5f)/2-1.5f, hauteur+hauteur*0.5f-1.5f);
         bossNode = Instantiate(nodePrefab, bossNodePosition, Quaternion.identity, bossFloor.gameObject.transform);
         bossNode.name = "Node Boss";
         this.maxHeightBoss = bossNodePosition.y;
@@ -292,6 +297,14 @@ public class MapGeneratorController : MonoBehaviour {
                 node.UpdateNodeState(NodeState.Bloque);
             }
         }
+    }
+
+    // On affiche/cache la pop-up et on update les textes et la position de la pop-up
+    public void DisplayPopUp(bool display, string titre, string description, Vector3 positionNode) {
+        this.popUpTitre.text = titre;
+        this.popUpDescription.text = description;
+        this.popUpInfos.transform.position = new Vector3(positionNode.x, positionNode.y + 1.5f, positionNode.z);
+        this.popUpInfos.SetActive(display);
     }
 
 }

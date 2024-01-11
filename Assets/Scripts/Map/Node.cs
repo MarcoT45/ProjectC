@@ -17,6 +17,8 @@ public class Node : MonoBehaviour {
     public Vector2 position;                                                 // Coordonnées du noeud
     public SpriteRenderer spriteRenderer;                                    // Pour changer le sprite rapidement
     public List<Sprite> spriteList;                                          // Liste des icones des evenements (Tete de mort, Coffre, Boutique, etc...)
+    private string titre;                                                    // Titre du type de node
+    private string description;                                              // Description du type de node
 
     public void UpdateNodeState(NodeState newState) {
         this.currentState = newState;
@@ -44,12 +46,66 @@ public class Node : MonoBehaviour {
         }
     }
 
-    public void ChangeNodeEvent(int spriteValue) {
-        spriteRenderer.sprite = spriteList[spriteValue];
+    public void ChangeNodeEvent (int spriteValue) {
 
-        if (spriteValue == 7) { // Si c'est le boss on agrandit l'icone
-            this.transform.localScale = new Vector2 (3, 3);
+        switch (spriteValue) {
+            case 0:
+                this.titre = "Combat normal";
+                this.description = "Affrontez des ennemis.";
+                break;
+            case 1:
+                this.titre = "Combat d'élite";
+                this.description = "Affrontez des ennemis coriaces.";
+                break;
+            case 2:
+                this.titre = "Coffre";
+                this.description = "Obtenez un objet en ouvrant ce coffre.";
+                break;
+            case 3:
+                this.titre = "Événement";
+                this.description = "Que va t'il se passer ? Une bonne ou une mauvaise rencontre ?";
+                break;
+            case 4:
+                this.titre = "Repos";
+                this.description = "Regagner 1PV en vous reposant au feu de camp.";
+                break;
+            case 5:
+                this.titre = "Echange";
+                this.description = "Echangez un objet en votre possession contre un autre.";
+                break;
+            case 6:
+                this.titre = "Magasin";
+                this.description = "Depensez votre argent dans cette boutique.";
+                break;
+            case 7:
+                this.titre = "Boss";
+                this.description = "Affrontez le chef de la zone.";
+                this.transform.localScale = new Vector2 (3, 3);
+                break;
         }
+
+        this.spriteRenderer.sprite = spriteList[spriteValue];
+    }
+
+    // Lancer action
+    private void OnMouseDown() {
+        Debug.Log("Mouse Click Detected on: "+this.name);
+    }
+
+    // Si on survole afficher petite pop-up avec infos
+    private void OnMouseOver() {
+        GameObject map;
+        map = GameObject.Find("Map Generator");
+        MapGeneratorController mapGenerator = (MapGeneratorController) map.GetComponent(typeof(MapGeneratorController));
+        mapGenerator.DisplayPopUp(true, this.titre, this.description, this.transform.position);
+    }
+
+    // Si on arrete de survoler cacher pop-up
+    private void OnMouseExit() {
+        GameObject map;
+        map = GameObject.Find("Map Generator");
+        MapGeneratorController mapGenerator = (MapGeneratorController) map.GetComponent(typeof(MapGeneratorController));
+        mapGenerator.DisplayPopUp(false, this.titre, this.description, this.transform.position);
     }
 
 }
