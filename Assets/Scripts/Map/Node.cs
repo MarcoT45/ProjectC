@@ -13,12 +13,17 @@ public enum NodeState {
 public class Node : MonoBehaviour {
 
     public NodeState currentState;                                           // Etat du noeud pour le joueur
-    public List<GameObject> nodeLinkedNextFloor = new List<GameObject>();    // On liste les noeuds de l'étage supérieur auquel il est lié
     public Vector2 position;                                                 // Coordonnées du noeud
+    public List<GameObject> nodeLinkedNextFloor = new List<GameObject>();    // On liste les noeuds de l'étage supérieur auquel il est lié
     public SpriteRenderer spriteRenderer;                                    // Pour changer le sprite rapidement
     public List<Sprite> spriteList;                                          // Liste des icones des evenements (Tete de mort, Coffre, Boutique, etc...)
-    private string titre;                                                    // Titre du type de node
-    private string description;                                              // Description du type de node
+    
+    public string titre;                                                     // Titre du type de node
+    public string description;                                               // Description du type de node
+    
+    public int taille = 0;                                                   // Taille de la map du level X*X
+    public int nbEnnemis = 0;                                                // Nombre d'ennemis dans le level
+    public bool sortie = true;                                               // Si le niveau à une sortie
 
     public void UpdateNodeState(NodeState newState) {
         this.currentState = newState;
@@ -51,11 +56,17 @@ public class Node : MonoBehaviour {
         switch (spriteValue) {
             case 0:
                 this.titre = "Combat normal";
-                this.description = "Affrontez des ennemis.";
+                this.description = "Affrontez des ennemis (Fuite possible).";
+                this.taille = Random.Range(2, 4);    // Un carré de 2x2 ou 3x3
+                this.nbEnnemis = Random.Range(2, 4); // Entre 2 et 3 ennemis
+                this.sortie = true;
                 break;
             case 1:
                 this.titre = "Combat d'élite";
-                this.description = "Affrontez des ennemis coriaces.";
+                this.description = "Affrontez des ennemis coriaces (Fuite impossible).";
+                this.taille = Random.Range(3, 5);    // Un carré de 3x3 ou 4x4
+                this.nbEnnemis = Random.Range(4, 7); // Entre 4 et 6 ennemis
+                this.sortie = false;
                 break;
             case 2:
                 this.titre = "Coffre";
@@ -97,7 +108,7 @@ public class Node : MonoBehaviour {
         GameObject map;
         map = GameObject.Find("Map Generator");
         MapGeneratorController mapGenerator = (MapGeneratorController) map.GetComponent(typeof(MapGeneratorController));
-        mapGenerator.DisplayPopUp(true, this.titre, this.description, this.transform.position);
+        mapGenerator.DisplayPopUp(true, this);
     }
 
     // Si on arrete de survoler cacher pop-up
@@ -105,7 +116,7 @@ public class Node : MonoBehaviour {
         GameObject map;
         map = GameObject.Find("Map Generator");
         MapGeneratorController mapGenerator = (MapGeneratorController) map.GetComponent(typeof(MapGeneratorController));
-        mapGenerator.DisplayPopUp(false, this.titre, this.description, this.transform.position);
+        mapGenerator.DisplayPopUp(false, this);
     }
 
 }

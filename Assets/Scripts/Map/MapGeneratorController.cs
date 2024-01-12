@@ -18,9 +18,13 @@ public class MapGeneratorController : MonoBehaviour {
     private Vector3 targetPos;       // Pour pouvoir scroll la carte
     private float maxHeightBoss = 0; // Pour pouvoir scroll la carte
 
-    public GameObject popUpInfos;               // Pour afficher/cacher les infos
-    public TextMeshProUGUI popUpTitre;          // Titre de la pop-up
-    public TextMeshProUGUI popUpDescription;    // Description de la pop-up
+    public GameObject popUpInfos;                     // Pour afficher/cacher les infos
+    public TextMeshProUGUI popUpTitre;                // Titre de la pop-up
+    public TextMeshProUGUI popUpDescription;          // Description de la pop-up
+    public GameObject encartCombat;                   // Encart combat fond
+    public GameObject encartCombatTexte;              // Encart combat texte
+    public TextMeshProUGUI encartCombatTexteTaille;   // Encart combat texte taille
+    public TextMeshProUGUI encartCombatTexteEnnemis;  // Encart combat texte ennemis
 
     private void Start() {
         this.originPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
@@ -300,11 +304,58 @@ public class MapGeneratorController : MonoBehaviour {
     }
 
     // On affiche/cache la pop-up et on update les textes et la position de la pop-up
-    public void DisplayPopUp(bool display, string titre, string description, Vector3 positionNode) {
-        this.popUpTitre.text = titre;
-        this.popUpDescription.text = description;
-        this.popUpInfos.transform.position = new Vector3(positionNode.x, positionNode.y + 1.5f, positionNode.z);
+    public void DisplayPopUp(bool display, Node node) {
+        this.popUpTitre.text = node.titre;
+        this.popUpDescription.text = node.description;
+        this.popUpInfos.transform.position = new Vector3(node.transform.position.x, node.transform.position.y + 1.5f, node.transform.position.z);
         this.popUpInfos.SetActive(display);
+
+        if (node.titre == "Combat normal" || node.titre == "Combat d'élite") {
+
+            switch (node.taille) {
+                case 2:
+                    this.encartCombatTexteTaille.text = "Petite";
+                    this.encartCombatTexteTaille.color = Color.blue;
+                    break;
+                case 3:
+                    this.encartCombatTexteTaille.text = "Moyenne";
+                    this.encartCombatTexteTaille.color = Color.white;
+                    break;
+                case 4:
+                    this.encartCombatTexteTaille.text = "Grande";
+                    this.encartCombatTexteTaille.color = Color.red;
+                    break;
+            }
+
+            switch (node.nbEnnemis) {
+                case 2:
+                    this.encartCombatTexteEnnemis.text = "Faible";
+                    this.encartCombatTexteEnnemis.color = Color.blue;
+                    break;
+                case 3:
+                    this.encartCombatTexteEnnemis.text = "Moyen";
+                    this.encartCombatTexteEnnemis.color = Color.cyan;
+                    break;
+                case 4:
+                    this.encartCombatTexteEnnemis.text = "Abondant";
+                    this.encartCombatTexteEnnemis.color = Color.white;
+                    break;
+                case 5:
+                    this.encartCombatTexteEnnemis.text = "Légion";
+                    this.encartCombatTexteEnnemis.color = Color.magenta;
+                    break;
+                case 6:
+                    this.encartCombatTexteEnnemis.text = "Mortel";
+                    this.encartCombatTexteEnnemis.color = Color.red;
+                    break;
+            }
+
+            this.encartCombat.SetActive(true);
+            this.encartCombatTexte.SetActive(true);
+        } else {
+            this.encartCombat.SetActive(false);
+            this.encartCombatTexte.SetActive(false);
+        }
     }
 
 }
