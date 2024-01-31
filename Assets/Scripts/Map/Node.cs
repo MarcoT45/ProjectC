@@ -100,6 +100,12 @@ public class Node : MonoBehaviour {
 
     // Lancer action
     private void OnMouseDown() {
+        if(this.currentState == NodeState.Accessible) {
+            GameObject map;
+            map = GameObject.Find("Map Generator");
+            MapGeneratorController mapGenerator = (MapGeneratorController) map.GetComponent(typeof(MapGeneratorController));
+            mapGenerator.OpenPopUp(this);
+        }
         Debug.Log("Mouse Click Detected on: "+this.name);
     }
 

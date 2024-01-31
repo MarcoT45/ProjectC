@@ -26,6 +26,13 @@ public class MapGeneratorController : MonoBehaviour {
     public TextMeshProUGUI encartCombatTexteTaille;   // Encart combat texte taille
     public TextMeshProUGUI encartCombatTexteEnnemis;  // Encart combat texte ennemis
 
+    public GameObject popUpChest;                     // Pour afficher/cacher la pop-up Coffre
+    public GameObject popUpEvent;                     // Pour afficher/cacher la pop-up Evenement
+    public GameObject popUpRest;                      // Pour afficher/cacher la pop-up Repos
+    public GameObject popUpTrade;                     // Pour afficher/cacher la pop-up Echange
+    public GameObject popUpShop;                      // Pour afficher/cacher la pop-up Boutique
+    private bool popUpOpened = false;                 // Pour savoir si une pop-up est ouverte ou non
+
     private void Start() {
         this.originPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
         this.targetPos = new Vector3(originPos.x, originPos.y, originPos.z);
@@ -305,57 +312,96 @@ public class MapGeneratorController : MonoBehaviour {
 
     // On affiche/cache la pop-up et on update les textes et la position de la pop-up
     public void DisplayPopUp(bool display, Node node) {
-        this.popUpTitre.text = node.titre;
-        this.popUpDescription.text = node.description;
-        this.popUpInfos.transform.position = new Vector3(node.transform.position.x, node.transform.position.y + 1.5f, node.transform.position.z);
-        this.popUpInfos.SetActive(display);
+        // On n'affiche pas les pop-up d'information si une grosse pop-up est ouverte
+        if (!popUpOpened) {
+            this.popUpTitre.text = node.titre;
+            this.popUpDescription.text = node.description;
+            this.popUpInfos.transform.position = new Vector3(node.transform.position.x, node.transform.position.y + 1.5f, node.transform.position.z);
+            this.popUpInfos.SetActive(display);
 
-        if (node.titre == "Combat normal" || node.titre == "Combat d'élite") {
+            if (node.titre == "Combat normal" || node.titre == "Combat d'élite") {
 
-            switch (node.taille) {
-                case 2:
-                    this.encartCombatTexteTaille.text = "Petite";
-                    this.encartCombatTexteTaille.color = Color.blue;
-                    break;
-                case 3:
-                    this.encartCombatTexteTaille.text = "Moyenne";
-                    this.encartCombatTexteTaille.color = Color.white;
-                    break;
-                case 4:
-                    this.encartCombatTexteTaille.text = "Grande";
-                    this.encartCombatTexteTaille.color = Color.red;
-                    break;
+                switch (node.taille) {
+                    case 2:
+                        this.encartCombatTexteTaille.text = "Petite";
+                        this.encartCombatTexteTaille.color = Color.blue;
+                        break;
+                    case 3:
+                        this.encartCombatTexteTaille.text = "Moyenne";
+                        this.encartCombatTexteTaille.color = Color.white;
+                        break;
+                    case 4:
+                        this.encartCombatTexteTaille.text = "Grande";
+                        this.encartCombatTexteTaille.color = Color.red;
+                        break;
+                }
+
+                switch (node.nbEnnemis) {
+                    case 2:
+                        this.encartCombatTexteEnnemis.text = "Faible";
+                        this.encartCombatTexteEnnemis.color = Color.blue;
+                        break;
+                    case 3:
+                        this.encartCombatTexteEnnemis.text = "Moyen";
+                        this.encartCombatTexteEnnemis.color = Color.cyan;
+                        break;
+                    case 4:
+                        this.encartCombatTexteEnnemis.text = "Abondant";
+                        this.encartCombatTexteEnnemis.color = Color.white;
+                        break;
+                    case 5:
+                        this.encartCombatTexteEnnemis.text = "Légion";
+                        this.encartCombatTexteEnnemis.color = Color.magenta;
+                        break;
+                    case 6:
+                        this.encartCombatTexteEnnemis.text = "Mortel";
+                        this.encartCombatTexteEnnemis.color = Color.red;
+                        break;
+                }
+
+                this.encartCombat.SetActive(true);
+                this.encartCombatTexte.SetActive(true);
+            } else {
+                this.encartCombat.SetActive(false);
+                this.encartCombatTexte.SetActive(false);
             }
-
-            switch (node.nbEnnemis) {
-                case 2:
-                    this.encartCombatTexteEnnemis.text = "Faible";
-                    this.encartCombatTexteEnnemis.color = Color.blue;
-                    break;
-                case 3:
-                    this.encartCombatTexteEnnemis.text = "Moyen";
-                    this.encartCombatTexteEnnemis.color = Color.cyan;
-                    break;
-                case 4:
-                    this.encartCombatTexteEnnemis.text = "Abondant";
-                    this.encartCombatTexteEnnemis.color = Color.white;
-                    break;
-                case 5:
-                    this.encartCombatTexteEnnemis.text = "Légion";
-                    this.encartCombatTexteEnnemis.color = Color.magenta;
-                    break;
-                case 6:
-                    this.encartCombatTexteEnnemis.text = "Mortel";
-                    this.encartCombatTexteEnnemis.color = Color.red;
-                    break;
-            }
-
-            this.encartCombat.SetActive(true);
-            this.encartCombatTexte.SetActive(true);
-        } else {
-            this.encartCombat.SetActive(false);
-            this.encartCombatTexte.SetActive(false);
         }
+    }
+
+    // On ouvre la pop-up au clic sur le node
+    public void OpenPopUp(Node node) {
+        switch (node.titre) {
+            case "Coffre":
+                this.popUpChest.SetActive(true);
+                this.popUpInfos.SetActive(false);
+                this.popUpOpened = true;
+                break;
+            case "Événement":
+                this.popUpEvent.SetActive(true);
+                this.popUpInfos.SetActive(false);
+                this.popUpOpened = true;
+                break;
+            case "Repos":
+                this.popUpRest.SetActive(true);
+                this.popUpInfos.SetActive(false);
+                this.popUpOpened = true;
+                break;
+            case "Echange":
+                this.popUpTrade.SetActive(true);
+                this.popUpInfos.SetActive(false);
+                this.popUpOpened = true;
+                break;
+            case "Magasin":
+                this.popUpShop.SetActive(true);
+                this.popUpInfos.SetActive(false);
+                this.popUpOpened = true;
+                break;
+        }
+    }
+
+    // On met à jour la variable de la fermeture de la pop-up
+    public void ClosedPopUpUpdate() {
+        this.popUpOpened = false;
     }
 
 }
