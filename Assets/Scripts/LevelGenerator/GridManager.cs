@@ -13,6 +13,9 @@ public class GridManager : MonoBehaviour
     public int cellSize;
     private GameObject[,] gridArray;
     public GameObject grid;
+
+    //A mettre dans un script à part 
+    public GameObject character;
     
     [Header("Tiles")]
     [Header("Corners")]
@@ -119,7 +122,7 @@ public class GridManager : MonoBehaviour
         }
 
         randomIndex = Random.Range(0,listTile.Count );
-
+        
         return listTile[randomIndex];
 
     }
@@ -133,8 +136,8 @@ public class GridManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject spawnPoint;
         
-        // Grid grid = new Grid(width,height,cellSize);
         gridArray = new GameObject[width,height];
         
         for (int x = 0; x < width; x++)
@@ -144,6 +147,11 @@ public class GridManager : MonoBehaviour
                 this.SetCell(x,y);
             }
         }
+
+        //A mettre dans un script à part 
+        spawnPoint = GameObject.Find("SpawnPoint");
+        Instantiate(character, spawnPoint.transform.position , Quaternion.identity);
+        
     }
 
 }

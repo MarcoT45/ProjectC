@@ -342,7 +342,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e8b765801141d54791d324b00bbc6ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  closedRoom: {fileID: 0}
 --- !u!1 &1683354654
 GameObject:
   m_ObjectHideFlags: 0
@@ -392,29 +391,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6ad88af0aaa60043a4cf7f4eb2de0a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  width: 3
-  height: 3
+  width: 2
+  height: 2
   xStart: 0
   yStart: 0
   xSpace: 1
   ySpace: 1
   cellSize: 10
   grid: {fileID: 537583183}
+  character: {fileID: 855895281463053772, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
   cornerTopLeftTiles:
-  - {fileID: 8862930261588241170, guid: ca60c04615692a34c9da35c2eff0588b, type: 3}
-  - {fileID: 4450379578618240930, guid: 1e65992a4caca1942bc9f1999204b26a, type: 3}
-  - {fileID: 7821469569453799088, guid: 6115c20bda3e2db4e9469436adb1f058, type: 3}
+  - {fileID: 454700164211241161, guid: fe884d9d2ee43914bbcecbc8931c4554, type: 3}
   cornerTopRightTiles:
-  - {fileID: 5175368735018584578, guid: 6b72b410b4d1a4740a3053b5b7a6c402, type: 3}
-  - {fileID: 1174478924053868008, guid: 835cdeb638ef82d49957108f074cffd6, type: 3}
-  - {fileID: 2331694916369405246, guid: 7fe52e0473872284daf777837c20c642, type: 3}
-  - {fileID: 1883419995346032539, guid: a9876091ee48b8943aae03cc61855cbd, type: 3}
+  - {fileID: 2084415303264132046, guid: 64f3891e613ea934b9e18b145cd83448, type: 3}
   cornerBottomLeftTiles:
-  - {fileID: 5651351772459654594, guid: 4ccef3bc43b35b24797fa69f92e7882b, type: 3}
-  - {fileID: 1992978815476179219, guid: fc11bf2a4c62d274081b45d43156bc48, type: 3}
+  - {fileID: 389289698664733252, guid: 1ac58ae4c0fb747439b14c8ce6ae0e97, type: 3}
   cornerBottomRightTiles:
-  - {fileID: 5620053324917460395, guid: e6f3e30701bf69241985a47b4d83d0d9, type: 3}
-  - {fileID: 2099867722629290710, guid: 4f0a8ba8e8da153478a7936c0d6e3173, type: 3}
+  - {fileID: 782635169351635825, guid: 93d31c286769c1c4381663e0a9bb3774, type: 3}
   topTiles:
   - {fileID: 4518661600205439442, guid: 58535e2dc1653bb46a6194477ee7a55d, type: 3}
   - {fileID: 7563539744887129594, guid: d4b5f1aa4f727144995980228f260179, type: 3}
@@ -497,7 +490,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 104.08913
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -521,7 +514,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1823795850}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
