@@ -30,8 +30,8 @@ public class Node : MonoBehaviour {
 
         if(this.currentState == NodeState.Accessible) {
             this.spriteRenderer.color = new Color (1, 1, 1, 1);
-        } else if(this.currentState == NodeState.Visite) {
-            this.spriteRenderer.color = new Color (0.75f, 0.75f, 0.75f, 1);
+        } else if(this.currentState == NodeState.Visite || this.currentState == NodeState.Position) {
+            this.spriteRenderer.color = new Color (0.85f, 0.85f, 0.85f, 1);
         } else if(this.currentState == NodeState.Bloque) {
             this.spriteRenderer.color = new Color (0.5f, 0.5f, 0.5f, 1);
         }
@@ -104,9 +104,8 @@ public class Node : MonoBehaviour {
             GameObject map;
             map = GameObject.Find("Map Generator");
             MapGeneratorController mapGenerator = (MapGeneratorController) map.GetComponent(typeof(MapGeneratorController));
-            mapGenerator.OpenPopUp(this);
+            mapGenerator.MovePlayer(this);
         }
-        Debug.Log("Mouse Click Detected on: "+this.name);
     }
 
     // Si on survole afficher petite pop-up avec infos

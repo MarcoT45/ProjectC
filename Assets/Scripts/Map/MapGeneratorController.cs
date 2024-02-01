@@ -9,7 +9,8 @@ public class MapGeneratorController : MonoBehaviour {
     private int largeur = 7;   // Largeur max de la map générée
     private int nbChemins = 6; // Nombre de chemins générés dans la map
 
-    public GameObject nodePrefab; // Prefab de Noeud
+    public GameObject nodePrefab;   // Prefab de Noeud
+    public GameObject playerPrefab; // Prefab du Joueur
 
     public List<GameObject> mapNodes = new List<GameObject>(); // Liste des gameobject noeuds de la map
     public List<int> usedNodes = new List<int>();              // Liste des numéros des noeuds utilisés
@@ -369,7 +370,7 @@ public class MapGeneratorController : MonoBehaviour {
     }
 
     // On ouvre la pop-up au clic sur le node
-    public void OpenPopUp(Node node) {
+    private void OpenPopUp(Node node) {
         switch (node.titre) {
             case "Coffre":
                 this.popUpChest.SetActive(true);
@@ -397,11 +398,50 @@ public class MapGeneratorController : MonoBehaviour {
                 this.popUpOpened = true;
                 break;
         }
+
+        /* SI ON CLIQUE SUR UN COMBAT IL FAUT SAUVEGARDER LA MAP ET PUIS CHANGER LA SCENE A PARTIR D'ICI */
     }
 
     // On met à jour la variable de la fermeture de la pop-up
     public void ClosedPopUpUpdate() {
         this.popUpOpened = false;
+    }
+
+    // On déplace le joueur jusqu'au Node (On le fait spawn si il n'existe pas)
+    public void MovePlayer(Node node) {
+
+        GameObject player = GameObject.Find("Joueur");
+        
+        if (player != null) {
+            player.transform.position = node.transform.position;
+            player.transform.parent = node.gameObject.transform;
+        } else {
+            player = Instantiate(playerPrefab, node.position, Quaternion.identity, node.gameObject.transform);
+            player.name = "Joueur";
+        }
+
+        UpdateMapAccess(node);
+        node.UpdateNodeState(NodeState.Position);
+        OpenPopUp(node);
+    }
+
+    // On Update la carte des accessibilités
+    private void UpdateMapAccess(Node nextNode) {
+        
+        foreach (GameObject n in mapNodes) {
+            Node node = (Node) n.GetComponent(typeof(Node));
+            if (node.currentState == NodeState.Accessible) {
+                node.UpdateNodeState(NodeState.Bloque);
+            }
+            if (node.currentState == NodeState.Position) {
+                node.UpdateNodeState(NodeState.Visite);
+            }
+        }
+
+        foreach (GameObject n in nextNode.nodeLinkedNextFloor) {
+            Node node = (Node) n.GetComponent(typeof(Node));
+            node.UpdateNodeState(NodeState.Accessible);
+        }
     }
 
 }
