@@ -40,7 +40,7 @@ public class MapGeneratorController : MonoBehaviour {
     }
 
     private void Update() {
-        while (this.transform.position != targetPos) {
+        while (this.transform.position != this.targetPos) {
             this.transform.position = Vector3.MoveTowards(this.transform.position, this.targetPos, 1f * Time.deltaTime);
         }
 
@@ -64,6 +64,7 @@ public class MapGeneratorController : MonoBehaviour {
 
     // On reset la map
     private void ResetMap() {
+        this.transform.position = this.originPos;
         this.mapNodes = new List<GameObject>();
         this.usedNodes = new List<int>();
         while (this.transform.childCount > 0) {
@@ -91,6 +92,7 @@ public class MapGeneratorController : MonoBehaviour {
         
                 Node node = (Node) newNode.GetComponent(typeof(Node));
                 node.SetPosition(nodePosition);
+                node.SetNumero(h*largeur+l);
         
                 mapNodes.Add(newNode);
             }
@@ -164,7 +166,7 @@ public class MapGeneratorController : MonoBehaviour {
                     lineRenderer.SetPosition(j, new Vector2(nextNode.transform.position.x, nextNode.transform.position.y));
 
                     Node node = (Node) currentNode.GetComponent(typeof(Node));
-                    node.AddNodeLinkedNextFloor(nextNode);
+                    node.AddNodeLinkedNextFloor(nextNodeNumber);
 
                     currentNodeNumber = nextNodeNumber;
                 }
@@ -263,6 +265,7 @@ public class MapGeneratorController : MonoBehaviour {
         this.maxHeightBoss = bossNodePosition.y;
         
         Node node = (Node) bossNode.GetComponent(typeof(Node));
+        node.SetNumero(8055);
         node.SetPosition(bossNodePosition);
         node.ChangeNodeEvent(7);
         node.UpdateNodeState(NodeState.Bloque);
@@ -277,7 +280,7 @@ public class MapGeneratorController : MonoBehaviour {
             if ( n >= 14*largeur ) {
                 tmpNode = GameObject.Find("Node "+ n);
                 Node nodeToBoss = (Node) tmpNode.GetComponent(typeof(Node));
-                nodeToBoss.AddNodeLinkedNextFloor(bossNode);
+                nodeToBoss.AddNodeLinkedNextFloor(node.numero);
 
                 //On crée une nouvelle ligne
                 var lineRenderer = new GameObject("Boss Line "+ i).AddComponent<LineRenderer>();
@@ -438,10 +441,136 @@ public class MapGeneratorController : MonoBehaviour {
             }
         }
 
-        foreach (GameObject n in nextNode.nodeLinkedNextFloor) {
-            Node node = (Node) n.GetComponent(typeof(Node));
+        GameObject tmpNode;
+
+        foreach (int n in nextNode.nodeLinkedNextFloor) {
+
+            if (n != 8055) {
+                tmpNode = GameObject.Find("Node "+ n);
+            } else {
+                tmpNode = GameObject.Find("Node Boss");
+            }
+
+            Node node = (Node) tmpNode.GetComponent(typeof(Node));
             node.UpdateNodeState(NodeState.Accessible);
         }
+    }
+
+    /******************* Test Sauvegarde / Chargement ************************************/
+
+    private List<Node> savedNodesMapData = new List<Node>();                 // GameObject qui contient les données sauvegardées
+
+    // On sauvegarde les données des noeuds de la carte
+    public void SauvegarderMap() {
+
+        this.savedNodesMapData = new List<Node>();
+
+        foreach (GameObject n in mapNodes) {
+            Node node = (Node) n.GetComponent(typeof(Node));
+            savedNodesMapData.Add(node);
+        }
+    }
+
+    // On charge depuis les données la carte
+    public void ChargerMap() {
+
+        ResetMap();
+
+        foreach (Node n in savedNodesMapData) {
+            usedNodes.Add(n.numero);
+        }
+
+        GameObject newFloor;
+        GameObject newNode;
+        GameObject player;
+        
+        for (int h = 0; h < this.hauteur; h++) {
+        
+            newFloor = new GameObject("Floor "+h);
+            newFloor.transform.parent = this.gameObject.transform;
+            newFloor.transform.position = new Vector3(0, 0, 0);
+        
+            for (int l = 0; l < this.largeur; l++) {
+
+                if (usedNodes.Contains(h*largeur+l)) {
+                    Vector2 nodePosition = new Vector2(l+l*0.5f-1.5f, h+h*0.5f-3);
+                    newNode = Instantiate(nodePrefab, nodePosition, Quaternion.identity, newFloor.gameObject.transform);
+                    newNode.name = "Node "+(h*largeur+l);
+        
+                    Node node = (Node) newNode.GetComponent(typeof(Node));
+                    foreach (Node n in savedNodesMapData) {
+                        if(n.numero == (h*largeur+l)) {
+                            node.SetAllDate(n);
+                        }
+                    }
+
+                    if(node.currentState == NodeState.Position) {
+                        player = Instantiate(playerPrefab, node.position, Quaternion.identity, node.gameObject.transform);
+                        player.name = "Joueur";
+                    }
+        
+                    mapNodes.Add(newNode);
+                }
+            }
+        }
+
+        GameObject bossFloor;
+        GameObject bossNode;
+        
+        bossFloor = new GameObject("Floor Boss");
+        bossFloor.transform.parent = this.gameObject.transform;
+        
+        Vector2 bossNodePosition = new Vector2(((largeur-1)+(largeur-1)*0.5f)/2-1.5f, hauteur+hauteur*0.5f-1.5f);
+        bossNode = Instantiate(nodePrefab, bossNodePosition, Quaternion.identity, bossFloor.gameObject.transform);
+        bossNode.name = "Node Boss";
+        this.maxHeightBoss = bossNodePosition.y;
+        
+        Node nodeB = (Node) bossNode.GetComponent(typeof(Node));
+
+        foreach (Node n in savedNodesMapData) {
+            if(n.numero == 8055) {
+                nodeB.SetAllDate(n);
+            }
+        }
+        
+        mapNodes.Add(bossNode);
+
+        foreach (GameObject n in mapNodes) {
+            Node tmpNode = (Node) n.GetComponent(typeof(Node));
+            GameObject firstNode;
+
+            if (tmpNode.numero != 8055) {
+                firstNode = GameObject.Find("Node "+ tmpNode.numero);
+            } else {
+                firstNode = GameObject.Find("Node Boss");
+            }
+            
+            for (int i = 0; i < tmpNode.nodeLinkedNextFloor.Count; i++) {
+
+                GameObject secondNode;
+
+                if (tmpNode.nodeLinkedNextFloor[i] != 8055) {
+                    secondNode = GameObject.Find("Node "+ tmpNode.nodeLinkedNextFloor[i]);
+                } else {
+                    secondNode = GameObject.Find("Node Boss");
+                }
+
+                //On crée une nouvelle ligne
+                var lineRenderer = new GameObject("Line").AddComponent<LineRenderer>();
+                lineRenderer.transform.parent = this.gameObject.transform;
+                lineRenderer.material = new Material(Shader.Find("Legacy Shaders/Particles/Alpha Blended Premultiply"));
+                lineRenderer.startWidth = 0.05f;
+                lineRenderer.endWidth = 0.05f;
+                lineRenderer.positionCount = 2;
+                lineRenderer.useWorldSpace = false;
+                lineRenderer.startColor = Color.cyan;
+                lineRenderer.endColor = Color.cyan;
+
+                lineRenderer.SetPosition(0, new Vector2(firstNode.transform.position.x, firstNode.transform.position.y));
+                lineRenderer.SetPosition(1, new Vector2(secondNode.transform.position.x, secondNode.transform.position.y));
+            }
+        }
+
     }
 
 }
