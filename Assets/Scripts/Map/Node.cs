@@ -14,16 +14,62 @@ public class Node : MonoBehaviour {
 
     public NodeState currentState;                                           // Etat du noeud pour le joueur
     public Vector2 position;                                                 // Coordonnées du noeud
-    public List<GameObject> nodeLinkedNextFloor = new List<GameObject>();    // On liste les noeuds de l'étage supérieur auquel il est lié
+    public List<int> nodeLinkedNextFloor = new List<int>();                  // On liste les numéros des noeuds de l'étage supérieur auquel il est lié
     public SpriteRenderer spriteRenderer;                                    // Pour changer le sprite rapidement
     public List<Sprite> spriteList;                                          // Liste des icones des evenements (Tete de mort, Coffre, Boutique, etc...)
     
+    public int numero;                                                       // Numero du node
     public string titre;                                                     // Titre du type de node
     public string description;                                               // Description du type de node
     
     public int taille = 0;                                                   // Taille de la map du level X*X
     public int nbEnnemis = 0;                                                // Nombre d'ennemis dans le level
     public bool sortie = true;                                               // Si le niveau à une sortie
+
+    public void SetAllDate(Node n) {
+        this.position = n.position;
+        this.nodeLinkedNextFloor = n.nodeLinkedNextFloor;
+        this.numero = n.numero;
+        this.titre = n.titre;
+        this.description = n.description;
+        this.taille = n.taille;
+        this.nbEnnemis = n.nbEnnemis;
+        this.sortie = n.sortie;
+
+        UpdateNodeState(n.currentState);
+
+        switch(n.titre) {
+            case "Combat normal":
+                this.spriteRenderer.sprite = spriteList[0];
+                break;
+            case "Combat d'élite":
+                this.spriteRenderer.sprite = spriteList[1];
+                break;
+            case "Coffre":
+                this.spriteRenderer.sprite = spriteList[2];
+                break;
+            case "Événement":
+                this.spriteRenderer.sprite = spriteList[3];
+                break;
+            case "Repos":
+                this.spriteRenderer.sprite = spriteList[4];
+                break;
+            case "Echange":
+                this.spriteRenderer.sprite = spriteList[5];
+                break;
+            case "Magasin":
+                this.spriteRenderer.sprite = spriteList[6];
+                break;
+            case "Boss":
+                this.spriteRenderer.sprite = spriteList[7];
+                this.transform.localScale = new Vector2 (3, 3);
+                break;
+        }
+    }
+
+    public void SetNumero(int n) {
+        this.numero = n;
+    }
 
     public void UpdateNodeState(NodeState newState) {
         this.currentState = newState;
@@ -45,9 +91,9 @@ public class Node : MonoBehaviour {
         this.position = newPosition;
     }
 
-    public void AddNodeLinkedNextFloor (GameObject newNode) {
-        if (!this.nodeLinkedNextFloor.Contains(newNode)) {
-            this.nodeLinkedNextFloor.Add(newNode);
+    public void AddNodeLinkedNextFloor (int newNodeNumber) {
+        if (!this.nodeLinkedNextFloor.Contains(newNodeNumber)) {
+            this.nodeLinkedNextFloor.Add(newNodeNumber);
         }
     }
 
