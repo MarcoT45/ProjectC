@@ -37,7 +37,9 @@ public class CharacterController : MonoBehaviour
                     movePoint.position += movePointDirection;
                 }
                 
-            }else if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
+            }
+            
+            if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
             {
                 movePointDirection = new Vector3( 0f, Input.GetAxisRaw("Vertical"), 0f);
                 if(!Physics2D.OverlapCircle(movePoint.position + movePointDirection, .2f, stopMovement ))
