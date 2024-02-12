@@ -17,6 +17,7 @@ public class NewGameButton : MonoBehaviour
 
     void TaskOnClick()
     {
+        GameManager.Instance.NewRun();
         SceneManager.LoadScene(1);
     }
 }

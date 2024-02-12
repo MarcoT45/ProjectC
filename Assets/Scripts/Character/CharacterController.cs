@@ -1,52 +1,109 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CharacterController : MonoBehaviour
 {
-    
+
+    private UI_Inventory uiInventory;
+    private Inventory inventory;
+
+    [SerializeField]
+    private Tilemap solTileMap;
+
+    [SerializeField]
+    private Tilemap murTileMap;
+
+    [SerializeField]
+    private Tilemap sortieTileMap;
+
     private GameObject character;
     private Rigidbody2D physics;
-    private Vector2 input;
+    private Vector2 direction;
+    private PlayerMovement controls;
+
     public float moveSpeed;
     public Transform movePoint;
 
     public LayerMask stopMovement;
 
-    // Start is called before the first frame update
+
+    private void Awake()
+    {
+        controls = new PlayerMovement();
+
+        //Enregistrer les types d'inputs et leurs affecter les fonctions
+        //started ~= GetKeyDown / performed ~= GetKey / canceled ~= GetKeyReleased
+        controls.Main.Movement.started += ctx => Move(ctx.ReadValue<Vector2>());
+        controls.Main.Movement.canceled += ctx => this.direction = Vector2.zero;
+
+        inventory = Inventory.Instance;
+    }
+
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void OnDisable()
+    {
+        controls.Disable();
+    }
+
     void Start()
     {
         character = this.gameObject;
         physics = character.GetComponent<Rigidbody2D>();
         movePoint.parent = null;
+        uiInventory = GameObject.FindWithTag("UI_Inventory").GetComponent<UI_Inventory>();
+        uiInventory.SetInventory(inventory);
+
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Vector3 movePointDirection; 
         transform.position = Vector3.MoveTowards(transform.position, movePoint.position, moveSpeed * Time.deltaTime);
 
-        if( Vector3.Distance(transform.position, movePoint.position) <= .05f)
+        if (direction == Vector2.zero)
         {
-            if(Mathf.Abs(Input.GetAxisRaw("Horizontal")) == 1f)
+            return;
+        }
+
+
+            if (Vector3.Distance(transform.position, movePoint.position) <= .05f)
             {
-                movePointDirection = new Vector3(Input.GetAxisRaw("Horizontal"), 0f, 0f);
-                if(!Physics2D.OverlapCircle(movePoint.position + movePointDirection, .2f, stopMovement ))
+                if (CanMove(direction))
                 {
-                    movePoint.position += movePointDirection;
-                }
-                
-            }
-            
-            if(Mathf.Abs(Input.GetAxisRaw("Vertical")) == 1f)
-            {
-                movePointDirection = new Vector3( 0f, Input.GetAxisRaw("Vertical"), 0f);
-                if(!Physics2D.OverlapCircle(movePoint.position + movePointDirection, .2f, stopMovement ))
-                {
-                    movePoint.position += movePointDirection;
+                    movePoint.position += (Vector3)direction;
                 }
             }
+
+        }
+
+    private void Move(Vector2 direction)
+    {
+        this.direction = (Vector3)direction;
+    }
+
+    private bool CanMove(Vector2 direction)
+    {
+        Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
+        if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if( other.gameObject.CompareTag("Coin") )
+        {
+            Destroy(other.gameObject);
+            GameManager.Instance.AddCoins(1) ;
         }
     }
 }

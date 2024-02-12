@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
+    #region Singleton
     private static GameManager instance = null;
-    private static GameManager Instance => instance;
+    public static GameManager Instance => instance;
 
     private void Awake()
     {
@@ -22,9 +22,32 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
   
     }
+    #endregion
 
     // En haut le singleton 
     // En bas la partie jeu
 
+    private int coinCount;
+    [SerializeField]
+    private Catalog catalog;
 
+    public List<ItemData> GetAllItems()
+    {
+        return this.catalog.GetAllItems();
+    }
+
+    public void AddCoins(int number)
+    {
+        this.coinCount += number;
+        Debug.Log(coinCount);
+    }
+
+    public void ResetCoins(int number)
+    {
+        this.coinCount = 0;
+    }
+
+    public void NewRun()
+    {
+    }
 }
