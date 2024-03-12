@@ -95,6 +95,8 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     void Update()
     {
+        Vector3 tmpPos;
+
         if (isHurt)
         {
             transform.position = Vector3.MoveTowards(transform.position, movePoint.position, pushBackSpeed * Time.deltaTime);
@@ -106,7 +108,9 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
         if(this.direction + lastDirection == Vector2.zero && lastDirection != Vector2.zero)
         {
-            movePoint.position = solTileMap.GetCellCenterWorld(lastPosition); 
+            tmpPos = movePoint.position;
+            movePoint.position = solTileMap.GetCellCenterWorld(lastPosition);
+            lastPosition = solTileMap.WorldToCell(tmpPos);
 
             lastDirection =  this.direction;
         }
@@ -141,8 +145,8 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         }
         this.direction = (Vector3)newDirection;
 
-        Debug.Log("lastDir " + lastDirection);
-        Debug.Log("dir " + this.direction);
+        /*Debug.Log("lastDir " + lastDirection);
+        Debug.Log("dir " + this.direction);*/
 
     }
 
