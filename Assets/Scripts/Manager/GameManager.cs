@@ -27,24 +27,46 @@ public class GameManager : MonoBehaviour
     // En haut le singleton 
     // En bas la partie jeu
 
-    private int coinCount;
-    [SerializeField]
-    private Catalog catalog;
+    [SerializeField] int startCoins;
+    private int playerCoins;
+    [SerializeField] private Catalog catalog;
+    [SerializeField] private Bestiary bestiary;
+    public GameObject player {  get; private set; }
+
+    public void Start()
+    {
+        playerCoins = startCoins;
+        player = GameObject.FindWithTag("Player");
+    }
 
     public List<ItemData> GetAllItems()
     {
         return this.catalog.GetAllItems();
     }
 
+    public List<MonsterData> GetAllMonsters()
+    {
+        return this.bestiary.GetAllMonsters();
+    }
+
+    public int GetPlayerCoins()
+    {
+        return playerCoins;
+    }
+
+    public void SetPlayerCoins(int coins)
+    {
+        playerCoins = coins;
+    }
+
     public void AddCoins(int number)
     {
-        this.coinCount += number;
-        Debug.Log(coinCount);
+        this.playerCoins += number;
     }
 
     public void ResetCoins(int number)
     {
-        this.coinCount = 0;
+        this.playerCoins = 0;
     }
 
     public void NewRun()

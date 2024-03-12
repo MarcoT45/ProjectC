@@ -8,6 +8,11 @@ TagManager:
   - Rooms
   - Coin
   - UI_Inventory
+  - UI_Shop
+  - UI_ShopItem
+  - Ennemi
+  - Mur
+  - Sol
   layers:
   - Default
   - TransparentFX
@@ -17,8 +22,8 @@ TagManager:
   - UI
   - Mur
   - Sortie
-  - 
-  - 
+  - Player
+  - Ennemi
   - 
   - 
   - 
@@ -44,4 +49,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Murs
+    uniqueID: 3321775671
+    locked: 0
+  - name: UI
+    uniqueID: 1113647231
     locked: 0

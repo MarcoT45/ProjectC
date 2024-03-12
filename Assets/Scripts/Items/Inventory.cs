@@ -23,19 +23,20 @@ public class Inventory : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
 
+        items = new List<ItemData>();
     }
     #endregion
 
     public void Start()
     {
-        items = new List<ItemData> ();
+        //Mis dans le Awake car erreur de NullRef sinon. Peut etre à lier au GM et enlever le singleton
+        //items = new List<ItemData> ();
 
-        foreach (ItemData item in GameManager.Instance.GetAllItems())
+        /*foreach (ItemData item in GameManager.Instance.GetAllItems())
         {
             items.Add(item);
-        }
+        }*/
 
-        Debug.Log(items.Count);
     }
 
     public List<ItemData> GetItemList()

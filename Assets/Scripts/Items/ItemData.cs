@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New ItemData", menuName = "ScriptableObjects/Items/ItemData")]
 public class ItemData : ScriptableObject
 {
     [SerializeField]
@@ -42,6 +42,26 @@ public class ItemData : ScriptableObject
     {
         numero = 0;
         itemName = "Test";
+    }
+
+    public string GetName()
+    {
+        return itemName;
+    } 
+
+    public string GetDescription()
+    {
+        return description;
+    }
+
+    public int GetPrice()
+    {
+        return price;
+    }
+
+    public int GetRarity()
+    {
+        return rarity;
     }
 
     public Sprite GetSprite()

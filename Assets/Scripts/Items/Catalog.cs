@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu]
+[CreateAssetMenu(fileName = "New Catalog", menuName = "ScriptableObjects/Items/Catalog")]
 public class Catalog : ScriptableObject
 {
     [SerializeField]

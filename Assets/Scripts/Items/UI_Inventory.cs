@@ -21,16 +21,17 @@ public class UI_Inventory : MonoBehaviour
         RefreshInventoryItems();
     }
 
-    private void RefreshInventoryItems()
+    public void RefreshInventoryItems()
     {
         int x = 0;
         int y = 0;
         float itemSlotCellSize = 90f;
 
-        foreach (ItemData item in inventory.GetItemList()) {
+        foreach (ItemData item in inventory.GetItemList())
+        {
             RectTransform itemSlotRectTransform = Instantiate(itemSlotTemplate, itemSlotContainer).GetComponent<RectTransform>();
             itemSlotRectTransform.gameObject.SetActive(true);
-            itemSlotRectTransform.anchoredPosition = new Vector2(x *  itemSlotCellSize, y * itemSlotCellSize);
+            itemSlotRectTransform.anchoredPosition = new Vector2(x * itemSlotCellSize, y * itemSlotCellSize);
             itemSlotRectTransform.Find("image").GetComponent<Image>().sprite = item.GetSprite();
             x++;
         }
