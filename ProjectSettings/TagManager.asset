@@ -24,7 +24,7 @@ TagManager:
   - Sortie
   - Player
   - Ennemi
-  - 
+  - DraggableItem
   - 
   - 
   - 
@@ -55,4 +55,7 @@ TagManager:
     locked: 0
   - name: UI
     uniqueID: 1113647231
+    locked: 0
+  - name: DraggableItem
+    uniqueID: 3504077463
     locked: 0

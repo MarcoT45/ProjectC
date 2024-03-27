@@ -68,6 +68,11 @@ public class ItemData : ScriptableObject
     {
         return sprite;
     }
+
+    public ItemType GetItemType()
+    {
+        return type;
+    }
 }
 
 public enum ItemType

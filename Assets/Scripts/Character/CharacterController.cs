@@ -7,8 +7,8 @@ using UnityEngine.Events;
 public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 {
 
-    private UI_Inventory uiInventory;
-    private Inventory inventory;
+    private UIInventory uiInventory;
+    private InventoryController inventory;
 
     [SerializeField]
     private Tilemap solTileMap;
@@ -81,7 +81,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     void Start()
     {
         gameManager = GameManager.Instance;
-        inventory = Inventory.Instance;
+        inventory = InventoryController.Instance;
         character = this.gameObject;
         physics = character.GetComponent<Rigidbody2D>();
         movePoint.parent = null;
@@ -233,7 +233,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     {
         gameManager.SetPlayerCoins(gameManager.GetPlayerCoins() - itemData.GetPrice());
         this.inventory.AddItem(itemData);
-        uiInventory.RefreshInventoryItems();
+        //uiInventory.RefreshInventoryItems();
     }
 
     public void Damage(float damage)
