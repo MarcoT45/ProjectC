@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class EquipmentController : MonoBehaviour
@@ -30,11 +31,72 @@ public class EquipmentController : MonoBehaviour
     public delegate void OnEquipmentChanged(ItemData newItem, ItemData oldItem);
     public static event OnEquipmentChanged onEquipmentChanged;
 
+    public void OnEnable()
+    {
+        UIInventoryItem.onItemDroppedOn += HandleEquipmentDrag;
+        UIEquipmentItem.onEquipmentDrop += HandleDrop;
+    }
+
+    public void OnDisnable()
+    {
+        UIInventoryItem.onItemDroppedOn -= HandleEquipmentDrag;
+        UIEquipmentItem.onEquipmentDrop -= HandleDrop;
+    }
+
     public void Start()
     {
         inventory = InventoryController.Instance;
         int numSlots = System.Enum.GetNames(typeof(ItemType)).Length;
         currentEquipement = new ItemData[numSlots];
+    }
+    
+    public void HandleDrop(DraggableItem draggableItem)
+    {
+        Transform parent = draggableItem.originalParent;
+        UIInventoryItem uiItem = parent.GetComponent<UIInventoryItem>();
+
+        if (uiItem != null && uiItem.GetItemData() != null)
+        {
+            Equip(uiItem.GetItemData());
+        }
+    }
+
+    public void HandleEquipmentDrag(UIInventoryItem uiItem, DraggableItem draggableItem)
+    {
+        //draggableItem non null pour savoir s'il provient de l'equipement
+        if (draggableItem != null)
+        {
+            Transform parent = draggableItem.originalParent;
+            UIEquipmentItem uiEquipmentItem = parent.GetComponent<UIEquipmentItem>();
+
+            if (uiEquipmentItem != null && uiEquipmentItem.GetItemData() != null)
+            {
+                if (uiItem == null)
+                {
+                    //Debug.Log("ui null " + uiEquipmentItem.GetItemData().GetName());
+                    Unequip(uiEquipmentItem.GetItemData());
+                }
+                else
+                {
+                    if (uiItem.GetItemData() != null)
+                    {
+                        ItemData equippedItemData = uiEquipmentItem.GetItemData();
+                        ItemData inventoryItemData = uiItem.GetItemData();
+
+                        if (equippedItemData.GetItemType() == inventoryItemData.GetItemType())
+                        {
+                            //Debug.Log("equip");
+                            Equip(inventoryItemData);
+                        }
+                        else
+                        {
+                            Debug.Log("unequip " + equippedItemData.GetName());
+                            Unequip(equippedItemData);
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void Equip(ItemData newItem)
@@ -49,12 +111,16 @@ public class EquipmentController : MonoBehaviour
         {
             oldItem = currentEquipement[equipSlot];
             inventory.AddItem(oldItem);
+
         }
+
+        currentEquipement[equipSlot] = newItem;
+
+        inventory.RemoveItem(newItem);
 
         //On trigger le delegate / ?.invoke pour savoir si des méthode y sont rattachées
         onEquipmentChanged?.Invoke(newItem, oldItem);
 
-        currentEquipement[equipSlot] = newItem;
 
     }
 
@@ -62,15 +128,26 @@ public class EquipmentController : MonoBehaviour
     {
         int indexEquipmentType = (int) itemData.GetItemType();
 
-        if (currentEquipement[indexEquipmentType] != null)
+        if(indexEquipmentType >= 0 && indexEquipmentType < currentEquipement.Length)
         {
-            ItemData oldItem = currentEquipement[indexEquipmentType];
-            inventory.AddItem(oldItem);
+            Debug.Log(indexEquipmentType);
+            if (currentEquipement[indexEquipmentType] != null)
+            {
+                Debug.Log("equipement != nul");
+                ItemData oldItem = currentEquipement[indexEquipmentType];
 
-            currentEquipement[indexEquipmentType] = null;
+                Debug.Log(currentEquipement[indexEquipmentType].ToString());
 
-            onEquipmentChanged?.Invoke(null, oldItem);
+                inventory.AddItem(oldItem);
 
+                onEquipmentChanged?.Invoke(null, oldItem);
+                currentEquipement[indexEquipmentType] = null;
+
+            }
+        }
+        else
+        {
+            Debug.Log("index erreur "+ indexEquipmentType);
         }
     }
 

@@ -110,12 +110,16 @@ public class UIInventory : MonoBehaviour
         }
     }
 
-    public void HandleSwap(UIInventoryItem uiItem)
+    public void HandleSwap(UIInventoryItem uiItem, DraggableItem draggedItem)
     {
-        int index = listUiItems.IndexOf(uiItem);
-        if (index > -1)
+        //draggedItem null pour savoir que le swap provient de l'inventaire
+        if(draggedItem == null)
         {
-            onSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+            int index = listUiItems.IndexOf(uiItem);
+            if (index > -1)
+            {
+                onSwapItems?.Invoke(currentlyDraggedItemIndex, index);
+            }
         }
 
     }

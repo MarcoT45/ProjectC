@@ -12,7 +12,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     LayerMask originalLayer;
     Camera camera;
     Vector3 originalPosition;
-    Transform originalParent;
+    public Transform originalParent;
 
     public delegate void OnItemBeginDrag(UIInventoryItem uiItem);
     public static event OnItemBeginDrag onItemBeginDrag;
@@ -30,9 +30,9 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     }
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if(this.isActiveAndEnabled)
+        Debug.Log("start parent " + originalParent.gameObject.name);
+        if (this.isActiveAndEnabled)
         {
-            onItemBeginDrag?.Invoke(this.GetComponentInParent<UIInventoryItem>());
 
             this.gameObject.layer = LayerMask.NameToLayer("DraggableItem");
             transform.SetParent(transform.root);
@@ -40,6 +40,15 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
             //Pour cacher l'image le temps que le pointeur sache si on est sur une case de Drop
             image.raycastTarget = false;
+
+            if (originalParent.GetComponent<UIInventoryItem>() != null)
+            {
+                onItemBeginDrag?.Invoke(originalParent.GetComponent<UIInventoryItem>());
+            }
+            else if(originalParent.GetComponent<UIEquipmentItem>() != null)
+            {
+               /* onItemBeginDrag?.Invoke((originalParent.GetComponent<UIEquipmentItem>());*/
+            }
 
         }
     }
@@ -53,10 +62,16 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        image.raycastTarget = true;
+        Debug.Log("end parent "+ originalParent.gameObject.name);
         transform.SetParent(originalParent);
         this.gameObject.layer = originalLayer;
         transform.position = originalPosition;
-        image.raycastTarget = true;
+
+        if(image.sprite == null)
+        {
+            image.gameObject.SetActive(false);
+        }
 
         onItemEndDrag?.Invoke();
     }

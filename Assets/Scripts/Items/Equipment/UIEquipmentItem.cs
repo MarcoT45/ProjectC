@@ -11,9 +11,17 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler, IDropHandler
 
     private ItemData itemData;
 
+    public delegate void OnEquipmentDrop(DraggableItem dragItem);
+    public static event OnEquipmentDrop onEquipmentDrop;
+
     public void Awake()
     {
         itemImage.gameObject.SetActive(false);
+    }
+
+    public ItemData GetItemData()
+    {
+        return itemData;
     }
 
     public void SetData(ItemData newItem)
@@ -26,8 +34,8 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler, IDropHandler
         }
         else
         {
+            Debug.LogWarning("reset");
             this.itemData = null;
-            itemImage.gameObject.SetActive(false);
             itemImage.sprite = null;
         }
     }
@@ -35,15 +43,20 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler, IDropHandler
 
     public void OnPointerClick(PointerEventData eventData)
     {
-
-        if (eventData.clickCount == 2)
+        if (eventData.clickCount == 2 && itemData != null)
         {
             EquipmentController.Instance.Unequip(itemData);
+            itemImage.gameObject.SetActive(false);
         }
     }
 
     public void OnDrop(PointerEventData eventData)
     {
+        DraggableItem draggableItem = eventData.pointerDrag.GetComponent<DraggableItem>();
 
+        if (draggableItem != null)
+        {
+            onEquipmentDrop?.Invoke(draggableItem);
+        }
     }
 }

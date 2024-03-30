@@ -49,12 +49,15 @@ public class InventoryController : MonoBehaviour
     {
         UIInventory.onSwapItems += HandleSwapItems;
         UIInventory.onDescriptionRequested += UpdateDescription;
+        //EquipmentController.onEquipmentChanged += HandleEquipmentChange;
         playerInput.Enable();
     }
 
     private void OnDisable()
     {
         UIInventory.onSwapItems -= HandleSwapItems;
+        UIInventory.onDescriptionRequested -= UpdateDescription;
+        //EquipmentController.onEquipmentChanged -= HandleEquipmentChange;
         playerInput.Disable();
     }
 
@@ -124,5 +127,19 @@ public class InventoryController : MonoBehaviour
         items[itemIndex2] = item1;
 
         onInventoryChanged?.Invoke();
+    }
+
+    public void HandleEquipmentChange(ItemData newItem, ItemData oldItem)
+    {
+        if(newItem != null)
+        {
+            RemoveItem(newItem);
+        }
+
+        if(oldItem != null)
+        {
+            AddItem(oldItem);
+        }
+
     }
 }
