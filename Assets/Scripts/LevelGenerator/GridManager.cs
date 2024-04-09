@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
@@ -11,8 +12,9 @@ public class GridManager : MonoBehaviour
     public float xSpace;
     public float ySpace;
     public int cellSize;
+    public Transform roomContainer;
     private GameObject[,] gridArray;
-    public GameObject grid;
+    private GameObject spawnPoint;
 
     //A mettre dans un script à part 
     public GameObject character;
@@ -21,7 +23,7 @@ public class GridManager : MonoBehaviour
     [Header("Corners")]
     public GameObject[] cornerTopLeftTiles;
     public GameObject[] cornerTopRightTiles;
-    public GameObject[] cornerBottomLeftTiles;
+    public GameObject[] cornerBottomLeftTiles; 
     public GameObject[] cornerBottomRightTiles;
 
     [Header("Content")]
@@ -36,26 +38,26 @@ public class GridManager : MonoBehaviour
     {
         RoomTile prevTile;
         RoomTile underTile;
-        GameObject randomTile = null;
+        GameObject randomRoom;
 
 
         //Coins
         //Coin BG
         if( x == 0 && y == 0)
         {
-            randomTile = this.SetTile(cornerBottomLeftTiles, 0, 0);
+            randomRoom = this.SetRoom(cornerBottomLeftTiles, 0, 0);
         }
         //Coin HG
         else if( x == 0 && y == (height - 1))
         {
             underTile = gridArray[x, y-1].GetComponent<RoomTile>();
-            randomTile = this.SetTile(cornerTopLeftTiles, underTile.numberDoorsTop, 0);
+            randomRoom = this.SetRoom(cornerTopLeftTiles, underTile.numberDoorsTop, 0);
         }
         //Coin BD
         else if( x == (width - 1) && y == 0 )
         {
             prevTile = gridArray[x-1, y].GetComponent<RoomTile>();
-            randomTile = this.SetTile(cornerBottomRightTiles, 0, prevTile.numberDoorsRight);
+            randomRoom = this.SetRoom(cornerBottomRightTiles, 0, prevTile.numberDoorsRight);
 
         }
         //Coin HD
@@ -63,50 +65,90 @@ public class GridManager : MonoBehaviour
         {
             prevTile = gridArray[x-1, y].GetComponent<RoomTile>();
             underTile = gridArray[x, y-1].GetComponent<RoomTile>();
-            randomTile = this.SetTile(cornerTopRightTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
+            randomRoom = this.SetRoom(cornerTopRightTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
         }
         //Cotés
         //G
         else if( x == 0 )
         {
             underTile = gridArray[x, y-1].GetComponent<RoomTile>();
-            randomTile = this.SetTile(leftTiles, underTile.numberDoorsTop, 0);
+            randomRoom = this.SetRoom(leftTiles, underTile.numberDoorsTop, 0);
         }
         //D
         else if( x == (width - 1)  )
         {
             prevTile = gridArray[x-1, y].GetComponent<RoomTile>();
             underTile = gridArray[x, y-1].GetComponent<RoomTile>();
-            randomTile = this.SetTile(rightTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
+            randomRoom = this.SetRoom(rightTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
         }
         //H
         else if( y == (height - 1))
         {
             prevTile = gridArray[x-1, y].GetComponent<RoomTile>();
             underTile = gridArray[x, y-1].GetComponent<RoomTile>();
-            randomTile = this.SetTile(topTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
+            randomRoom = this.SetRoom(topTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
         }
         //B
         else if( y == 0 )
         {
             prevTile = gridArray[x-1, y].GetComponent<RoomTile>();
-            randomTile = this.SetTile(bottomTiles, 0, prevTile.numberDoorsRight);
+            randomRoom = this.SetRoom(bottomTiles, 0, prevTile.numberDoorsRight);
         }
         //Centre
         else
         {
             prevTile = gridArray[x-1, y].GetComponent<RoomTile>();
             underTile = gridArray[x, y-1].GetComponent<RoomTile>();
-            randomTile = this.SetTile(centerTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
+            randomRoom = this.SetRoom(centerTiles, underTile.numberDoorsTop, prevTile.numberDoorsRight);
         }
 
-        GameObject instantiatedTile = Instantiate(randomTile,  GetWorldPosition(x, y), Quaternion.identity);
-        instantiatedTile.transform.parent = grid.transform;
-        instantiatedTile.name = "Room("+x+","+y+")";
-        gridArray[x, y] = randomTile;
+        //Ajout de la room dans le tableau
+        gridArray[x, y] = randomRoom;
+
+        Tilemap source;
+        Tilemap destination;
+        Vector3Int offsetPosition = GetWorldPosition(x, y);
+        Vector2 roomSize = new(cellSize, cellSize);
+
+        //Pour chaque layer/tilemap dans le prefab
+        for (int k =  0; k < roomContainer.childCount; k++) {
+
+            // /!\ Attention si on change l'arborescence des prefabs
+            source = randomRoom.transform.GetChild(0).GetChild(k).GetComponent<Tilemap>();
+            destination = roomContainer.GetChild(k).GetComponent<Tilemap>();
+
+            //Copie des tiles du préfab dans la destination
+            CopyTilemap(source, destination, offsetPosition, roomSize);
+        }
+
+        //Si un SpawnPoint existe dans cette room
+        if(randomRoom.transform.childCount > 1)
+        {
+            if(randomRoom.transform.GetChild(1).name == "SpawnPoint")
+            {
+                spawnPoint = randomRoom.transform.GetChild(1).gameObject;
+            }
+        }
     }
 
-    private GameObject SetTile(GameObject[] tiles, int numberDoorsBottom, int numberDoorsLeft){
+    private void CopyTilemap(Tilemap source, Tilemap destination, Vector3Int roomPosition, Vector2 roomSize)
+    {
+
+        Vector3Int tilePosition;
+        for (int i = 0; i < roomSize.x; i++)
+        {
+            for (int j = 0; j < roomSize.y; j++)
+            {
+                tilePosition = new Vector3Int(i, j, 0);
+
+                destination.SetTile(roomPosition + tilePosition, source.GetTile(tilePosition));
+            }
+        }
+    }
+
+    private GameObject SetRoom(GameObject[] tiles, int numberDoorsBottom, int numberDoorsLeft)
+    {
+
         List<GameObject> listTile = new List<GameObject>();
         int randomIndex;
         RoomTile tile;
@@ -127,16 +169,15 @@ public class GridManager : MonoBehaviour
 
     }
     
-    private Vector3 GetWorldPosition(int x, int y)
+    private Vector3Int GetWorldPosition(int x, int y)
     {
-        return new Vector3(xStart + (xSpace * x) , yStart + ( ySpace * y )) * cellSize;
+        return new Vector3Int((int)(xStart + (xSpace * x)), (int)(yStart + ( ySpace * y ))) * cellSize;
     }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        GameObject spawnPoint;
         
         gridArray = new GameObject[width,height];
         
@@ -149,8 +190,8 @@ public class GridManager : MonoBehaviour
         }
 
         //A mettre dans un script à part 
-        spawnPoint = GameObject.Find("SpawnPoint");
-        Instantiate(character, spawnPoint.transform.position , Quaternion.identity);
+        //Ajoute le personnage au spawnpoint
+        Instantiate(character, spawnPoint.transform.position, Quaternion.identity);
         
     }
 

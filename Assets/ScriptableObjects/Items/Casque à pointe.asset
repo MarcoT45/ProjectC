@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
+  m_Name: "Casque \xE0 pointe"
+  m_EditorClassIdentifier: 
+  numero: 5
+  itemName: "Casque \xE0 Pointe"
+  description: "Casque \xE0 pointe pour se prot\xE9ger"
+  discovered: 0
+  pv: 2
+  atk: 0
+  def: 3
+  speed: 0
+  critical: 0
+  descriptionEffect: 
+  price: 50
+  rarity: 90
+  sprite: {fileID: -2107909901, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 0

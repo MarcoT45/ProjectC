@@ -11,7 +11,7 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IDropHandler
 
     private ItemData itemData;
 
-    public delegate void OnItemDroppedOn(UIInventoryItem uiItem);
+    public delegate void OnItemDroppedOn(UIInventoryItem uiItem, DraggableItem draggedItem);
     public static event OnItemDroppedOn onItemDroppedOn;
 
     public delegate void OnItemClicked(UIInventoryItem uiItem);
@@ -20,6 +20,11 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IDropHandler
     public void Awake()
     {
         ResetData();
+    }
+
+    public ItemData GetItemData()
+    {
+        return itemData;
     }
 
     public void SetData(ItemData itemData)
@@ -47,17 +52,38 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler, IDropHandler
             else if(eventData.clickCount == 2)
             {
                 EquipmentController.Instance.Equip(itemData);
-                InventoryController.Instance.RemoveItem(itemData);
             }
         }
     }
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(transform.childCount > 0 && itemData != null)
-        {
-            onItemDroppedOn?.Invoke(this);
+        DraggableItem draggableItem = eventData.pointerDrag.GetComponent<DraggableItem>();
+        Transform parent = draggableItem.originalParent;
+        UIInventoryItem uiItem = parent.GetComponent<UIInventoryItem>();
+        UIEquipmentItem uiEquipment = parent.GetComponent<UIEquipmentItem>();
 
+        //Si drag n drop entre éléments de l'inventaire. Case vide NOK
+        if (uiItem != null && itemData != null)
+        {
+            if (transform.childCount > 0 && itemData != null)
+            {
+                onItemDroppedOn?.Invoke(this, null);
+            }
+        }
+
+        //Si drag n drop provenant de l'equipement. Case vide OK
+        if (uiEquipment != null)
+        {
+            //Sur case vide
+            if (itemData == null)
+            {
+                onItemDroppedOn?.Invoke(null, draggableItem);
+            }
+            else
+            {
+                onItemDroppedOn?.Invoke(this, draggableItem);
+            }
         }
     }
 }
