@@ -2,26 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
-{
+public class GameManager : MonoBehaviour {
+
     #region Singleton
+    
     private static GameManager instance = null;
     public static GameManager Instance => instance;
 
-    private void Awake()
-    {
-        if (instance != null && instance != this)
-        {
+    private void Awake() {
+        if (instance != null && instance != this) {
             Destroy(this.gameObject);
             return;
-        }
-        else
-        {
+        } else {
             instance = this;
         }
+
         DontDestroyOnLoad(this.gameObject);
-  
     }
+
     #endregion
 
     // En haut le singleton 
@@ -31,45 +29,50 @@ public class GameManager : MonoBehaviour
     private int playerCoins;
     [SerializeField] private Catalog catalog;
     [SerializeField] private Bestiary bestiary;
-    public GameObject player {  get; private set; }
+    public GameObject player { get; private set; }
 
-    public void Start()
-    {
+    public void Start() {
         playerCoins = startCoins;
         player = GameObject.FindWithTag("Player");
     }
 
-    public List<ItemData> GetAllItems()
-    {
+    public List<ItemData> GetAllItems() {
         return this.catalog.GetAllItems();
     }
 
-    public List<MonsterData> GetAllMonsters()
-    {
+    public List<MonsterData> GetAllMonsters() {
         return this.bestiary.GetAllMonsters();
     }
 
-    public int GetPlayerCoins()
-    {
+    public int GetPlayerCoins() {
         return playerCoins;
     }
 
-    public void SetPlayerCoins(int coins)
-    {
+    public void SetPlayerCoins(int coins) {
         playerCoins = coins;
     }
 
-    public void AddCoins(int number)
-    {
+    public void AddCoins(int number) {
         this.playerCoins += number;
     }
 
-    public void ResetCoins(int number)
-    {
+    public void ResetCoins(int number) {
         this.playerCoins = 0;
     }
 
-    public void NewRun()
-    {
+    public void NewRun() {
     }
+
+    // ********** PARTIE CARTE/MAP DE RUN ********** //
+
+    public List<Noeud> mapData = new List<Noeud>();
+
+    public List<Noeud> GetMapData() {
+        return mapData;
+    }
+
+    public void SetMapData(List<Noeud> data) {
+        mapData = data;
+    }
+
 }

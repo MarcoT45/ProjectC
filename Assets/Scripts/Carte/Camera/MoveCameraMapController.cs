@@ -9,7 +9,7 @@ public class MoveCameraMapController : MonoBehaviour {
     }
 
     private void Update() {
-        if ( Input.GetAxis("Mouse ScrollWheel") != 0 && this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")) < 9 && this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")) > 0) {
+        if ( Input.GetAxis("Mouse ScrollWheel") != 0 && this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")) < 11 && this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")) > 0) {
             this.transform.position = new Vector3(0, this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")), -10);
         }
     }

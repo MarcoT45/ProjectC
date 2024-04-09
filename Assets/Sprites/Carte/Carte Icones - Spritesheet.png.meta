@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cd6002dcf5f06e64f97c827b91031f5b
+guid: 309e12e36d69b5149a22ce39913e1e71
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,175 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Arbre 1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 8cc1808d41ca54748b3b3d201355bf55
-      internalID: -1532861931
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arbre 2
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 304af911de1633946b5ec987a678104b
-      internalID: -2046444914
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arbre 3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 40bd6af54849b9c4e8db7bbd038f0e64
-      internalID: 2008632150
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arbre 4
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 48
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 0f5adb8f7fe715e41aa16a0a27af38b8
-      internalID: 228951168
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Arbre 5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 6ed26da80f64af5419a1ec5085eb2a6e
-      internalID: 2115561139
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Fum\xE9e 1"
-      rect:
-        serializedVersion: 2
-        x: 16
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 21679a7f116f3a849bc40862a11129e0
-      internalID: -1495993644
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "Fum\xE9e 2"
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 141da414d56d1b942b0ef4222b2366d7
-      internalID: -430067000
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Poissons
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 32
-        width: 16
-        height: 16
-      alignment: 9
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: e69f784934923074daf728aadb32b683
-      internalID: -1811103119
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Oiseaux 1
+      name: Icone Combat
       rect:
         serializedVersion: 2
         x: 0
@@ -281,20 +113,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 976cfe5ad02e1a445940aa4ca8067b43
-      internalID: 1285068659
+      spriteID: c6f104f2f4bcf934099bd47dd22807a7
+      internalID: 1293320310
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Oiseaux 2
+      name: Icone Combat Elite
       rect:
         serializedVersion: 2
         x: 16
@@ -302,20 +134,62 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b408349c3b3139540995ada297f0f0b3
-      internalID: 1708673493
+      spriteID: 6060e8e640101324c96e369330399a0d
+      internalID: 1801837765
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Nuage 1
+      name: Icone Boss
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2adac7e67f24509488826c5e91ec7012
+      internalID: 1252692852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icone Coffre
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34d279a956bae4942a11ba768b55eb94
+      internalID: -232395168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Icone Evenement
       rect:
         serializedVersion: 2
         x: 0
@@ -323,20 +197,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 57445a11abec15a488a247887485fbc2
-      internalID: -960259748
+      spriteID: f56713f8043426445909d56bd9fd2e22
+      internalID: -955476249
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Nuage 2
+      name: Icone Magasin
       rect:
         serializedVersion: 2
         x: 16
@@ -344,20 +218,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9104f2d5e9cdfb9438f5aabf89df81e7
-      internalID: -159060876
+      spriteID: 15a14383ff0c6524dae2ff506b26e797
+      internalID: -1914271651
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Nuage 3
+      name: Icone Repos
       rect:
         serializedVersion: 2
         x: 32
@@ -365,20 +239,20 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1756f3e5aac59f948ac9adb4f4fd2493
-      internalID: 1982972520
+      spriteID: 7caaa7896130c474e8a54743f8b84dc2
+      internalID: 1084027636
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Echantillon Palette
+      name: Icone Echange
       rect:
         serializedVersion: 2
         x: 48
@@ -386,14 +260,14 @@ TextureImporter:
         width: 16
         height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c8737051aa0e5c546b34e27db4033caa
-      internalID: 666110883
+      spriteID: 1b41bf9b48e60b44e9bf4ecd874cd0b9
+      internalID: 688147079
       vertices: []
       indices: 
       edges: []
@@ -409,20 +283,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Arbre 1: -1532861931
-      Arbre 2: -2046444914
-      Arbre 3: 2008632150
-      Arbre 4: 228951168
-      Arbre 5: 2115561139
-      Echantillon Palette: 666110883
-      "Fum\xE9e 1": -1495993644
-      "Fum\xE9e 2": -430067000
-      Nuage 1: -960259748
-      Nuage 2: -159060876
-      Nuage 3: 1982972520
-      Oiseaux 1: 1285068659
-      Oiseaux 2: 1708673493
-      Poissons: -1811103119
+      Icone Boss: 1252692852
+      Icone Coffre: -232395168
+      Icone Combat: 1293320310
+      Icone Combat Elite: 1801837765
+      Icone Echange: 688147079
+      Icone Evenement: -955476249
+      Icone Magasin: -1914271651
+      Icone Repos: 1084027636
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
