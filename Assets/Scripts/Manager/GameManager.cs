@@ -75,4 +75,8 @@ public class GameManager : MonoBehaviour {
         mapData = data;
     }
 
+    public void ResetMapData() {
+        mapData = new List<Noeud>();
+    }
+
 }
