@@ -462,8 +462,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 80
+  m_fontSizeBase: 80
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3325,7 +3325,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3375ba638f4b67e49ad6955393eea801, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startCoins: 0
   catalog: {fileID: 11400000, guid: 7c27819f6266c4e41817346781eb2ab1, type: 2}
+  bestiary: {fileID: 0}
+  mapData: []
 --- !u!4 &2029438296
 Transform:
   m_ObjectHideFlags: 0
@@ -3380,7 +3383,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 600, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2042399921
 MonoBehaviour:

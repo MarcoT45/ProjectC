@@ -8,6 +8,7 @@ public class CarteForetController : MonoBehaviour {
     public GameObject playerPrefab;
     private List<int> noeudsUtilises = new List<int>();
     private int currentPlayerNode;
+    public GameObject popup;
 
     private void Start() {
         List<Noeud> mapData = GameManager.Instance.GetMapData();
@@ -235,47 +236,51 @@ public class CarteForetController : MonoBehaviour {
 
     // On déplace le joueur sur le noeud cliqué
     public void MovePlayer(Noeud newPosition) {
-        GameObject currentNode = GameObject.Find("Noeud "+ currentPlayerNode);
-        NoeudController cd = (NoeudController) currentNode.GetComponent(typeof(NoeudController));
-        cd.UpdateEtatNoeud(EtatNoeud.Visite);
 
-        foreach (var n in cd.noeud.noeudsSuivant) {
-            if(n != newPosition.numero) {
+        if(!popup.activeSelf) {
+
+            GameObject currentNode = GameObject.Find("Noeud "+ currentPlayerNode);
+            NoeudController cd = (NoeudController) currentNode.GetComponent(typeof(NoeudController));
+            cd.UpdateEtatNoeud(EtatNoeud.Visite);
+
+            foreach (var n in cd.noeud.noeudsSuivant) {
+                if(n != newPosition.numero) {
+                    GameObject node = GameObject.Find("Noeud "+ n);
+                    NoeudController nd = (NoeudController) node.GetComponent(typeof(NoeudController));
+                    nd.UpdateEtatNoeud(EtatNoeud.Inatteignable);
+
+                    GameObject path = GameObject.Find("Chemin "+ currentPlayerNode +"-"+n);
+                    LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
+                    p.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                    p.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                }
+            }
+
+            GameObject newNode = GameObject.Find("Noeud "+ newPosition.numero);
+            NoeudController cdn = (NoeudController) newNode.GetComponent(typeof(NoeudController));
+            cdn.UpdateEtatNoeud(EtatNoeud.Joueur);
+
+            // *********** C'est surement ici pour faire un déplacement smooth **********************//
+
+            GameObject player = GameObject.Find("Joueur");
+            player.transform.position = newNode.transform.position;
+            player.transform.parent = newNode.gameObject.transform;
+
+            foreach (var n in newPosition.noeudsSuivant) {
                 GameObject node = GameObject.Find("Noeud "+ n);
                 NoeudController nd = (NoeudController) node.GetComponent(typeof(NoeudController));
-                nd.UpdateEtatNoeud(EtatNoeud.Inatteignable);
+                nd.UpdateEtatNoeud(EtatNoeud.Accessible);
 
-                GameObject path = GameObject.Find("Chemin "+ currentPlayerNode +"-"+n);
+                GameObject path = GameObject.Find("Chemin "+ newPosition.numero +"-"+n);
                 LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
-                p.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                p.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                p.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+                p.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
             }
+
+            currentPlayerNode = newPosition.numero;
+
+            PlayNodeEvent(newPosition);
         }
-
-        GameObject newNode = GameObject.Find("Noeud "+ newPosition.numero);
-        NoeudController cdn = (NoeudController) newNode.GetComponent(typeof(NoeudController));
-        cdn.UpdateEtatNoeud(EtatNoeud.Joueur);
-
-        // *********** C'est surement ici pour faire un déplacement smooth **********************//
-
-        GameObject player = GameObject.Find("Joueur");
-        player.transform.position = newNode.transform.position;
-        player.transform.parent = newNode.gameObject.transform;
-
-        foreach (var n in newPosition.noeudsSuivant) {
-            GameObject node = GameObject.Find("Noeud "+ n);
-            NoeudController nd = (NoeudController) node.GetComponent(typeof(NoeudController));
-            nd.UpdateEtatNoeud(EtatNoeud.Accessible);
-
-            GameObject path = GameObject.Find("Chemin "+ newPosition.numero +"-"+n);
-            LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
-            p.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-            p.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-        }
-
-        currentPlayerNode = newPosition.numero;
-
-        PlayNodeEvent(newPosition);
     }
 
     // On joue l'evenement du node ici ?
@@ -286,6 +291,7 @@ public class CarteForetController : MonoBehaviour {
             SceneManager.LoadScene(2);
         } else {
             Debug.Log("Jouer la pop-up !");
+            popup.SetActive(true);
         }
     }
 
@@ -320,6 +326,10 @@ public class CarteForetController : MonoBehaviour {
                 GameObject player = Instantiate(playerPrefab, nodeTmp.transform.position, Quaternion.identity, nodeTmp.transform);
                 player.name = "Joueur";
                 currentPlayerNode = n.numero;
+
+                GameObject camera = GameObject.Find("Main Camera");
+                MoveCameraMapController cam = (MoveCameraMapController) camera.GetComponent(typeof(MoveCameraMapController));
+                cam.SetCameraToPlayerPosition(nodeTmp.transform.position.y);
             }
 
             noeudsUtilises.Add(n.numero);
