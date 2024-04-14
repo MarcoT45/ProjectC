@@ -260,27 +260,32 @@ public class CarteForetController : MonoBehaviour {
             NoeudController cdn = (NoeudController) newNode.GetComponent(typeof(NoeudController));
             cdn.UpdateEtatNoeud(EtatNoeud.Joueur);
 
-            // *********** C'est surement ici pour faire un déplacement smooth **********************//
-
             GameObject player = GameObject.Find("Joueur");
-            player.transform.position = newNode.transform.position;
             player.transform.parent = newNode.gameObject.transform;
-
-            foreach (var n in newPosition.noeudsSuivant) {
-                GameObject node = GameObject.Find("Noeud "+ n);
-                NoeudController nd = (NoeudController) node.GetComponent(typeof(NoeudController));
-                nd.UpdateEtatNoeud(EtatNoeud.Accessible);
-
-                GameObject path = GameObject.Find("Chemin "+ newPosition.numero +"-"+n);
-                LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
-                p.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-                p.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-            }
-
+            CarteJoueurForetController pl = (CarteJoueurForetController) player.GetComponent(typeof(CarteJoueurForetController));
+            pl.UpdateTargetPosition(newNode.transform.position);
             currentPlayerNode = newPosition.numero;
-
-            PlayNodeEvent(newPosition);
         }
+    }
+
+    // On débloque les prochains chemins et on joue l'évenement du noeud
+    public void UnlockPath() {
+
+        GameObject currentNode = GameObject.Find("Noeud "+ currentPlayerNode);
+        NoeudController cn = (NoeudController) currentNode.GetComponent(typeof(NoeudController));
+
+        foreach (var n in cn.noeud.noeudsSuivant) {
+            GameObject node = GameObject.Find("Noeud "+ n);
+            NoeudController nd = (NoeudController) node.GetComponent(typeof(NoeudController));
+            nd.UpdateEtatNoeud(EtatNoeud.Accessible);
+
+            GameObject path = GameObject.Find("Chemin "+ cn.noeud.numero +"-"+n);
+            LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
+            p.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+            p.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+        }
+
+        PlayNodeEvent(cn.noeud);
     }
 
     // On joue l'evenement du node ici ?
