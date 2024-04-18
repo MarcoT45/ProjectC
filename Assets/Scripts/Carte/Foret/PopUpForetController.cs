@@ -11,7 +11,7 @@ public class PopUpForetController : MonoBehaviour {
     private bool isOpening = false;
     private bool isClosing = false;
 
-    private void Update() {
+    private void FixedUpdate() {
 
         if(isOpening) {
             Vector3 targetAngle = new Vector3(0, 0, 0);
