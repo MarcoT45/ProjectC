@@ -14,7 +14,7 @@ public class CarteJoueurForetController : MonoBehaviour {
 
     private void Update() {
         if (this.transform.position != targetPos) {
-            this.transform.position = Vector2.MoveTowards(this.transform.position, this.targetPos, 1.0f * Time.deltaTime);
+            this.transform.position = Vector2.MoveTowards(this.transform.position, this.targetPos, 2.0f * Time.deltaTime);
         }
         else {
             if(!targetPosReached) {

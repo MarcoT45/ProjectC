@@ -291,12 +291,11 @@ public class CarteForetController : MonoBehaviour {
     // On joue l'evenement du node ici ?
     private void PlayNodeEvent(Noeud noeud){
         if (noeud.eventNumber == 0 || noeud.eventNumber == 2 || noeud.eventNumber == 7) {
-            Debug.Log("Jouer le combat !");
             SendDataToManager();
             SceneManager.LoadScene(2);
         } else {
-            Debug.Log("Jouer la pop-up !");
-            popup.SetActive(true);
+            PopUpForetController pu = (PopUpForetController) popup.GetComponent(typeof(PopUpForetController));
+            pu.CreatePopUpEvent(noeud);
         }
     }
 
