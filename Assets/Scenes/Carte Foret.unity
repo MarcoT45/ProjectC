@@ -15548,6 +15548,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   textePopUp: {fileID: 566273519}
+  conteneurPopUp: {fileID: 1712333239}
+  feuDeCampPrefab: {fileID: 888133271174373555, guid: 095c68bbeae67414095429832d5526f3, type: 3}
   popUpContent: {fileID: 1712333239}
 --- !u!1 &1455231004
 GameObject:
@@ -17288,7 +17290,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: fedf2ee6dceee3445a691fea8bead046, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d440497b2d3c734449996887e2389c81, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
