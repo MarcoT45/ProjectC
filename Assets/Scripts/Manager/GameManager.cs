@@ -26,7 +26,7 @@ public class GameManager : MonoBehaviour {
     // En bas la partie jeu
 
     [SerializeField] int startCoins;
-    private int playerCoins;
+    private int playerCoins = 0;
     [SerializeField] private Catalog catalog;
     [SerializeField] private Bestiary bestiary;
     public GameObject player { get; private set; }

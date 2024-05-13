@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
+  m_Name: 15 - Accessoire 4
+  m_EditorClassIdentifier: 
+  numero: 16
+  itemName: "Cale\xE7on porte bonheur"
+  description: "Un cale\xE7on tr\xE8s confortable pour celui qui l'utilise"
+  discovered: 0
+  pv: 3
+  atk: 0
+  def: 1
+  speed: 1
+  critical: 0
+  descriptionEffect: 
+  price: 180
+  rarity: 4
+  sprite: {fileID: -2044864671, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 3

@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: Casque
+  m_Name: 08 - Bottes Bronze
   m_EditorClassIdentifier: 
-  numero: 1
-  itemName: Casque
-  description: Casque pour la tete
-  discovered: 0
+  numero: 9
+  itemName: Bottes en bronze
+  description: "Bottes avec des protections basiques et l\xE9g\xE8re"
+  discovered: 1
   pv: 0
   atk: 0
-  def: 0
-  speed: 0
+  def: 1
+  speed: 2
   critical: 0
   descriptionEffect: 
-  price: 50
-  rarity: 90
-  sprite: {fileID: -1631740621, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
-  type: 0
+  price: 40
+  rarity: 1
+  sprite: {fileID: -279305679, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 2
