@@ -14,4 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Fake Battle.unity
     guid: 8d9c56a4af88ca1499ef3f5d1bf10489
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: c1f5c60933e12e1448fb1c52ff574c7e, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 61c4e4736959fa54699c65e042d59aab, type: 2}
