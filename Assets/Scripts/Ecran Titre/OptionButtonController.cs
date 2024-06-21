@@ -7,8 +7,25 @@ public class OptionButtonController : MonoBehaviour {
 
     public TextMeshProUGUI text;
 
+    public GameObject popUpOptions;
+    private bool isOpening = false;
+
+    private void FixedUpdate() {
+
+        if(isOpening) {
+            Vector3 targetAngle = new Vector3(0, 0, 0);
+
+            if (Vector3.Distance(popUpOptions.transform.eulerAngles, targetAngle) > 0.01f) {
+                popUpOptions.transform.Rotate(2.5f, 0, 0);
+            } else {
+                popUpOptions.transform.eulerAngles = targetAngle;
+                isOpening = false;
+            }
+        }
+    }
+
     public void OuvrirMenuOption() {
-        Debug.Log("Ouverture du menu option");
+        isOpening = true;
     }
 
     public void OnButtonOver() {
