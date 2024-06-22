@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 {
@@ -10,14 +11,10 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     private UIInventory uiInventory;
     private InventoryController inventory;
 
-    [SerializeField]
     private Tilemap solTileMap;
-
-    [SerializeField]
-    private Tilemap murTileMap;
-
-    [SerializeField]
-    private Tilemap sortieTileMap;
+    private Tilemap[] solTileMaps;
+    private Tilemap[] murTileMaps;
+    private Tilemap[] sortieTileMaps;
 
     private GameObject character;
     private Rigidbody2D physics;
@@ -87,9 +84,18 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         movePoint.parent = null;
         /*uiInventory = GameObject.FindWithTag("UI_Inventory").GetComponent<UI_Inventory>();
         uiInventory.SetInventory(inventory);*/
+        InitTileMaps();
+        solTileMap = solTileMaps[0];
         lastPosition = solTileMap.WorldToCell(transform.position);
         lastDirection = Vector2.zero;
         isHurt = false;
+
+        //Si on est dans le hub, on rajoute le key released pour arreter le mouvement
+        if(SceneManager.GetActiveScene().name == "Hub")
+        {
+
+            controls.Main.Movement.canceled += ctx => this.direction = Vector2.zero;
+        }
 
     }
 
@@ -137,6 +143,36 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         }
     }
 
+    private void InitTileMaps()
+    {
+        //On récupère les Tilemaps avec le tag "Sol", que l'on met dans solTileMaps
+        GameObject[] solTilemapsGO = GameObject.FindGameObjectsWithTag("Sol");
+        solTileMaps = new Tilemap[solTilemapsGO.Length];
+
+        for(int i = 0; i < solTilemapsGO.Length; i++)
+        {
+            solTileMaps[i] = solTilemapsGO[i].GetComponent<Tilemap>();
+        }
+
+        //Même chose pour les tags "Mur"
+        GameObject[] murTilemapsGO = GameObject.FindGameObjectsWithTag("Mur");
+        murTileMaps = new Tilemap[murTilemapsGO.Length];
+
+        for (int i = 0; i < murTilemapsGO.Length; i++)
+        {
+            murTileMaps[i] = murTilemapsGO[i].GetComponent<Tilemap>();
+        }
+
+        //Même chose pour les tags "Sortie"
+        GameObject[] sortieTilemapsGO = GameObject.FindGameObjectsWithTag("Sortie");
+        sortieTileMaps = new Tilemap[sortieTilemapsGO.Length];
+
+        for (int i = 0; i < sortieTilemapsGO.Length; i++)
+        {
+            sortieTileMaps[i] = sortieTilemapsGO[i].GetComponent<Tilemap>();
+        }
+    }
+
     private void Move(Vector2 newDirection)
     {
         if (this.direction != newDirection && CanMove(newDirection))
@@ -153,9 +189,14 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     private bool CanMove(Vector2 direction)
     {
         Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
-        if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+
+        //Boucle sur les tilemaps avec le tag "Mur"
+        foreach (Tilemap murTileMap in murTileMaps)
         {
-            return false;
+            if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+            {
+                return false;
+            }
         }
 
         return true;
