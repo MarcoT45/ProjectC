@@ -13,6 +13,7 @@ TagManager:
   - Ennemi
   - Mur
   - Sol
+  - Sortie
   layers:
   - Default
   - TransparentFX
@@ -25,8 +26,8 @@ TagManager:
   - Player
   - Ennemi
   - DraggableItem
-  - 
-  - 
+  - Sol
+  - Items
   - 
   - 
   - 
@@ -47,11 +48,23 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Sol
+    uniqueID: 344073627
+    locked: 0
+  - name: Sortie
+    uniqueID: 2779735757
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
   - name: Murs
     uniqueID: 3321775671
+    locked: 0
+  - name: Items
+    uniqueID: 4076037843
+    locked: 0
+  - name: Player
+    uniqueID: 1003546095
     locked: 0
   - name: UI
     uniqueID: 1113647231
