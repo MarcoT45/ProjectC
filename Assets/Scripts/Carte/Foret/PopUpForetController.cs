@@ -130,7 +130,7 @@ public class PopUpForetController : MonoBehaviour {
                 imageObjet3.GetComponent<Image>().sprite = objet3.GetSprite();
                 textePrice3.text = objet3.GetPrice()+" G";
 
-                texteArgentJoueur.text = GameManager.Instance.GetPlayerCoins().ToString();
+                texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
 
                 encartArgentJoueur.SetActive(true);
                 encartObjet1.SetActive(true);
@@ -237,7 +237,7 @@ public class PopUpForetController : MonoBehaviour {
     }
 
     public void BuyItem(int itemNumber) {
-        int money = GameManager.Instance.GetPlayerCoins();
+        int money = GameManager.Instance.GetRunPlayerCoins();
 
         switch (itemNumber) {
             case 1:
@@ -246,9 +246,9 @@ public class PopUpForetController : MonoBehaviour {
                     // ICI ON PLACE L'OBJET ACHETE DANS LE SAC
 
                     encartObjet1.SetActive(false);
-                    GameManager.Instance.AddCoins(objet1.GetPrice()*-1);
-                    texteArgentJoueur.text = GameManager.Instance.GetPlayerCoins().ToString();
-                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetPlayerCoins().ToString();
+                    GameManager.Instance.AddCoinsToRunPlayerCoins(objet1.GetPrice()*-1);
+                    texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
+                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetRunPlayerCoins().ToString();
                     textePopUp.text = "Merci de votre achat !";
                 } else {
                     textePopUp.text = "Tu essaies de me rouler ?";
@@ -260,9 +260,9 @@ public class PopUpForetController : MonoBehaviour {
                     // ICI ON PLACE L'OBJET ACHETE DANS LE SAC
 
                     encartObjet2.SetActive(false);
-                    GameManager.Instance.AddCoins(objet2.GetPrice()*-1);
-                    texteArgentJoueur.text = GameManager.Instance.GetPlayerCoins().ToString();
-                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetPlayerCoins().ToString();
+                    GameManager.Instance.AddCoinsToRunPlayerCoins(objet2.GetPrice()*-1);
+                    texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
+                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetRunPlayerCoins().ToString();
                     textePopUp.text = "Merci de votre achat !";
                 } else {
                     textePopUp.text = "Tu essaies de me rouler ?";
@@ -274,9 +274,9 @@ public class PopUpForetController : MonoBehaviour {
                     // ICI ON PLACE L'OBJET ACHETE DANS LE SAC
 
                     encartObjet3.SetActive(false);
-                    GameManager.Instance.AddCoins(objet3.GetPrice()*-1);
-                    texteArgentJoueur.text = GameManager.Instance.GetPlayerCoins().ToString();
-                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetPlayerCoins().ToString();
+                    GameManager.Instance.AddCoinsToRunPlayerCoins(objet3.GetPrice()*-1);
+                    texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
+                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetRunPlayerCoins().ToString();
                     textePopUp.text = "Merci de votre achat !";
                 } else {
                     textePopUp.text = "Tu essaies de me rouler ?";

@@ -58,11 +58,11 @@ public class ShopController : MonoBehaviour
 
     public void ReloadItems()
     {
-        int playercoins = GameManager.Instance.GetPlayerCoins();
+        int playercoins = GameManager.Instance.GetRunPlayerCoins();
 
         if (playercoins >= reloadPrice)
         {
-            GameManager.Instance.SetPlayerCoins(playercoins - reloadPrice);
+            GameManager.Instance.SetRunPlayerCoins(playercoins - reloadPrice);
             this.ResetItems();
             GameObject[] uiShopItems = GameObject.FindGameObjectsWithTag("UI_ShopItem");
             foreach (GameObject uiItem in uiShopItems)

@@ -250,7 +250,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         if ( other.gameObject.CompareTag("Coin") )
         {
             Destroy(other.gameObject);
-            gameManager.AddCoins(1) ;
+            gameManager.AddCoinsToRunPlayerCoins(1) ;
         }
     }
 
@@ -272,7 +272,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     public void BuyItem(ItemData itemData)
     {
-        gameManager.SetPlayerCoins(gameManager.GetPlayerCoins() - itemData.GetPrice());
+        gameManager.SetRunPlayerCoins(gameManager.GetRunPlayerCoins() - itemData.GetPrice());
         this.inventory.AddItem(itemData);
         //uiInventory.RefreshInventoryItems();
     }
