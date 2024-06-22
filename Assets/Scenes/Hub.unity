@@ -10462,6 +10462,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 855895281463053768, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 855895281463053768, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 855895281463053769, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
       propertyPath: data
       value: 
@@ -10539,6 +10547,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 855895281463053771, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
+      propertyPath: m_Size.y
+      value: 0.99999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 855895281463053771, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.10943487
+      objectReference: {fileID: 0}
+    - target: {fileID: 855895281463053771, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
+      propertyPath: m_SpriteTilingProperty.pivot.y
+      value: 0.2593883
+      objectReference: {fileID: 0}
+    - target: {fileID: 855895281463053771, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1
       objectReference: {fileID: 0}
@@ -10574,6 +10594,10 @@ PrefabInstance:
       propertyPath: m_SortingLayerID
       value: 1003546095
       objectReference: {fileID: 0}
+    - target: {fileID: 2082885413344839581, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2082885413344839581, guid: ca47543b721b63048bdc97351f6d0b4d, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -12750,7 +12774,7 @@ GameObject:
   - component: {fileID: 1826967042}
   m_Layer: 6
   m_Name: Murs
-  m_TagString: Untagged
+  m_TagString: Mur
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
