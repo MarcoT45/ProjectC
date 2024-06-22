@@ -16,7 +16,7 @@ public class UI_Coins : MonoBehaviour
     //Peut etre à ne pas laisser dans un Update
     private void Update()
     {
-        int coins = GameManager.Instance.GetPlayerCoins();
+        int coins = GameManager.Instance.GetRunPlayerCoins();
         coinContainer.Find("Texte").GetComponent<TextMeshProUGUI>().text = coins + " G";
     }
 }

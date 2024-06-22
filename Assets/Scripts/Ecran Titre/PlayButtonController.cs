@@ -9,7 +9,6 @@ public class PlayButtonController : MonoBehaviour {
     public TextMeshProUGUI text;
 
     public void Jouer() {
-        GameManager.Instance.NewRun();
         SceneManager.LoadScene(1);
     }
 

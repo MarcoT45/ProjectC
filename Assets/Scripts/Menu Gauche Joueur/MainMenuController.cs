@@ -8,7 +8,7 @@ public class MainMenuController : MonoBehaviour {
     public TextMeshProUGUI coinNumberText;
 
     private void Start() {
-        coinNumberText.text = GameManager.Instance.GetPlayerCoins().ToString();
+        coinNumberText.text = GameManager.Instance.GetRunPlayerCoins().ToString();
     }
 
     private void Update() {

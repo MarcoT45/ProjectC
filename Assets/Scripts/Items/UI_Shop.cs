@@ -35,7 +35,7 @@ public class UI_Shop : MonoBehaviour
 
     public void TryBuyItem(ItemData itemData)
     {
-        int playercoins = GameManager.Instance.GetPlayerCoins();
+        int playercoins = GameManager.Instance.GetRunPlayerCoins();
 
         if (playercoins >= itemData.GetPrice())
         {
