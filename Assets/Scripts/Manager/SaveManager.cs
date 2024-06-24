@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Globalization;
+using System.Text;
 
 public class SaveManager : MonoBehaviour {
 
@@ -96,14 +97,14 @@ public class SaveManager : MonoBehaviour {
 
     public void SaveGame() {
         GetData();
-        string gameStateData = JsonUtility.ToJson(this.gameState);
+        string gameStateData = Convert.ToBase64String(Encoding.UTF8.GetBytes(JsonUtility.ToJson(this.gameState)));
         string filePath = Application.persistentDataPath + "/ConeyCatchingSaveData.json";
         System.IO.File.WriteAllText(filePath, gameStateData);
     }
 
     public void LoadGame() {
         string filePath = Application.persistentDataPath + "/ConeyCatchingSaveData.json";
-        string gameStateData = System.IO.File.ReadAllText(filePath);
+        string gameStateData = Encoding.UTF8.GetString(Convert.FromBase64String(System.IO.File.ReadAllText(filePath)));
         this.gameState = JsonUtility.FromJson<GameState>(gameStateData);
         SendData();
     }
