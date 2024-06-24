@@ -42,6 +42,17 @@ MonoBehaviour:
     m_Localized: 'Language :'
     m_Metadata:
       m_Items: []
+  - m_Id: 3250100091879424
+    m_Localized: WARNING
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3251888920592384
+    m_Localized: 'Corrupt save data was detected and could not be loaded.
+
+      A
+      new save will be created.'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

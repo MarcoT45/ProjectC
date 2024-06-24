@@ -42,6 +42,15 @@ MonoBehaviour:
     m_Localized: 'Langue :'
     m_Metadata:
       m_Items: []
+  - m_Id: 3250100091879424
+    m_Localized: ATTENTION
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3251888920592384
+    m_Localized: "Des donn\xE9es de sauvegarde corrompues ont \xE9t\xE9 d\xE9tect\xE9es
+      et ne peuvent pas \xEAtre charg\xE9es.\r\nUne nouvelle sauvegarde sera cr\xE9\xE9e."
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

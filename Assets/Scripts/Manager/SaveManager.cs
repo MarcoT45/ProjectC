@@ -66,32 +66,34 @@ public class SaveManager : MonoBehaviour {
     }
 
     private void SendData() {
-        GameManager.Instance.SetStartCoins(this.gameState.startCoins);
-        GameManager.Instance.SetStatNbRunMade(this.gameState.statNbRunMade);
-        GameManager.Instance.SetStatNbRunWon(this.gameState.statNbRunWon);
-        GameManager.Instance.SetStatNbBossDefeated(this.gameState.statNbBossDefeated);
-        GameManager.Instance.SetStatNbEnnemiesDefeated(this.gameState.statNbEnnemiesDefeated);
-        GameManager.Instance.SetStatNbNormalBattleWon(this.gameState.statNbNormalBattleWon);
-        GameManager.Instance.SetStatNbEliteBattleWon(this.gameState.statNbEliteBattleWon);
-        GameManager.Instance.SetStatTotalCoinsObtained(this.gameState.statTotalCoinsObtained);
-        GameManager.Instance.SetStatMaxMoneyRecord(this.gameState.statMaxMoneyRecord);
-        GameManager.Instance.SetStatMoneySpent(this.gameState.statMoneySpent);
-        GameManager.Instance.SetStatNbChestOpened(this.gameState.statNbChestOpened);
-        GameManager.Instance.SetStatNbTradeMade(this.gameState.statNbTradeMade);
-        GameManager.Instance.SetStatNbEventEncountered(this.gameState.statNbEventEncountered);
+        try {
+            GameManager.Instance.SetStartCoins(this.gameState.startCoins);
+            GameManager.Instance.SetStatNbRunMade(this.gameState.statNbRunMade);
+            GameManager.Instance.SetStatNbRunWon(this.gameState.statNbRunWon);
+            GameManager.Instance.SetStatNbBossDefeated(this.gameState.statNbBossDefeated);
+            GameManager.Instance.SetStatNbEnnemiesDefeated(this.gameState.statNbEnnemiesDefeated);
+            GameManager.Instance.SetStatNbNormalBattleWon(this.gameState.statNbNormalBattleWon);
+            GameManager.Instance.SetStatNbEliteBattleWon(this.gameState.statNbEliteBattleWon);
+            GameManager.Instance.SetStatTotalCoinsObtained(this.gameState.statTotalCoinsObtained);
+            GameManager.Instance.SetStatMaxMoneyRecord(this.gameState.statMaxMoneyRecord);
+            GameManager.Instance.SetStatMoneySpent(this.gameState.statMoneySpent);
+            GameManager.Instance.SetStatNbChestOpened(this.gameState.statNbChestOpened);
+            GameManager.Instance.SetStatNbTradeMade(this.gameState.statNbTradeMade);
+            GameManager.Instance.SetStatNbEventEncountered(this.gameState.statNbEventEncountered);
 
-        TimeSpan st = new TimeSpan (0, this.gameState.statShortestWinTimeHours, this.gameState.statShortestWinTimeMinutes, this.gameState.statShortestWinTimeSeconds, this.gameState.statShortestWinTimeMilliseconds);
-        GameManager.Instance.SetStatShortestWinTime(st);
+            TimeSpan st = new TimeSpan (0, this.gameState.statShortestWinTimeHours, this.gameState.statShortestWinTimeMinutes, this.gameState.statShortestWinTimeSeconds, this.gameState.statShortestWinTimeMilliseconds);
+            GameManager.Instance.SetStatShortestWinTime(st);
 
-        TimeSpan lt = new TimeSpan (0, this.gameState.statLongestWinTimeHours, this.gameState.statLongestWinTimeMinutes, this.gameState.statLongestWinTimeSeconds, this.gameState.statLongestWinTimeMilliseconds);
-        GameManager.Instance.SetStatLongestWinTime(lt);
+            TimeSpan lt = new TimeSpan (0, this.gameState.statLongestWinTimeHours, this.gameState.statLongestWinTimeMinutes, this.gameState.statLongestWinTimeSeconds, this.gameState.statLongestWinTimeMilliseconds);
+            GameManager.Instance.SetStatLongestWinTime(lt);
 
-        foreach (var i in this.gameState.catalogItemObtained) {
-            GameManager.Instance.UpdateItemCalalogDiscovered(i);
-        }
-
-        foreach (var m in this.gameState.bestiaryMonsterSeen) {
-            GameManager.Instance.UpdateMonsterBestiaryDiscovered(m);
+            GameManager.Instance.UpdateAllItemDiscovered(this.gameState.catalogItemObtained);
+            GameManager.Instance.UpdateAllMonsterDiscovered(this.gameState.bestiaryMonsterSeen);
+        } catch (System.Exception) {
+            isOpening = true;
+            this.gameState = new GameState();
+            SendData();
+            SaveGame();
         }
     }
 
@@ -104,9 +106,50 @@ public class SaveManager : MonoBehaviour {
 
     public void LoadGame() {
         string filePath = Application.persistentDataPath + "/ConeyCatchingSaveData.json";
-        string gameStateData = Encoding.UTF8.GetString(Convert.FromBase64String(System.IO.File.ReadAllText(filePath)));
-        this.gameState = JsonUtility.FromJson<GameState>(gameStateData);
-        SendData();
+        try {
+            string gameStateData = Encoding.UTF8.GetString(Convert.FromBase64String(System.IO.File.ReadAllText(filePath)));
+            if (IsValidJson(gameStateData)) {
+                this.gameState = JsonUtility.FromJson<GameState>(gameStateData);
+                SendData();
+            } else {
+                isOpening = true;
+                this.gameState = new GameState();
+                SendData();
+                SaveGame();
+            }
+        } catch (System.Exception) {
+            isOpening = true;
+            this.gameState = new GameState();
+            SendData();
+            SaveGame();
+        }
+    }
+
+    private bool IsValidJson(string jsonString) {
+        try {
+            JsonUtility.FromJsonOverwrite(jsonString, new object());
+            return true;
+        } catch (System.Exception) {
+            return false;
+        }
+    }
+
+    // Pour ouvrir la petite pop-up qui notifie le joueur que sa sauvegarde est corrompue
+    public GameObject popUpCorrupted;
+    private bool isOpening = false;
+
+    private void FixedUpdate() {
+
+        if(isOpening) {
+            Vector3 targetAngle = new Vector3(0, 0, 0);
+
+            if (Vector3.Distance(popUpCorrupted.transform.eulerAngles, targetAngle) > 0.01f) {
+                popUpCorrupted.transform.Rotate(2.5f, 0, 0);
+            } else {
+                popUpCorrupted.transform.eulerAngles = targetAngle;
+                isOpening = false;
+            }
+        }
     }
 
 }

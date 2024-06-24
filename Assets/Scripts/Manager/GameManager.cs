@@ -134,12 +134,32 @@ public class GameManager : MonoBehaviour {
         this.catalog.GetAllItems()[numero - 1].SetDiscovered(true);
     }
 
+    public void UpdateAllItemDiscovered(List<int> numberList) {
+        foreach (var i in this.catalog.GetAllItems()) {
+            if (numberList.Contains(i.GetNumero())) {
+                i.SetDiscovered(true);
+            } else {
+                i.SetDiscovered(false);
+            }
+        }
+    }
+
     public List<MonsterData> GetAllMonsters() {
         return this.bestiary.GetAllMonsters();
     }
 
     public void UpdateMonsterBestiaryDiscovered(int numero) {
         this.bestiary.GetAllMonsters()[numero - 1].SetDiscovered(true);
+    }
+
+    public void UpdateAllMonsterDiscovered(List<int> numberList) {
+        foreach (var m in this.bestiary.GetAllMonsters()) {
+            if (numberList.Contains(m.GetNumero())) {
+                m.SetDiscovered(true);
+            } else {
+                m.SetDiscovered(false);
+            }
+        }
     }
 
     public int GetStatNbRunMade() {
