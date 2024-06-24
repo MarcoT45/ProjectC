@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 07 - Torse Platine
+  m_Name: 06 - Torse Argent
   m_EditorClassIdentifier: 
-  numero: 8
-  itemName: Torse en platine
-  description: "Torse extremement r\xE9sistant et tr\xE8s confortable"
+  numero: 6
+  itemName: Torse en argent
+  description: Torse en argent qui offre une bonne resistance
   discovered: 0
-  pv: 3
+  pv: 2
   atk: 0
-  def: 5
+  def: 2
   speed: 0
   critical: 0
   descriptionEffect: 
-  price: 180
-  rarity: 4
-  sprite: {fileID: -190497358, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  price: 90
+  rarity: 2
+  sprite: {fileID: -565501065, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 1

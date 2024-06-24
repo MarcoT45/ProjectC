@@ -31,7 +31,7 @@ public class GameManager : MonoBehaviour {
     // Variables statistiques totales du joueur
     private int statNbRunMade = 0;
     private int statNbRunWon = 0;
-    private TimeSpan statShortestWinTime = new TimeSpan (99, 99, 99, 99, 99);
+    private TimeSpan statShortestWinTime = new TimeSpan (0, 23, 59, 59, 999);
     private TimeSpan statLongestWinTime = new TimeSpan (0, 0, 0, 0, 0);
     private int statNbBossDefeated = 0;
     private int statNbEnnemiesDefeated = 0;
@@ -61,7 +61,13 @@ public class GameManager : MonoBehaviour {
     private DateTime runEndingTime;
 
     public void Start() {
-        // AU LANCEMENT DU GAMEMANAGER CHARGER LES DONNEES SAUVEGARDEES
+        string filePath = Application.persistentDataPath + "/ConeyCatchingSaveData.json";
+        if (!System.IO.File.Exists(filePath)) {
+            SaveManager.Instance.SaveGame(); // On crée une save si elle n'existe pas
+        } else {
+            SaveManager.Instance.LoadGame();  // On charge la save si elle existe
+        }
+
         ResetRun();
     }
 
@@ -112,12 +118,140 @@ public class GameManager : MonoBehaviour {
         this.startCoins = (int) (this.runPlayerCoins * 0.1);
     }
 
+    public int GetStartCoins() {
+        return this.startCoins;
+    }
+
+    public void SetStartCoins(int coins) {
+        this.startCoins = coins;
+    }
+
     public List<ItemData> GetAllItems() {
         return this.catalog.GetAllItems();
     }
 
+    public void UpdateItemCalalogDiscovered(int numero) {
+        this.catalog.GetAllItems()[numero - 1].SetDiscovered(true);
+    }
+
     public List<MonsterData> GetAllMonsters() {
         return this.bestiary.GetAllMonsters();
+    }
+
+    public void UpdateMonsterBestiaryDiscovered(int numero) {
+        this.bestiary.GetAllMonsters()[numero - 1].SetDiscovered(true);
+    }
+
+    public int GetStatNbRunMade() {
+        return this.statNbRunMade;
+    }
+
+    public void SetStatNbRunMade(int number) {
+        this.statNbRunMade = number;
+    }
+
+    public int GetStatNbRunWon() {
+        return this.statNbRunWon;
+    }
+
+    public void SetStatNbRunWon(int number) {
+        this.statNbRunWon = number;
+    }
+
+    public TimeSpan GetStatShortestWinTime() {
+        return this.statShortestWinTime;
+    }
+
+    public void SetStatShortestWinTime(TimeSpan time) {
+        this.statShortestWinTime = time;
+    }
+
+    public TimeSpan GetStatLongestWinTime() {
+        return this.statLongestWinTime;
+    }
+
+    public void SetStatLongestWinTime(TimeSpan time) {
+        this.statLongestWinTime = time;
+    }
+
+    public int GetStatNbBossDefeated() {
+        return this.statNbBossDefeated;
+    }
+
+    public void SetStatNbBossDefeated(int number) {
+        this.statNbBossDefeated = number;
+    }
+
+    public int GetStatNbEnnemiesDefeated() {
+        return this.statNbEnnemiesDefeated;
+    }
+
+    public void SetStatNbEnnemiesDefeated(int number) {
+        this.statNbEnnemiesDefeated = number;
+    }
+
+    public int GetStatNbNormalBattleWon() {
+        return this.statNbNormalBattleWon;
+    }
+
+    public void SetStatNbNormalBattleWon(int number) {
+        this.statNbNormalBattleWon = number;
+    }
+ 
+    public int GetStatNbEliteBattleWon() {
+        return this.statNbEliteBattleWon;
+    }
+
+    public void SetStatNbEliteBattleWon(int number) {
+        this.statNbEliteBattleWon = number;
+    }
+
+    public int GetStatTotalCoinsObtained() {
+        return this.statTotalCoinsObtained;
+    }
+
+    public void SetStatTotalCoinsObtained(int number) {
+        this.statTotalCoinsObtained = number;
+    }
+
+    public int GetStatMaxMoneyRecord() {
+        return this.statMaxMoneyRecord;
+    }
+
+    public void SetStatMaxMoneyRecord(int number) {
+        this.statMaxMoneyRecord = number;
+    }
+
+    public int GetStatMoneySpent() {
+        return this.statMoneySpent;
+    }
+
+    public void SetStatMoneySpent(int number) {
+        this.statMoneySpent = number;
+    }
+
+    public int GetStatNbChestOpened() {
+        return this.statNbChestOpened;
+    }
+
+    public void SetStatNbChestOpened(int number) {
+        this.statNbChestOpened = number;
+    }
+
+    public int GetStatNbTradeMade() {
+        return this.statNbTradeMade;
+    }
+
+    public void SetStatNbTradeMade(int number) {
+        this.statNbTradeMade = number;
+    }
+
+    public int GetStatNbEventEncountered() {
+        return this.statNbEventEncountered;
+    }
+
+    public void SetStatNbEventEncountered(int number) {
+        this.statNbEventEncountered = number;
     }
 
     public int GetRunPlayerCoins() {

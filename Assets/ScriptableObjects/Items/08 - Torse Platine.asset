@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 14 - Accessoire 3
+  m_Name: 08 - Torse Platine
   m_EditorClassIdentifier: 
-  numero: 15
-  itemName: Bague de Garderoche
-  description: "Bague d'un illustre paladin qui aurait prot\xE9g\xE9 son royaume
-    jusqu'\xE0 sa mort"
+  numero: 8
+  itemName: Torse en platine
+  description: "Torse extremement r\xE9sistant et tr\xE8s confortable"
   discovered: 0
-  pv: 0
+  pv: 3
   atk: 0
-  def: 4
+  def: 5
   speed: 0
   critical: 0
   descriptionEffect: 
-  price: 140
-  rarity: 3
-  sprite: {fileID: -657901763, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
-  type: 3
+  price: 180
+  rarity: 4
+  sprite: {fileID: -190497358, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 1

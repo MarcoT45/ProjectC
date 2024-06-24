@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 01 - Casque Argent
+  m_Name: 14 - Accessoire 2
   m_EditorClassIdentifier: 
-  numero: 2
-  itemName: Casque en argent
-  description: Casque en argent qui offre une protection moyenne
+  numero: 14
+  itemName: "Bague de rapidit\xE9"
+  description: "Bague enchant\xE9e qui augmente la vitesse de son porteur"
   discovered: 0
   pv: 0
   atk: 0
-  def: 2
-  speed: 0
+  def: 0
+  speed: 2
   critical: 0
   descriptionEffect: 
-  price: 75
-  rarity: 2
-  sprite: {fileID: 1100032928, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
-  type: 0
+  price: 130
+  rarity: 3
+  sprite: {fileID: 499731133, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 3

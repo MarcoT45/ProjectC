@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 05 - Torse Argent
+  m_Name: 12 - Bottes Platine
   m_EditorClassIdentifier: 
-  numero: 6
-  itemName: Torse en argent
-  description: Torse en argent qui offre une bonne resistance
+  numero: 12
+  itemName: Bottes en platne
+  description: "Bottes tr\xE8s r\xE9sistantes mais tr\xE8s lourdes"
   discovered: 0
-  pv: 2
+  pv: 0
   atk: 0
-  def: 2
-  speed: 0
+  def: 4
+  speed: -1
   critical: 0
   descriptionEffect: 
-  price: 90
-  rarity: 2
-  sprite: {fileID: -565501065, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
-  type: 1
+  price: 120
+  rarity: 3
+  sprite: {fileID: -65948040, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 2

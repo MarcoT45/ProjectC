@@ -44,6 +44,11 @@ public class ItemData : ScriptableObject
         itemName = "Test";
     }
 
+    public int GetNumero()
+    {
+        return numero;
+    } 
+
     public string GetName()
     {
         return itemName;
@@ -52,6 +57,16 @@ public class ItemData : ScriptableObject
     public string GetDescription()
     {
         return description;
+    }
+
+    public bool GetDiscovered()
+    {
+        return discovered;
+    }
+
+    public void SetDiscovered(bool d)
+    {
+        this.discovered = d;
     }
 
     public int GetPrice()

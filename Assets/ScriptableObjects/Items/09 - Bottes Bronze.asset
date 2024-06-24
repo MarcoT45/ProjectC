@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 08 - Bottes Bronze
+  m_Name: 09 - Bottes Bronze
   m_EditorClassIdentifier: 
   numero: 9
   itemName: Bottes en bronze
   description: "Bottes avec des protections basiques et l\xE9g\xE8re"
-  discovered: 1
+  discovered: 0
   pv: 0
   atk: 0
   def: 1

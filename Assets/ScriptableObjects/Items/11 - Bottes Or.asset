@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 10 - Bottes Or
+  m_Name: 11 - Bottes Or
   m_EditorClassIdentifier: 
   numero: 11
   itemName: Bottes en or
   description: Bottes avec une bonne protection mais plutot lourde
-  discovered: 1
+  discovered: 0
   pv: 0
   atk: 0
   def: 3

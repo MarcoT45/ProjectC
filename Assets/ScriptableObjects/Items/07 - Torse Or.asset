@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea9d4ae85ef92f74587bb2fb8d6df154, type: 3}
-  m_Name: 18 - Epee Or
+  m_Name: 07 - Torse Or
   m_EditorClassIdentifier: 
-  numero: 19
-  itemName: "Ep\xE9e en or"
-  description: "Ep\xE9e de bonne qualit\xE9 et tr\xE8s tranchante"
+  numero: 7
+  itemName: Torse en or
+  description: "Torse en or de tr\xE8s bonne qualit\xE9"
   discovered: 0
-  pv: 0
-  atk: 4
-  def: 0
+  pv: 2
+  atk: 0
+  def: 4
   speed: 0
-  critical: 10
+  critical: 0
   descriptionEffect: 
-  price: 135
+  price: 130
   rarity: 3
-  sprite: {fileID: -2005639393, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
-  type: 4
+  sprite: {fileID: -190497358, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
+  type: 1
