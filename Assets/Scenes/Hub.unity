@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 127432159}
   - component: {fileID: 127432161}
   - component: {fileID: 127432160}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Contenur du Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3870,7 +3870,7 @@ GameObject:
   - component: {fileID: 168515536}
   - component: {fileID: 168515538}
   - component: {fileID: 168515537}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Emplacement Casque
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4548,7 +4548,7 @@ GameObject:
   - component: {fileID: 289616984}
   - component: {fileID: 289616986}
   - component: {fileID: 289616985}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stat Attaque
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6243,7 +6243,7 @@ GameObject:
   - component: {fileID: 532670428}
   - component: {fileID: 532670430}
   - component: {fileID: 532670429}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Bouton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6695,7 +6695,7 @@ GameObject:
   - component: {fileID: 556520967}
   - component: {fileID: 556520969}
   - component: {fileID: 556520968}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Emplacement Torse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -6771,7 +6771,7 @@ GameObject:
   - component: {fileID: 581845566}
   - component: {fileID: 581845568}
   - component: {fileID: 581845567}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Emplacement Bottes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7088,7 +7088,7 @@ GameObject:
   - component: {fileID: 652035979}
   - component: {fileID: 652035981}
   - component: {fileID: 652035980}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stat Vitesse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7405,7 +7405,7 @@ GameObject:
   - component: {fileID: 735360613}
   - component: {fileID: 735360615}
   - component: {fileID: 735360614}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stat Critique
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7769,7 +7769,7 @@ GameObject:
   - component: {fileID: 800070532}
   - component: {fileID: 800070534}
   - component: {fileID: 800070533}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Statut
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7980,7 +7980,7 @@ GameObject:
   - component: {fileID: 809373480}
   - component: {fileID: 809373482}
   - component: {fileID: 809373481}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Bloc Equipements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8061,7 +8061,7 @@ GameObject:
   - component: {fileID: 809381488}
   - component: {fileID: 809381490}
   - component: {fileID: 809381489}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Vitesse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8606,7 +8606,7 @@ GameObject:
   - component: {fileID: 926165031}
   - component: {fileID: 926165033}
   - component: {fileID: 926165032}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: "Texte Pi\xE8ces"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -8880,7 +8880,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 940028688}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
@@ -9362,7 +9362,7 @@ GameObject:
   - component: {fileID: 1054329243}
   - component: {fileID: 1054329245}
   - component: {fileID: 1054329244}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Stat Defense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10287,7 +10287,7 @@ GameObject:
   - component: {fileID: 1266425573}
   - component: {fileID: 1266425572}
   - component: {fileID: 1266425571}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: "Nombre de pi\xE8ces"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10422,7 +10422,7 @@ GameObject:
   - component: {fileID: 1270156795}
   - component: {fileID: 1270156797}
   - component: {fileID: 1270156796}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Critique
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10744,7 +10744,7 @@ GameObject:
   - component: {fileID: 1339712705}
   - component: {fileID: 1339712707}
   - component: {fileID: 1339712706}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Equipements
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10879,7 +10879,7 @@ GameObject:
   - component: {fileID: 1347370311}
   - component: {fileID: 1347370313}
   - component: {fileID: 1347370312}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Attaque
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11014,7 +11014,7 @@ GameObject:
   - component: {fileID: 1347724749}
   - component: {fileID: 1347724751}
   - component: {fileID: 1347724750}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Couleur barre de vie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12692,7 +12692,7 @@ GameObject:
   - component: {fileID: 1479954645}
   - component: {fileID: 1479954647}
   - component: {fileID: 1479954646}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Emplacement Accessoire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -12768,7 +12768,7 @@ GameObject:
   - component: {fileID: 1514123214}
   - component: {fileID: 1514123216}
   - component: {fileID: 1514123215}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Bloc Statistiques
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13019,7 +13019,7 @@ GameObject:
   - component: {fileID: 1567541608}
   - component: {fileID: 1567541610}
   - component: {fileID: 1567541609}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Defense
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -13322,7 +13322,7 @@ GameObject:
   - component: {fileID: 1624311467}
   - component: {fileID: 1624311469}
   - component: {fileID: 1624311468}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Emplacement Arme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -15157,7 +15157,7 @@ GameObject:
   - component: {fileID: 1812959448}
   - component: {fileID: 1812959447}
   - component: {fileID: 1812959446}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17757,7 +17757,7 @@ GameObject:
   - component: {fileID: 1932728801}
   - component: {fileID: 1932728803}
   - component: {fileID: 1932728802}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Texte Vie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18239,7 +18239,7 @@ GameObject:
   - component: {fileID: 1999853268}
   - component: {fileID: 1999853267}
   - component: {fileID: 1999853266}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Bouton Sac
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20487,7 +20487,7 @@ GameObject:
   - component: {fileID: 2069527377}
   - component: {fileID: 2069527379}
   - component: {fileID: 2069527378}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Barre de vie
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -23,7 +23,7 @@ public class ItemData : ScriptableObject
     [SerializeField]
     private float speed;
     [SerializeField]
-    private float critical;
+    private float luck;
     [SerializeField]
     [TextArea]
     private string descriptionEffect;

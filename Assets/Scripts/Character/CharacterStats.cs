@@ -10,5 +10,5 @@ public struct CharacterStats
     public int atk;
     public int def;
     public int vitesse;
-    public int crit;
+    public int luck;
 }
