@@ -4,8 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct CharacterStats
-{
+public struct CharacterStats {
     public int pv;
     public int atk;
     public int def;

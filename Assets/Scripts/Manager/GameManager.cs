@@ -416,7 +416,7 @@ public class GameManager : MonoBehaviour {
 
     // ********** PARTIE CARTE/MAP DE RUN ********** //
 
-    public List<Noeud> mapData = new List<Noeud>();
+    private List<Noeud> mapData = new List<Noeud>();
 
     public List<Noeud> GetMapData() {
         return mapData;

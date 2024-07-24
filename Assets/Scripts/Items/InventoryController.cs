@@ -22,7 +22,7 @@ public class InventoryController : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
 
-        //Awake mais pas Singleton
+        // Appels supplémentaires non dépendante de la partie Singleton
         playerInput = new PlayerMovement();
         menuOpenCloseAction = playerInput.Main.MenuOpenClose;
     }

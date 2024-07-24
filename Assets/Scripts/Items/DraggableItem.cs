@@ -28,6 +28,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         originalPosition = transform.position;
         originalParent = transform.parent;
     }
+    
     public void OnBeginDrag(PointerEventData eventData)
     {
         Debug.Log("start parent " + originalParent.gameObject.name);

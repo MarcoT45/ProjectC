@@ -37,7 +37,7 @@ public class EquipmentController : MonoBehaviour
         UIEquipmentItem.onEquipmentDrop += HandleDrop;
     }
 
-    public void OnDisnable()
+    public void OnDisable()
     {
         UIInventoryItem.onItemDroppedOn -= HandleEquipmentDrag;
         UIEquipmentItem.onEquipmentDrop -= HandleDrop;
