@@ -4156,7 +4156,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.75}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
 --- !u!212 &163260533
 SpriteRenderer:
@@ -8136,7 +8136,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 687793926}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8c9df37b7227a2440b8e35d9dc0bedc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 3864e7180b441d042a58102d1095570f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   popUpBookLeft: {fileID: 1372606847}
@@ -8167,7 +8167,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.75}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
 --- !u!212 &687793930
 SpriteRenderer:
@@ -10840,7 +10840,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1136801065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a1b06603b9f26c645ba8365e837c0e43, type: 3}
+  m_Script: {fileID: 11500000, guid: 3864e7180b441d042a58102d1095570f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   popUpBookLeft: {fileID: 1935485993}
@@ -10871,7 +10871,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.7, y: 0.75}
+  m_Size: {x: 0.2, y: 0.2}
   m_EdgeRadius: 0
 --- !u!1001 &1220393702
 PrefabInstance:

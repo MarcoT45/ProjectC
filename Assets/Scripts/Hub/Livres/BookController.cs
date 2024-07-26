@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemBookController : MonoBehaviour {
+public class BookController : MonoBehaviour {
 
     // Pour gerer l'ouverture/fermeture du livre
     public GameObject popUpBookLeft;
