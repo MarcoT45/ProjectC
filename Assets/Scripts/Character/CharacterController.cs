@@ -65,13 +65,11 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     }
 
-    private void OnEnable()
-    {
+    public void OnEnable() {
         controls.Enable();
     }
 
-    private void OnDisable()
-    {
+    public void OnDisable() {
         controls.Disable();
     }
 
