@@ -1,0 +1,83 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: RecordsBookTable_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 11e0e3e1cc39c6d40948851cfe72f670, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1086064033792
+    m_Localized: Records
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1358727348224
+    m_Localized: 'Nombre de parties :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1611023122432
+    m_Localized: "Nombre de parties gagn\xE9es:"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1788731588608
+    m_Localized: "Partie gagn\xE9e le plus vite :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2018139045888
+    m_Localized: "Partie gagn\xE9e la plus longue :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2199601414144
+    m_Localized: 'Total de boss vaincu :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2475959910400
+    m_Localized: 'Total d''ennemis vaincus :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2658290499584
+    m_Localized: "Nombre de combats gagn\xE9s :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2819154640896
+    m_Localized: "Nombre de combats d'\xE9lites gagn\xE9s :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3033970114560
+    m_Localized: "Total de pi\xE8ces gagn\xE9es :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3275624939520
+    m_Localized: "Quantit\xE9 max d'or en une partie :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3631239004160
+    m_Localized: "Total de pi\xE8ces d\xE9pens\xE9es :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3954737283072
+    m_Localized: 'Total de coffres ouverts :'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4143950725120
+    m_Localized: "Total d'\xE9changes effectu\xE9s :"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4304676454400
+    m_Localized: "Total d'\xE9venements rencontr\xE9s :"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
