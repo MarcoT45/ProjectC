@@ -16,8 +16,9 @@ public class BookController : MonoBehaviour {
     public GameObject character;
     private CharacterController charControl;
 
-    // Pour afficher la touche espace à presser
+    // Pour afficher la touche espace à presser et la pastille
     public GameObject spaceButton;
+    public GameObject bookIcon;
 
     private void Start() {
         charControl = (CharacterController) character.GetComponent(typeof(CharacterController));
@@ -78,11 +79,13 @@ public class BookController : MonoBehaviour {
     private void OnTriggerEnter2D(Collider2D other) {
         inFrontOfBook = true;
         spaceButton.SetActive(true);
+        bookIcon.SetActive(true);
     }
 
     private void OnTriggerExit2D(Collider2D other) {
         inFrontOfBook = false;
         spaceButton.SetActive(false);
+        bookIcon.SetActive(false);
     }
 
 }
