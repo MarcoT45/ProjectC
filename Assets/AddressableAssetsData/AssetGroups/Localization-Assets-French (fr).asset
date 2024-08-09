@@ -16,22 +16,7 @@ MonoBehaviour:
   m_Data:
     m_SerializedData: []
   m_GUID: 6622630907c2f974dbb67f59bcecec2f
-  m_SerializeEntries:
-  - m_GUID: 07f0a787a1950bf4ca393b1104e9cc49
-    m_Address: Monstropedie - Fr
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-fr
-  - m_GUID: 6eeb26f7e626a6e49b4b703489e4a4fb
-    m_Address: Records - Fr
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-fr
-  - m_GUID: 5435a95010566fe4384945ac2bb45708
-    m_Address: Compendium - Fr
-    m_ReadOnly: 1
-    m_SerializedLabels:
-    - Locale-fr
+  m_SerializeEntries: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: aa0b14a1d13731144a69140652c36c47, type: 2}
   m_SchemaSet:
