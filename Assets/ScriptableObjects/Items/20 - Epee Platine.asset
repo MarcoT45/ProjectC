@@ -15,14 +15,13 @@ MonoBehaviour:
   numero: 20
   itemName: "Ep\xE9e en platine"
   description: "Ep\xE9e de qualit\xE9 excellente et tr\xE8s tranchante"
-  discovered: 0
-  pv: 0
-  atk: 5
-  def: 0
+  discovered: 1
+  attack: 20
+  defense: 0
   speed: 0
-  critical: 20
+  luck: 0
   descriptionEffect: 
   price: 200
-  rarity: 4
+  rarity: 3
   sprite: {fileID: -1911702155, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 4

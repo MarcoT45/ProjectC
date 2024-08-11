@@ -16,11 +16,10 @@ MonoBehaviour:
   itemName: Torse en argent
   description: Torse en argent qui offre une bonne resistance
   discovered: 0
-  pv: 2
-  atk: 0
-  def: 2
+  attack: 0
+  defense: 3
   speed: 0
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 90
   rarity: 2

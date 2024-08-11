@@ -15,14 +15,13 @@ MonoBehaviour:
   numero: 11
   itemName: Bottes en or
   description: Bottes avec une bonne protection mais plutot lourde
-  discovered: 0
-  pv: 0
-  atk: 0
-  def: 3
-  speed: 0
-  critical: 0
+  discovered: 1
+  attack: 0
+  defense: 1
+  speed: 1
+  luck: 0
   descriptionEffect: 
   price: 120
-  rarity: 3
+  rarity: 2
   sprite: {fileID: 25435196, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 2

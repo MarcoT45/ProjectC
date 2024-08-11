@@ -16,13 +16,12 @@ MonoBehaviour:
   itemName: "Cale\xE7on porte bonheur"
   description: "Un cale\xE7on tr\xE8s confortable pour celui qui l'utilise"
   discovered: 0
-  pv: 3
-  atk: 0
-  def: 1
+  attack: 0
+  defense: 0
   speed: 1
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 180
-  rarity: 4
+  rarity: 3
   sprite: {fileID: -2044864671, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 3

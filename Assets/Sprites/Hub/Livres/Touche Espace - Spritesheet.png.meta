@@ -105,7 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Touche Moyen Espace 1
+      name: Touche Espace 1
       rect:
         serializedVersion: 2
         x: 0
@@ -119,35 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 605f493c5331f964fa460a8de23ae1eb
-      internalID: -92012290
+      spriteID: 2ff267670cc3c424b9e8cb3a046ac4a1
+      internalID: -1397405435
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icone Records 2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ceb09f7d5f1ee0941a34ee97b7edc7b1
-      internalID: -1005789889
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Touche Moyen Espace 2
+      name: Touche Espace 2
       rect:
         serializedVersion: 2
         x: 0
@@ -161,14 +140,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a17ab61e1db2bb48b74d55bfb1ba239
-      internalID: 1058467578
+      spriteID: b9d71e630207ffe48a3727c49442cba5
+      internalID: -248005802
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Touche Moyen Espace 3
+      name: Touche Espace 3
       rect:
         serializedVersion: 2
         x: 0
@@ -182,113 +161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0afd0aebba39fa24c99ee80022026fe5
-      internalID: 1957931861
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icone Records 1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 32
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 1f25b794229bc8a4b9e5706e0f4ddc94
-      internalID: -843273576
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icone Compendium 1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cfc8deae06a41854e8c996b745f8fb41
-      internalID: 28822750
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icone Compendium 2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 16
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 62b67add1eb8ef34f868e225ec311687
-      internalID: 525317266
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icone Bestiaire 1
-      rect:
-        serializedVersion: 2
-        x: 48
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ed650fef8c4458142bd094909f425cd7
-      internalID: 1553227597
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icone Bestiaire 2
-      rect:
-        serializedVersion: 2
-        x: 64
-        y: 0
-        width: 16
-        height: 16
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 009c68d4d077e7d4a8177e253d988222
-      internalID: 1773864468
+      spriteID: b2d0e46a7ab7b104098c3f74bbebf5c5
+      internalID: -1515111901
       vertices: []
       indices: 
       edges: []
@@ -304,15 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Icone Bestiaire 1: 1553227597
-      Icone Bestiaire 2: 1773864468
-      Icone Compendium 1: 28822750
-      Icone Compendium 2: 525317266
-      Icone Records 1: -843273576
-      Icone Records 2: -1005789889
-      Touche Moyen Espace 1: -92012290
-      Touche Moyen Espace 2: 1058467578
-      Touche Moyen Espace 3: 1957931861
+      Touche Espace 1: -1397405435
+      Touche Espace 2: -248005802
+      Touche Espace 3: -1515111901
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

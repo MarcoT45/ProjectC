@@ -16,11 +16,10 @@ MonoBehaviour:
   itemName: "Ep\xE9e en argent"
   description: "Ep\xE9e en argent de qualit\xE9 moyenne"
   discovered: 0
-  pv: 0
-  atk: 3
-  def: 0
+  attack: 10
+  defense: 0
   speed: 0
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 85
   rarity: 2

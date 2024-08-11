@@ -15,14 +15,13 @@ MonoBehaviour:
   numero: 3
   itemName: Casque en or
   description: "Casque en or de bonne qualit\xE9"
-  discovered: 0
-  pv: 0
-  atk: 0
-  def: 3
+  discovered: 1
+  attack: 0
+  defense: 2
   speed: 0
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 100
-  rarity: 3
+  rarity: 2
   sprite: {fileID: -514007416, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 0

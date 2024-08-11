@@ -25,6 +25,14 @@ MonoBehaviour:
     m_Address: Assets/Localization/Tables/RecordsBookTable Shared Data.asset
     m_ReadOnly: 1
     m_SerializedLabels: []
+  - m_GUID: e35430653b1f12c4a8cfcfbe1b607276
+    m_Address: Assets/Localization/Tables/EquipediaBookTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
+  - m_GUID: 44e9bb28ce383df43ab8556f88c45647
+    m_Address: Assets/Localization/Tables/BestiaryBookTable Shared Data.asset
+    m_ReadOnly: 1
+    m_SerializedLabels: []
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: aa0b14a1d13731144a69140652c36c47, type: 2}
   m_SchemaSet:

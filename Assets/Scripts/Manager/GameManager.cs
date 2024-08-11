@@ -66,6 +66,14 @@ public class GameManager : MonoBehaviour {
             SaveManager.Instance.SaveGame(); // On crée une save si elle n'existe pas
         } else {
             SaveManager.Instance.LoadGame();  // On charge la save si elle existe
+
+            UpdateItemCalalogDiscovered(1);
+            UpdateItemCalalogDiscovered(3);
+            UpdateItemCalalogDiscovered(11);
+            UpdateItemCalalogDiscovered(14);
+            UpdateItemCalalogDiscovered(20);
+
+            SaveManager.Instance.SaveGame();
         }
 
         ResetRun();

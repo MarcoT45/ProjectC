@@ -15,11 +15,9 @@ public class ItemData : ScriptableObject
     [SerializeField]
     private bool discovered;
     [SerializeField]
-    private float pv;
+    private float attack;
     [SerializeField]
-    private float atk;
-    [SerializeField]
-    private float def;
+    private float defense;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -67,6 +65,22 @@ public class ItemData : ScriptableObject
     public void SetDiscovered(bool d)
     {
         this.discovered = d;
+    }
+
+    public float GetAttack() {
+        return this.attack;
+    }
+
+    public float GetDefense() {
+        return this.defense;
+    }
+
+    public float GetSpeed() {
+        return this.speed;
+    }
+
+    public float GetLuck() {
+        return this.luck;
     }
 
     public int GetPrice()

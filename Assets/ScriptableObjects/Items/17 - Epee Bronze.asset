@@ -16,11 +16,10 @@ MonoBehaviour:
   itemName: "Ep\xE9e en bronze"
   description: "Ep\xE9e qui peine \xE0 couper"
   discovered: 0
-  pv: 0
-  atk: 2
-  def: 0
+  attack: 5
+  defense: 0
   speed: 0
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 40
   rarity: 1

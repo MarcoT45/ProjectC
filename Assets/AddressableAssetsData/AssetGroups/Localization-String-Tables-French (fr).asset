@@ -29,6 +29,18 @@ MonoBehaviour:
     m_SerializedLabels:
     - Locale-fr
     - Preload
+  - m_GUID: 6c5b9b091ec7650468e82df0fcb2a6f4
+    m_Address: EquipediaBookTable_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
+  - m_GUID: a19f651d59235e744a6f8942bae0e53a
+    m_Address: BestiaryBookTable_fr
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-fr
+    - Preload
   m_ReadOnly: 1
   m_Settings: {fileID: 11400000, guid: aa0b14a1d13731144a69140652c36c47, type: 2}
   m_SchemaSet:
