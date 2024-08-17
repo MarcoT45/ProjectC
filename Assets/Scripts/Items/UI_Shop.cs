@@ -9,7 +9,10 @@ public class UI_Shop : MonoBehaviour
     private Transform shopContainer;
     private IShopCustomer shopCustomer;
 
-    [SerializeField] private GameObject shopItemTemplate;
+   /* [SerializeField] private GameObject shopItemTemplate;*/
+    [SerializeField] private UI_ShopItem shopItem1;
+    [SerializeField] private UI_ShopItem shopItem2;
+    [SerializeField] private UI_ShopItem shopItem3;
 
 
     void Awake()
@@ -19,28 +22,38 @@ public class UI_Shop : MonoBehaviour
         Hide();
     }
 
+
     public void CreateItemInShop(ItemData itemData, int index)
     {
-        float shopItemWidth = 500f;
-        GameObject item = Instantiate(shopItemTemplate, shopContainer);
-        RectTransform itemRectTransform = item.GetComponent<RectTransform>();
-        UI_ShopItem uiShopItem = item.GetComponent<UI_ShopItem>();
+        switch (index)
+        {
+            case 0:
+                shopItem1.itemData = itemData;
+                break;
 
-        itemRectTransform.gameObject.SetActive(true);
-        itemRectTransform.anchoredPosition = new Vector2(shopItemWidth * index - shopItemWidth, 0);
+            case 1:
+                shopItem2.itemData = itemData;
+                break;
 
-        uiShopItem.itemData = itemData;
+            case 2:
+                shopItem3.itemData = itemData;
+                break;
+        }
 
     }
 
-    public void TryBuyItem(ItemData itemData)
+    public bool TryBuyItem(ItemData itemData)
     {
         int playercoins = GameManager.Instance.GetRunPlayerCoins();
 
         if (playercoins >= itemData.GetPrice())
         {
             shopCustomer.BuyItem(itemData);
+
+            return true;
         }
+
+        return false;
     }
 
 

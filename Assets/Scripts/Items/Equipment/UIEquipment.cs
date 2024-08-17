@@ -16,6 +16,8 @@ public class UIEquipment : MonoBehaviour
     private UIEquipmentItem weaponSlot;
     [SerializeField]
     private UIEquipmentItem accessorySlot;
+    [SerializeField]
+    private UIEquipmentItem accessorySlot2;
 
 
     public void OnEnable()
@@ -39,7 +41,6 @@ public class UIEquipment : MonoBehaviour
         {
             type = oldEquipment.GetItemType();
         }
-
 
         switch (type)
         {

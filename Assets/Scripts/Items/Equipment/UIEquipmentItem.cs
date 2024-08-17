@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler, IDropHandler
+public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler/*, IDropHandler*/
 {
     [SerializeField]
     private Image itemImage;
@@ -50,7 +50,7 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler, IDropHandler
         }
     }
 
-    public void OnDrop(PointerEventData eventData)
+    /*public void OnDrop(PointerEventData eventData)
     {
         DraggableItem draggableItem = eventData.pointerDrag.GetComponent<DraggableItem>();
 
@@ -58,5 +58,5 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler, IDropHandler
         {
             onEquipmentDrop?.Invoke(draggableItem);
         }
-    }
+    }*/
 }

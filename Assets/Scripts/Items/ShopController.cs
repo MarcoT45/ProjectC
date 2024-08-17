@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class ShopController : MonoBehaviour
 {
@@ -28,8 +29,8 @@ public class ShopController : MonoBehaviour
 
     private void AddItemsInShop()
     {
-        List<ItemData> items = GameManager.Instance.GetAllItems();
-        int random = Random.Range(0, 101); // 1 - 100
+        List<ItemData> items = GameManager.Instance.GetAllItems(); 
+       /* int random = Random.Range(1, 101); // 1 - 100
 
         foreach (ItemData item in items)
         {
@@ -37,6 +38,38 @@ public class ShopController : MonoBehaviour
             {
                 shopItems.Add(item);
             }
+        }*/
+
+        //Boucle sur nb item dans le shop
+        for(int i = 0; i < 3; i++)
+        {
+            int random = Random.Range(1, 101);
+            int rarity = 0;
+
+            if(random < 61)
+            {
+                rarity = 1;
+
+            }
+            else if ( random < 91)
+            {
+                rarity = 2;
+            }
+            else
+            {
+                rarity = 3;
+            }
+
+            ItemData itemDataRandom = items[Random.Range(0, items.Count)];
+
+
+            while (itemDataRandom.GetRarity() != rarity)
+            {
+                itemDataRandom = items[Random.Range(0, items.Count)];
+            }
+
+
+            shopItems.Add(itemDataRandom);
         }
 
     }
@@ -47,12 +80,12 @@ public class ShopController : MonoBehaviour
 
     private void DisplayItems()
     {
-
+        Debug.Log(shopItems[0].GetName());
         if (shopItems.Count > 0)
         {
-            uiShop.CreateItemInShop(shopItems[Random.Range(0, shopItems.Count)], 0);
-            uiShop.CreateItemInShop(shopItems[Random.Range(0, shopItems.Count)], 1);
-            uiShop.CreateItemInShop(shopItems[Random.Range(0, shopItems.Count)], 2);
+            uiShop.CreateItemInShop(shopItems[0], 0);
+            uiShop.CreateItemInShop(shopItems[1], 1);
+            uiShop.CreateItemInShop(shopItems[2], 2);
         }
     }
 

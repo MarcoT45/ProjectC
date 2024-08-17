@@ -70,7 +70,6 @@ public class InventoryController : MonoBehaviour
         foreach (ItemData item in GameManager.Instance.GetAllItems())
         {
             AddItem(item);
-            AddItem(item);
         }
         //------
     }

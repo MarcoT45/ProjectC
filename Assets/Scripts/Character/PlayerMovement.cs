@@ -160,7 +160,7 @@ public partial class @PlayerMovement: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1b864d0c-cfde-4da2-b591-0dcda4aee19a"",
-                    ""path"": ""<Keyboard>/i"",
+                    ""path"": ""<Keyboard>/#(I)"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",

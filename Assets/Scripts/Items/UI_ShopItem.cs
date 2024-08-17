@@ -45,10 +45,12 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        bool bought = false ;
         if(!cardBackIsActive)
         {
-            TryBuyItem(itemData);
-            Flip();
+            bought = TryBuyItem(itemData);
+            
+            if(bought) Flip();
         }
     }
 
@@ -69,9 +71,10 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
         }
     }
 
-    private void TryBuyItem(ItemData itemData)
+    private bool TryBuyItem(ItemData itemData)
     {
         UI_Shop ui_shop = GameObject.FindWithTag("UI_Shop").GetComponent<UI_Shop>();
-        ui_shop.TryBuyItem(itemData);
+        
+        return ui_shop.TryBuyItem(itemData);
     }
 }
