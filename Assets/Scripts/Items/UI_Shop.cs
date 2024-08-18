@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using static UnityEditor.Progress;
 
 public class UI_Shop : MonoBehaviour
 {
@@ -46,7 +47,7 @@ public class UI_Shop : MonoBehaviour
     {
         int playercoins = GameManager.Instance.GetRunPlayerCoins();
 
-        if (playercoins >= itemData.GetPrice())
+        if (playercoins >= itemData.GetPrice() &&  InventoryController.Instance.GetItemList().Count < InventoryController.Instance.inventorySize)
         {
             shopCustomer.BuyItem(itemData);
 

@@ -90,7 +90,6 @@ public class EquipmentController : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("unequip " + equippedItemData.GetName());
                             Unequip(equippedItemData);
                         }
                     }
@@ -130,13 +129,9 @@ public class EquipmentController : MonoBehaviour
 
         if(indexEquipmentType >= 0 && indexEquipmentType < currentEquipement.Length)
         {
-            Debug.Log(indexEquipmentType);
             if (currentEquipement[indexEquipmentType] != null)
             {
-                Debug.Log("equipement != nul");
                 ItemData oldItem = currentEquipement[indexEquipmentType];
-
-                Debug.Log(currentEquipement[indexEquipmentType].ToString());
 
                 inventory.AddItem(oldItem);
 

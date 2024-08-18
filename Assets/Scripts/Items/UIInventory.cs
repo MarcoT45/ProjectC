@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -62,14 +63,16 @@ public class UIInventory : MonoBehaviour
     {
 
         ResetAll();
+        int index = 0;
 
         foreach (ItemData item in inventory.GetItemList())
         {
-            int index = inventory.GetItemList().IndexOf(item);
             if (listUiItems.Count > index)
             {
                 listUiItems[index].SetData(item);
             }
+
+            index++;
         }
     }
 

@@ -97,7 +97,7 @@ public class InventoryController : MonoBehaviour
 
     public void AddItem(ItemData item)
     {
-        if(items.Count < 30 && !items.Contains(item))
+        if(items.Count < inventorySize )
         {
             items.Add(item);
         }

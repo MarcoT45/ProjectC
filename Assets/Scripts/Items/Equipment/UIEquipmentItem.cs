@@ -34,7 +34,6 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler/*, IDropHandl
         }
         else
         {
-            Debug.LogWarning("reset");
             this.itemData = null;
             itemImage.sprite = null;
         }
