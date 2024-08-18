@@ -80,7 +80,6 @@ public class ShopController : MonoBehaviour
 
     private void DisplayItems()
     {
-        Debug.Log(shopItems[0].GetName());
         if (shopItems.Count > 0)
         {
             uiShop.CreateItemInShop(shopItems[0], 0);

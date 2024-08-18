@@ -121,7 +121,7 @@ public class EquipmentController : MonoBehaviour
         //On trigger le delegate / ?.invoke pour savoir si des méthode y sont rattachées
         onEquipmentChanged?.Invoke(newItem, oldItem);
 
-
+        ResetCurrentHitCounter();
     }
 
     public void Unequip(ItemData itemData)
@@ -143,11 +143,57 @@ public class EquipmentController : MonoBehaviour
                 onEquipmentChanged?.Invoke(null, oldItem);
                 currentEquipement[indexEquipmentType] = null;
 
+                ResetCurrentHitCounter();
             }
         }
         else
         {
             Debug.Log("index erreur "+ indexEquipmentType);
+        }
+    }
+
+    public ItemData GetCasque() {
+        return currentEquipement[(int) ItemType.Casque];
+    }
+
+    public ItemData GetTorse() {
+        return currentEquipement[(int) ItemType.Torse];
+    }
+
+    public ItemData GetBottes() {
+        return currentEquipement[(int) ItemType.Bottes];
+    }
+
+    public ItemData GetArme() {
+        return currentEquipement[(int) ItemType.Arme];
+    }
+
+    public ItemData GetAccessoireJ() {
+        return currentEquipement[(int) ItemType.Accessoire];
+    }
+
+    public ItemData GetAccessoireK() {
+        return currentEquipement[(int) ItemType.Accessoire + 1];
+    }
+
+
+    // Test pour le compteur de coup disponible/restant
+
+    private int currentHitCounter = 0;
+
+    public int GetCurrentHitCounter() {
+        return currentHitCounter;
+    }
+
+    public void MinusHitCounter() {
+        currentHitCounter--;
+    }
+
+    public void ResetCurrentHitCounter() {
+        if(currentEquipement[(int) ItemType.Arme] != null) {
+            currentHitCounter = (int) currentEquipement[(int) ItemType.Arme].GetAttack();
+        } else {
+            currentHitCounter = 0;
         }
     }
 

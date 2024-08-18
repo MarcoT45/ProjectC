@@ -62,7 +62,7 @@ public class UIInventory : MonoBehaviour
     {
 
         ResetAll();
-        Debug.Log(inventory.GetItemList().Count);
+
         foreach (ItemData item in inventory.GetItemList())
         {
             int index = inventory.GetItemList().IndexOf(item);
