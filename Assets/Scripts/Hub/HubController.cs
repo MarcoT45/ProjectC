@@ -4,23 +4,19 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Tilemaps;
 
-public class HubController : MonoBehaviour
-{
+public class HubController : MonoBehaviour {
 
-    [SerializeField]
-    private Tilemap sortieTileMap;
+    [SerializeField] private Tilemap sortieTileMap;
     public LayerMask layerSortie;
     public GameObject character;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    [SerializeField] private AudioClip hubTrack;
+
+    private void Start() {
+        MusicManager.Instance.PlayMusicClip(hubTrack);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    private void Update() {
         /*if (Physics2D.OverlapCircle(character.transform.position, .2f, layerSortie))
         {
             SceneManager.LoadScene(2);
