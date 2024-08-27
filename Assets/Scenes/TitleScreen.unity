@@ -2399,7 +2399,7 @@ GameObject:
   m_Component:
   - component: {fileID: 846655235}
   m_Layer: 0
-  m_Name: ----- MANAGERS -----
+  m_Name: ----- MANAGER -----
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3426,7 +3426,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Volume g\xE9n\xE9ral"
+  m_text: Volume global
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1b9df3aa487d7614997caafd9f17a7e8, type: 2}
   m_sharedMaterial: {fileID: -2199568454596123001, guid: 1b9df3aa487d7614997caafd9f17a7e8, type: 2}
