@@ -26,12 +26,12 @@ public class SoundMixerManager : MonoBehaviour {
 
     private void Start() {
         if(PlayerPrefs.GetFloat("MasterVolume") == 0) PlayerPrefs.SetFloat("MasterVolume", 1.0f);
-        if(PlayerPrefs.GetFloat("SoundFXVolume") == 0) PlayerPrefs.SetFloat("SoundFXVolume", 1.0f);
         if(PlayerPrefs.GetFloat("MusicVolume") == 0) PlayerPrefs.SetFloat("MusicVolume", 1.0f);
+        if(PlayerPrefs.GetFloat("SoundFXVolume") == 0) PlayerPrefs.SetFloat("SoundFXVolume", 1.0f);
 
         audioMixer.SetFloat("masterVolume", Mathf.Log10(PlayerPrefs.GetFloat("MasterVolume")) * 20f);
-        audioMixer.SetFloat("soundFXVolume", Mathf.Log10(PlayerPrefs.GetFloat("SoundFXVolume")) * 20f);
         audioMixer.SetFloat("musicVolume", Mathf.Log10(PlayerPrefs.GetFloat("MusicVolume")) * 20f);
+        audioMixer.SetFloat("soundFXVolume", Mathf.Log10(PlayerPrefs.GetFloat("SoundFXVolume")) * 20f);
     }
 
     public void SetMasterVolume(float level) {
@@ -39,14 +39,14 @@ public class SoundMixerManager : MonoBehaviour {
         audioMixer.SetFloat("masterVolume", Mathf.Log10(level) * 20f);
     }
 
-    public void SetSoundFXVolume(float level) {
-        PlayerPrefs.SetFloat("SoundFXVolume", level);
-        audioMixer.SetFloat("soundFXVolume", Mathf.Log10(level) * 20f);
-    }
-
     public void SetMusicVolume(float level) {
         PlayerPrefs.SetFloat("MusicVolume", level);
         audioMixer.SetFloat("musicVolume", Mathf.Log10(level) * 20f);
+    }
+
+    public void SetSoundFXVolume(float level) {
+        PlayerPrefs.SetFloat("SoundFXVolume", level);
+        audioMixer.SetFloat("soundFXVolume", Mathf.Log10(level) * 20f);
     }
     
 }
