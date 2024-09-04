@@ -67,14 +67,16 @@ public class GameManager : MonoBehaviour {
         } else {
             SaveManager.Instance.LoadGame();  // On charge la save si elle existe
 
+
             UpdateItemCalalogDiscovered(1); // A enlever plus tard
             UpdateItemCalalogDiscovered(3); // A enlever plus tard
             UpdateItemCalalogDiscovered(11); // A enlever plus tard
             UpdateItemCalalogDiscovered(14); // A enlever plus tard
             UpdateItemCalalogDiscovered(20); // A enlever plus tard
             SetStartCoins(900); // A enlever plus tard
+            SaveManager.Instance.SaveGame(); // A enlever plus tard
 
-            SaveManager.Instance.SaveGame();
+
         }
 
         ResetRun();

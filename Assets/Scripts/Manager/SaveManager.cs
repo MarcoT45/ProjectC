@@ -152,6 +152,13 @@ public class SaveManager : MonoBehaviour {
         }
     }
 
+    // Sert uniquement pour la fonction reset des données du joueur sur l'écran titre dans les options
+    public void ResetData() {
+        this.gameState = new GameState();
+        SendData();
+        SaveGame();
+    }
+
 }
 
 public class GameState {

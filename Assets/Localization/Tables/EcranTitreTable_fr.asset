@@ -51,6 +51,27 @@ MonoBehaviour:
       et ne peuvent pas \xEAtre charg\xE9es.\r\nUne nouvelle sauvegarde sera cr\xE9\xE9e."
     m_Metadata:
       m_Items: []
+  - m_Id: 29307027234095104
+    m_Localized: Reinitialiser la sauvegarde
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29307337864249344
+    m_Localized: "Voulez-vous vraiment reinitialiser la sauvegarde ? Ce choix est
+      irreversible. Toutes les donn\xE9es seront remises \xE0 zero."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308695254269952
+    m_Localized: Volume global
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308875764531200
+    m_Localized: Volume musique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308992563314688
+    m_Localized: Volume effets sonores
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

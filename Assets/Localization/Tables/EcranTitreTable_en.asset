@@ -53,6 +53,27 @@ MonoBehaviour:
       new save will be created.'
     m_Metadata:
       m_Items: []
+  - m_Id: 29307027234095104
+    m_Localized: Reset save data
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29307337864249344
+    m_Localized: Do you really want to reset your save data ? This choice is irreversible.
+      All data will be reset to zero.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308695254269952
+    m_Localized: Overall volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308875764531200
+    m_Localized: Music volume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308992563314688
+    m_Localized: Sound effects volume
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

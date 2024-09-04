@@ -47,6 +47,26 @@ MonoBehaviour:
     m_Key: PopUpSaveCorruptedMessage
     m_Metadata:
       m_Items: []
+  - m_Id: 29307027234095104
+    m_Key: PopUpOptionResetSave
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29307337864249344
+    m_Key: PopUpResetMessage
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308695254269952
+    m_Key: PopUpOptionGlobalVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308875764531200
+    m_Key: PopUpOptionMusicVolume
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29308992563314688
+    m_Key: PopUpOptionSFXVolume
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
