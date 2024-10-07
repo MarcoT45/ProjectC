@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e8cc7494a1602db4ba1ea37083698647
+guid: ea8ab158f1f8d2b47baca514f957cc5e
 ScriptedImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -33,7 +33,7 @@ ScriptedImporter:
     spriteMeshType: 1
     alignment: 0
     spritePivot: {x: 0.5, y: 0.5}
-    spritePixelsToUnits: 16
+    spritePixelsToUnits: 100
     spriteBorder: {x: 0, y: 0, z: 0, w: 0}
     spriteGenerateFallbackPhysicsShape: 0
     generateCubemap: 6
@@ -93,7 +93,7 @@ ScriptedImporter:
     addSortingGroup: 1
     addShadowCasters: 0
   importFileNodeState: 1
-  platformSettingsDirtyTick: 638611750066450988
+  platformSettingsDirtyTick: 0
   textureAssetName: 
   singleSpriteImportData:
   - name: 
@@ -117,18 +117,18 @@ ScriptedImporter:
     tessellationDetail: 0
     uvTransform: {x: 0, y: 0}
   animatedSpriteImportData:
-  - name: cascade_Frame_0
+  - name: eauBord_Frame_0
     originalName: 
-    pivot: {x: 0.5, y: -0.15942028}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
       y: 4
-      width: 48
-      height: 69
-    spriteID: 8bef95da5e690a64bb200f0049764985
+      width: 16
+      height: 16
+    spriteID: 5206dbcdf925f804a98e38e1f4566456
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -137,18 +137,18 @@ ScriptedImporter:
     edges: []
     tessellationDetail: 0
     uvTransform: {x: 4, y: 4}
-  - name: cascade_Frame_1
+  - name: eauBord_Frame_1
     originalName: 
-    pivot: {x: 0.5, y: -0.15942028}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 81
-      width: 48
-      height: 69
-    spriteID: 61082f99690f39c469fd06597f506ed9
+      y: 28
+      width: 16
+      height: 16
+    spriteID: e38352737fe3a6c4b83bc81f4e53405e
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -156,19 +156,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 81}
-  - name: cascade_Frame_2
+    uvTransform: {x: 4, y: 28}
+  - name: eauBord_Frame_2
     originalName: 
-    pivot: {x: 0.5, y: -0.17647061}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 60
+      x: 28
       y: 4
-      width: 48
-      height: 68
-    spriteID: 024b2e8958dceea49be7f084b391b254
+      width: 16
+      height: 16
+    spriteID: 32304d66d624f7e4aaf9400e3727cccf
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -176,19 +176,19 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 60, y: 4}
-  - name: cascade_Frame_3
+    uvTransform: {x: 28, y: 4}
+  - name: eauBord_Frame_3
     originalName: 
-    pivot: {x: 0.5, y: -0.15942028}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 158
-      width: 48
-      height: 69
-    spriteID: 7ed06e720912e124089154862f60d895
+      x: 28
+      y: 28
+      width: 16
+      height: 16
+    spriteID: 99c0ba6977de12e4f8e27fa408dcfbbd
     spriteBone: []
     spriteOutline: []
     vertices: []
@@ -196,84 +196,51 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 158}
+    uvTransform: {x: 28, y: 28}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
-    guid: 99133600
-    name: cascade
+    guid: -401278790
+    name: eauBord
     layerFlags: 0
     layerType: 0
     blendMode: 0
     cells:
-    - name: cascade_Frame_0
+    - name: eauBord_Frame_0
       frameIndex: 0
       cellRect:
         x: 0
-        y: 11
-        width: 48
-        height: 69
-      spriteId: 8bef95da5e690a64bb200f0049764985
-    - name: cascade_Frame_1
+        y: 0
+        width: 16
+        height: 16
+      spriteId: 5206dbcdf925f804a98e38e1f4566456
+    - name: eauBord_Frame_1
       frameIndex: 1
       cellRect:
         x: 0
-        y: 11
-        width: 48
-        height: 69
-      spriteId: 61082f99690f39c469fd06597f506ed9
-    - name: cascade_Frame_2
+        y: 0
+        width: 16
+        height: 16
+      spriteId: e38352737fe3a6c4b83bc81f4e53405e
+    - name: eauBord_Frame_2
       frameIndex: 2
       cellRect:
         x: 0
-        y: 12
-        width: 48
-        height: 68
-      spriteId: 024b2e8958dceea49be7f084b391b254
-    - name: cascade_Frame_3
+        y: 0
+        width: 16
+        height: 16
+      spriteId: 32304d66d624f7e4aaf9400e3727cccf
+    - name: eauBord_Frame_3
       frameIndex: 3
       cellRect:
         x: 0
-        y: 11
-        width: 48
-        height: 69
-      spriteId: 7ed06e720912e124089154862f60d895
+        y: 0
+        width: 16
+        height: 16
+      spriteId: 99c0ba6977de12e4f8e27fa408dcfbbd
     linkedCells: []
     parentIndex: -1
-  platformSettings:
-  - name: DefaultTexturePlatform
-    overridden: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Standalone
-    overridden: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
-  - name: Server
-    overridden: 0
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 0
-    compressionQuality: 50
-    forceMaximumCompressionQuality_BC6H_BC7: 0
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    androidETC2FallbackOverride: 0
+  platformSettings: []
   secondarySpriteTextures: []
   spritePackingTag: 
-  canvasSize: {x: 48, y: 80}
+  canvasSize: {x: 16, y: 16}
