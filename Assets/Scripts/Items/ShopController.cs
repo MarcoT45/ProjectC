@@ -29,7 +29,7 @@ public class ShopController : MonoBehaviour
 
     private void AddItemsInShop()
     {
-        List<ItemData> items = GameManager.Instance.GetAllItems(); 
+       // List<ItemData> items = GameManager.Instance.GetAllItems(); 
        /* int random = Random.Range(1, 101); // 1 - 100
 
         foreach (ItemData item in items)
@@ -44,30 +44,35 @@ public class ShopController : MonoBehaviour
         for(int i = 0; i < 3; i++)
         {
             int random = Random.Range(1, 101);
-            int rarity = 0;
+            //int rarity = 0;
+            List<List<ItemData>> items = GameManager.Instance.itemsTriRarete;
+            ItemData itemDataRandom = null;
 
-            if(random < 61)
+            if (random < 61)
             {
-                rarity = 1;
+                //rarity = 1;
+                itemDataRandom = items[0][Random.Range(0, items[0].Count)];
 
             }
             else if ( random < 91)
             {
-                rarity = 2;
+                //rarity = 2;
+                itemDataRandom = items[1][Random.Range(0, items[1].Count)];
             }
             else
             {
-                rarity = 3;
+                //rarity = 3;
+                itemDataRandom = items[0][Random.Range(0, items[2].Count)];
             }
-
-            ItemData itemDataRandom = items[Random.Range(0, items.Count)];
+/*
+            itemDataRandom = items[Random.Range(0, items.Count)];
 
 
             while (itemDataRandom.GetRarity() != rarity)
             {
                 itemDataRandom = items[Random.Range(0, items.Count)];
             }
-
+*/
 
             shopItems.Add(itemDataRandom);
         }

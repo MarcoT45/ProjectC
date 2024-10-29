@@ -23,9 +23,13 @@ public class GameManager : MonoBehaviour {
     // En haut le singleton 
     // En bas la partie jeu
 
+    // Variables globales du jeu
+    public bool GameIsPaused = false;
+
     // Variables informations joueur
     private int startCoins = 0;
     public Catalog catalog;
+    public List<List<ItemData>> itemsTriRarete; 
     public Bestiary bestiary;
 
     // Variables statistiques totales du joueur
@@ -59,6 +63,8 @@ public class GameManager : MonoBehaviour {
     private int runNbEventEncountered;
     private DateTime runStartingTime;
     private DateTime runEndingTime;
+    private float runTimer;
+    private bool runTimerIsActive;
 
     public void Start() {
         string filePath = Application.persistentDataPath + "/ConeyCatchingSaveData.json";
@@ -79,7 +85,16 @@ public class GameManager : MonoBehaviour {
 
         }
 
+        TriItemsParRarete();
         ResetRun();
+    }
+
+    private void Update()
+    {
+        if(this.runTimerIsActive)
+        {
+            this.runTimer = this.runTimer + Time.deltaTime;
+        }
     }
 
     public void ResetRun() {
@@ -95,6 +110,8 @@ public class GameManager : MonoBehaviour {
         this.runNbChestOpened = 0;
         this.runNbTradeMade = 0;
         this.runNbEventEncountered = 0;
+        this.runTimer = 0f;
+        this.runTimerIsActive = false;
     }
 
     public void UpdateGlobalStats(bool win) {
@@ -136,6 +153,40 @@ public class GameManager : MonoBehaviour {
     public void SetStartCoins(int coins) {
         this.startCoins = coins;
     }
+
+    public void TriItemsParRarete()
+    {
+        List<ItemData> rarete1 = new List<ItemData>();
+        List<ItemData> rarete2 = new List<ItemData>();
+        List<ItemData> rarete3 = new List<ItemData>();
+        itemsTriRarete = new List<List<ItemData>>();
+
+        foreach (ItemData item in this.catalog.GetAllItems())
+        {
+            switch (item.GetRarity())
+            {
+                case 1:
+                    rarete1.Add(item);
+                    break;
+
+                case 2:
+                    rarete2.Add(item);
+                    break;
+
+                case 3:
+                    rarete3.Add(item);
+                    break;
+                    
+                 default:
+                    rarete1.Add(item);
+                    break;
+            }
+        }
+
+        this.itemsTriRarete.Add(rarete1);
+        this.itemsTriRarete.Add(rarete2);
+        this.itemsTriRarete.Add(rarete3); 
+    } 
 
     public List<ItemData> GetAllItems() {
         return this.catalog.GetAllItems();
@@ -423,6 +474,25 @@ public class GameManager : MonoBehaviour {
 
     public void EndTimer() {
         this.runEndingTime = DateTime.Now;
+    }
+
+    public float GetRunTimer()
+    {
+        return this.runTimer;
+    }
+
+    public void SetRunTimer(float time)
+    {
+        this.runTimer = time;
+    }
+    public bool GetRunTimerIsActive()
+    {
+        return this.runTimerIsActive;
+    }
+
+    public void SetRunTimerIsActive(bool timerIsActive)
+    {
+        this.runTimerIsActive = timerIsActive;
     }
 
     // ********** PARTIE CARTE/MAP DE RUN ********** //

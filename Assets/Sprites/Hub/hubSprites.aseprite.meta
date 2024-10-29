@@ -119,15 +119,15 @@ ScriptedImporter:
   animatedSpriteImportData:
   - name: hubSprites
     originalName: 
-    pivot: {x: 4, y: -3}
+    pivot: {x: 0.5, y: 0}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 60
+      x: 4
       y: 4
-      width: 32
-      height: 32
+      width: 512
+      height: 512
     spriteID: 31d74a6da971bd74aa7557b4c60c3386
     spriteBone: []
     spriteOutline: []
@@ -136,18 +136,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 60, y: 4}
+    uvTransform: {x: 4, y: 4}
   - name: hubSprites_Frame_1
     originalName: 
-    pivot: {x: 3, y: -3}
+    pivot: {x: 0.65122616, y: -0.16933638}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
       x: 4
-      y: 4
-      width: 48
-      height: 32
+      y: 524
+      width: 367
+      height: 437
     spriteID: f3d4014c2d5072e468bade2a95754497
     spriteBone: []
     spriteOutline: []
@@ -156,18 +156,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 4}
+    uvTransform: {x: 4, y: 524}
   - name: hubSprites_Frame_2
     originalName: 
-    pivot: {x: 3, y: -3}
+    pivot: {x: 0.65122616, y: -0.16666666}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 44
-      width: 48
-      height: 32
+      x: 524
+      y: 4
+      width: 367
+      height: 438
     spriteID: d8b0fec93a6beeb4096623d8310248f8
     spriteBone: []
     spriteOutline: []
@@ -176,18 +176,18 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 44}
+    uvTransform: {x: 524, y: 4}
   - name: hubSprites_Frame_3
     originalName: 
-    pivot: {x: 3, y: -3}
+    pivot: {x: 0.65122616, y: -0.16933638}
     alignment: 9
     border: {x: 0, y: 0, z: 0, w: 0}
     rect:
       serializedVersion: 2
-      x: 4
-      y: 84
-      width: 48
-      height: 32
+      x: 379
+      y: 524
+      width: 367
+      height: 437
     spriteID: 67dc06765152b9e4a9a7f8a837f76e16
     spriteBone: []
     spriteOutline: []
@@ -196,7 +196,7 @@ ScriptedImporter:
     indices: 
     edges: []
     tessellationDetail: 0
-    uvTransform: {x: 4, y: 84}
+    uvTransform: {x: 379, y: 524}
   spriteSheetImportData: []
   asepriteLayers:
   - layerIndex: 0
@@ -209,34 +209,34 @@ ScriptedImporter:
     - name: hubSprites_Frame_0
       frameIndex: 0
       cellRect:
-        x: 128
-        y: 96
-        width: 32
-        height: 32
+        x: 0
+        y: 0
+        width: 512
+        height: 512
       spriteId: 31d74a6da971bd74aa7557b4c60c3386
     - name: hubSprites_Frame_1
       frameIndex: 1
       cellRect:
-        x: 112
-        y: 96
-        width: 48
-        height: 32
+        x: 17
+        y: 74
+        width: 367
+        height: 437
       spriteId: f3d4014c2d5072e468bade2a95754497
     - name: hubSprites_Frame_2
       frameIndex: 2
       cellRect:
-        x: 112
-        y: 96
-        width: 48
-        height: 32
+        x: 17
+        y: 73
+        width: 367
+        height: 438
       spriteId: d8b0fec93a6beeb4096623d8310248f8
     - name: hubSprites_Frame_3
       frameIndex: 3
       cellRect:
-        x: 112
-        y: 96
-        width: 48
-        height: 32
+        x: 17
+        y: 74
+        width: 367
+        height: 437
       spriteId: 67dc06765152b9e4a9a7f8a837f76e16
     linkedCells: []
     parentIndex: -1
