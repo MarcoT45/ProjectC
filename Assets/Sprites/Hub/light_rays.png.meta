@@ -109,9 +109,9 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 39
-        y: 442
+        y: 451
         width: 479
-        height: 62
+        height: 49
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -281,7 +281,7 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -302,7 +302,7 @@ TextureImporter:
         width: 24
         height: 24
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -310,6 +310,90 @@ TextureImporter:
       bones: []
       spriteID: d3ec193d7a22fd54e8964b5890241ad1
       internalID: 1586335105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light_rays_10
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 516
+        width: 48
+        height: 48
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d7bd23783f986c41b04ad83bb6736fb
+      internalID: -1742513745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light_rays_11
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 500
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eca533e2e9ae60f45968953434765cde
+      internalID: -1519642758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light_rays_12
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 143
+        width: 200
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dc75f14d3563114f8f4e1ab08e19193
+      internalID: -449025193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: light_rays_13
+      rect:
+        serializedVersion: 2
+        x: 47
+        y: 100
+        width: 194
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b65a7fa146f7c48499bba733c287e967
+      internalID: 1178027314
       vertices: []
       indices: 
       edges: []
@@ -327,6 +411,10 @@ TextureImporter:
     nameFileIdTable:
       light_rays_0: 1833442671
       light_rays_1: 1864486497
+      light_rays_10: -1742513745
+      light_rays_11: -1519642758
+      light_rays_12: -449025193
+      light_rays_13: 1178027314
       light_rays_2: -869062290
       light_rays_3: -1771774696
       light_rays_4: 125891910
