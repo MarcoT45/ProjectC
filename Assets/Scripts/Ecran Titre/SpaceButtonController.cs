@@ -14,12 +14,20 @@ public class SpaceButtonController : MonoBehaviour {
     public GameObject quitButton;
 
     private void Update() {
+        if(ControlsManager.Instance.controlsState == ControlsState.InputTest) {
+            Valider();
+        }
+
         FlashingText();
-        if(Input.GetKeyDown (KeyCode.Space)) {
+    }
+
+    private void Valider() {
+        if (ControlsManager.Instance.ValiderPressed) {
             this.gameObject.SetActive(false);
             playButton.SetActive(true);
             optionButton.SetActive(true);
             quitButton.SetActive(true);
+            ControlsManager.Instance.UpdateState(1);
         }
     }
 

@@ -140,7 +140,10 @@ public class SaveManager : MonoBehaviour {
 
     private void FixedUpdate() {
 
-        if(isOpening) {
+        if(isOpening & ControlsManager.Instance.controlsState != ControlsState.InputTest) {
+
+            ControlsManager.Instance.UpdateState(3);
+
             Vector3 targetAngle = new Vector3(0, 0, 0);
 
             if (Vector3.Distance(popUpCorrupted.transform.eulerAngles, targetAngle) > 0.01f) {
