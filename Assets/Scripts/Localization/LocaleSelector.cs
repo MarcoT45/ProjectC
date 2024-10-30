@@ -5,6 +5,23 @@ using UnityEngine.Localization.Settings;
 
 public class LocaleSelector : MonoBehaviour {
 
+    private static LocaleSelector instance = null;
+    public static LocaleSelector Instance => instance;
+
+    private void Awake() {
+        if (instance != null && instance != this) {
+            Destroy(this.gameObject);
+            return;
+        } else {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(this.gameObject);
+    }
+
+    // En haut le singleton 
+    // En bas la partie jeu
+
     private bool active = false;
 
     private void Start() {
