@@ -35,6 +35,7 @@ public class ControlsManager : MonoBehaviour {
     private InputAction fermer;
     private InputAction inventaire;
     private InputAction actionSpeciale;
+    private InputAction camera;
 
     public Vector2 DeplacerValue { get; private set; }
     public bool DeplacerPressed { get; private set; }
@@ -45,6 +46,8 @@ public class ControlsManager : MonoBehaviour {
     public bool FermerPressed { get; private set; }
     public bool InventairePressed { get; private set; }
     public bool ActionSpecialePressed { get; private set; }
+    public Vector2 CameraValue { get; private set; }
+    public bool CameraPressed { get; private set; }
 
     private void Update() {
         DeplacerValue = deplacer.ReadValue<Vector2>();
@@ -56,6 +59,8 @@ public class ControlsManager : MonoBehaviour {
         FermerPressed = fermer.WasPressedThisFrame();
         InventairePressed = inventaire.WasPressedThisFrame();
         ActionSpecialePressed = actionSpeciale.WasPressedThisFrame();
+        CameraValue = camera.ReadValue<Vector2>();
+        CameraPressed = camera.WasPressedThisFrame();
     }
 
     private void SetupInputActions() {
@@ -67,6 +72,7 @@ public class ControlsManager : MonoBehaviour {
         fermer = playerInput.actions["Fermer"];
         inventaire = playerInput.actions["Inventaire"];
         actionSpeciale = playerInput.actions["Action Speciale"];
+        camera = playerInput.actions["Camera"];
     }
 
 

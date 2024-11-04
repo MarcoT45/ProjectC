@@ -14,12 +14,13 @@ public class ControlsTestScript : MonoBehaviour {
             Fermer();
             Inventaire();
             ActionSpeciale();
+            Camera();
         }
     }
 
     private void Deplacer() {
         if (ControlsManager.Instance.DeplacerPressed) {
-            Debug.Log("On se déplace : "+ControlsManager.Instance.DeplacerValue);
+            Debug.Log("On se déplace : " + ControlsManager.Instance.DeplacerValue);
         }
     }
 
@@ -62,6 +63,12 @@ public class ControlsTestScript : MonoBehaviour {
     private void ActionSpeciale() {
         if (ControlsManager.Instance.ActionSpecialePressed) {
             Debug.Log("On utilise l'action spéciale");
+        }
+    }
+
+    private void Camera() {
+        if (ControlsManager.Instance.CameraPressed) {
+            Debug.Log("La camera bouge : " + ControlsManager.Instance.CameraValue);
         }
     }
 
