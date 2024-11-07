@@ -34511,10 +34511,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 1.24375
+    y: 0.016666668
+    width: 2
+    height: 2
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -74948,7 +74948,7 @@ Tilemap:
       - {fileID: -417866379, guid: 38ff862586cd95643bc676f52d5725f7, type: 3}
       - {fileID: 581703984, guid: 38ff862586cd95643bc676f52d5725f7, type: 3}
       - {fileID: 1179477434, guid: 38ff862586cd95643bc676f52d5725f7, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_IsLooping: 1
   m_TileAssetArray:

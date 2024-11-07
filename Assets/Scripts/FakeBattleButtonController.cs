@@ -16,7 +16,7 @@ public class FakeBattleButtonController : MonoBehaviour {
 
     public void ReturnToMap() {
         GameManager.Instance.AddCoinsToRunPlayerCoins(randomCoinsValue);
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
 }

@@ -39,28 +39,28 @@ public class CarteForetController : MonoBehaviour {
         List<int> nodesSums = new List<int>();
         List<int> firstNodesList = new List<int>();
 
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
 
-            firstNode = Random.Range(1, 5);
+            firstNode = Random.Range(1, 6);
 
             while (firstNodesList.Contains(firstNode)) {
-                firstNode = Random.Range(1, 5);
+                firstNode = Random.Range(1, 6);
             }
 
             firstNodesList.Add(firstNode);
 
-            for (int j = 1; j < 9; j++) {
+            for (int j = 1; j < 14; j++) {
 
-                if (firstNode == (j-1)*4+1) {
+                if (firstNode == (j-1)*5+1) {
+                    secondNode = Random.Range(firstNode+5, firstNode+7);
+                } else if (firstNode == j*5) {
                     secondNode = Random.Range(firstNode+4, firstNode+6);
-                } else if (firstNode == j*4) {
-                    secondNode = Random.Range(firstNode+3, firstNode+5);
                 } else {
-                    secondNode = Random.Range(firstNode+3, firstNode+6);
+                    secondNode = Random.Range(firstNode+4, firstNode+7);
                 }
 
                 if (nodesSums.Contains(firstNode+secondNode)) {
-                    secondNode = firstNode + 4;
+                    secondNode = firstNode + 5;
                 }
                     
                 nodesSums.Add(firstNode+secondNode);
@@ -102,7 +102,7 @@ public class CarteForetController : MonoBehaviour {
     // On supprime les noeuds inutiles
     private void DeleteUnusedNodes() {
         GameObject noeudTemporaire;
-        for(int i = 1; i < 37; i++) {
+        for(int i = 1; i < 71; i++) {
             if(!noeudsUtilises.Contains(i)) {
                 noeudTemporaire = GameObject.Find("Noeud "+ i);
                 Destroy(noeudTemporaire);
@@ -119,11 +119,11 @@ public class CarteForetController : MonoBehaviour {
             tmpNode = GameObject.Find("Noeud "+ n);
             NoeudController nds = (NoeudController) tmpNode.GetComponent(typeof(NoeudController));
 
-            if (n<=4) {
+            if (n<=5) {
                 nds.ChangeNodeState(0);    // Regle 1
-            } else if (n>=17 && n<=20) {
+            } else if (n>=31 && n<=35) {
                 nds.ChangeNodeState(6);    // Regle 2
-            } else if (n>=33) {
+            } else if (n>=66) {
                 nds.ChangeNodeState(3);    // Regle 3
             } else {
                 int randomEventValue = Random.Range(0, 101);
@@ -152,7 +152,7 @@ public class CarteForetController : MonoBehaviour {
         GameObject node1 = GameObject.Find("Noeud 0");
 
         foreach (var n in noeudsUtilises) {
-            if(n<=4) {
+            if(n<=5) {
                 var lineRenderer = new GameObject("Chemin 0"+"-"+n).AddComponent<LineRenderer>();
                 lineRenderer.transform.parent = GameObject.Find("Chemins Carte Foret").transform;
                 lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -178,14 +178,14 @@ public class CarteForetController : MonoBehaviour {
 
     // On connecte le boss à la carte
     private void ConnectBoss() {
-        GameObject node2 = GameObject.Find("Noeud 37");
+        GameObject node2 = GameObject.Find("Noeud 71");
         NoeudController ndp = (NoeudController) node2.GetComponent(typeof(NoeudController));
         ndp.ChangeNodeState(7);
         ndp.UpdateCouleur();
 
         foreach (var n in noeudsUtilises) {
-            if(n>=33) {
-                var lineRenderer = new GameObject("Chemin "+n+"-37").AddComponent<LineRenderer>();
+            if(n>=66) {
+                var lineRenderer = new GameObject("Chemin "+n+"-71").AddComponent<LineRenderer>();
                 lineRenderer.transform.parent = GameObject.Find("Chemins Carte Foret").transform;
                 lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
                 lineRenderer.startWidth = 0.1f;
@@ -196,7 +196,7 @@ public class CarteForetController : MonoBehaviour {
                 
                 GameObject node1 = GameObject.Find("Noeud "+ n);
                 NoeudController nds = (NoeudController) node1.GetComponent(typeof(NoeudController));
-                nds.noeud.AddNoeudSuivant(37);
+                nds.noeud.AddNoeudSuivant(71);
 
                 ndp.noeud.AddNoeudPrecedent(n);
 
@@ -217,7 +217,7 @@ public class CarteForetController : MonoBehaviour {
         currentPlayerNode = 0;
 
         foreach (var n in noeudsUtilises) {
-            if(n<=4) {      
+            if(n<=5) {      
                 GameObject node = GameObject.Find("Noeud "+ n);
                 NoeudController nd = (NoeudController) node.GetComponent(typeof(NoeudController));
                 nd.UpdateEtatNoeud(EtatNoeud.Accessible);
@@ -292,7 +292,7 @@ public class CarteForetController : MonoBehaviour {
     private void PlayNodeEvent(Noeud noeud){
         if (noeud.eventNumber == 0 || noeud.eventNumber == 2 || noeud.eventNumber == 7) {
             SendDataToManager();
-            SceneManager.LoadScene(2);
+            SceneManager.LoadScene(3);
         } else {
             PopUpForetController pu = (PopUpForetController) popup.GetComponent(typeof(PopUpForetController));
             pu.CreatePopUpEvent(noeud);
@@ -317,7 +317,7 @@ public class CarteForetController : MonoBehaviour {
     private void LoadMapData(List<Noeud> mapData) {
 
         GameObject nodeDepart = GameObject.Find("Noeud 0");
-        GameObject nodeFinal = GameObject.Find("Noeud 37");
+        GameObject nodeFinal = GameObject.Find("Noeud 71");
 
         foreach (var n in mapData) {
             GameObject nodeTmp = GameObject.Find("Noeud "+n.numero);
@@ -369,7 +369,7 @@ public class CarteForetController : MonoBehaviour {
                 lineRenderer.SetPosition(1, nextNode.transform.position);
             }
             
-            if (n.numero <= 4) {
+            if (n.numero <= 5) {
                 var lineRenderer = new GameObject("Chemin 0"+"-"+n.numero).AddComponent<LineRenderer>();
                 lineRenderer.transform.parent = GameObject.Find("Chemins Carte Foret").transform;
                 lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
@@ -387,8 +387,8 @@ public class CarteForetController : MonoBehaviour {
                 lineRenderer.SetPosition(1, nodeTmp.transform.position);
             }
 
-            if (n.numero >= 33) {
-                var lineRenderer = new GameObject("Chemin "+n.numero+"-37").AddComponent<LineRenderer>();
+            if (n.numero >= 66) {
+                var lineRenderer = new GameObject("Chemin "+n.numero+"-71").AddComponent<LineRenderer>();
                 lineRenderer.transform.parent = GameObject.Find("Chemins Carte Foret").transform;
                 lineRenderer.material = new Material(Shader.Find("Sprites/Default"));
                 lineRenderer.startWidth = 0.1f;
