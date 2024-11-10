@@ -90,5 +90,7 @@ public enum ControlsState {
     Options = 2,
     PopUpCorrupted = 3,
     PopUpOuiNon = 4,
-    CharacterHub = 5
+    CharacterHub = 5,
+    Dialogue = 6,
+    DialogueChoice = 7
 }

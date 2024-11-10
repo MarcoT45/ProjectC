@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-public class ShopController : MonoBehaviour
+public class ShopController : NPC, ITalkable
 {
     [SerializeField] private UI_Shop uiShop;
-
     [SerializeField] private int maxItemsInShop;
+    [SerializeField] private DialogueText dialogueText;
     private List<ItemData> shopItems;
     public int reloadPrice;
 
@@ -18,9 +18,11 @@ public class ShopController : MonoBehaviour
         this.DisplayItems();
     }
 
-    void Update()
+    protected override void Update()
     {
-        if(shopItems.Count == 0)
+        base.Update();
+
+;       if(shopItems.Count == 0)
         {
             this.AddItemsInShop();
             this.DisplayItems();
@@ -123,6 +125,8 @@ public class ShopController : MonoBehaviour
 
     }
 
+//Plus nécessaire pour le moment
+/*
     private void OnTriggerEnter2D(Collider2D other)
     {
         IShopCustomer shopCustomer = other.GetComponent<IShopCustomer>();
@@ -138,6 +142,45 @@ public class ShopController : MonoBehaviour
         if (shopCustomer != null)
         {
             uiShop.Hide();
+        }
+    }*/
+
+    public override void Interact()
+    {
+        Talk(dialogueText);
+    }
+
+    public void Talk(DialogueText dialogueText)
+    {
+        //Appel du DialogueManager avec le DialogueText adequat et une action pour utiliser une suite à un choix
+        DialogueManager.Instance.DisplayDialogue(dialogueText, (onChoiceSelected) => ChoiceDone(onChoiceSelected));
+    }
+
+    //Fonction gérant les choix fait suite au dialogue du vendeur
+    public void ChoiceDone(int choiceMade)
+    {
+        IShopCustomer shopCustomer = collidingPlayer.GetComponent<IShopCustomer>();
+        switch (choiceMade)
+        {
+            //Acheter
+            case 0:
+
+                if (shopCustomer != null)
+                {
+                    uiShop.Show(shopCustomer);
+                }
+                break;
+
+            //Vendre
+            case 1:
+                break;
+
+            //Partir
+            case 2:
+                DialogueManager.Instance.EndDialogue();
+                ControlsManager.Instance.UpdateState(5);
+                break;
+
         }
     }
 }

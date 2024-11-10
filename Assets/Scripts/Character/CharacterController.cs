@@ -67,9 +67,25 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     public void OnEnable() {
         controls.Enable();
+
+        DialogueManager.onStartDialog += DisableControls;
+        DialogueManager.onEndDialog += EnableControls;
     }
 
     public void OnDisable() {
+        controls.Disable();
+
+        DialogueManager.onStartDialog -= DisableControls;
+        DialogueManager.onEndDialog -= EnableControls;
+    }
+
+    public void EnableControls()
+    {
+        controls.Enable();
+    }
+
+    public void DisableControls()
+    {
         controls.Disable();
     }
 
@@ -173,11 +189,12 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     private void Move(Vector2 newDirection)
     {
-        if (this.direction != newDirection && CanMove(newDirection))
-        {
-            lastDirection = this.direction;
-        }
-        this.direction = (Vector3)newDirection;
+            if (this.direction != newDirection && CanMove(newDirection))
+            {
+                lastDirection = this.direction;
+            }
+            this.direction = (Vector3)newDirection;
+
 
         /*Debug.Log("lastDir " + lastDirection);
         Debug.Log("dir " + this.direction);*/
@@ -188,16 +205,23 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     {
         Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
 
-        //Boucle sur les tilemaps avec le tag "Mur"
-        foreach (Tilemap murTileMap in murTileMaps)
+        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub)
         {
-            if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+            //Boucle sur les tilemaps avec le tag "Mur"
+            foreach (Tilemap murTileMap in murTileMaps)
             {
-                return false;
+                if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+                {
+                    return false;
+                }
             }
-        }
 
-        return true;
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D other)

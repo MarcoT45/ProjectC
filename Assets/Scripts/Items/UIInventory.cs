@@ -44,7 +44,9 @@ public class UIInventory : MonoBehaviour
     {
         InventoryController.onInventoryChanged -= UpdateInventoryUI;
         DraggableItem.onItemBeginDrag -= HandleBeginDrag;
+        DraggableItem.onItemEndDrag -= UpdateInventoryUI;
         UIInventoryItem.onItemDroppedOn -= HandleSwap;
+        UIInventoryItem.onItemClicked -= HandleClick;
     }
 
     public void InitializeInventoryUI(int inventorySize)
