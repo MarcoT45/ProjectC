@@ -31,16 +31,6 @@ public class ShopController : NPC, ITalkable
 
     private void AddItemsInShop()
     {
-       // List<ItemData> items = GameManager.Instance.GetAllItems(); 
-       /* int random = Random.Range(1, 101); // 1 - 100
-
-        foreach (ItemData item in items)
-        {
-            if (random <= item.GetRarity())
-            {
-                shopItems.Add(item);
-            }
-        }*/
 
         //Boucle sur nb item dans le shop
         for(int i = 0; i < 3; i++)
@@ -66,15 +56,6 @@ public class ShopController : NPC, ITalkable
                 //rarity = 3;
                 itemDataRandom = items[0][Random.Range(0, items[2].Count)];
             }
-/*
-            itemDataRandom = items[Random.Range(0, items.Count)];
-
-
-            while (itemDataRandom.GetRarity() != rarity)
-            {
-                itemDataRandom = items[Random.Range(0, items.Count)];
-            }
-*/
 
             shopItems.Add(itemDataRandom);
         }
@@ -159,11 +140,15 @@ public class ShopController : NPC, ITalkable
     //Fonction gérant les choix fait suite au dialogue du vendeur
     public void ChoiceDone(int choiceMade)
     {
-        IShopCustomer shopCustomer = collidingPlayer.GetComponent<IShopCustomer>();
+        //On ferme le dialogue suite au choix
+        DialogueManager.Instance.EndDialogue();
+
+        IShopCustomer shopCustomer = this.collidingPlayer.GetComponent<IShopCustomer>();
         switch (choiceMade)
         {
             //Acheter
             case 0:
+                ControlsManager.Instance.UpdateState(5);
 
                 if (shopCustomer != null)
                 {
@@ -177,7 +162,6 @@ public class ShopController : NPC, ITalkable
 
             //Partir
             case 2:
-                DialogueManager.Instance.EndDialogue();
                 ControlsManager.Instance.UpdateState(5);
                 break;
 

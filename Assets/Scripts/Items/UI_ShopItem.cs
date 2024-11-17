@@ -45,6 +45,7 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        Debug.Log(itemData.GetName());
         bool bought = false ;
         if(!cardBackIsActive)
         {

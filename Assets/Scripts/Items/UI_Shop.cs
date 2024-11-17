@@ -60,12 +60,14 @@ public class UI_Shop : MonoBehaviour
 
     public void Show(IShopCustomer shopCustomer)
     {
+        Debug.Log("show");
         this.shopCustomer = shopCustomer;
-        gameObject.SetActive(true);
+        transform.GetChild(0).gameObject.SetActive(true);
+
     }
 
     public void Hide()
     {
-        gameObject.SetActive(false);
+        transform.GetChild(0).gameObject.SetActive(false);
     }
 }
