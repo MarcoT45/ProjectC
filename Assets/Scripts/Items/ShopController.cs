@@ -54,7 +54,7 @@ public class ShopController : NPC, ITalkable
             else
             {
                 //rarity = 3;
-                itemDataRandom = items[0][Random.Range(0, items[2].Count)];
+                itemDataRandom = items[2][Random.Range(0, items[2].Count)];
             }
 
             shopItems.Add(itemDataRandom);
