@@ -1,11 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
+using UnityEngine.Localization.Components;
 
 public class ControlsTestScript : MonoBehaviour {
 
+    public LocalizeStringEvent localizedStringEvent;
+
     private void Update() {
-        if(ControlsManager.Instance.controlsState == ControlsState.CharacterHub) {
+        if(ControlsManager.Instance.controlsState == ControlsState.Carte) {
             Deplacer();
             Trinket1();
             Trinket2();
@@ -21,18 +25,21 @@ public class ControlsTestScript : MonoBehaviour {
     private void Deplacer() {
         if (ControlsManager.Instance.DeplacerPressed) {
             Debug.Log("On se déplace : " + ControlsManager.Instance.DeplacerValue);
+            localizedStringEvent.StringReference.SetReference("EcranTitreTable", "PressSpaceButton");
         }
     }
 
     private void Trinket1() {
         if (ControlsManager.Instance.Trinket1Pressed) {
             Debug.Log("On utilise le trinket 1");
+            localizedStringEvent.StringReference.SetReference("EcranTitreTable", "PopUpOptionResetSave");
         }
     }
 
     private void Trinket2() {
         if (ControlsManager.Instance.Trinket2Pressed) {
             Debug.Log("On utilise le trinket 2");
+            localizedStringEvent.StringReference.SetReference("EcranTitreTable", "PopUpOptionSFXVolume");
         }
     }
 

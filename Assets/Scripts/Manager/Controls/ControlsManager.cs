@@ -92,5 +92,6 @@ public enum ControlsState {
     PopUpOuiNon = 4,
     CharacterHub = 5,
     Dialogue = 6,
-    DialogueChoice = 7
+    DialogueChoice = 7,
+    Carte = 300
 }

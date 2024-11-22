@@ -10,7 +10,7 @@ public class PopUpForetController : MonoBehaviour {
     public GameObject boutonPartir;
     public TextMeshProUGUI textePopUp;
     public GameObject popUpContent;
-    public TextMeshProUGUI texteArgentJoueurMenuGauche;
+    public TextMeshProUGUI texteArgentJoueurBarreDuHaut;
     private GameObject sujet;
     private bool isOpening = false;
     private bool isClosing = false;
@@ -248,7 +248,7 @@ public class PopUpForetController : MonoBehaviour {
                     encartObjet1.SetActive(false);
                     GameManager.Instance.AddCoinsToRunPlayerCoins(objet1.GetPrice()*-1);
                     texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
-                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetRunPlayerCoins().ToString();
+                    texteArgentJoueurBarreDuHaut.text = GameManager.Instance.GetRunPlayerCoins().ToString();
                     textePopUp.text = "Merci de votre achat !";
                 } else {
                     textePopUp.text = "Tu essaies de me rouler ?";
@@ -262,7 +262,7 @@ public class PopUpForetController : MonoBehaviour {
                     encartObjet2.SetActive(false);
                     GameManager.Instance.AddCoinsToRunPlayerCoins(objet2.GetPrice()*-1);
                     texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
-                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetRunPlayerCoins().ToString();
+                    texteArgentJoueurBarreDuHaut.text = GameManager.Instance.GetRunPlayerCoins().ToString();
                     textePopUp.text = "Merci de votre achat !";
                 } else {
                     textePopUp.text = "Tu essaies de me rouler ?";
@@ -276,7 +276,7 @@ public class PopUpForetController : MonoBehaviour {
                     encartObjet3.SetActive(false);
                     GameManager.Instance.AddCoinsToRunPlayerCoins(objet3.GetPrice()*-1);
                     texteArgentJoueur.text = GameManager.Instance.GetRunPlayerCoins().ToString();
-                    texteArgentJoueurMenuGauche.text = GameManager.Instance.GetRunPlayerCoins().ToString();
+                    texteArgentJoueurBarreDuHaut.text = GameManager.Instance.GetRunPlayerCoins().ToString();
                     textePopUp.text = "Merci de votre achat !";
                 } else {
                     textePopUp.text = "Tu essaies de me rouler ?";
