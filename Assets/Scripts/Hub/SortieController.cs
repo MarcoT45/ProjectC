@@ -9,6 +9,7 @@ public class SortieController : MonoBehaviour
     {
         if (collider.tag == "Player")
         {
+            ControlsManager.Instance.UpdateState(300);
             SceneManager.LoadScene(2);
         }
     }

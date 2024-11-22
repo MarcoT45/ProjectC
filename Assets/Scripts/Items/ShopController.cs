@@ -44,7 +44,6 @@ public class ShopController : NPC, ITalkable
             {
                 //rarity = 1;
                 itemDataRandom = items[0][Random.Range(0, items[0].Count)];
-
             }
             else if ( random < 91)
             {
