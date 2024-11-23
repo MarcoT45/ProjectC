@@ -2,14 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+//using UnityEngine.Localization;
 using UnityEngine.Localization.Components;
 
 public class ControlsTestScript : MonoBehaviour {
 
+    //public TextMeshProUGUI texteTest;
     public LocalizeStringEvent localizedStringEvent;
 
     private void Update() {
-        if(ControlsManager.Instance.controlsState == ControlsState.Carte) {
+        if(ControlsManager.Instance.controlsState == ControlsState.Carte && false) {
             Deplacer();
             Trinket1();
             Trinket2();
@@ -25,6 +27,7 @@ public class ControlsTestScript : MonoBehaviour {
     private void Deplacer() {
         if (ControlsManager.Instance.DeplacerPressed) {
             Debug.Log("On se déplace : " + ControlsManager.Instance.DeplacerValue);
+            //texteTest.text = new LocalizedString("EcranTitreTable", "PressSpaceButton").GetLocalizedString();
             localizedStringEvent.StringReference.SetReference("EcranTitreTable", "PressSpaceButton");
         }
     }

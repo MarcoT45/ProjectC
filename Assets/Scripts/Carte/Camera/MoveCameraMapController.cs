@@ -4,9 +4,37 @@ using UnityEngine;
 
 public class MoveCameraMapController : MonoBehaviour {
 
+    private float mouseSpeed = 0.65f;
+    private float controllerSpeed = 0.1f;
+
     private void Update() {
-        if ( Input.GetAxis("Mouse ScrollWheel") != 0 && this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")) < 21 && this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")) > 0) {
-            this.transform.position = new Vector3(0, this.transform.position.y + (5 * Input.GetAxis("Mouse ScrollWheel")), -10);
+        if(ControlsManager.Instance.controlsState == ControlsState.Carte) {
+            MoveCamera();
+        } 
+    }
+
+    private void MoveCamera() {
+
+        if (ControlsManager.Instance.CameraPressed) {
+            if(ControlsManager.Instance.GetCurrentDevice() == "Mouse") {
+                if (ControlsManager.Instance.CameraValue.y != 0 && 
+                    this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y) < 21 &&
+                    this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y) > 0) {
+                    
+                    this.transform.position = new Vector3(0, this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y), -10);
+                }
+            }
+        }
+
+        if (ControlsManager.Instance.CameraHold) {
+            if(ControlsManager.Instance.GetCurrentDevice() != "Mouse") {
+                if (ControlsManager.Instance.CameraValue.y != 0 && 
+                    this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y) < 21 &&
+                    this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y) > 0) {
+                    
+                    this.transform.position = new Vector3(0, this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y), -10);
+                }
+            }
         }
     }
 

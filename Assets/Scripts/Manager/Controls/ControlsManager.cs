@@ -27,6 +27,8 @@ public class ControlsManager : MonoBehaviour {
 
     private PlayerInput playerInput;
 
+    private string currentDevice;
+
     private InputAction deplacer;
     private InputAction trinket1;
     private InputAction trinket2;
@@ -39,6 +41,7 @@ public class ControlsManager : MonoBehaviour {
 
     public Vector2 DeplacerValue { get; private set; }
     public bool DeplacerPressed { get; private set; }
+    public bool DeplacerHold { get; private set; }
     public bool Trinket1Pressed { get; private set; }
     public bool Trinket2Pressed { get; private set; }
     public bool PausePressed { get; private set; }
@@ -48,10 +51,16 @@ public class ControlsManager : MonoBehaviour {
     public bool ActionSpecialePressed { get; private set; }
     public Vector2 CameraValue { get; private set; }
     public bool CameraPressed { get; private set; }
+    public bool CameraHold { get; private set; }
+
+    private void Start() {
+        InputSystem.onActionChange += GetLastDeviceUsed;
+    }
 
     private void Update() {
         DeplacerValue = deplacer.ReadValue<Vector2>();
         DeplacerPressed = deplacer.WasPressedThisFrame();
+        DeplacerHold = deplacer.IsPressed();
         Trinket1Pressed = trinket1.WasPressedThisFrame();
         Trinket2Pressed = trinket2.WasPressedThisFrame();
         PausePressed = pause.WasPressedThisFrame();
@@ -61,6 +70,7 @@ public class ControlsManager : MonoBehaviour {
         ActionSpecialePressed = actionSpeciale.WasPressedThisFrame();
         CameraValue = camera.ReadValue<Vector2>();
         CameraPressed = camera.WasPressedThisFrame();
+        CameraHold = camera.IsPressed();
     }
 
     private void SetupInputActions() {
@@ -75,6 +85,17 @@ public class ControlsManager : MonoBehaviour {
         camera = playerInput.actions["Camera"];
     }
 
+    public string GetCurrentDevice() {
+        return currentDevice;
+    }
+
+    private void GetLastDeviceUsed(object obj, InputActionChange change) {
+        if (change == InputActionChange.ActionPerformed) {
+            InputAction receivedInputAction = (InputAction) obj;
+            InputDevice lastDevice = receivedInputAction.activeControl.device;
+            currentDevice = lastDevice.name;
+        }
+    }
 
     public ControlsState controlsState = 0;
 
