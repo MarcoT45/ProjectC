@@ -85,6 +85,7 @@ public class PopUpForetController : MonoBehaviour {
                 Destroy(sujet);
                 ResetPopUpButton();
                 this.gameObject.SetActive(false);
+                ControlsManager.Instance.UpdateState(300);
             }
         }
     }

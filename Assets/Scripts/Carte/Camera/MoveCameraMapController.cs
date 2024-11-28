@@ -18,7 +18,7 @@ public class MoveCameraMapController : MonoBehaviour {
         if (ControlsManager.Instance.CameraPressed) {
             if(ControlsManager.Instance.GetCurrentDevice() == "Mouse") {
                 if (ControlsManager.Instance.CameraValue.y != 0 && 
-                    this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y) < 21 &&
+                    this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y) < 23 &&
                     this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y) > 0) {
                     
                     this.transform.position = new Vector3(0, this.transform.position.y + (mouseSpeed * ControlsManager.Instance.CameraValue.y), -10);
@@ -29,7 +29,7 @@ public class MoveCameraMapController : MonoBehaviour {
         if (ControlsManager.Instance.CameraHold) {
             if(ControlsManager.Instance.GetCurrentDevice() != "Mouse") {
                 if (ControlsManager.Instance.CameraValue.y != 0 && 
-                    this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y) < 21 &&
+                    this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y) < 23 &&
                     this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y) > 0) {
                     
                     this.transform.position = new Vector3(0, this.transform.position.y + (controllerSpeed * ControlsManager.Instance.CameraValue.y), -10);
@@ -43,8 +43,8 @@ public class MoveCameraMapController : MonoBehaviour {
         if (posY < 0)
             posY = 0;
 
-        if (posY > 21)
-            posY = 21;
+        if (posY > 23)
+            posY = 23;
 
         this.transform.position = new Vector3(0, posY, -10);
     }
