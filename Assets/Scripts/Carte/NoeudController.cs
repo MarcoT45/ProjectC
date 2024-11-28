@@ -7,21 +7,29 @@ public class NoeudController : MonoBehaviour {
     public Noeud noeud = new Noeud();
     public List<Sprite> spriteList;
 
+    private Color blackColor = new Color (0f, 0f, 0f, 1f);
+    private Color greyColor = new Color (0.6f, 0.6f, 0.6f, 6f);
+    private Color whiteColor = new Color (1f, 1f, 1f, 1f);
+
     public void UpdateEtatNoeud(EtatNoeud nouvelleEtat) {
         this.noeud.SetEtat(nouvelleEtat);
 
-        if(this.noeud.etat == EtatNoeud.Accessible || this.noeud.etat == EtatNoeud.Visite || this.noeud.etat == EtatNoeud.Joueur) {
-            this.GetComponent<SpriteRenderer>().color = new Color (0.3333333f, 0.2196078f, 0.2509804f, 1);
+        if(this.noeud.etat == EtatNoeud.Accessible) {
+            this.GetComponent<SpriteRenderer>().color = whiteColor;
+        } else if (this.noeud.etat == EtatNoeud.Visite || this.noeud.etat == EtatNoeud.Joueur) {
+            this.GetComponent<SpriteRenderer>().color = blackColor;
         } else {
-            this.GetComponent<SpriteRenderer>().color = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+            this.GetComponent<SpriteRenderer>().color = greyColor;
         }
     }
 
     public void UpdateCouleur() {
-        if(this.noeud.etat == EtatNoeud.Accessible || this.noeud.etat == EtatNoeud.Visite || this.noeud.etat == EtatNoeud.Joueur) {
-            this.GetComponent<SpriteRenderer>().color = new Color (0.3333333f, 0.2196078f, 0.2509804f, 1);
+        if(this.noeud.etat == EtatNoeud.Accessible) {
+            this.GetComponent<SpriteRenderer>().color = whiteColor;
+        } else if (this.noeud.etat == EtatNoeud.Visite || this.noeud.etat == EtatNoeud.Joueur) {
+            this.GetComponent<SpriteRenderer>().color = blackColor;
         } else {
-            this.GetComponent<SpriteRenderer>().color = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+            this.GetComponent<SpriteRenderer>().color = greyColor;
         }
     }
 
@@ -33,9 +41,18 @@ public class NoeudController : MonoBehaviour {
     // Si on clique sur le noeud
     private void OnMouseDown() {
         if(this.noeud.etat == EtatNoeud.Accessible) {
-            GameObject carte = GameObject.Find("Carte Foret");
-            CarteForetController carteController = (CarteForetController) carte.GetComponent(typeof(CarteForetController));
-            carteController.MovePlayer(this.noeud);
+            GameObject commandCarte = GameObject.Find("CarteDeplacementController");
+            CarteDeplacementController cmdC = (CarteDeplacementController) commandCarte.GetComponent(typeof(CarteDeplacementController));
+            cmdC.ConfirmerDeplacement();
+        }
+    }
+
+    // Si on survole sur le noeud
+    private void OnMouseOver() {
+        if(this.noeud.etat == EtatNoeud.Accessible) {
+            GameObject commandCarte = GameObject.Find("CarteDeplacementController");
+            CarteDeplacementController cmdC = (CarteDeplacementController) commandCarte.GetComponent(typeof(CarteDeplacementController));
+            cmdC.OnMouseOverNode(this.noeud.numero);
         }
     }
 

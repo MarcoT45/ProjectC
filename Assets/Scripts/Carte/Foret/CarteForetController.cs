@@ -10,6 +10,11 @@ public class CarteForetController : MonoBehaviour {
     private int currentPlayerNode;
     public GameObject popup;
 
+    private Color blackColor = new Color (0f, 0f, 0f, 1f);
+    private Color lightGreyColor = new Color (0.85f, 0.85f, 0.85f, 1f);
+    private Color whiteColor = new Color (1f, 1f, 1f, 1f);
+    private Color greenColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+
     private void Start() {
         List<Noeud> mapData = GameManager.Instance.GetMapData();
 
@@ -72,8 +77,8 @@ public class CarteForetController : MonoBehaviour {
                     lineRenderer.startWidth = 0.1f;
                     lineRenderer.endWidth = 0.1f;
                     lineRenderer.positionCount = 2;
-                    lineRenderer.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                    lineRenderer.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                    lineRenderer.startColor = lightGreyColor;
+                    lineRenderer.endColor = lightGreyColor;
                 
                     GameObject node1 = GameObject.Find("Noeud "+ firstNode);
                     GameObject node2 = GameObject.Find("Noeud "+ secondNode);
@@ -128,18 +133,18 @@ public class CarteForetController : MonoBehaviour {
             } else {
                 int randomEventValue = Random.Range(0, 101);
                 
-                if (randomEventValue < 50) { 
-                    nds.ChangeNodeState(0); // Combat 50%
-                } else if (randomEventValue < 60) {
-                    nds.ChangeNodeState(1); // Evenement 10%
-                } else if (randomEventValue < 70) {
-                    nds.ChangeNodeState(3); // Repos 10%
-                } else if (randomEventValue < 80) {
-                    nds.ChangeNodeState(4); // Magasin 10%
-                } else if (randomEventValue < 90) {
-                    nds.ChangeNodeState(5); // Echange 10%
+                if (randomEventValue < 59) { 
+                    nds.ChangeNodeState(0); // Combat 59%
+                } else if (randomEventValue < 67) {
+                    nds.ChangeNodeState(1); // Evenement 8%
+                } else if (randomEventValue < 75) {
+                    nds.ChangeNodeState(3); // Repos 8%
+                } else if (randomEventValue < 83) {
+                    nds.ChangeNodeState(4); // Magasin 8%
+                } else if (randomEventValue < 91) {
+                    nds.ChangeNodeState(5); // Echange 8%
                 } else if (randomEventValue < 100) {
-                    nds.ChangeNodeState(6); // Coffre 10%
+                    nds.ChangeNodeState(6); // Coffre 8%
                 } else {
                     nds.ChangeNodeState(2); // Elite 1%
                 }
@@ -159,8 +164,8 @@ public class CarteForetController : MonoBehaviour {
                 lineRenderer.startWidth = 0.1f;
                 lineRenderer.endWidth = 0.1f;
                 lineRenderer.positionCount = 2;
-                lineRenderer.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-                lineRenderer.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+                lineRenderer.startColor = whiteColor;
+                lineRenderer.endColor = whiteColor;
                 
                 GameObject node2 = GameObject.Find("Noeud "+ n);
 
@@ -191,8 +196,8 @@ public class CarteForetController : MonoBehaviour {
                 lineRenderer.startWidth = 0.1f;
                 lineRenderer.endWidth = 0.1f;
                 lineRenderer.positionCount = 2;
-                lineRenderer.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                lineRenderer.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                lineRenderer.startColor = lightGreyColor;
+                lineRenderer.endColor = lightGreyColor;
                 
                 GameObject node1 = GameObject.Find("Noeud "+ n);
                 NoeudController nds = (NoeudController) node1.GetComponent(typeof(NoeudController));
@@ -251,8 +256,8 @@ public class CarteForetController : MonoBehaviour {
 
                     GameObject path = GameObject.Find("Chemin "+ currentPlayerNode +"-"+n);
                     LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
-                    p.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                    p.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                    p.startColor = lightGreyColor;
+                    p.endColor = lightGreyColor;
                 }
             }
 
@@ -265,6 +270,10 @@ public class CarteForetController : MonoBehaviour {
             CarteJoueurForetController pl = (CarteJoueurForetController) player.GetComponent(typeof(CarteJoueurForetController));
             pl.UpdateTargetPosition(newNode.transform.position);
             currentPlayerNode = newPosition.numero;
+
+            GameObject commandCarte = GameObject.Find("CarteDeplacementController");
+            CarteDeplacementController cmdC = (CarteDeplacementController) commandCarte.GetComponent(typeof(CarteDeplacementController));
+            cmdC.UpdateCurrentNode(newPosition.numero);
         }
     }
 
@@ -281,8 +290,8 @@ public class CarteForetController : MonoBehaviour {
 
             GameObject path = GameObject.Find("Chemin "+ cn.noeud.numero +"-"+n);
             LineRenderer p = (LineRenderer) path.GetComponent(typeof(LineRenderer));
-            p.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-            p.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+            p.startColor = whiteColor;
+            p.endColor = whiteColor;
         }
 
         PlayNodeEvent(cn.noeud);
@@ -292,9 +301,11 @@ public class CarteForetController : MonoBehaviour {
     private void PlayNodeEvent(Noeud noeud){
         if (noeud.eventNumber == 0 || noeud.eventNumber == 2 || noeud.eventNumber == 7) {
             SendDataToManager();
+            ControlsManager.Instance.UpdateState(400);
             SceneManager.LoadScene(3);
         } else {
             PopUpForetController pu = (PopUpForetController) popup.GetComponent(typeof(PopUpForetController));
+            ControlsManager.Instance.UpdateState(301);
             pu.CreatePopUpEvent(noeud);
         }
     }
@@ -331,6 +342,10 @@ public class CarteForetController : MonoBehaviour {
                 player.name = "Joueur";
                 currentPlayerNode = n.numero;
 
+                GameObject commandCarte = GameObject.Find("CarteDeplacementController");
+                CarteDeplacementController cmdC = (CarteDeplacementController) commandCarte.GetComponent(typeof(CarteDeplacementController));
+                cmdC.UpdateCurrentNode(currentPlayerNode);
+
                 GameObject camera = GameObject.Find("Main Camera");
                 MoveCameraMapController cam = (MoveCameraMapController) camera.GetComponent(typeof(MoveCameraMapController));
                 cam.SetCameraToPlayerPosition(nodeTmp.transform.position.y);
@@ -357,12 +372,15 @@ public class CarteForetController : MonoBehaviour {
                 GameObject nextNode = GameObject.Find("Noeud "+ nextPath);
                 NoeudController nextTmp = (NoeudController) nextNode.GetComponent(typeof(NoeudController));
 
-                if ( (nextTmp.noeud.etat == EtatNoeud.Accessible || nextTmp.noeud.etat == EtatNoeud.Visite || nextTmp.noeud.etat == EtatNoeud.Joueur) && (ndTmp.noeud.etat == EtatNoeud.Visite || ndTmp.noeud.etat == EtatNoeud.Joueur) ) {
-                    lineRenderer.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-                    lineRenderer.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+                if ( (nextTmp.noeud.etat == EtatNoeud.Accessible) && (ndTmp.noeud.etat == EtatNoeud.Visite || ndTmp.noeud.etat == EtatNoeud.Joueur) ) {
+                    lineRenderer.startColor = whiteColor;
+                    lineRenderer.endColor = whiteColor;
+                } else if ( (nextTmp.noeud.etat == EtatNoeud.Visite || nextTmp.noeud.etat == EtatNoeud.Joueur) && (ndTmp.noeud.etat == EtatNoeud.Visite || ndTmp.noeud.etat == EtatNoeud.Joueur) ) {
+                    lineRenderer.startColor = greenColor;
+                    lineRenderer.endColor = greenColor;
                 } else {
-                    lineRenderer.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                    lineRenderer.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                    lineRenderer.startColor = lightGreyColor;
+                    lineRenderer.endColor = lightGreyColor;
                 }
 
                 lineRenderer.SetPosition(0, nodeTmp.transform.position);
@@ -377,11 +395,11 @@ public class CarteForetController : MonoBehaviour {
                 lineRenderer.endWidth = 0.1f;
                 lineRenderer.positionCount = 2;
                 if (n.etat == EtatNoeud.Visite || n.etat == EtatNoeud.Joueur) {
-                    lineRenderer.startColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
-                    lineRenderer.endColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+                    lineRenderer.startColor = greenColor;
+                    lineRenderer.endColor = greenColor;
                 } else {
-                    lineRenderer.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                    lineRenderer.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                    lineRenderer.startColor = lightGreyColor;
+                    lineRenderer.endColor = lightGreyColor;
                 }
                 lineRenderer.SetPosition(0, nodeDepart.transform.position);
                 lineRenderer.SetPosition(1, nodeTmp.transform.position);
@@ -394,8 +412,8 @@ public class CarteForetController : MonoBehaviour {
                 lineRenderer.startWidth = 0.1f;
                 lineRenderer.endWidth = 0.1f;
                 lineRenderer.positionCount = 2;
-                lineRenderer.startColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
-                lineRenderer.endColor = new Color (0.6078432f, 0.4078431f, 0.3490196f, 1);
+                lineRenderer.startColor = lightGreyColor;
+                lineRenderer.endColor = lightGreyColor;
                 lineRenderer.SetPosition(0, nodeTmp.transform.position);
                 lineRenderer.SetPosition(1, nodeFinal.transform.position);
             }

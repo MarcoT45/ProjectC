@@ -114,5 +114,7 @@ public enum ControlsState {
     CharacterHub = 5,
     Dialogue = 6,
     DialogueChoice = 7,
-    Carte = 300
+    Carte = 300,
+    CarteEvent = 301,
+    Combat = 400
 }
