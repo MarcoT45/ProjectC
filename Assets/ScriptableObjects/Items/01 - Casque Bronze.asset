@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 01 - Casque Bronze
   m_EditorClassIdentifier: 
   numero: 1
-  itemName: Casque en bronze
-  description: "Casque en bronze peu on\xE9reux et de faible resistance"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 14563926016
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 378679844864
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 1
   attack: 0
   defense: 1
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 1
   sprite: {fileID: 375485043, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 0
+  references:
+    version: 2
+    RefIds: []

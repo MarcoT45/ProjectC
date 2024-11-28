@@ -13,16 +13,34 @@ MonoBehaviour:
   m_Name: 10 - Bottes Argent
   m_EditorClassIdentifier: 
   numero: 10
-  itemName: Bottes en argent
-  description: "Bottes plus r\xE9sistante mais plus lourde"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4247891730432
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4276278779904
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
-  pv: 0
-  atk: 0
-  def: 2
+  attack: 0
+  defense: 0
   speed: 1
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 70
   rarity: 2
   sprite: {fileID: -2023070388, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 2
+  references:
+    version: 2
+    RefIds: []

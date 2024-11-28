@@ -13,17 +13,34 @@ MonoBehaviour:
   m_Name: 15 - Accessoire 3
   m_EditorClassIdentifier: 
   numero: 15
-  itemName: Bague de Garderoche
-  description: "Bague d'un illustre paladin qui aurait prot\xE9g\xE9 son royaume
-    jusqu'\xE0 sa mort"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4474715496448
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4493921214464
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
-  pv: 0
-  atk: 0
-  def: 4
+  attack: 0
+  defense: 0
   speed: 0
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 140
   rarity: 3
   sprite: {fileID: -657901763, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 3
+  references:
+    version: 2
+    RefIds: []

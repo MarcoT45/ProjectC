@@ -13,16 +13,34 @@ MonoBehaviour:
   m_Name: 14 - Accessoire 2
   m_EditorClassIdentifier: 
   numero: 14
-  itemName: "Bague de rapidit\xE9"
-  description: "Bague enchant\xE9e qui augmente la vitesse de son porteur"
-  discovered: 0
-  pv: 0
-  atk: 0
-  def: 0
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4407254310912
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4452984807424
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  discovered: 1
+  attack: 0
+  defense: 0
   speed: 2
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 130
   rarity: 3
   sprite: {fileID: 499731133, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 3
+  references:
+    version: 2
+    RefIds: []

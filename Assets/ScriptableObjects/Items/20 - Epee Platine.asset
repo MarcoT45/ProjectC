@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 20 - Epee Platine
   m_EditorClassIdentifier: 
   numero: 20
-  itemName: "Ep\xE9e en platine"
-  description: "Ep\xE9e de qualit\xE9 excellente et tr\xE8s tranchante"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4770049024000
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4794266935296
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 1
   attack: 20
   defense: 0
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 3
   sprite: {fileID: -1911702155, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 4
+  references:
+    version: 2
+    RefIds: []

@@ -42,7 +42,7 @@ public class EnnemyIdleState : EnnemyState
 
         if (ennemy.isAggroed)
         {
-            ennemy.stateMachine.ChangeState(ennemy.chasingState);
+            ennemy.StateMachine.ChangeState(ennemy.ChasingState);
         }
 
         if (Vector3.Distance(ennemy.transform.position, ennemy.movePoint.position) <= .05f)

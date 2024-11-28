@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 
 public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
@@ -18,14 +20,23 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
     public Image uiSprite;
     public ItemData itemData;
 
-    // Start is called before the first frame update
+    private LocalizeStringEvent localizedStringEventTitle;
+    private LocalizeStringEvent localizedStringEventDescription;
+
+    private void Awake()
+    {
+        localizedStringEventTitle = tmpNom.gameObject.GetComponent<LocalizeStringEvent>();
+        localizedStringEventDescription = tmpDescription.gameObject.GetComponent<LocalizeStringEvent>();
+    }
+
     void Start()
     {
         cardBackIsActive = false;
 
+        string itemId = itemData.GetNumero().ToString();
         uiSprite.sprite = itemData.GetSprite();
-        tmpNom.text = itemData.GetName();
-        tmpDescription.text = itemData.GetDescription();
+        localizedStringEventTitle.StringReference.SetReference("EquipementTable", "Item_" + itemId + "_Name");
+        localizedStringEventDescription.StringReference.SetReference("EquipementTable", "Item_" + itemId + "_Name");
         tmpPrix.text = itemData.GetPrice()+"";
     }
 
@@ -38,8 +49,8 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
     {
         this.itemData = itemData;
         uiSprite.sprite = itemData.GetSprite();
-        tmpNom.text = itemData.GetName();
-        tmpDescription.text = itemData.GetDescription();
+        tmpNom.text = itemData.GetName().GetLocalizedString();
+        tmpDescription.text = itemData.GetDescription().GetLocalizedString();
         tmpPrix.text = itemData.GetPrice() + "";
     }
 

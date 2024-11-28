@@ -13,16 +13,34 @@ MonoBehaviour:
   m_Name: 12 - Bottes Platine
   m_EditorClassIdentifier: 
   numero: 12
-  itemName: Bottes en platne
-  description: "Bottes tr\xE8s r\xE9sistantes mais tr\xE8s lourdes"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4334248255488
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4348374671360
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
-  pv: 0
-  atk: 0
-  def: 4
+  attack: 0
+  defense: 0
   speed: -1
-  critical: 0
+  luck: 0
   descriptionEffect: 
   price: 120
   rarity: 3
   sprite: {fileID: -65948040, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 2
+  references:
+    version: 2
+    RefIds: []

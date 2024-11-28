@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: EquipementTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 9568bce9c698d234da4fedd4d35b4871, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 14563926016
+    m_Localized: Bronze helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378679844864
+    m_Localized: Low-cost, low-resistance bronze helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2970789076992
+    m_Localized: Silver helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3133406437376
+    m_Localized: Silver helmet Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3281159184384
+    m_Localized: Golden helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3341049651200
+    m_Localized: Golden helmet Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3371382857728
+    m_Localized: "Platinium helmet\t"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399035904000
+    m_Localized: Platinium helmet Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3884795027456
+    m_Localized: Bronze Chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3888129499136
+    m_Localized: Bronze Chest Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4042492469248
+    m_Localized: Silver Chest Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4074344013824
+    m_Localized: Gloden Chest Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4125405470720
+    m_Localized: Platinium Chest Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4076659269632
+    m_Localized: Platinium Chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4051443113984
+    m_Localized: Gloden Chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3892042784768
+    m_Localized: Silver Chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4231752048640
+    m_Localized: Bronze Boots Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4129301979136
+    m_Localized: 'Bronze Boots '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4276278779904
+    m_Localized: Silver Boots Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4312727281664
+    m_Localized: Golden Boots Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4348374671360
+    m_Localized: Platinium Boots Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4334248255488
+    m_Localized: 'Platinium Boots '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4298525368320
+    m_Localized: Golden Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4247891730432
+    m_Localized: Silver Boots
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4372911349760
+    m_Localized: Accessory 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4387184566272
+    m_Localized: Accessory 1 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4452984807424
+    m_Localized: Accessory 2 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4493921214464
+    m_Localized: Accessory 3 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4543086845952
+    m_Localized: Accessory 4 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4518868934656
+    m_Localized: 'Accessory 4 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4474715496448
+    m_Localized: Accessory 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4407254310912
+    m_Localized: Accessory 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4577224286208
+    m_Localized: Bronze Sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4597818318848
+    m_Localized: Bronze Sword Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4636003262464
+    m_Localized: Silver Sword Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4705855201280
+    m_Localized: Golden Sword Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4794266935296
+    m_Localized: Platinium Sword Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4770049024000
+    m_Localized: Platinium Sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4659692691456
+    m_Localized: 'Golden Sword '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4620178153472
+    m_Localized: Silver Sword
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

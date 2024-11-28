@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 05 - Torse Bronze
   m_EditorClassIdentifier: 
   numero: 5
-  itemName: Torse en bronze
-  description: "Torse en bronze qui ne prot\xE8ge pas beaucoup"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 3884795027456
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 3888129499136
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
   attack: 0
   defense: 2
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 1
   sprite: {fileID: -565501065, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 1
+  references:
+    version: 2
+    RefIds: []

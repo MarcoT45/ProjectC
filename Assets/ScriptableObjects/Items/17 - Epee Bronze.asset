@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 17 - Epee Bronze
   m_EditorClassIdentifier: 
   numero: 17
-  itemName: "Ep\xE9e en bronze"
-  description: "Ep\xE9e qui peine \xE0 couper"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4577224286208
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4597818318848
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
   attack: 5
   defense: 0
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 1
   sprite: {fileID: -292892247, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 4
+  references:
+    version: 2
+    RefIds: []

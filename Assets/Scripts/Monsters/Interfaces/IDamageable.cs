@@ -8,7 +8,7 @@ public interface IDamageable
 
     void Die();
 
-    float maxHealth { get; set; }
+    float MaxHealth { get; set; }
 
-    float currentHealth { get; set; }
+    float CurrentHealth { get; set; }
 }

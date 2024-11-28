@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 06 - Torse Argent
   m_EditorClassIdentifier: 
   numero: 6
-  itemName: Torse en argent
-  description: Torse en argent qui offre une bonne resistance
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 3892042784768
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4042492469248
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
   attack: 0
   defense: 3
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 2
   sprite: {fileID: -565501065, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 1
+  references:
+    version: 2
+    RefIds: []

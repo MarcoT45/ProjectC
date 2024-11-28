@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemyChasingState : EnnemyState
+public class OrcChasingState : EnnemyState
 {
     private GameObject target;
     private Vector3 targetPos;
@@ -13,7 +14,7 @@ public class EnnemyChasingState : EnnemyState
     private bool timerIsRunning = false;
     private float aggroRange = 4f;
 
-    public EnnemyChasingState(Ennemy ennemy, EnnemyStateMachine ennemyStateMachine) : base(ennemy,ennemyStateMachine)
+    public OrcChasingState(Ennemy ennemy, EnnemyStateMachine ennemyStateMachine) : base(ennemy, ennemyStateMachine)
     {
 
     }
@@ -40,17 +41,7 @@ public class EnnemyChasingState : EnnemyState
 
         Vector3 ennemyCellPos = ennemy.solTileMap.WorldToCell(ennemy.transform.position);
 
-
-        // ---Mouvement du movePoint et de l'ennemi 
-        ennemy.MoveEnnemy();
-
-        if (Vector3.Distance(ennemy.transform.position, ennemy.movePoint.position) <= .05f)
-        {
-            ennemy.lastPosition = ennemy.solTileMap.WorldToCell(ennemy.transform.position);
-            direction = ennemy.FindNextCell(direction, targetPos);
-            ennemy.MoveEnnemyMovePoint(direction);
-        }
-        // ----
+        ManageMovement();
 
         // ---Debug 
         Vector3 targetTmp = target.transform.position;
@@ -61,8 +52,13 @@ public class EnnemyChasingState : EnnemyState
                   color: Color.white);
         // ----
 
+        ManageAggro(targetTmp, ennemyCellPos);
+    }
+
+    private void ManageAggro(Vector3 playerCellPostion, Vector3 enemyCellPosition)
+    {
         TimerAggro();
-        ennemy.isAggroed = ennemy.CheckAggro((targetTmp - ennemyCellPos).normalized, aggroRange);
+        ennemy.isAggroed = ennemy.CheckAggro((playerCellPostion - enemyCellPosition).normalized, aggroRange);
 
         if (ennemy.isAggroed || timeRemaining > 0)
         {
@@ -76,32 +72,14 @@ public class EnnemyChasingState : EnnemyState
                 timerIsRunning = true;
             }
 
-            if(targetPos != ennemy.solTileMap.WorldToCell(target.transform.position))
+            if (targetPos != ennemy.solTileMap.WorldToCell(target.transform.position))
             {
                 /*Debug.Log("Reset target");*/
                 targetPos = target.transform.position;
                 targetPos = ennemy.solTileMap.WorldToCell(targetPos);
             }
         }
-
-        /* if (Vector3.Distance(ennemyCellPos, targetPos) <= .05f)
-         {
-             Debug.Log("Direction " + (targetTmp - ennemyCellPos).normalized); 
-             ennemy.isAggroed = ennemy.CheckAggro((targetTmp - ennemyCellPos).normalized);
-             if (ennemy.isAggroed)
-             {
-                 Debug.Log("Entre");
-                 targetPos = target.transform.position;
-                 targetPos = ennemy.solTileMap.WorldToCell(targetPos);
-             }
-             else
-             {
-                 ennemy.stateMachine.ChangeState(ennemy.idleState);
-             }
-         }*/
-
     }
-
 
     public override void AnnimationTriggerEvent(Ennemy.AnimationTriggerType triggerType)
     {
@@ -110,9 +88,9 @@ public class EnnemyChasingState : EnnemyState
 
     public void TimerAggro()
     {
-        if(timerIsRunning)
+        if (timerIsRunning)
         {
-            if(timeRemaining > 0)
+            if (timeRemaining > 0)
             {
                 timeRemaining -= Time.deltaTime;
             }
@@ -123,6 +101,19 @@ public class EnnemyChasingState : EnnemyState
                 timeRemaining = 0;
                 timerIsRunning = false;
             }
+        }
+    }
+
+    // ---Mouvement du movePoint et de l'ennemi 
+    public void ManageMovement()
+    {
+        ennemy.MoveEnnemy();
+
+        if (Vector3.Distance(ennemy.transform.position, ennemy.movePoint.position) <= .05f)
+        {
+            ennemy.lastPosition = ennemy.solTileMap.WorldToCell(ennemy.transform.position);
+            direction = ennemy.FindNextCell(direction, targetPos);
+            ennemy.MoveEnnemyMovePoint(direction);
         }
     }
 }

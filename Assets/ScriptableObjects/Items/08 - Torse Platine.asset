@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 08 - Torse Platine
   m_EditorClassIdentifier: 
   numero: 8
-  itemName: Torse en platine
-  description: "Torse extremement r\xE9sistant et tr\xE8s confortable"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4076659269632
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4125405470720
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
   attack: 0
   defense: 5
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 3
   sprite: {fileID: -190497358, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 1
+  references:
+    version: 2
+    RefIds: []

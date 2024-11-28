@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Localization;
 
 [CreateAssetMenu(fileName = "New ItemData", menuName = "ScriptableObjects/Items/ItemData")]
 public class ItemData : ScriptableObject
@@ -8,10 +9,9 @@ public class ItemData : ScriptableObject
     [SerializeField]
     private int numero;
     [SerializeField]
-    private string itemName;
+    private LocalizedString itemName;
     [SerializeField]
-    [TextArea]
-    private string description;
+    private LocalizedString description;
     [SerializeField]
     private bool discovered;
     [SerializeField]
@@ -39,7 +39,6 @@ public class ItemData : ScriptableObject
     public ItemData()
     {
         numero = 0;
-        itemName = "Test";
     }
 
     public int GetNumero()
@@ -47,12 +46,12 @@ public class ItemData : ScriptableObject
         return numero;
     } 
 
-    public string GetName()
+    public LocalizedString GetName()
     {
         return itemName;
     } 
 
-    public string GetDescription()
+    public LocalizedString GetDescription()
     {
         return description;
     }

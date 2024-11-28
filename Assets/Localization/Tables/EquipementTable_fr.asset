@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: EquipementTable_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 9568bce9c698d234da4fedd4d35b4871, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 14563926016
+    m_Localized: Casque en bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 378679844864
+    m_Localized: "Casque en bronze peu on\xE9reux et de faible resistance"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2970789076992
+    m_Localized: Casque en argent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3133406437376
+    m_Localized: Casque en argent Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3341049651200
+    m_Localized: Casque en or Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3399035904000
+    m_Localized: Casque en platine Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3281159184384
+    m_Localized: Casque en or
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3371382857728
+    m_Localized: Casque en platine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3884795027456
+    m_Localized: Torse Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3888129499136
+    m_Localized: Torse Bronze Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3892042784768
+    m_Localized: Torse Argent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4042492469248
+    m_Localized: Torse Argent Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4051443113984
+    m_Localized: Torse Or
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4074344013824
+    m_Localized: Torse Or Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4125405470720
+    m_Localized: Torse Platine Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4076659269632
+    m_Localized: Torse Platine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4129301979136
+    m_Localized: Bottes Bronze
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4231752048640
+    m_Localized: Bottes Bronze Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4247891730432
+    m_Localized: Bottes Argent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4276278779904
+    m_Localized: Bottes Argent Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4312727281664
+    m_Localized: Bottes Or Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4348374671360
+    m_Localized: Bottes Platine Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4334248255488
+    m_Localized: Bottes Platine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4298525368320
+    m_Localized: Bottes Or
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4372911349760
+    m_Localized: Accessoire 1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4387184566272
+    m_Localized: Accessoire 1 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4407254310912
+    m_Localized: Accessoire 2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4452984807424
+    m_Localized: Accessoire 2 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4493921214464
+    m_Localized: Accessoire 3 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4543086845952
+    m_Localized: Accessoire 4 Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4518868934656
+    m_Localized: 'Accessoire 4 '
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4474715496448
+    m_Localized: Accessoire 3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4577224286208
+    m_Localized: "Ep\xE9e Bronze"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4597818318848
+    m_Localized: "Ep\xE9e Bronze Description"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4636003262464
+    m_Localized: "Ep\xE9e Argent Description"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4705855201280
+    m_Localized: "Ep\xE9e Or Description"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4794266935296
+    m_Localized: "Ep\xE9e Platine Description"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4770049024000
+    m_Localized: "Ep\xE9e Platine "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4659692691456
+    m_Localized: "Ep\xE9e Or"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4620178153472
+    m_Localized: "Ep\xE9e Argent"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

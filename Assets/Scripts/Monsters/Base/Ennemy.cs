@@ -4,30 +4,33 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 
-public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
+public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 {
     public MonsterData monsterData;
 
     public Transform movePoint;
 
-    public float maxHealth { get; set; }
+    public float MaxHealth { get; set; }
 
-    public float currentHealth { get; set; }
+    public float CurrentHealth { get; set; }
 
-    public bool isFacingRight { get; set; }
+    public bool IsFacingRight { get; set; }
 
     public Tilemap murTileMap;
     public Tilemap solTileMap;
 
     #region State Machine variables
 
-    public EnnemyStateMachine stateMachine { get; set; }
+    public EnnemyStateMachine StateMachine { get; set; }
 
-    public EnnemyIdleState idleState { get; set; }
+    //Mis dans les héritiers
 
-    public EnnemyChasingState chasingState { get; set; }
+    public EnnemyState IdleState { get; set; }
 
-    private bool isBlocked;
+    public EnnemyState ChasingState { get; set; }
+
+
+    public bool isBlocked;
 
     #endregion
 
@@ -41,13 +44,13 @@ public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     #region Hit variables
 
-    private bool isHurt;
-    private SpriteRenderer spriteRenderer;
-    private Material material;
-    [SerializeField] private float pushBackDistance = 1f;
-    [SerializeField] private float pushBackSpeed = 3f;
-    [SerializeField] private float tintFadeSpeed = 0.25f;
-    [SerializeField] private Color tintColor;
+    public bool isHurt;
+    protected SpriteRenderer spriteRenderer;
+    protected Material material;
+    [SerializeField] protected float pushBackDistance = 1f;
+    [SerializeField] protected float pushBackSpeed = 3f;
+    [SerializeField] protected float tintFadeSpeed = 0.25f;
+    [SerializeField] protected Color tintColor;
 
     #endregion
 
@@ -56,12 +59,13 @@ public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     public UnityEvent OnHit;*/
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
-        stateMachine = new EnnemyStateMachine();
+        StateMachine = new EnnemyStateMachine();
 
-        idleState = new EnnemyIdleState(this, stateMachine);
-        chasingState = new EnnemyChasingState(this, stateMachine);
+        /* Mis dans les héritiers
+        IdleState = new EnnemyIdleState(this, StateMachine);
+        ChasingState = new EnnemyChasingState(this, StateMachine);*/
 
         movePoint.parent = null;
 
@@ -71,26 +75,26 @@ public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     }
 
-    private void Start()
+    protected virtual void Start()
     {
-        maxHealth = monsterData.pv;
-        currentHealth = maxHealth;
+        MaxHealth = monsterData.pv;
+        CurrentHealth = MaxHealth;
 
-        stateMachine.Initialize(idleState);
+        StateMachine.Initialize(IdleState);
     }
 
-    private void Update()
+    protected virtual void Update()
     {
-        stateMachine.currentEnnemyState.FrameUpdate();
+        StateMachine.CurrentEnnemyState.FrameUpdate();
     }
 
 
     #region Health / Die functions
     public void Damage(float damage)
     {
-        currentHealth -= damage;
+        CurrentHealth -= damage;
 
-        if (currentHealth <= 0f)
+        if (CurrentHealth <= 0f)
         {
             Die();
         }
@@ -177,25 +181,25 @@ public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     public void CheckForLeftOrRightFacing(Vector2 direction)
     {
-        if (isFacingRight && direction.x < 0f)
+        if (IsFacingRight && direction.x < 0f)
         {
             Vector3 rotator = new Vector3(transform.rotation.x, 180f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
-            isFacingRight = !isFacingRight;
+            IsFacingRight = !IsFacingRight;
 
         }
-        else if (!isFacingRight && direction.x > 0f)
+        else if (!IsFacingRight && direction.x > 0f)
         {
             Vector3 rotator = new Vector3(transform.rotation.x, 0f, transform.rotation.z);
             transform.rotation = Quaternion.Euler(rotator);
-            isFacingRight = !isFacingRight;
+            IsFacingRight = !IsFacingRight;
         }
     }
 
     #endregion
 
     #region Aggro / Chase functions
-    
+
     public bool CheckAggro(Vector2 direction, float aggroRange)
     {
         Vector2 position = transform.position;
@@ -237,7 +241,7 @@ public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     #region Collider / Hit flash
 
-    private void OnTriggerEnter2D(Collider2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         Vector3 otherCell = Vector3.zero;
         Vector3Int thisCell = Vector3Int.zero;
@@ -305,9 +309,9 @@ public class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     #region Annimation Triggers
 
-    private void AnimationTriggerEvent(AnimationTriggerType triggerType)
+    protected virtual void AnimationTriggerEvent(AnimationTriggerType triggerType)
     {
-        stateMachine.currentEnnemyState.AnnimationTriggerEvent(triggerType);
+        StateMachine.CurrentEnnemyState.AnnimationTriggerEvent(triggerType);
     }
 
     public enum AnimationTriggerType

@@ -41,8 +41,8 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     public CharacterData data;
     public CharacterStats stats;
 
-    public float maxHealth { get; set; }
-    public float currentHealth { get; set; }
+    public float MaxHealth { get; set; }
+    public float CurrentHealth { get; set; }
 
     //Si on utilise les barres de vie au dessus du perso
     /*public UnityEvent<float> OnChangeHealth;
@@ -51,8 +51,8 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
     private void Awake()
     {
         stats = data.baseStats;
-        maxHealth = stats.pv;
-        currentHealth = maxHealth;
+        MaxHealth = stats.pv;
+        CurrentHealth = MaxHealth;
 
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
         material = spriteRenderer.material;
@@ -301,9 +301,9 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     public void Damage(float damage)
     {
-        currentHealth -= damage;
+        CurrentHealth -= damage;
 
-        if (currentHealth <= 0f)
+        if (CurrentHealth <= 0f)
         {
             Die();
         }

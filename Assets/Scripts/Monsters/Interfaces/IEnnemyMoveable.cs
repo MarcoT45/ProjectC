@@ -4,7 +4,7 @@ using UnityEngine;
 
 public interface IEnnemyMoveable 
 {
-    bool isFacingRight { get; set; }
+    public bool IsFacingRight { get; set; }
 
     void MoveEnnemy();
 

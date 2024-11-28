@@ -299,9 +299,11 @@ MonoBehaviour:
   movePoint: {fileID: 1937668522}
   murTileMap: {fileID: 1046008324}
   solTileMap: {fileID: 2092674706}
+  isBlocked: 0
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
   tintFadeSpeed: 0.25
@@ -826,7 +828,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &191166478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -839,13 +841,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ae205d5e921e49960446c3772170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: fe1860bbe0b4ee84e9620db512af72ea, type: 2}
+  monsterData: {fileID: 11400000, guid: 8a0d6e178b021514db56aa1bf6eefba7, type: 2}
   movePoint: {fileID: 1473459355}
   murTileMap: {fileID: 1046008324}
   solTileMap: {fileID: 2092674706}
+  isBlocked: 0
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
   tintFadeSpeed: 0.25
@@ -1950,7 +1954,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2255,6 +2259,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 870100168}
   m_CullTransparentMesh: 1
+--- !u!1 &936856932
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 936856935}
+  - component: {fileID: 936856934}
+  - component: {fileID: 936856933}
+  m_Layer: 0
+  m_Name: ControlsManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &936856933
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936856932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 1c3f1dc410f7a3142b86c408773840f9, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Keyboard/Gamepad Mapping
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
+--- !u!114 &936856934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936856932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b13fb62c1b623ad4689f5dd375c4842b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  controlsState: 0
+--- !u!4 &936856935
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936856932}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1012372605
 GameObject:
   m_ObjectHideFlags: 0
@@ -11847,7 +11927,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12087,7 +12167,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -12859,7 +12939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1537002575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12872,13 +12952,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e86ae205d5e921e49960446c3772170e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  monsterData: {fileID: 11400000, guid: fe1860bbe0b4ee84e9620db512af72ea, type: 2}
+  monsterData: {fileID: 11400000, guid: 8a0d6e178b021514db56aa1bf6eefba7, type: 2}
   movePoint: {fileID: 311156739}
   murTileMap: {fileID: 1046008324}
   solTileMap: {fileID: 2092674706}
+  isBlocked: 0
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
   tintFadeSpeed: 0.25
@@ -14524,7 +14606,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1864255826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14541,9 +14623,11 @@ MonoBehaviour:
   movePoint: {fileID: 113104694}
   murTileMap: {fileID: 1046008324}
   solTileMap: {fileID: 2092674706}
+  isBlocked: 0
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
   tintFadeSpeed: 0.25

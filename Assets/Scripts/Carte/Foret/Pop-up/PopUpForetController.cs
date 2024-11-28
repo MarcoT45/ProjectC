@@ -187,7 +187,7 @@ public class PopUpForetController : MonoBehaviour {
 
         List<ItemData> listItem = GameManager.Instance.GetAllItems();
         int randomItemValue = Random.Range(0, listItem.Count);
-        texteNomObjetTrouve.text = listItem[randomItemValue].GetName();
+        texteNomObjetTrouve.text = listItem[randomItemValue].GetName().GetLocalizedString();
         imageObjetTrouve.GetComponent<Image>().sprite = listItem[randomItemValue].GetSprite();
         encartObjetTrouve.SetActive(true);
 

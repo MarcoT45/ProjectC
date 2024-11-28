@@ -13,8 +13,24 @@ MonoBehaviour:
   m_Name: 13 - Accessoire 1
   m_EditorClassIdentifier: 
   numero: 13
-  itemName: Collier critique
-  description: "Collier en os qui augmente la pr\xE9cision de son porteur"
+  itemName:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4372911349760
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
+  description:
+    m_TableReference:
+      m_TableCollectionName: GUID:9568bce9c698d234da4fedd4d35b4871
+    m_TableEntryReference:
+      m_KeyId: 4387184566272
+      m_Key: 
+    m_FallbackState: 0
+    m_WaitForCompletion: 0
+    m_LocalVariables: []
   discovered: 0
   attack: 0
   defense: 0
@@ -25,3 +41,6 @@ MonoBehaviour:
   rarity: 1
   sprite: {fileID: 2080524993, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 3
+  references:
+    version: 2
+    RefIds: []

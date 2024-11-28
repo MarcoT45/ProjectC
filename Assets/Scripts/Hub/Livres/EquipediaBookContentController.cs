@@ -196,13 +196,13 @@ public class EquipediaBookContentController : MonoBehaviour {
     private void DisplayItemForRightPage() {
         if(catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetDiscovered()) {
             numeroItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetNumero().ToString();
-            nameItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetName();
+            nameItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetName().GetLocalizedString();
             priceItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetPrice().ToString();
             attackItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetAttack().ToString();
             defenseItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetDefense().ToString();
             speedItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetSpeed().ToString();
             luckItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetLuck().ToString();
-            descriptionItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetDescription();
+            descriptionItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetDescription().GetLocalizedString();
             Image icon = (Image) typeItem.GetComponent(typeof(Image));
             icon.sprite = typeItemSprite[(int) catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetItemType()];
             Image icon2 = (Image) spriteItem.GetComponent(typeof(Image));
