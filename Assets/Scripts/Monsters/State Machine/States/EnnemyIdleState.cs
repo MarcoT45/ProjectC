@@ -1,12 +1,14 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 public class EnnemyIdleState : EnnemyState
 {
     private Vector3 targetPos;
     private Vector2 direction;
-    private float aggroRange = 3f;
+    private float aggroRange = 4f;
 
     public EnnemyIdleState(Ennemy ennemy, EnnemyStateMachine ennemyStateMachine) : base(ennemy, ennemyStateMachine)
     {
@@ -21,7 +23,9 @@ public class EnnemyIdleState : EnnemyState
 
         direction = Vector2.zero;
         targetPos = GetRandomPointInCircle();
-        targetPos = ennemy.solTileMap.WorldToCell(targetPos);
+        // targetPos = ennemy.solTileMap.WorldToCell(targetPos);
+        targetPos = ennemy.gridManager.WorldToCell(targetPos);
+        ennemy.newCellTarget = ennemy.gridManager.WorldToCell(ennemy.transform.position);
 
     }
 
@@ -40,23 +44,53 @@ public class EnnemyIdleState : EnnemyState
         //Changer l'aggroRange et mettre dans Monster SO
         ennemy.isAggroed = ennemy.CheckAggro(direction, aggroRange);
 
-        if (ennemy.isAggroed)
+
+
+        if (Vector3.Distance(ennemy.transform.position, ennemy.gridManager.CellToWorld(ennemy.newCellTarget)) <= .05f)
         {
-            ennemy.StateMachine.ChangeState(ennemy.ChasingState);
+
+            if (Time.time > ennemy.LastUsedTimeMove + ennemy.coolDownMove)
+            {
+
+                ennemy.lastPosition = ennemy.gridManager.WorldToCell(ennemy.transform.position);
+                direction = ennemy.FindNextCell(direction, targetPos);
+
+                Vector3 nextPosition = ennemy.transform.position + (Vector3)direction;
+                Vector3Int gridNextPosition = ennemy.gridManager.WorldToCell(nextPosition);
+
+                ennemy.newCellTarget = gridNextPosition;
+
+                if (ennemy.isAggroed)
+                {
+                    //Tween animation du saut
+                    ennemy.transform.DOLocalJump(ennemy.transform.position, 1f, 1, 0.5f)
+                         .SetEase(Ease.InOutQuint);
+                    ennemy.StateMachine.ChangeState(ennemy.ChasingState);
+                }
+
+                //changement de place sur la grid du gridManager
+                var currentCell = ennemy.gridManager.GetCellData(ennemy.lastPosition);
+                currentCell.containedInCell = null;
+
+                var targetCell = ennemy.gridManager.GetCellData(ennemy.newCellTarget);
+                targetCell.containedInCell = ennemy.gameObject;
+
+                //Debug
+                ennemy.movePoint.transform.position = ennemy.gridManager.CellToWorld(ennemy.newCellTarget);
+                //-----
+
+                UnityEngine.Object.Instantiate(ennemy.stepVFXPrefab, ennemy.gridManager.CellToWorld(ennemy.lastPosition), Quaternion.identity);
+
+                ennemy.LastUsedTimeMove = Time.time;
+            }
+
         }
 
-        if (Vector3.Distance(ennemy.transform.position, ennemy.movePoint.position) <= .05f)
-        {
-            ennemy.lastPosition = ennemy.solTileMap.WorldToCell(ennemy.transform.position); 
-            direction = ennemy.FindNextCell(direction, targetPos);
-            ennemy.MoveEnnemyMovePoint(direction);
-        }
-
-        ennemyCellPos = ennemy.solTileMap.WorldToCell(ennemy.transform.position);
+        ennemyCellPos = ennemy.gridManager.WorldToCell(ennemy.transform.position);
         if (Vector3.Distance(ennemyCellPos, targetPos) <= .05f)
         {
             targetPos = GetRandomPointInCircle();
-            targetPos = ennemy.solTileMap.WorldToCell(targetPos);
+            targetPos = ennemy.gridManager.WorldToCell(targetPos);
         }
     }
 

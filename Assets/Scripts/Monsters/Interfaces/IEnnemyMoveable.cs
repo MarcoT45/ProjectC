@@ -8,7 +8,7 @@ public interface IEnnemyMoveable
 
     void MoveEnnemy();
 
-    void MoveEnnemyMovePoint(Vector2 direction);
+    //void MoveEnnemyMovePoint(Vector2 direction);
 
     bool CanEnnemyMove(Vector2 direction);
 

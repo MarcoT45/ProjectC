@@ -4,9 +4,22 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using System;
+using DG.Tweening;
 
 public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 {
+    public GridManager gridManager;
+    private Vector3Int newCellTarget;
+    private Vector3Int lastPosition;
+    public float coolDownAttack = 1.5f;
+    private float lastUsedTimeAttack;
+    private float attacKTimeRemaining;
+    private bool attackKTimeIsRuning = false;
+    public float coolDownMove = 0.5f;
+    private float lastUsedTimeMove;
+    public GameObject slashVFXPrefab;
+    public GameObject stepVFXPrefab;
 
     private UIInventory uiInventory;
     private InventoryController inventory;
@@ -26,7 +39,6 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
     public float moveSpeed;
     public Transform movePoint;
-    private Vector3Int lastPosition;
     private Vector2 lastDirection;
     private bool isHurt;
     private SpriteRenderer spriteRenderer;
@@ -55,12 +67,12 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         CurrentHealth = MaxHealth;
 
         spriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        material = spriteRenderer.material;
+        material = transform.GetComponentInChildren<SpriteRenderer>().material;
         controls = new PlayerMovement();
 
         //Enregistrer les types d'inputs et leurs affecter les fonctions
         //started ~= GetKeyDown / performed ~= GetKey / canceled ~= GetKeyReleased
-        controls.Main.Movement.started += ctx => Move(ctx.ReadValue<Vector2>());
+        controls.Main.Movement.started += ctx => InputDirection(ctx.ReadValue<Vector2>());
         /*controls.Main.Movement.canceled += ctx => this.direction = Vector2.zero;*/
 
     }
@@ -98,9 +110,8 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         movePoint.parent = null;
         /*uiInventory = GameObject.FindWithTag("UI_Inventory").GetComponent<UI_Inventory>();
         uiInventory.SetInventory(inventory);*/
-        InitTileMaps();
-        solTileMap = solTileMaps[0];
-        lastPosition = solTileMap.WorldToCell(transform.position);
+        /*InitTileMaps();
+        solTileMap = solTileMaps[0];*/
         lastDirection = Vector2.zero;
         isHurt = false;
 
@@ -111,9 +122,14 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
             controls.Main.Movement.canceled += ctx => this.direction = Vector2.zero;
         }
 
+        // Changement de méthode
+        attacKTimeRemaining = coolDownAttack;
+        attackKTimeIsRuning = true;
+        lastPosition = gridManager.WorldToCell(transform.position);
+        newCellTarget = lastPosition;
     }
 
-    void Update()
+  /*  void Update()
     {
         Vector3 tmpPos;
 
@@ -155,9 +171,57 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
                 movePoint.position += (Vector3)lastDirection;
             }
         }
-    }
+    }*/
 
-    private void InitTileMaps()
+    private void Update()
+    {
+        if (this.direction != Vector2.zero)
+        {
+            
+            //Essai "saut" pendant mouvement
+            transform.Translate(new Vector3(0, 0.5f, 0) * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, gridManager.CellToWorld(newCellTarget), moveSpeed * Time.deltaTime);
+
+            //Perso au centre de la case
+            if (Vector3.Distance(transform.position, gridManager.CellToWorld(newCellTarget)) <= .05f)
+            {
+
+                Vector3 positionNewDir = transform.position + (Vector3)this.direction;
+                Vector3Int gridPositionNewDir = gridManager.WorldToCell(positionNewDir);
+
+                Vector3 positionLastDir = transform.position + (Vector3)lastDirection;
+                Vector3Int gridPositionLastDir = gridManager.WorldToCell(positionLastDir);
+
+                //Si on bouge
+                if (gridManager.CanMoveOnCell(gridPositionNewDir))
+                {
+
+                    //Récupère le cellData
+                    GridManager.CellData cellData = gridManager.GetCellData(gridPositionNewDir);
+
+                    //Si quelque chose sur la cell
+                    if (gridManager.IsObjectOnCell(gridPositionNewDir))
+                    {
+                        if(cellData.containedInCell.tag == "Ennemi")
+                        {
+                            Attaque(gridPositionNewDir, cellData);
+                            cellData.containedInCell.GetComponent<Ennemy>().isHurt = true;
+                        }
+                    }
+                    else
+                    {
+                        Move(gridPositionNewDir);
+
+                    }
+                }
+                else if (gridManager.CanMoveOnCell(gridPositionLastDir))
+                {
+                    Move(gridPositionLastDir);
+                }
+            }
+        }
+    }
+   /* private void InitTileMaps()
     {
         //On récupère les Tilemaps avec le tag "Sol", que l'on met dans solTileMaps
         GameObject[] solTilemapsGO = GameObject.FindGameObjectsWithTag("Sol");
@@ -185,23 +249,103 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         {
             sortieTileMaps[i] = sortieTilemapsGO[i].GetComponent<Tilemap>();
         }
-    }
+    }*/
 
-    private void Move(Vector2 newDirection)
+
+    private void Attaque(Vector3Int position, GridManager.CellData cellData)
     {
-            if (this.direction != newDirection && CanMove(newDirection))
+        /* if(Time.time > lastUsedTimeAttack + coolDownAttack)
+         {
+             Debug.Log("Attaque Player");
+             Instantiate(slashVFXPrefab, gridManager.CellToWorld(position), Quaternion.identity);
+             lastUsedTimeAttack = Time.time;
+         }*/
+
+        if (!attackKTimeIsRuning)
+        {
+            Instantiate(slashVFXPrefab, gridManager.CellToWorld(position), Quaternion.identity);
+            //lastUsedTimeAttack = Time.time;
+            attacKTimeRemaining = coolDownAttack;
+            attackKTimeIsRuning = true;
+
+            Ennemy monster = cellData.containedInCell.GetComponent<Ennemy>();
+            
+            if(monster != null) 
             {
-                lastDirection = this.direction;
+                monster.OnDamage();
             }
-            this.direction = (Vector3)newDirection;
+
+            Camera camera = Camera.main;
+            camera.DOShakePosition(0.2f, 0.1f, 5, 90, true, ShakeRandomnessMode.Harmonic);
+
+        }
+        else
+        {
+            attacKTimeRemaining -= Time.deltaTime;
+            if (attacKTimeRemaining <= 0f)
+            {
+                attackKTimeIsRuning = false;
+            }
+        }
+    }
+
+    public void OnDamage()
+    {
+        StartCoroutine(HitFlash());
+    }
+
+    private void Move(Vector3Int position)
+    {
+        if (Time.time > lastUsedTimeMove + coolDownMove)
+        {
+
+            //Récupère le cellData
+            GridManager.CellData cellData = gridManager.GetCellData(position);
+
+            //Changement de place sur scene
+            lastPosition = newCellTarget;
+            newCellTarget = position;
+
+            //changement de place sur la grid du gridManager
+            var currentCell = gridManager.GetCellData(lastPosition);
+            currentCell.containedInCell = null;
+
+            var targetCell = gridManager.GetCellData(newCellTarget);
+            targetCell.containedInCell = this.gameObject;
+
+            lastUsedTimeMove = Time.time;
+
+            //Debug
+            //gridManager.DebugCellWithObjects();
+
+            Instantiate(stepVFXPrefab, gridManager.CellToWorld(lastPosition) , Quaternion.identity);
+        }
+    }
+
+    //Méthode qui récupère l'input de la direction
+    private void InputDirection(Vector2 newDirection)
+    {
+        //Nouvelle Méthode avec le GridManager
+
+        //Position avec NewDirection
+        Vector3 positionNewDir = lastPosition + (Vector3)newDirection;
+        Vector3Int gridPositionNewDir = gridManager.WorldToCell(positionNewDir);
+
+        this.direction = (Vector3)newDirection;
 
 
-        /*Debug.Log("lastDir " + lastDirection);
-        Debug.Log("dir " + this.direction);*/
+        ////////////////////////////////////////////////////////////////////
+
+        /* if (this.direction != newDirection && CanMove(newDirection))
+         {
+             lastDirection = this.direction;
+         }
+         this.direction = (Vector3)newDirection;*/
+
 
     }
 
-    private bool CanMove(Vector2 direction)
+/*    private bool CanMove(Vector2 direction)
     {
         Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
 
@@ -222,7 +366,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         {
             return false;
         }
-    }
+    }*/
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -234,7 +378,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         {
             Ennemy ennemy = other.gameObject.GetComponent<Ennemy>();
 
-            if(ennemy != null)
+            /*if(ennemy != null)
             {
                 ennemy.Damage(stats.atk);
                 StartCoroutine(HitFlash());
@@ -257,17 +401,17 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
 
                 for (int i = 0; i < pushBackDistance; i++)
                 {
-                    if (CanMove(directionPushback))
+                    *//*if (CanMove(directionPushback))
                     {
                         transform.position += directionPushback;
-                    }
+                    }*//*
                 }
 
                 isHurt = true;
                 this.direction = Vector2.zero;
                 movePoint.position = transform.position;
                 controls.Disable();
-            }
+            }*/
         }
         if ( other.gameObject.CompareTag("Coin") )
         {

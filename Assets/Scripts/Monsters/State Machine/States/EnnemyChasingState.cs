@@ -28,7 +28,7 @@ public class EnnemyChasingState : EnnemyState
         //Changer par le player du GM, autre façon de faire avec le joueur comme direction
         target = GameObject.FindWithTag("Player");
         targetPos = target.transform.position;
-        targetPos = ennemy.solTileMap.WorldToCell(targetPos);
+        targetPos = ennemy.gridManager.WorldToCell(targetPos);
 
         timeRemaining = aggroDuration;
 
@@ -38,23 +38,45 @@ public class EnnemyChasingState : EnnemyState
     {
         base.FrameUpdate();
 
-        Vector3 ennemyCellPos = ennemy.solTileMap.WorldToCell(ennemy.transform.position);
+        Vector3Int ennemyCellPos = ennemy.gridManager.WorldToCell(ennemy.transform.position);
 
 
         // ---Mouvement du movePoint et de l'ennemi 
         ennemy.MoveEnnemy();
 
-        if (Vector3.Distance(ennemy.transform.position, ennemy.movePoint.position) <= .05f)
+        if (Vector3.Distance(ennemy.transform.position, ennemy.gridManager.CellToWorld(ennemy.newCellTarget)) <= .05f)
         {
-            ennemy.lastPosition = ennemy.solTileMap.WorldToCell(ennemy.transform.position);
-            direction = ennemy.FindNextCell(direction, targetPos);
-            ennemy.MoveEnnemyMovePoint(direction);
+            if (Time.time > ennemy.LastUsedTimeMove + ennemy.coolDownMove)
+            {
+                ennemy.lastPosition = ennemy.gridManager.WorldToCell(ennemy.transform.position);
+                direction = ennemy.FindNextCell(direction, targetPos);
+
+                Vector3 nextPosition = ennemy.transform.position + (Vector3)direction;
+                Vector3Int gridNextPosition = ennemy.gridManager.WorldToCell(nextPosition);
+
+                ennemy.newCellTarget = gridNextPosition;
+
+                //changement de place sur la grid du gridManager
+                var currentCell = ennemy.gridManager.GetCellData(ennemy.lastPosition);
+                currentCell.containedInCell = null;
+
+                var targetCell = ennemy.gridManager.GetCellData(ennemy.newCellTarget);
+                targetCell.containedInCell = ennemy.gameObject;
+
+                //Debug
+                ennemy.movePoint.transform.position = ennemy.gridManager.CellToWorld(ennemy.newCellTarget);
+                //-----
+
+                UnityEngine.Object.Instantiate(ennemy.stepVFXPrefab, ennemy.gridManager.CellToWorld(ennemy.lastPosition), Quaternion.identity);
+
+                ennemy.LastUsedTimeMove = Time.time;
+            }
         }
         // ----
 
         // ---Debug 
         Vector3 targetTmp = target.transform.position;
-        targetTmp = ennemy.solTileMap.WorldToCell(targetTmp);
+        targetTmp = ennemy.gridManager.WorldToCell(targetTmp);
         Debug.DrawRay(
                   start: ennemy.transform.position,
                   dir: targetPos - ennemyCellPos,
@@ -76,11 +98,11 @@ public class EnnemyChasingState : EnnemyState
                 timerIsRunning = true;
             }
 
-            if(targetPos != ennemy.solTileMap.WorldToCell(target.transform.position))
+            if(targetPos != ennemy.gridManager.WorldToCell(target.transform.position))
             {
                 /*Debug.Log("Reset target");*/
                 targetPos = target.transform.position;
-                targetPos = ennemy.solTileMap.WorldToCell(targetPos);
+                targetPos = ennemy.gridManager.WorldToCell(targetPos);
             }
         }
 
@@ -118,7 +140,6 @@ public class EnnemyChasingState : EnnemyState
             }
             else
             {
-                Debug.Log("Fin");
                 ennemy.StateMachine.ChangeState(ennemy.IdleState);
                 timeRemaining = 0;
                 timerIsRunning = false;

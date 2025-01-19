@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.Events;
+using DG.Tweening;
 
 public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 {
+    public GridManager gridManager;
+    public Vector3Int newCellTarget;
+    public float coolDownAttack = 1.5f;
+    public float LastUsedTimeAttack { get; set; } // En property mais peut juste être un simple public
+    public float coolDownMove = 0.5f;
+    public float LastUsedTimeMove { get; set; }
+    public GameObject slashVFXPrefab;
+    public GameObject stepVFXPrefab;
+
     public MonsterData monsterData;
 
     public Transform movePoint;
@@ -16,8 +26,8 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     public bool IsFacingRight { get; set; }
 
-    public Tilemap murTileMap;
-    public Tilemap solTileMap;
+    /*public Tilemap murTileMap;
+    public Tilemap solTileMap;*/
 
     #region State Machine variables
 
@@ -28,6 +38,7 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     public EnnemyState IdleState { get; set; }
 
     public EnnemyState ChasingState { get; set; }
+    public EnnemyState AttackingState { get; set; }
 
 
     public bool isBlocked;
@@ -110,24 +121,37 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     public void MoveEnnemy()
     {
-        transform.position = Vector3.MoveTowards(transform.position, movePoint.position, monsterData.speed * Time.deltaTime);
+        //Essai "saut" pendant mouvement
+        transform.Translate(new Vector3(0, 0.5f, 0) * Time.deltaTime);
+
+        transform.position = Vector3.MoveTowards(transform.position, gridManager.CellToWorld(newCellTarget), monsterData.speed * Time.deltaTime);
     }
 
-    public void MoveEnnemyMovePoint(Vector2 direction)
+/*    public void MoveEnnemyMovePoint(Vector2 direction)
     {
         movePoint.position += (Vector3)direction;
-    }
+    }*/
 
     public bool CanEnnemyMove(Vector2 direction)
     {
-        Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
+        /* Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
 
-        if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+         if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
+         {
+             return false;
+         }
+
+         return true;*/
+
+        Vector3 position = (Vector3)transform.position + (Vector3)direction;
+        Vector3Int gridPosition = gridManager.WorldToCell(position);
+
+        if (gridManager.CanMoveOnCell(gridPosition))
         {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public Vector2 FindNextCell(Vector2 direction, Vector3 targetPos)
@@ -205,33 +229,46 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
         Vector2 position = transform.position;
 
 
-        RaycastHit2D hit = Physics2D.Raycast(
+        //RaycastHit2D hit = Physics2D.Raycast(
+        RaycastHit2D[] hits = Physics2D.RaycastAll(
                 origin: position,
                 direction: direction,
                 distance: aggroRange);
 
-        //Ici hit ne detecte pas le collider d'où il sort car j'ai décoché l'option dans les settings
+        //Hit ne detecte pas le collider d'où il sort car j'ai décoché l'option dans les settings
         // Project Settings > Physics 2D > Query Start in collider
-        if ( hit.collider != null)
-        {
-            Debug.DrawRay(
-                    start: transform.position,
-                    dir: direction * aggroRange,
-                    color: Color.green);
 
-            if (hit.collider.gameObject.tag == "Player")
+        for(int i = 0; i < hits.Length; i++)
+        {
+            RaycastHit2D hit = hits[i];
+
+            if (hit.collider != null)
             {
-                return true;
+                Debug.DrawRay(
+                        start: transform.position,
+                        dir: direction * aggroRange,
+                        color: Color.green);
+
+                if (hit.collider.gameObject.tag == "Player")
+                {
+                    return true;
+                }
+
             }
+            else
+            {
 
+                Debug.DrawRay(
+                        start: transform.position,
+                        dir: direction * aggroRange,
+                        color: Color.red);
+            }
         }
-        else
-        {
 
-            Debug.DrawRay(
-                    start: transform.position,
-                    dir: direction * aggroRange,
-                    color: Color.red);
+        if(isHurt)
+        {
+            isHurt = false; 
+            return true;
         }
 
         return false;
@@ -240,6 +277,11 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     #endregion
 
     #region Collider / Hit flash
+
+    public void OnDamage()
+    {
+        StartCoroutine(HitFlash());
+    }
 
     public void OnTriggerEnter2D(Collider2D other)
     {
@@ -250,14 +292,21 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
         if (other.gameObject.CompareTag("Player"))
         {
 
+            isHurt = true;
+
+             
             //A changer peut etre si le CharacterController est amené à être modifié dans sa structure
             CharacterController characterController = other.gameObject.GetComponent<CharacterController>();
             if (characterController != null)
             {
-                characterController.Damage(monsterData.atk);
-                StartCoroutine(HitFlash());
+                //Screen shake
+               /* Camera cam = Camera.main;
+                cam.DOShakePosition(1f, 2f, 5, 90, true, ShakeRandomnessMode.Harmonic);
 
-                otherCell = solTileMap.WorldToCell(other.transform.position);
+                characterController.Damage(monsterData.atk);*/
+                //StartCoroutine(HitFlash());
+
+               /* otherCell = solTileMap.WorldToCell(other.transform.position);
                 thisCell = solTileMap.WorldToCell(transform.position);
                 directionPushback = (otherCell - thisCell).normalized * -1;
 
@@ -279,10 +328,9 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
                     {
                         transform.position += directionPushback;
                     }
-                }
-
-                isHurt = true;
-                movePoint.position = transform.position;
+                }*/
+                
+                //movePoint.position = transform.position;
             }
 
         }
