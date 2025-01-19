@@ -113,6 +113,7 @@ public class CarteDeplacementController : MonoBehaviour {
         NoeudController nds = (NoeudController) tmpNode.GetComponent(typeof(NoeudController));
         this.currentNode = n;
         this.nextNodes = nds.noeud.noeudsSuivant;
+        this.nextNodes.Sort();
         this.currentPos = 0;
     }
 

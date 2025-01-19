@@ -31,6 +31,7 @@ public class CarteForetController : MonoBehaviour {
         CreateNewPaths();
         DeleteUnusedNodes();
         UpdateNodesEvent();
+        DeleteDuplicates();
         ConnectStartingPoint();
         ConnectBoss();
         SetPlayerStartingPosition();
@@ -133,20 +134,54 @@ public class CarteForetController : MonoBehaviour {
             } else {
                 int randomEventValue = Random.Range(0, 101);
                 
-                if (randomEventValue < 59) { 
-                    nds.ChangeNodeState(0); // Combat 59%
-                } else if (randomEventValue < 67) {
-                    nds.ChangeNodeState(1); // Evenement 8%
-                } else if (randomEventValue < 75) {
-                    nds.ChangeNodeState(3); // Repos 8%
-                } else if (randomEventValue < 83) {
-                    nds.ChangeNodeState(4); // Magasin 8%
-                } else if (randomEventValue < 91) {
-                    nds.ChangeNodeState(5); // Echange 8%
+                if (randomEventValue < 64) { 
+                    nds.ChangeNodeState(0); // Combat 64%
+                } else if (randomEventValue < 71) {
+                    nds.ChangeNodeState(1); // Evenement 7%
+                } else if (randomEventValue < 78) {
+                    nds.ChangeNodeState(3); // Repos 7%
+                } else if (randomEventValue < 85) {
+                    nds.ChangeNodeState(4); // Magasin 7%
+                } else if (randomEventValue < 92) {
+                    nds.ChangeNodeState(5); // Echange 7%
                 } else if (randomEventValue < 100) {
-                    nds.ChangeNodeState(6); // Coffre 8%
+                    nds.ChangeNodeState(6); // Coffre 7%
                 } else {
                     nds.ChangeNodeState(2); // Elite 1%
+                }
+            }
+        }
+    }
+
+    // On supprime/remplace les doublons de noeuds qui se suivent
+    private void DeleteDuplicates() {
+        GameObject tmpNode, previousNode;
+        bool duplicate = false;
+
+        List<int> remainingEvent = new List<int>() {1, 3, 4, 5, 6};
+
+        foreach (var n in noeudsUtilises) {
+
+            remainingEvent = new List<int>() {1, 3, 4, 5, 6};
+
+            tmpNode = GameObject.Find("Noeud "+ n);
+            NoeudController nds = (NoeudController) tmpNode.GetComponent(typeof(NoeudController));
+
+            if (nds.noeud.eventNumber != 0 && nds.noeud.eventNumber != 2) {
+                foreach (var p in nds.noeud.noeudsPrecedent) {
+                    previousNode = GameObject.Find("Noeud "+ p);
+                    NoeudController pnd = (NoeudController) previousNode.GetComponent(typeof(NoeudController));
+
+                    if(nds.noeud.eventNumber == pnd.noeud.eventNumber) {
+                        duplicate = true;
+                    }
+
+                    remainingEvent.Remove(pnd.noeud.eventNumber);
+                }
+
+                if(duplicate) {
+                    nds.ChangeNodeState(remainingEvent[Random.Range(0, remainingEvent.Count)]);
+                    duplicate = false;
                 }
             }
         }
