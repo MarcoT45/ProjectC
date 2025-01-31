@@ -133,58 +133,6 @@ public class OrcChasingState : EnnemyState
             Vector3 nextPosition = ennemy.transform.position + (Vector3)direction;
             Vector3Int gridNextPosition = gridManager.WorldToCell(nextPosition);
 
-            Debug.Log(gridNextPosition);
-
-            /*if (CanAttack(gridNextPosition))
-            {
-                Debug.Log("Can Attack");
-                //ennemy.StateMachine.ChangeState(ennemy.AttackingState);
-
-                if (Time.time > ennemy.LastUsedTimeAttack + ennemy.coolDownAttack)
-                {
-                    Debug.Log("Attaque Orc 2");
-                    UnityEngine.Object.Instantiate(ennemy.slashVFXPrefab, ennemy.gridManager.CellToWorld(gridNextPosition), Quaternion.identity);
-                    ennemy.LastUsedTimeAttack = Time.time;
-                    
-                }
-            }
-            else
-            {
-                *//*ennemy.lastPosition = ennemy.gridManager.WorldToCell(ennemy.transform.position);
-                direction = ennemy.FindNextCell(direction, targetPos);*//*
-                //ennemy.MoveEnnemyMovePoint(direction);
-
-                if (Time.time > ennemy.LastUsedTimeMove + ennemy.coolDownMove)
-                {
-                    ennemy.lastPosition = ennemy.gridManager.WorldToCell(ennemy.transform.position);
-                    direction = ennemy.FindNextCell(direction, targetPos);
-
-                    nextPosition = ennemy.transform.position + (Vector3)direction;
-                    gridNextPosition = ennemy.gridManager.WorldToCell(nextPosition);
-
-                    ennemy.newCellTarget = gridNextPosition;
-
-                    //changement de place sur la grid du gridManager
-                    var currentCell = ennemy.gridManager.GetCellData(ennemy.lastPosition);
-                    currentCell.containedInCell = null;
-
-                    var targetCell = ennemy.gridManager.GetCellData(ennemy.newCellTarget);
-                    targetCell.containedInCell = ennemy.gameObject;
-
-                    UnityEngine.Object.Instantiate(ennemy.stepVFXPrefab, ennemy.gridManager.CellToWorld(ennemy.lastPosition), Quaternion.identity);
-
-                    //Debug
-                    //ennemy.gridManager.DebugCellWithObjects();
-                    ennemy.movePoint.transform.position = ennemy.gridManager.CellToWorld(ennemy.newCellTarget);
-                    //------
-
-                    ennemy.LastUsedTimeMove = Time.time;
-
-                    //Debug.Log("current " + ennemy.gridManager.CellToWorld(ennemy.lastPosition));
-                    // Debug.Log("new " + ennemy.gridManager.CellToWorld(ennemy.newCellTarget));
-                }
-            }*/
-
             if(gridManager.CanMoveOnCell(gridNextPosition))
             {
                 GridManager.CellData cellData = gridManager.GetCellData(gridNextPosition);
@@ -197,19 +145,9 @@ public class OrcChasingState : EnnemyState
 
                         //ennemy.StateMachine.ChangeState(ennemy.AttackingState);
 
-                        //Autre façon de faire le timer, mais ici l'attaque part directement au début
-                       /* if (Time.time > ennemy.LastUsedTimeAttack + ennemy.coolDownAttack)
-                        {
-                            Debug.Log("Attaque Orc 2");
-                            UnityEngine.Object.Instantiate(ennemy.slashVFXPrefab, ennemy.gridManager.CellToWorld(gridNextPosition), Quaternion.identity);
-                            ennemy.LastUsedTimeAttack = Time.time;
-
-                        }*/
-
                         if (!attackKTimeIsRuning)
                         {
                             UnityEngine.Object.Instantiate(ennemy.slashVFXPrefab, ennemy.gridManager.CellToWorld(gridNextPosition), Quaternion.identity);
-                            //ennemy.LastUsedTimeAttack = Time.time;
                             attacKTimeRemaining = attackCoolDown;
                             attackKTimeIsRuning = true;
 
@@ -238,11 +176,8 @@ public class OrcChasingState : EnnemyState
                 {
                     //Move
 
-                    Debug.Log("move");
-
                     if (Time.time > ennemy.LastUsedTimeMove + ennemy.coolDownMove)
                     {
-                        Debug.Log("move time");
 
                         ennemy.lastPosition = ennemy.gridManager.WorldToCell(ennemy.transform.position);
 
@@ -268,41 +203,5 @@ public class OrcChasingState : EnnemyState
             }
 
         }
-    }
-
-    private bool CanAttack(Vector3Int nextPosition)
-    {
-        /*      Vector2 position = ennemy.transform.position;
-              Vector3 cellPos = ennemy.gridManager.WorldToCell(position);
-
-              RaycastHit2D hit = Physics2D.Raycast(
-                      origin: position,
-                      direction: direction,
-                      distance: 5f);
-
-              if (hit.collider != null)
-              {
-
-                  if (hit.collider.gameObject.tag == "Player")
-                  {
-                      return true;
-                  }
-
-              }
-
-              return false;*/
-        //Récupère le cellData
-        GridManager.CellData cellData = ennemy.gridManager.GetCellData(nextPosition);
-
-        //Si quelque chose sur la cell
-        if (ennemy.gridManager.IsObjectOnCell(nextPosition))
-        {
-            if (cellData.containedInCell.tag == "Player")
-            {
-                return true;
-            }
-        }
-
-        return false;
     }
 }

@@ -287,6 +287,21 @@ public class GridManager : MonoBehaviour
 
         InitCellDatas();
     }
+    public bool IsObstacleBetween(Vector3Int start, Vector3Int end, Vector2 direction)
+    {
+        float distance = Vector3Int.Distance(start, end);
+        Vector3Int checkPosition = start;
+
+        for (int i = 1; i < distance; i++)
+        {
+            checkPosition += Vector3Int.FloorToInt((Vector3)direction);
+            if (!CanMoveOnCell(checkPosition))
+            {
+                return true; // Il y a un obstacle
+            }
+        }
+        return false; // Pas d'obstacle
+    }
 
     private void Start()
     {

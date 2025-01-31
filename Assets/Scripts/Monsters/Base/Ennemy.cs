@@ -15,6 +15,7 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     public float LastUsedTimeMove { get; set; }
     public GameObject slashVFXPrefab;
     public GameObject stepVFXPrefab;
+    public GameObject projectilePrefab;
 
     public MonsterData monsterData;
 
@@ -282,7 +283,7 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     {
         StartCoroutine(HitFlash());
     }
-
+/*
     public void OnTriggerEnter2D(Collider2D other)
     {
         Vector3 otherCell = Vector3.zero;
@@ -300,13 +301,13 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
             if (characterController != null)
             {
                 //Screen shake
-               /* Camera cam = Camera.main;
+               *//* Camera cam = Camera.main;
                 cam.DOShakePosition(1f, 2f, 5, 90, true, ShakeRandomnessMode.Harmonic);
 
-                characterController.Damage(monsterData.atk);*/
+                characterController.Damage(monsterData.atk);*//*
                 //StartCoroutine(HitFlash());
 
-               /* otherCell = solTileMap.WorldToCell(other.transform.position);
+               *//* otherCell = solTileMap.WorldToCell(other.transform.position);
                 thisCell = solTileMap.WorldToCell(transform.position);
                 directionPushback = (otherCell - thisCell).normalized * -1;
 
@@ -328,14 +329,14 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
                     {
                         transform.position += directionPushback;
                     }
-                }*/
+                }*//*
                 
                 //movePoint.position = transform.position;
             }
 
         }
 
-    }
+    }*/
 
 
     private IEnumerator HitFlash()
