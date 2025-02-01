@@ -232,6 +232,11 @@ MonoBehaviour:
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  aggroDuration: 5
+  aggroRange: 6
+  safeRange: 3
+  attackCoolDown: 2
+  fireRate: 3
   isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
@@ -11474,6 +11479,11 @@ MonoBehaviour:
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  aggroDuration: 5
+  aggroRange: 6
+  safeRange: 4
+  attackCoolDown: 2
+  fireRate: 3
   isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
@@ -12614,6 +12624,11 @@ MonoBehaviour:
   movementRange: 5
   isAggroed: 0
   lastPosition: {x: 0, y: 0, z: 0}
+  aggroDuration: 5
+  aggroRange: 6
+  safeRange: 4
+  attackCoolDown: 2
+  fireRate: 3
   isHurt: 0
   pushBackDistance: 1
   pushBackSpeed: 3
