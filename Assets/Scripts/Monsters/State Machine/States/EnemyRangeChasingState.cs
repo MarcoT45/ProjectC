@@ -14,8 +14,8 @@ public class EnemyRangeChasingState : EnnemyState
     private float aggroDuration = 5f;
     private float timeRemaining;
     private bool timerIsRunning = false;
-    private float aggroRange = 8f;
-    private float safeRange = 5f;
+    private float aggroRange = 5f;
+    private float safeRange = 3f;
 
     private float attackCoolDown = 2f;
     private float attacKTimeRemaining;
