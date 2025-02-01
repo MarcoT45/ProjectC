@@ -54,6 +54,16 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     #endregion
 
+    #region Attack variables
+
+    public float aggroDuration = 5f;
+    public float aggroRange = 6f;
+    public float safeRange = 4f;
+    public float attackCoolDown = 2f;
+    public float fireRate = 3f;
+
+    #endregion
+
     #region Hit variables
 
     public bool isHurt;

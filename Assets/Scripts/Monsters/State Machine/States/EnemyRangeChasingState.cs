@@ -11,19 +11,19 @@ public class EnemyRangeChasingState : EnnemyState
     private Vector2 direction;
     private Vector3Int currentGridPosition;
 
-    private float aggroDuration = 5f;
+    private float aggroDuration;
     private float timeRemaining;
     private bool timerIsRunning = false;
-    private float aggroRange = 6f;
-    private float safeRange = 3f;
+    private float aggroRange;
+    private float safeRange;
 
-    private float attackCoolDown = 2f;
+    private float attackCoolDown;
     private float attacKTimeRemaining;
     private bool attackKTimeIsRuning = false;
 
     //Tir de projectiles
     public Transform firePoint;
-    public float fireRate = 3f;
+    private float fireRate;
     private float lastShotTime = 0f;
 
 
@@ -53,6 +53,11 @@ public class EnemyRangeChasingState : EnnemyState
 
         gridManager = ennemy.gridManager;
         firePoint = ennemy.transform;
+        aggroDuration = ennemy.aggroDuration;
+        aggroRange = ennemy.aggroRange;
+        safeRange = ennemy.safeRange;
+        attackCoolDown = ennemy.attackCoolDown;
+        fireRate = ennemy.fireRate;
 
     }
     public override void FrameUpdate()
