@@ -339,9 +339,15 @@ public class CarteForetController : MonoBehaviour {
             ControlsManager.Instance.UpdateState(400);
             SceneManager.LoadScene(3);
         } else {
+            /*
             PopUpForetController pu = (PopUpForetController) popup.GetComponent(typeof(PopUpForetController));
             ControlsManager.Instance.UpdateState(301);
             pu.CreatePopUpEvent(noeud);
+            */
+
+            PopUpEventForetController pu = (PopUpEventForetController) popup.GetComponent(typeof(PopUpEventForetController));
+            ControlsManager.Instance.UpdateState(301);
+            pu.GeneratePopUpEvent(noeud);
         }
     }
 
