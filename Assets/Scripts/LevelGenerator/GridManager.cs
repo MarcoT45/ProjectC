@@ -262,6 +262,23 @@ public class GridManager : MonoBehaviour
         return grid.GetCellCenterWorld(cellPosition);
     }
 
+    public bool IsObstacleBetween(Vector3Int start, Vector3Int end, Vector2 direction)
+    {
+        float distance = Vector3Int.Distance(start, end);
+        Vector3Int checkPosition = start;
+
+        for (int i = 1; i < distance; i++)
+        {
+            checkPosition += Vector3Int.FloorToInt((Vector3)direction);
+            if (!CanMoveOnCell(checkPosition))
+            {
+                return true; // Il y a un obstacle
+            }
+        }
+        return false; // Pas d'obstacle
+    }
+
+
     private void Awake()
     {
 
@@ -287,26 +304,10 @@ public class GridManager : MonoBehaviour
 
         InitCellDatas();
     }
-    public bool IsObstacleBetween(Vector3Int start, Vector3Int end, Vector2 direction)
-    {
-        float distance = Vector3Int.Distance(start, end);
-        Vector3Int checkPosition = start;
-
-        for (int i = 1; i < distance; i++)
-        {
-            checkPosition += Vector3Int.FloorToInt((Vector3)direction);
-            if (!CanMoveOnCell(checkPosition))
-            {
-                return true; // Il y a un obstacle
-            }
-        }
-        return false; // Pas d'obstacle
-    }
-
     private void Start()
     {
         
-        //LogGridArray();
+       // LogGridArray();
     }
 
     private void Update()
@@ -325,7 +326,8 @@ public class GridManager : MonoBehaviour
                 //log += " " + "(" + x + "," + y + ")";
                 if (cellDatas[x, y].isPassable)
                 {
-                    log += " "+CellToWorld(new Vector3Int(x,y,0)).ToString();
+                    //log += " "+CellToWorld(new Vector3Int(x,y,0)).ToString();
+                    log += " 0";
                 } 
                 else
                 {
