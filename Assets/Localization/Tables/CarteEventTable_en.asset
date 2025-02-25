@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: CarteEventTable_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 58a07a2da95433f45940c6d5cc77769d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42017882112
+    m_Localized: You spot a chest hidden in the middle of the forest. What can it
+      contain?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 616092270592
+    m_Localized: You stumble upon a magic well. Perhaps you should exchange something?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1025624113152
+    m_Localized: A merchant is waving at you. It seems he has something to sell !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2027735613440
+    m_Localized: In the middle of the forest, you come across a campfire. Nobody
+      seems to be nearby.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2833209753600
+    m_Localized: "This frog has a head you don\u2019t remember. Should you kick his
+      ass?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3172851908608
+    m_Localized: "But it\u2019s the legendary Pepe ! He seems so happy in the forest
+      ! "
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

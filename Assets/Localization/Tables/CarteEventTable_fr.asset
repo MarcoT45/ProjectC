@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: CarteEventTable_fr
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: fr
+  m_SharedData: {fileID: 11400000, guid: 58a07a2da95433f45940c6d5cc77769d, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 42017882112
+    m_Localized: "Vous rep\xE9rez un coffre cach\xE9 au milieu de la for\xEAt. Que
+      peut-il contenir ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 616092270592
+    m_Localized: "Vous tombez sur un puits magique. Peut-\xEAtre devriez-vous \xE9changer
+      quelque chose ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1025624113152
+    m_Localized: "Un marchand vous fait signe. Il semble qu'il ait quelque chose
+      \xE0 vous vendre !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2027735613440
+    m_Localized: "Au milieu de la for\xEAt, vous tombez sur un feu de camp. Personne
+      ne semble \xEAtre \xE0 proximit\xE9."
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2833209753600
+    m_Localized: "Cette grenouille a une t\xEAte qui ne vous revient pas. Devriez-vous
+      lui p\xE9ter la gueule ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3172851908608
+    m_Localized: "Mais c'est le l\xE9gendaire Pepe ! Il semble si heureux dans la
+      for\xEAt ! "
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
