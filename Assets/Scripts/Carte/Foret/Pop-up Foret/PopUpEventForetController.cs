@@ -94,11 +94,13 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     IEnumerator TypeText () {
+        int cpt = 0;
         foreach (char letter in textValue.ToCharArray()) {
             textePopUp.text += letter;
-            if(letter.Equals(' ')) 
+            if(cpt%3 == 0) 
                 SoundFXManager.Instance.PlaySoundFXClip(textSFXTrack, this.transform);
-            yield return new WaitForSeconds (0.03f);
+            yield return new WaitForSeconds (0.02f);
+            cpt++;
 
             if (textePopUp.text == textValue) {
                 Debug.Log("On a écrit tout le texte ! On peut passer à la suite !");
