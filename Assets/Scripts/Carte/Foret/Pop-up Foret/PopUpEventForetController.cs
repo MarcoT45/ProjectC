@@ -96,8 +96,9 @@ public class PopUpEventForetController : MonoBehaviour {
     IEnumerator TypeText () {
         foreach (char letter in textValue.ToCharArray()) {
             textePopUp.text += letter;
-            SoundFXManager.Instance.PlaySoundFXClip(textSFXTrack, this.transform);
-            yield return new WaitForSeconds (0.05f);
+            if(letter.Equals(' ')) 
+                SoundFXManager.Instance.PlaySoundFXClip(textSFXTrack, this.transform);
+            yield return new WaitForSeconds (0.03f);
 
             if (textePopUp.text == textValue) {
                 Debug.Log("On a écrit tout le texte ! On peut passer à la suite !");
