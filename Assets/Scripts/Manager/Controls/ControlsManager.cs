@@ -115,6 +115,6 @@ public enum ControlsState {
     Dialogue = 6,
     DialogueChoice = 7,
     Carte = 300,
-    CarteEvent = 301,
+    CarteChoiceWindow = 301,
     Combat = 400
 }
