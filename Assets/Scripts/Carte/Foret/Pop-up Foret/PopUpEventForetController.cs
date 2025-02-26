@@ -30,6 +30,8 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip bushSFXTrack;
     public AudioClip textSFXTrack;
     public AudioClip menuMoveSFXTrack;
+    public AudioClip popupOpenSFXTrack;
+    public AudioClip popupCloseSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
@@ -123,7 +125,8 @@ public class PopUpEventForetController : MonoBehaviour {
 
     private async void OpenPopUpAnimation() {
         this.gameObject.SetActive(true);
-        await conteneur.transform.DOScale(new Vector3(1, 1 ,1), 2f).AsyncWaitForCompletion();
+        SoundFXManager.Instance.PlaySoundFXClip(popupOpenSFXTrack, this.transform);
+        await conteneur.transform.DOScale(new Vector3(1, 1 ,1), 1.5f).AsyncWaitForCompletion();
 
         partieCentrale.GetComponent<Image>().DOFade(1.0f, 2.5f);
         sujetPopUp.GetComponent<Image>().DOFade(1.0f, 2.5f);
@@ -215,7 +218,8 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     private async void FermerPopUpEvent() {
-        await conteneur.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        SoundFXManager.Instance.PlaySoundFXClip(popupCloseSFXTrack, this.transform);
+        await conteneur.transform.DOScale(new Vector3(0, 0 ,0), 1.5f).AsyncWaitForCompletion();
         partieCentrale.GetComponent<Image>().DOFade(0f, 0.5f);
         sujetPopUp.GetComponent<Image>().DOFade(0f, 0.5f);
         partieCentrale.GetComponent<RectTransform>().DOAnchorPosY(-110, 0.5f, false);

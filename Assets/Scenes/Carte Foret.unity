@@ -6136,6 +6136,8 @@ MonoBehaviour:
   bushSFXTrack: {fileID: 8300000, guid: f790759fa295e7541a7cddfb111da76d, type: 3}
   textSFXTrack: {fileID: 8300000, guid: 5ad6e6ac50b54db4fab0369ffb135d12, type: 3}
   menuMoveSFXTrack: {fileID: 8300000, guid: 7f6a9da4acd062c47a81e5257d355600, type: 3}
+  popupOpenSFXTrack: {fileID: 8300000, guid: ebb3a2c730eaaba4d8a59583cde934ac, type: 3}
+  popupCloseSFXTrack: {fileID: 8300000, guid: dd55f52e9ef5ea348b0fa3da34a9ff71, type: 3}
   spriteList:
   - {fileID: 1819065797, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
   - {fileID: -614892619, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
