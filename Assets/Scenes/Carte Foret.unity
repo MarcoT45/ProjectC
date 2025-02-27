@@ -31598,7 +31598,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0172f94964f0b2441a1de67cd7b8ce43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  confirmChoiceSFXTrack: {fileID: 8300000, guid: 9babf9fe4c1018f4e84906ed8cbe59c8, type: 3}
+  parcourirCarteSFXTrack: {fileID: 8300000, guid: 1a9c0db6614d1fb46b7458b2abd400b4, type: 3}
+  confirmerCarteSFXTrack: {fileID: 8300000, guid: 1a9c0db6614d1fb46b7458b2abd400b4, type: 3}
 --- !u!4 &1702684985
 Transform:
   m_ObjectHideFlags: 0

@@ -7,13 +7,15 @@ public class CarteDeplacementController : MonoBehaviour {
     private int currentNode = 0;
     private List<int> nextNodes = new List<int>();
     private int currentPos = 0;
+    private int lastPos = 0;
 
     private Color blackColor = new Color (0f, 0f, 0f, 1f);
     private Color whiteColor = new Color (1f, 1f, 1f, 1f);
     private Color greenColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
 
     // Sons de la pop-up
-    public AudioClip confirmChoiceSFXTrack;
+    public AudioClip parcourirCarteSFXTrack;
+    public AudioClip confirmerCarteSFXTrack;
 
     private void Start() {
         UpdateCurrentNode(currentNode);
@@ -47,7 +49,7 @@ public class CarteDeplacementController : MonoBehaviour {
     }
 
     public void ConfirmerDeplacement() {
-        SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
+        SoundFXManager.Instance.PlaySoundFXClip(confirmerCarteSFXTrack, this.transform);
 
         GameObject tmpNode = GameObject.Find("Noeud "+ nextNodes[currentPos-1]);
         tmpNode.GetComponent<FlashingController>().enabled = false;
@@ -90,6 +92,11 @@ public class CarteDeplacementController : MonoBehaviour {
     }
 
     private void ShowCurrentNodeSelected() {
+        if(lastPos != currentPos) {
+            SoundFXManager.Instance.PlaySoundFXClip(parcourirCarteSFXTrack, this.transform);
+            lastPos = currentPos;
+        }
+
         GameObject tmpNode = GameObject.Find("Noeud "+ nextNodes[currentPos-1]);
         tmpNode.GetComponent<SpriteRenderer>().color = blackColor;
 
