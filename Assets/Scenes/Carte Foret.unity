@@ -6133,11 +6133,11 @@ MonoBehaviour:
   cursor1: {fileID: 690383426}
   cursor2: {fileID: 919790426}
   textePopUp: {fileID: 807967862}
+  popupOpenSFXTrack: {fileID: 8300000, guid: ebb3a2c730eaaba4d8a59583cde934ac, type: 3}
   bushSFXTrack: {fileID: 8300000, guid: f790759fa295e7541a7cddfb111da76d, type: 3}
   textSFXTrack: {fileID: 8300000, guid: 5ad6e6ac50b54db4fab0369ffb135d12, type: 3}
-  menuMoveSFXTrack: {fileID: 8300000, guid: 7f6a9da4acd062c47a81e5257d355600, type: 3}
-  popupOpenSFXTrack: {fileID: 8300000, guid: ebb3a2c730eaaba4d8a59583cde934ac, type: 3}
-  popupCloseSFXTrack: {fileID: 8300000, guid: dd55f52e9ef5ea348b0fa3da34a9ff71, type: 3}
+  selectChoiceSFXTrack: {fileID: 8300000, guid: bdc96c2b74da18b498fe200b0cf80474, type: 3}
+  confirmChoiceSFXTrack: {fileID: 8300000, guid: 6e9e29ef37ad1b241bf82eabf397adf4, type: 3}
   spriteList:
   - {fileID: 1819065797, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
   - {fileID: -614892619, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
@@ -31598,6 +31598,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0172f94964f0b2441a1de67cd7b8ce43, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  confirmChoiceSFXTrack: {fileID: 8300000, guid: 9babf9fe4c1018f4e84906ed8cbe59c8, type: 3}
 --- !u!4 &1702684985
 Transform:
   m_ObjectHideFlags: 0

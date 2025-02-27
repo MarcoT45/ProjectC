@@ -27,11 +27,11 @@ public class PopUpEventForetController : MonoBehaviour {
     public TextMeshProUGUI textePopUp;
 
     // Sons de la pop-up
+    public AudioClip popupOpenSFXTrack;
     public AudioClip bushSFXTrack;
     public AudioClip textSFXTrack;
-    public AudioClip menuMoveSFXTrack;
-    public AudioClip popupOpenSFXTrack;
-    public AudioClip popupCloseSFXTrack;
+    public AudioClip selectChoiceSFXTrack;
+    public AudioClip confirmChoiceSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
@@ -79,7 +79,7 @@ public class PopUpEventForetController : MonoBehaviour {
                 cursor2.SetActive(true);
             }
 
-            SoundFXManager.Instance.PlaySoundFXClip(menuMoveSFXTrack, this.transform);
+            SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
         }
     }
 
@@ -90,12 +90,13 @@ public class PopUpEventForetController : MonoBehaviour {
             } else {
                 FermerPopUpEvent();
             }
+            SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
         }
     }
 
     public void MouseDeplacerChoix(int choiceValue) {
         if(choiceNumber != choiceValue) {
-            SoundFXManager.Instance.PlaySoundFXClip(menuMoveSFXTrack, this.transform);
+            SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
             choiceNumber = choiceValue;
             if(choiceNumber == 1) {
                 cursor1.SetActive(true);
@@ -113,6 +114,7 @@ public class PopUpEventForetController : MonoBehaviour {
         } else {
             FermerPopUpEvent();
         }
+        SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
     }
 
     ////////////////////////////////// Partie pour les controles ////////////////////////////////////////
@@ -218,7 +220,6 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     private async void FermerPopUpEvent() {
-        SoundFXManager.Instance.PlaySoundFXClip(popupCloseSFXTrack, this.transform);
         await conteneur.transform.DOScale(new Vector3(0, 0 ,0), 1.5f).AsyncWaitForCompletion();
         partieCentrale.GetComponent<Image>().DOFade(0f, 0.5f);
         sujetPopUp.GetComponent<Image>().DOFade(0f, 0.5f);

@@ -12,6 +12,9 @@ public class CarteDeplacementController : MonoBehaviour {
     private Color whiteColor = new Color (1f, 1f, 1f, 1f);
     private Color greenColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
 
+    // Sons de la pop-up
+    public AudioClip confirmChoiceSFXTrack;
+
     private void Start() {
         UpdateCurrentNode(currentNode);
     }
@@ -44,6 +47,8 @@ public class CarteDeplacementController : MonoBehaviour {
     }
 
     public void ConfirmerDeplacement() {
+        SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
+
         GameObject tmpNode = GameObject.Find("Noeud "+ nextNodes[currentPos-1]);
         tmpNode.GetComponent<FlashingController>().enabled = false;
 
