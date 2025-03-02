@@ -109,18 +109,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1
-        y: 18
+        y: 29
         width: 74
         height: 33
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1665b3af041bc9c4898cc19932e5bab3
-      internalID: 237301182
+      spriteID: 923fc6576d42b32439c7315165e40734
+      internalID: -786754894
       vertices: []
       indices: 
       edges: []
@@ -130,18 +130,18 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 82
-        y: 43
+        y: 54
         width: 5
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 50b236f6a730bed4f89764e8d8de3679
-      internalID: -1552338627
+      spriteID: 1952009b318206c45a9f7b661837d558
+      internalID: -517954634
       vertices: []
       indices: 
       edges: []
@@ -151,18 +151,39 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 93
-        y: 43
+        y: 54
         width: 5
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9626d54524530394a887a96adca0021e
-      internalID: -1299751328
+      spriteID: c7a6934857833a34393e2e18de8141d3
+      internalID: 240233107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Fenetre partir
+      rect:
+        serializedVersion: 2
+        x: 1
+        y: 9
+        width: 74
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 099520113b3370a4cbc6939197c00028
+      internalID: 675287174
       vertices: []
       indices: 
       edges: []
@@ -178,9 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Curseur choix 1: -1552338627
-      Curseur choix 2: -1299751328
-      Fenetre choix: 237301182
+      Curseur choix 1: -517954634
+      Curseur choix 2: 240233107
+      Fenetre choix: -786754894
+      Fenetre partir: 675287174
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

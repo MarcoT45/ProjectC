@@ -22,9 +22,14 @@ public class PopUpEventForetController : MonoBehaviour {
     public TextMeshProUGUI texteChoice2;
     public GameObject cursor1;
     public GameObject cursor2;
+    public GameObject leaveWindow;
 
     // Texte dans la zone de texte de la pop-up
     public TextMeshProUGUI textePopUp;
+
+    // Gameobject pour l'animation de repos
+    public GameObject voletNoirHaut;
+    public GameObject voletNoirBas;
 
     // Sons de la pop-up
     public AudioClip popupOpenSFXTrack;
@@ -32,6 +37,7 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip textSFXTrack;
     public AudioClip selectChoiceSFXTrack;
     public AudioClip confirmChoiceSFXTrack;
+    public AudioClip restSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
@@ -48,6 +54,10 @@ public class PopUpEventForetController : MonoBehaviour {
         if(ControlsManager.Instance.controlsState == ControlsState.CarteChoiceWindow) {
             DeplacerChoix();
             ValiderChoix();
+        }
+
+         if(ControlsManager.Instance.controlsState == ControlsState.CarteLeaveWindow) {
+            ValiderPartir();
         }
     }
 
@@ -117,11 +127,23 @@ public class PopUpEventForetController : MonoBehaviour {
         SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
     }
 
+    private void ValiderPartir() {
+        if (ControlsManager.Instance.ValiderPressed) {
+            FermerPopUpEvent();
+            SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
+        }
+    }
+
+    public void MouseValiderPartir() {
+        FermerPopUpEvent();
+        SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
+    }
+
     ////////////////////////////////// Partie pour les controles ////////////////////////////////////////
 
     public void GeneratePopUpEvent(Noeud n) {
         eventType = n.eventNumber;
-        SetInfoEvent(eventType);
+        SetInfoEvent();
         OpenPopUpAnimation();
     }
 
@@ -130,20 +152,20 @@ public class PopUpEventForetController : MonoBehaviour {
         SoundFXManager.Instance.PlaySoundFXClip(popupOpenSFXTrack, this.transform);
         await conteneur.transform.DOScale(new Vector3(1, 1 ,1), 1.5f).AsyncWaitForCompletion();
 
-        partieCentrale.GetComponent<Image>().DOFade(1.0f, 2.5f);
-        sujetPopUp.GetComponent<Image>().DOFade(1.0f, 2.5f);
-        await partieCentrale.GetComponent<RectTransform>().DOAnchorPosY(0, 2.5f, false).AsyncWaitForCompletion();
+        partieCentrale.GetComponent<Image>().DOFade(1.0f, 2f);
+        sujetPopUp.GetComponent<Image>().DOFade(1.0f, 2f);
+        await partieCentrale.GetComponent<RectTransform>().DOAnchorPosY(0, 2f, false).AsyncWaitForCompletion();
 
         buissonGauche.GetComponent<RectTransform>().DOAnchorPosX(-200, 2.5f, false);
         buissonDroite.GetComponent<RectTransform>().DOAnchorPosX(200, 2.5f, false);
         SoundFXManager.Instance.PlaySoundFXClip(bushSFXTrack, this.transform);
 
         await zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-55, 2.0f, false).AsyncWaitForCompletion();
-        StartWritingText();
+        StartWritingTextIntro();
     }
 
-    private void SetInfoEvent(int eventNumber) {
-        switch (eventNumber) {
+    private void SetInfoEvent() {
+        switch (eventType) {
             case 1: // Evenement aléatoire
                 GenerateRandomEvent();
                 break;
@@ -192,11 +214,11 @@ public class PopUpEventForetController : MonoBehaviour {
         }
     }
 
-    private void StartWritingText() {
-        StartCoroutine(TypeText());
+    private void StartWritingTextIntro() {
+        StartCoroutine(TypeTextIntro());
     }
 
-    IEnumerator TypeText () {
+    IEnumerator TypeTextIntro () {
         int compteur = 0;
         foreach (char letter in textValue.ToCharArray()) {
             textePopUp.text += letter;
@@ -229,6 +251,7 @@ public class PopUpEventForetController : MonoBehaviour {
         zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-87, 0.5f, false);
         textePopUp.text = "";
         choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f);
+        leaveWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f);
         cursor1.SetActive(true);
         cursor2.SetActive(false);
         this.gameObject.SetActive(false);
@@ -236,7 +259,88 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     private void ContinuerPopUpEvent() {
-        Debug.Log("En travaux pour le moment ! Il faut executer les actions et changements ici !");
+        // On met les controles du joueur en pause
+        ControlsManager.Instance.UpdateState(302);
+
+        switch (eventType) {
+            case 1: // Evenement aléatoire   
+                switch (randomNumberEvent) {
+                    case 0: // Evenement aléatoire n°1
+                        Debug.Log("Action: evenement aléatoire n°1 en travaux !");
+                        ControlsManager.Instance.UpdateState(301);
+                        break;
+                    case 1: // Evenement aléatoire n°2
+                        Debug.Log("Action: evenement aléatoire n°2 en travaux !");
+                        ControlsManager.Instance.UpdateState(301);
+                        break;
+                }
+                break;
+            case 3: // Feu de camp
+                textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RestEventEnd");
+                StartRestAnimation();
+                break;
+            case 4: // Magasin
+                Debug.Log("Action: magasin en travaux !");
+                ControlsManager.Instance.UpdateState(301);
+                break;
+            case 5: // Echange
+                Debug.Log("Action: echange en travaux !");
+                ControlsManager.Instance.UpdateState(301);
+                break;
+            case 6: // Coffre
+                Debug.Log("Action: coffre en travaux !");
+                ControlsManager.Instance.UpdateState(301);
+                break;
+        }
+    }
+
+    // Animation lorsque l'on choisit de se reposer au feu de camp
+    private async void StartRestAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+
+        voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(50, 0.75f, false);
+        await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-50, 0.75f, false).AsyncWaitForCompletion();
+
+        voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(65, 1f, false);
+        await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-65, 1f, false).AsyncWaitForCompletion();
+
+        voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(50, 2f, false);
+        await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-50, 2f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(restSFXTrack, this.transform);
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 2.5f).AsyncWaitForCompletion();
+
+        textePopUp.text = "";
+
+        voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(121, 2f, false);
+        await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-121, 2f, false).AsyncWaitForCompletion();
+
+        // APPLIQUER L'EFFET DU REPOS ICI, RECUPERER DES POINTS DE VIES
+        StartWritingTextEnd();
+    }
+
+    private void StartWritingTextEnd() {
+        StartCoroutine(TypeTextEnd());
+    }
+
+    IEnumerator TypeTextEnd () {
+        int compteur = 0;
+        foreach (char letter in textValue.ToCharArray()) {
+            textePopUp.text += letter;
+            if((compteur%3) == 0) 
+                SoundFXManager.Instance.PlaySoundFXClip(textSFXTrack, this.transform);
+            yield return new WaitForSeconds (0.02f);
+            compteur++;
+
+            if (textePopUp.text == textValue) {
+                OpenLeaveWindow();
+            }
+        }
+    }
+
+    private async void OpenLeaveWindow() {
+        await leaveWindow.transform.DOScale(new Vector3(1, 1 ,1), 0.5f).AsyncWaitForCompletion();
+        ControlsManager.Instance.UpdateState(303);
     }
 
 }
