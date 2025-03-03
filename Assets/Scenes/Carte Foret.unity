@@ -6142,6 +6142,9 @@ MonoBehaviour:
   selectChoiceSFXTrack: {fileID: 8300000, guid: bdc96c2b74da18b498fe200b0cf80474, type: 3}
   confirmChoiceSFXTrack: {fileID: 8300000, guid: 6e9e29ef37ad1b241bf82eabf397adf4, type: 3}
   restSFXTrack: {fileID: 8300000, guid: 94052dc35a6d57f48a601d8aa3a72103, type: 3}
+  dodgeSFXTrack: {fileID: 8300000, guid: 978b28e87e09ae245a224440f2d285b1, type: 3}
+  punchSFXTrack: {fileID: 8300000, guid: 069e060fdecfbb5499a5819c550a9693, type: 3}
+  punchedSFXTrack: {fileID: 8300000, guid: f89261eb1ee5b1d4b8b57f0e61f521a1, type: 3}
   spriteList:
   - {fileID: 1819065797, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
   - {fileID: -614892619, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}

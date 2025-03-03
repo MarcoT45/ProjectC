@@ -38,6 +38,9 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip selectChoiceSFXTrack;
     public AudioClip confirmChoiceSFXTrack;
     public AudioClip restSFXTrack;
+    public AudioClip dodgeSFXTrack;
+    public AudioClip punchSFXTrack;
+    public AudioClip punchedSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
@@ -152,12 +155,12 @@ public class PopUpEventForetController : MonoBehaviour {
         SoundFXManager.Instance.PlaySoundFXClip(popupOpenSFXTrack, this.transform);
         await conteneur.transform.DOScale(new Vector3(1, 1 ,1), 1.5f).AsyncWaitForCompletion();
 
-        partieCentrale.GetComponent<Image>().DOFade(1.0f, 2f);
-        sujetPopUp.GetComponent<Image>().DOFade(1.0f, 2f);
-        await partieCentrale.GetComponent<RectTransform>().DOAnchorPosY(0, 2f, false).AsyncWaitForCompletion();
+        partieCentrale.GetComponent<Image>().DOFade(1.0f, 1.5f);
+        sujetPopUp.GetComponent<Image>().DOFade(1.0f, 1.5f);
+        await partieCentrale.GetComponent<RectTransform>().DOAnchorPosY(0, 1.5f, false).AsyncWaitForCompletion();
 
-        buissonGauche.GetComponent<RectTransform>().DOAnchorPosX(-200, 2.5f, false);
-        buissonDroite.GetComponent<RectTransform>().DOAnchorPosX(200, 2.5f, false);
+        buissonGauche.GetComponent<RectTransform>().DOAnchorPosX(-200, 2.0f, false);
+        buissonDroite.GetComponent<RectTransform>().DOAnchorPosX(200, 2.0f, false);
         SoundFXManager.Instance.PlaySoundFXClip(bushSFXTrack, this.transform);
 
         await zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-55, 2.0f, false).AsyncWaitForCompletion();
@@ -197,7 +200,7 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     private void GenerateRandomEvent() {
-        randomNumberEvent = Random.Range(0, 2);
+        randomNumberEvent = Random.Range(0, 1); // JE METS A 1 ICI POUR QUE L'EVENT ALEATOIRE SOIT TOUJOURS LE 1ER POUR TESTER L'ANIM
         switch (randomNumberEvent) {
             case 0:
                 sujetPopUp.GetComponent<Image>().sprite = spriteList[4];
@@ -266,8 +269,14 @@ public class PopUpEventForetController : MonoBehaviour {
             case 1: // Evenement aléatoire   
                 switch (randomNumberEvent) {
                     case 0: // Evenement aléatoire n°1
-                        Debug.Log("Action: evenement aléatoire n°1 en travaux !");
-                        ControlsManager.Instance.UpdateState(301);
+                        int randomSuccessEvent = Random.Range(0, 101);
+                        if(randomSuccessEvent > 39) {
+                            textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent1GoodEnd");
+                            StartEvent1SuccessAnimation();
+                        } else {
+                            textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent1BadEnd");
+                            StartEvent1FailureAnimation();
+                        }
                         break;
                     case 1: // Evenement aléatoire n°2
                         Debug.Log("Action: evenement aléatoire n°2 en travaux !");
@@ -292,6 +301,47 @@ public class PopUpEventForetController : MonoBehaviour {
                 ControlsManager.Instance.UpdateState(301);
                 break;
         }
+    }
+
+    // Animation de l'event aléatoire 1 si on reussit
+    private async void StartEvent1SuccessAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(punchSFXTrack, this.transform);
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+
+        await sujetPopUp.GetComponent<RectTransform>().DOShakeAnchorPos(2.0f, 5.0f, 5, 10f, false, true).AsyncWaitForCompletion();
+        sujetPopUp.GetComponent<Image>().DOFade(0f, 1f);
+
+        // APPLIQUER L'EFFET DE L'EVENEMENT ICI, GAGNER DE L'ARGENT (200 pièces ?)
+        StartWritingTextEnd();
+    }
+
+    // Animation de l'event aléatoire 1 si on échoue
+    private async void StartEvent1FailureAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(dodgeSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(-20, 0.5f, false).AsyncWaitForCompletion();
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(0, 0.5f, false).AsyncWaitForCompletion();
+        
+        SoundFXManager.Instance.PlaySoundFXClip(punchedSFXTrack, this.transform);
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.25f).AsyncWaitForCompletion();
+        await conteneur.GetComponent<RectTransform>().DOShakeAnchorPos(2.0f, 5.0f, 5, 10f, false, true).AsyncWaitForCompletion();
+
+        voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(50, 0.5f, false);
+        await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-50, 0.5f, false).AsyncWaitForCompletion();
+
+        sujetPopUp.GetComponent<Image>().DOFade(0f, 0.1f);
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 2.5f).AsyncWaitForCompletion();
+
+        voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(121, 2f, false);
+        await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-121, 2f, false).AsyncWaitForCompletion();
+
+        // APPLIQUER L'EFFET DE L'EVENEMENT ICI, PERDRE DE L'ARGENT (20%)
+        StartWritingTextEnd();
     }
 
     // Animation lorsque l'on choisit de se reposer au feu de camp
