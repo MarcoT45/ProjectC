@@ -15,6 +15,7 @@ public class PopUpEventForetController : MonoBehaviour {
     public GameObject partieCentrale;
     public GameObject zoneTexteBas;
     public GameObject sujetPopUp;
+    public GameObject objetCoffre;
 
     // Fenetre des choix
     public GameObject choiceWindow;
@@ -41,9 +42,12 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip dodgeSFXTrack;
     public AudioClip punchSFXTrack;
     public AudioClip punchedSFXTrack;
+    public AudioClip drumRollSFXTrack;
+    public AudioClip fanfareSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
+    public Sprite openChest;
 
     // Variable pour gerer les differents elements de la pop-up
     private int randomNumberEvent;
@@ -252,6 +256,8 @@ public class PopUpEventForetController : MonoBehaviour {
         buissonGauche.GetComponent<RectTransform>().DOAnchorPosX(-60, 0.5f, false);
         buissonDroite.GetComponent<RectTransform>().DOAnchorPosX(60, 0.5f, false);
         zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-87, 0.5f, false);
+        objetCoffre.GetComponent<Image>().DOFade(0f, 0.5f);
+        objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(17, 0.5f, false);
         textePopUp.text = "";
         choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f);
         leaveWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f);
@@ -297,8 +303,25 @@ public class PopUpEventForetController : MonoBehaviour {
                 ControlsManager.Instance.UpdateState(301);
                 break;
             case 6: // Coffre
-                Debug.Log("Action: coffre en travaux !");
-                ControlsManager.Instance.UpdateState(301);
+                int randomItemNumber;
+                int randomRarityRate = Random.Range(0, 101);
+                ItemData randomItem;
+                
+                if(randomRarityRate > 90) {
+                    randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[2].Count);
+                    randomItem = GameManager.Instance.itemsTriRarete[2][randomItemNumber];
+                } else if (randomRarityRate > 60) {
+                    randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[1].Count);
+                    randomItem = GameManager.Instance.itemsTriRarete[1][randomItemNumber];
+                } else {
+                    randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[0].Count);
+                    randomItem = GameManager.Instance.itemsTriRarete[0][randomItemNumber];
+                }
+
+                objetCoffre.GetComponent<Image>().sprite = randomItem.GetSprite();
+
+                textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ChestEventEnd");
+                StartChestAnimation();
                 break;
         }
     }
@@ -347,6 +370,7 @@ public class PopUpEventForetController : MonoBehaviour {
     // Animation lorsque l'on choisit de se reposer au feu de camp
     private async void StartRestAnimation() {
         await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
 
         voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(50, 0.75f, false);
         await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-50, 0.75f, false).AsyncWaitForCompletion();
@@ -360,12 +384,27 @@ public class PopUpEventForetController : MonoBehaviour {
         SoundFXManager.Instance.PlaySoundFXClip(restSFXTrack, this.transform);
         await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 2.5f).AsyncWaitForCompletion();
 
-        textePopUp.text = "";
-
         voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(121, 2f, false);
         await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-121, 2f, false).AsyncWaitForCompletion();
 
         // APPLIQUER L'EFFET DU REPOS ICI, RECUPERER DES POINTS DE VIES
+        StartWritingTextEnd();
+    }
+
+    // Animation lorsque l'on choisit d'ouvrir le coffre
+    private async void StartChestAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(drumRollSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOShakeAnchorPos(4.0f, new Vector3(10, 0, 0), 15, 0, false, false).AsyncWaitForCompletion();
+        sujetPopUp.GetComponent<Image>().sprite = openChest;
+
+        SoundFXManager.Instance.PlaySoundFXClip(fanfareSFXTrack, this.transform);
+        objetCoffre.GetComponent<Image>().DOFade(1f, 3f);
+        await objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(50, 3f, false).AsyncWaitForCompletion();
+
+        // AJOUTER L'OBJET DU COFFRE DANS L'INVENTAIRE DU JOUEUR
         StartWritingTextEnd();
     }
 

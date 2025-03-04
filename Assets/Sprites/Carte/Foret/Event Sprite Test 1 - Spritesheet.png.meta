@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf496902abebb2d448914d7ef5127a5c
+guid: f791667da65c060479e01eecf43bf390
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,91 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Frog test_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bcf98fc2f24e5dd418470e6b84c66254
-      internalID: 847150245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Frog test_1
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fda497f73267d7540bdca6198a68e7dd
-      internalID: -1733611480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Frog test_2
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4034c83c22f010b4ba43c3a43901b6c9
-      internalID: -1148014558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Frog test_3
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30b4be43181221b45a5aa3c04072a3d5
-      internalID: -1794898357
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Frog test_4
+      name: "Coffre ferm\xE9"
       rect:
         serializedVersion: 2
         x: 0
@@ -203,14 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4e3916b37a738543bbb5fd29323279a
-      internalID: -1116645858
+      spriteID: a7c695abdcfe59940b66148025c6be8f
+      internalID: -792257227
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Frog test_5
+      name: Puits petit
       rect:
         serializedVersion: 2
         x: 32
@@ -224,8 +140,50 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdd509263d03f6945b3c5222b55e050e
-      internalID: -479750059
+      spriteID: b484a5b443ea96043872be355d87ce35
+      internalID: 1775728857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Coffre ouvert
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e5e5b9eeb58ace4285feba5f1c943f1
+      internalID: -1351967338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Puits
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62c0bb1670a321a4cbc957f075b673e0
+      internalID: -1925323518
       vertices: []
       indices: 
       edges: []
@@ -241,12 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Frog test_0: 847150245
-      Frog test_1: -1733611480
-      Frog test_2: -1148014558
-      Frog test_3: -1794898357
-      Frog test_4: -1116645858
-      Frog test_5: -479750059
+      "Coffre ferm\xE9": -792257227
+      Coffre ouvert: -1351967338
+      Puits: -1925323518
+      Puits petit: 1775728857
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
