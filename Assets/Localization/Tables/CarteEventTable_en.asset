@@ -42,8 +42,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 3172851908608
-    m_Localized: "But it\u2019s the legendary Pepe ! He seems so happy in the forest
-      ! "
+    m_Localized: You see a suspicious chest with traces of blood on it. Should you
+      open it?
     m_Metadata:
       m_Items: []
   - m_Id: 365643294965760
@@ -68,10 +68,6 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 366679061561344
     m_Localized: Punch
-    m_Metadata:
-      m_Items: []
-  - m_Id: 366781264166912
-    m_Localized: Salute
     m_Metadata:
       m_Items: []
   - m_Id: 1858138042400768
@@ -115,6 +111,16 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3388267147165696
     m_Localized: 'LCK:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3676737904181248
+    m_Localized: Aaaaargh ! You have fallen into the mimic trap. Curiosity is a nasty
+      flaw.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3676735832195072
+    m_Localized: You find very good quality equipment. Sometimes curiosity pays off
+      !
     m_Metadata:
       m_Items: []
   references:

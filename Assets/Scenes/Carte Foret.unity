@@ -6477,14 +6477,17 @@ MonoBehaviour:
   fanfareSFXTrack: {fileID: 8300000, guid: 65dd448604a647342913d93e78b9b20b, type: 3}
   splashSFXTrack: {fileID: 8300000, guid: d04ed12383aac5945ac598ac28d8fb08, type: 3}
   wellShakingSFXTrack: {fileID: 8300000, guid: 017c0a5e70315634f9dec0c57af49dca, type: 3}
+  mimicBiteSFXTrack: {fileID: 8300000, guid: 65a5dc572511ddc4088f74e8f1f7b369, type: 3}
   spriteList:
   - {fileID: 847150245, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
   - {fileID: -1733611480, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
-  - {fileID: -1925323518, guid: f791667da65c060479e01eecf43bf390, type: 3}
-  - {fileID: -792257227, guid: f791667da65c060479e01eecf43bf390, type: 3}
+  - {fileID: 1220758277, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
+  - {fileID: 1846701436, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
   - {fileID: -1116645858, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
-  - {fileID: -479750059, guid: cf496902abebb2d448914d7ef5127a5c, type: 3}
-  openChest: {fileID: -1351967338, guid: f791667da65c060479e01eecf43bf390, type: 3}
+  - {fileID: -2075240379, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
+  openChest: {fileID: -219697165, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
+  openSuspiciousChest: {fileID: -1650959772, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
+  openTrapChest: {fileID: -1242078593, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
 --- !u!4 &368155374
 Transform:
   m_ObjectHideFlags: 0

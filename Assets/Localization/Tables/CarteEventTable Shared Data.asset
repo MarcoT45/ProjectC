@@ -63,10 +63,6 @@ MonoBehaviour:
     m_Key: ActionPunch
     m_Metadata:
       m_Items: []
-  - m_Id: 366781264166912
-    m_Key: ActionSalute
-    m_Metadata:
-      m_Items: []
   - m_Id: 1858138042400768
     m_Key: RestEventEnd
     m_Metadata:
@@ -105,6 +101,14 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3388267147165696
     m_Key: LuckStatName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3676735832195072
+    m_Key: RandomEvent2GoodEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3676737904181248
+    m_Key: RandomEvent2BadEnd
     m_Metadata:
       m_Items: []
   m_Metadata:

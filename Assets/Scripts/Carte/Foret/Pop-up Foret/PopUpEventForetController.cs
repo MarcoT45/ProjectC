@@ -63,10 +63,13 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip fanfareSFXTrack;
     public AudioClip splashSFXTrack;
     public AudioClip wellShakingSFXTrack;
+    public AudioClip mimicBiteSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
     public Sprite openChest;
+    public Sprite openSuspiciousChest;
+    public Sprite openTrapChest;
 
     // Variable pour gerer les differents elements de la pop-up
     private int randomNumberEvent;
@@ -324,7 +327,7 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     private void GenerateRandomEvent() {
-        randomNumberEvent = Random.Range(0, 1); // JE METS A 1 ICI POUR QUE L'EVENT ALEATOIRE SOIT TOUJOURS LE 1ER POUR TESTER L'ANIM
+        randomNumberEvent = Random.Range(0, 2); // POUR REGLER SUR QUEL EVENT ON TOMBE
         switch (randomNumberEvent) {
             case 0:
                 sujetPopUp.GetComponent<Image>().sprite = spriteList[4];
@@ -335,7 +338,7 @@ public class PopUpEventForetController : MonoBehaviour {
             case 1:
                 sujetPopUp.GetComponent<Image>().sprite = spriteList[5];
                 textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent2Intro");
-                texteChoice1.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionSalute");
+                texteChoice1.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionOpen");
                 texteChoice2.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionLeave");
                 break;
         }
@@ -396,11 +399,15 @@ public class PopUpEventForetController : MonoBehaviour {
         // On met les controles du joueur en pause
         ControlsManager.Instance.UpdateState(302);
 
+        int randomItemNumber;
+        int randomRarityRate = Random.Range(0, 101);
+        ItemData randomItem;
+
         switch (eventType) {
-            case 1: // Evenement aléatoire   
+            case 1: // Evenement aléatoire
+                int randomSuccessEvent = Random.Range(0, 101);
                 switch (randomNumberEvent) {
                     case 0: // Evenement aléatoire n°1 (Dayo)
-                        int randomSuccessEvent = Random.Range(0, 101);
                         if(randomSuccessEvent > 39) {
                             textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent1GoodEnd");
                             StartEvent1SuccessAnimation();
@@ -410,8 +417,25 @@ public class PopUpEventForetController : MonoBehaviour {
                         }
                         break;
                     case 1: // Evenement aléatoire n°2 (Mimic)
-                        Debug.Log("Action: evenement aléatoire n°2 en travaux !");
-                        ControlsManager.Instance.UpdateState(301);
+                        if(randomSuccessEvent > 29) {
+                            if(randomRarityRate > 70) {
+                                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[2].Count);
+                                randomItem = GameManager.Instance.itemsTriRarete[2][randomItemNumber];
+                            } else {
+                                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[1].Count);
+                                randomItem = GameManager.Instance.itemsTriRarete[1][randomItemNumber];
+                            }
+
+                            objetCoffre.GetComponent<Image>().sprite = randomItem.GetSprite();
+
+                            InventoryController.Instance.AddItem(randomItem);
+
+                            textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent2GoodEnd");
+                            StartEvent2SuccessAnimation();
+                        } else {
+                            textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent2BadEnd");
+                            StartEvent2FailureAnimation();
+                        }
                         break;
                 }
                 break;
@@ -474,10 +498,6 @@ public class PopUpEventForetController : MonoBehaviour {
                 }
                 break;
             case 6: // Coffre
-                int randomItemNumber;
-                int randomRarityRate = Random.Range(0, 101);
-                ItemData randomItem;
-                
                 if(randomRarityRate > 90) {
                     randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[2].Count);
                     randomItem = GameManager.Instance.itemsTriRarete[2][randomItemNumber];
@@ -562,6 +582,41 @@ public class PopUpEventForetController : MonoBehaviour {
 
         GameManager.Instance.AddCoinsToRunPlayerCoins( (int) (GameManager.Instance.GetRunPlayerCoins() * 0.2f * -1));
 
+        StartWritingTextEnd();
+    }
+
+    // Animation de l'event aléatoire 2 si on reussit
+    private async void StartEvent2SuccessAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(drumRollSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOShakeAnchorPos(4.0f, new Vector3(10, 0, 0), 15, 0, false, false).AsyncWaitForCompletion();
+        sujetPopUp.GetComponent<Image>().sprite = openSuspiciousChest;
+
+        SoundFXManager.Instance.PlaySoundFXClip(fanfareSFXTrack, this.transform);
+        objetCoffre.GetComponent<Image>().DOFade(1f, 3f);
+        await objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(50, 3f, false).AsyncWaitForCompletion();
+
+        StartWritingTextEnd();
+    }
+
+    // Animation de l'event aléatoire 2 si on échoue
+    private async void StartEvent2FailureAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(drumRollSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOShakeAnchorPos(4.0f, new Vector3(10, 0, 0), 15, 0, false, false).AsyncWaitForCompletion();
+        sujetPopUp.GetComponent<Image>().sprite = openTrapChest;
+
+        SoundFXManager.Instance.PlaySoundFXClip(mimicBiteSFXTrack, this.transform);
+        await conteneur.GetComponent<RectTransform>().DOShakeAnchorPos(1.0f, 5.0f, 5, 10f, false, true).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(mimicBiteSFXTrack, this.transform);
+        await conteneur.GetComponent<RectTransform>().DOShakeAnchorPos(1.0f, 5.0f, 5, 10f, false, true).AsyncWaitForCompletion();
+
+        // APPLIQUER L'EFFET DE PERTE DES PV ICI, ENLEVER 2 POINTS DE VIES
         StartWritingTextEnd();
     }
 
