@@ -83,6 +83,30 @@ MonoBehaviour:
     m_Key: ChestEventEnd
     m_Metadata:
       m_Items: []
+  - m_Id: 3315065280659456
+    m_Key: TradeEventEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3315097107038208
+    m_Key: TradeEventNoItemEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388065883488256
+    m_Key: AtkStatName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388162688024576
+    m_Key: DefStatName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388217415303168
+    m_Key: SpeedStatName
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388267147165696
+    m_Key: LuckStatName
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

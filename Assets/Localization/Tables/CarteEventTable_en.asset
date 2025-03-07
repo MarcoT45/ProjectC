@@ -91,6 +91,32 @@ MonoBehaviour:
     m_Localized: What a boon ! The chest contained equipment you can use.
     m_Metadata:
       m_Items: []
+  - m_Id: 3315097107038208
+    m_Localized: It's unfortunate that you don't have anything to exchange. The only
+      thing left is to go back...
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3315065280659456
+    m_Localized: Due to the exchange, the well's power was reduced. Did you get a
+      valuable item back ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388065883488256
+    m_Localized: 'ATK:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388162688024576
+    m_Localized: 'DEF:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388217415303168
+    m_Localized: 'SPD:'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3388267147165696
+    m_Localized: 'LCK:'
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

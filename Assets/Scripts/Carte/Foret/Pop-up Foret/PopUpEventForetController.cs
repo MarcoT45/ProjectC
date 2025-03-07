@@ -28,6 +28,23 @@ public class PopUpEventForetController : MonoBehaviour {
     // Texte dans la zone de texte de la pop-up
     public TextMeshProUGUI textePopUp;
 
+    // Gameobject & TextMesh pour la partie échange
+    public GameObject fenetreInfoEchange;
+    public TextMeshProUGUI nomObjetEchange;
+    public GameObject rarityObjetEchange;
+    public TextMeshProUGUI atkObjetEchange;
+    public TextMeshProUGUI defObjetEchange;
+    public TextMeshProUGUI vitObjetEchange;
+    public TextMeshProUGUI chnObjetEchange;
+    public TextMeshProUGUI descObjetEchange;
+    public GameObject fenetreObjetEchange;
+    public GameObject spriteObjetEchange;
+    public GameObject flecheGaucheObjetEchange;
+    public GameObject flecheDroiteObjetEchange;
+
+    // La liste des images pour la rareté
+    public List<Sprite> raritySpriteList = new List<Sprite>();
+
     // Gameobject pour l'animation de repos
     public GameObject voletNoirHaut;
     public GameObject voletNoirBas;
@@ -44,6 +61,8 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip punchedSFXTrack;
     public AudioClip drumRollSFXTrack;
     public AudioClip fanfareSFXTrack;
+    public AudioClip splashSFXTrack;
+    public AudioClip wellShakingSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
@@ -54,6 +73,8 @@ public class PopUpEventForetController : MonoBehaviour {
     private string textValue;
     private int eventType;
     private int choiceNumber = 1;
+    private List<ItemData> allPlayerItems = new List<ItemData>();
+    private int tradeItemIndex = 0;
 
     ////////////////////////////////// Partie pour les controles ////////////////////////////////////////
 
@@ -63,8 +84,13 @@ public class PopUpEventForetController : MonoBehaviour {
             ValiderChoix();
         }
 
-         if(ControlsManager.Instance.controlsState == ControlsState.CarteLeaveWindow) {
+        if(ControlsManager.Instance.controlsState == ControlsState.CarteLeaveWindow) {
             ValiderPartir();
+        }
+
+        if(ControlsManager.Instance.controlsState == ControlsState.CarteTradeWindow) {
+            ChangeTradeItem();
+            ConfirmTradeItem();
         }
     }
 
@@ -144,6 +170,100 @@ public class PopUpEventForetController : MonoBehaviour {
     public void MouseValiderPartir() {
         FermerPopUpEvent();
         SoundFXManager.Instance.PlaySoundFXClip(confirmChoiceSFXTrack, this.transform);
+    }
+
+    private void ChangeTradeItem() {
+        if (ControlsManager.Instance.DeplacerPressed) {
+            int val = (int) ControlsManager.Instance.DeplacerValue.x;
+            switch (val) {
+                case -1:
+                    if (tradeItemIndex == 0) {
+                        tradeItemIndex = allPlayerItems.Count - 1;
+                    } else {
+                        tradeItemIndex = tradeItemIndex - 1;
+                    }
+                    break;
+                case 1:
+                    if (tradeItemIndex == allPlayerItems.Count - 1) {
+                        tradeItemIndex = 0;
+                    } else {
+                        tradeItemIndex = tradeItemIndex + 1;
+                    }
+                    break;
+            }
+
+            if(allPlayerItems.Count > 1) {
+                SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+            }
+
+            ChargerInfoTradeItem(tradeItemIndex);
+        }
+    }
+
+    public void MousePreviousItem() {
+        if (tradeItemIndex == 0) {
+            tradeItemIndex = allPlayerItems.Count - 1;
+        } else {
+            tradeItemIndex = tradeItemIndex - 1;
+        }
+
+        if(allPlayerItems.Count > 1) {
+            SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+        }
+
+        ChargerInfoTradeItem(tradeItemIndex);
+    }
+
+    public void MouseNextItem() {
+        if (tradeItemIndex == allPlayerItems.Count - 1) {
+            tradeItemIndex = 0;
+        } else {
+            tradeItemIndex = tradeItemIndex + 1;
+        }
+
+        if(allPlayerItems.Count > 1) {
+            SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+        }
+
+        ChargerInfoTradeItem(tradeItemIndex);
+    }
+
+    private void ConfirmTradeItem() {
+        if (ControlsManager.Instance.ValiderPressed) {
+            ControlsManager.Instance.UpdateState(302);
+
+            if( EquipmentController.Instance.GetCasque() == allPlayerItems[tradeItemIndex] ||
+                EquipmentController.Instance.GetTorse() == allPlayerItems[tradeItemIndex] ||
+                EquipmentController.Instance.GetBottes() == allPlayerItems[tradeItemIndex] ||
+                EquipmentController.Instance.GetArme() == allPlayerItems[tradeItemIndex] ||
+                EquipmentController.Instance.GetAccessoireJ() == allPlayerItems[tradeItemIndex] ||
+                EquipmentController.Instance.GetAccessoireK() == allPlayerItems[tradeItemIndex]) {
+
+                EquipmentController.Instance.Unequip(allPlayerItems[tradeItemIndex]);
+            }
+
+            InventoryController.Instance.RemoveItem(allPlayerItems[tradeItemIndex]);
+
+            int randomItemNumber;
+            int randomRarityRate = Random.Range(0, 101);
+            ItemData randomItem;
+                
+            if(randomRarityRate > 80) {
+                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[2].Count);
+                randomItem = GameManager.Instance.itemsTriRarete[2][randomItemNumber];
+            } else if (randomRarityRate > 50) {
+                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[1].Count);
+                randomItem = GameManager.Instance.itemsTriRarete[1][randomItemNumber];
+            } else {
+                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[0].Count);
+                randomItem = GameManager.Instance.itemsTriRarete[0][randomItemNumber];
+            }
+
+            objetCoffre.GetComponent<Image>().sprite = randomItem.GetSprite();
+            InventoryController.Instance.AddItem(randomItem);
+
+            StartTradeItemAnimation();
+        }
     }
 
     ////////////////////////////////// Partie pour les controles ////////////////////////////////////////
@@ -261,6 +381,11 @@ public class PopUpEventForetController : MonoBehaviour {
         textePopUp.text = "";
         choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f);
         leaveWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f);
+        flecheGaucheObjetEchange.GetComponent<Image>().DOFade(1f, 0.5f);
+        flecheDroiteObjetEchange.GetComponent<Image>().DOFade(1f, 0.5f);
+        spriteObjetEchange.GetComponent<Image>().DOFade(1f, 0.5f);
+        fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosY(50, 1f, false);
+        fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosX(-61, 1f, false);
         cursor1.SetActive(true);
         cursor2.SetActive(false);
         this.gameObject.SetActive(false);
@@ -274,7 +399,7 @@ public class PopUpEventForetController : MonoBehaviour {
         switch (eventType) {
             case 1: // Evenement aléatoire   
                 switch (randomNumberEvent) {
-                    case 0: // Evenement aléatoire n°1
+                    case 0: // Evenement aléatoire n°1 (Dayo)
                         int randomSuccessEvent = Random.Range(0, 101);
                         if(randomSuccessEvent > 39) {
                             textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent1GoodEnd");
@@ -284,7 +409,7 @@ public class PopUpEventForetController : MonoBehaviour {
                             StartEvent1FailureAnimation();
                         }
                         break;
-                    case 1: // Evenement aléatoire n°2
+                    case 1: // Evenement aléatoire n°2 (Mimic)
                         Debug.Log("Action: evenement aléatoire n°2 en travaux !");
                         ControlsManager.Instance.UpdateState(301);
                         break;
@@ -297,10 +422,56 @@ public class PopUpEventForetController : MonoBehaviour {
             case 4: // Magasin
                 Debug.Log("Action: magasin en travaux !");
                 ControlsManager.Instance.UpdateState(301);
+
+                // FAIRE LA PARTIE MAGASIN DE LA POP-UP
+                // REFLECHIR A COMMENT CA MARCHE ET AUX CONTROLES
+                // NE PAS OUBLIER LE MESSAGE SI ON A PAS ASSEZ D'ARGENT POUR ACHETER
+
                 break;
             case 5: // Echange
-                Debug.Log("Action: echange en travaux !");
-                ControlsManager.Instance.UpdateState(301);
+                allPlayerItems = new List<ItemData>();
+
+                int itemCount = 0;
+
+                if(EquipmentController.Instance.GetCasque() != null) {
+                    itemCount++;
+                    allPlayerItems.Add(EquipmentController.Instance.GetCasque());
+                }
+                if(EquipmentController.Instance.GetTorse() != null) {
+                    itemCount++;
+                    allPlayerItems.Add(EquipmentController.Instance.GetTorse());
+                }
+                if(EquipmentController.Instance.GetBottes() != null){
+                    itemCount++;
+                    allPlayerItems.Add(EquipmentController.Instance.GetBottes());
+                }
+                if(EquipmentController.Instance.GetArme() != null){
+                    itemCount++;
+                    allPlayerItems.Add(EquipmentController.Instance.GetArme());
+                }
+                if(EquipmentController.Instance.GetAccessoireJ() != null){
+                    itemCount++;
+                    allPlayerItems.Add(EquipmentController.Instance.GetAccessoireJ());
+                }
+                if(EquipmentController.Instance.GetAccessoireK() != null){
+                    itemCount++;
+                    allPlayerItems.Add(EquipmentController.Instance.GetAccessoireK());
+                }
+
+                itemCount = itemCount + InventoryController.Instance.GetItemList().Count;
+                foreach (ItemData item in InventoryController.Instance.GetItemList()) {
+                    allPlayerItems.Add(item);
+                }
+
+                if(itemCount == 0) {
+                    textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "TradeEventNoItemEnd");
+                    StartTradeNoItemAnimation();
+                } else {
+                    textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "TradeEventEnd");
+                    tradeItemIndex = 0;
+                    ChargerInfoTradeItem(tradeItemIndex);
+                    OpenTradeMenuAnimation();
+                }
                 break;
             case 6: // Coffre
                 int randomItemNumber;
@@ -320,8 +491,32 @@ public class PopUpEventForetController : MonoBehaviour {
 
                 objetCoffre.GetComponent<Image>().sprite = randomItem.GetSprite();
 
+                InventoryController.Instance.AddItem(randomItem);
+
                 textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ChestEventEnd");
                 StartChestAnimation();
+                break;
+        }
+    }
+
+    private void ChargerInfoTradeItem(int index) {
+        spriteObjetEchange.GetComponent<Image>().sprite = allPlayerItems[index].GetSprite();
+        nomObjetEchange.text = allPlayerItems[index].GetName().GetLocalizedString();
+        atkObjetEchange.text = allPlayerItems[index].GetAttack().ToString();
+        defObjetEchange.text = allPlayerItems[index].GetDefense().ToString();
+        vitObjetEchange.text = allPlayerItems[index].GetSpeed().ToString();
+        chnObjetEchange.text = allPlayerItems[index].GetLuck().ToString();
+        descObjetEchange.text = allPlayerItems[index].GetDescription().GetLocalizedString();
+  
+        switch (allPlayerItems[index].GetRarity()) {
+            case 1:
+                rarityObjetEchange.GetComponent<Image>().sprite = raritySpriteList[0];
+                break;
+            case 2:
+                rarityObjetEchange.GetComponent<Image>().sprite = raritySpriteList[1];
+                break;
+            case 3:
+                rarityObjetEchange.GetComponent<Image>().sprite = raritySpriteList[2];
                 break;
         }
     }
@@ -337,7 +532,9 @@ public class PopUpEventForetController : MonoBehaviour {
         await sujetPopUp.GetComponent<RectTransform>().DOShakeAnchorPos(2.0f, 5.0f, 5, 10f, false, true).AsyncWaitForCompletion();
         sujetPopUp.GetComponent<Image>().DOFade(0f, 1f);
 
-        // APPLIQUER L'EFFET DE L'EVENEMENT ICI, GAGNER DE L'ARGENT (200 pièces ?)
+        int randomCoinsQuantity = Random.Range(100, 201);
+        GameManager.Instance.AddCoinsToRunPlayerCoins(randomCoinsQuantity);
+
         StartWritingTextEnd();
     }
 
@@ -363,7 +560,8 @@ public class PopUpEventForetController : MonoBehaviour {
         voletNoirHaut.GetComponent<RectTransform>().DOAnchorPosY(121, 2f, false);
         await voletNoirBas.GetComponent<RectTransform>().DOAnchorPosY(-121, 2f, false).AsyncWaitForCompletion();
 
-        // APPLIQUER L'EFFET DE L'EVENEMENT ICI, PERDRE DE L'ARGENT (20%)
+        GameManager.Instance.AddCoinsToRunPlayerCoins( (int) (GameManager.Instance.GetRunPlayerCoins() * 0.2f * -1));
+
         StartWritingTextEnd();
     }
 
@@ -391,6 +589,47 @@ public class PopUpEventForetController : MonoBehaviour {
         StartWritingTextEnd();
     }
 
+    // Animation lorsque l'on n'a pas d'item à échanger
+    private async void StartTradeNoItemAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+        StartWritingTextEnd();
+    }
+
+    // Animation qui ouvre le menu de l'échange
+    private async void OpenTradeMenuAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosY(10, 1f, false);
+        await fenetreInfoEchange.GetComponent<RectTransform>().DOAnchorPosX(67, 1f, false).AsyncWaitForCompletion();
+
+        ControlsManager.Instance.UpdateState(304);
+    }
+
+    // Animation lorsque l'on a au moins un item à échanger
+    private async void StartTradeItemAnimation() {
+        flecheGaucheObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
+        flecheDroiteObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
+        fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosX(0, 1f, false);
+        await fenetreInfoEchange.GetComponent<RectTransform>().DOAnchorPosX(190, 1f, false).AsyncWaitForCompletion();
+
+        spriteObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
+        await fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosY(-10, 1f, false).AsyncWaitForCompletion();
+        
+        SoundFXManager.Instance.PlaySoundFXClip(splashSFXTrack, this.transform);
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 1.25f).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(wellShakingSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOShakeAnchorPos(1.25f, new Vector3(5, 0, 0), 30, 0, false, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(fanfareSFXTrack, this.transform);
+        objetCoffre.GetComponent<Image>().DOFade(1f, 3f);
+        await objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(50, 3f, false).AsyncWaitForCompletion();
+
+        StartWritingTextEnd();
+    }
+
     // Animation lorsque l'on choisit d'ouvrir le coffre
     private async void StartChestAnimation() {
         await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
@@ -404,7 +643,6 @@ public class PopUpEventForetController : MonoBehaviour {
         objetCoffre.GetComponent<Image>().DOFade(1f, 3f);
         await objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(50, 3f, false).AsyncWaitForCompletion();
 
-        // AJOUTER L'OBJET DU COFFRE DANS L'INVENTAIRE DU JOUEUR
         StartWritingTextEnd();
     }
 

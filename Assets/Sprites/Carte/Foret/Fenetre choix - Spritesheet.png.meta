@@ -113,20 +113,20 @@ TextureImporter:
         width: 74
         height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 923fc6576d42b32439c7315165e40734
-      internalID: -786754894
+      spriteID: 553d9a44d74931a4cae44eada5ee54f6
+      internalID: -43024246
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Curseur choix 1
+      name: Curseur 1 droite
       rect:
         serializedVersion: 2
         x: 82
@@ -134,20 +134,20 @@ TextureImporter:
         width: 5
         height: 8
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1952009b318206c45a9f7b661837d558
-      internalID: -517954634
+      spriteID: c630ea80c21ec7741a776b292cc58818
+      internalID: 286901951
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Curseur choix 2
+      name: Curseur 2 droite
       rect:
         serializedVersion: 2
         x: 93
@@ -155,14 +155,56 @@ TextureImporter:
         width: 5
         height: 8
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c7a6934857833a34393e2e18de8141d3
-      internalID: 240233107
+      spriteID: 6934506105b6949449b741407c381198
+      internalID: 1093248445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Curseur 1 gauche
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 42
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e31e775c09510d418bf3bb9fd98d300
+      internalID: -1843391625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Curseur 2 gauche
+      rect:
+        serializedVersion: 2
+        x: 93
+        y: 42
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41fc3d798fbb9994189c150434b4d97f
+      internalID: -291972566
       vertices: []
       indices: 
       edges: []
@@ -176,14 +218,14 @@ TextureImporter:
         width: 74
         height: 18
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 099520113b3370a4cbc6939197c00028
-      internalID: 675287174
+      spriteID: 92e37602aa4a24b48a9a5129c3c607ba
+      internalID: 169634019
       vertices: []
       indices: 
       edges: []
@@ -199,10 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Curseur choix 1: -517954634
-      Curseur choix 2: 240233107
-      Fenetre choix: -786754894
-      Fenetre partir: 675287174
+      Curseur 1 droite: 286901951
+      Curseur 1 gauche: -1843391625
+      Curseur 2 droite: 1093248445
+      Curseur 2 gauche: -291972566
+      Fenetre choix: -43024246
+      Fenetre partir: 169634019
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
