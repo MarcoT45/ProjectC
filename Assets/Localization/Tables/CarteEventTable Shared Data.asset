@@ -60,7 +60,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 366679061561344
-    m_Key: ActionPunch
+    m_Key: ActionAttack
     m_Metadata:
       m_Items: []
   - m_Id: 1858138042400768
@@ -109,6 +109,22 @@ MonoBehaviour:
       m_Items: []
   - m_Id: 3676737904181248
     m_Key: RandomEvent2BadEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3965890977988608
+    m_Key: ActionObserve
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3965972251017216
+    m_Key: RandomEvent3Intro
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3967072962215936
+    m_Key: RandomEvent3GoodEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3967084085510144
+    m_Key: RandomEvent3BadEnd
     m_Metadata:
       m_Items: []
   m_Metadata:

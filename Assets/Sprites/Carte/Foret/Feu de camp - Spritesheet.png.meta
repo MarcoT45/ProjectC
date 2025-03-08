@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf496902abebb2d448914d7ef5127a5c
+guid: 35e8b744d98eee44f961acc27a460cb2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,127 +105,43 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grenouille marchande 1
+      name: Feu de camp 1
       rect:
         serializedVersion: 2
         x: 0
-        y: 96
+        y: 0
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bcf98fc2f24e5dd418470e6b84c66254
-      internalID: 847150245
+      spriteID: 58b11b9d5a904e340a42c4a65df591fb
+      internalID: 697987697
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grenouille marchande 2
+      name: Feu de camp 2
       rect:
         serializedVersion: 2
         x: 32
-        y: 96
+        y: 0
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fda497f73267d7540bdca6198a68e7dd
-      internalID: -1733611480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 3
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4034c83c22f010b4ba43c3a43901b6c9
-      internalID: -1148014558
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 4
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30b4be43181221b45a5aa3c04072a3d5
-      internalID: -1794898357
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 5
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f4e3916b37a738543bbb5fd29323279a
-      internalID: -1116645858
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 6
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 32
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cdd509263d03f6945b3c5222b55e050e
-      internalID: -479750059
+      spriteID: a6eb0919718f0614ea7df8d062e37588
+      internalID: 742760437
       vertices: []
       indices: 
       edges: []
@@ -241,12 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Grenouille marchande 1: 847150245
-      Grenouille marchande 2: -1733611480
-      Grenouille marchande 3: -1148014558
-      Grenouille marchande 4: -1794898357
-      Grenouille marchande 5: -1116645858
-      Grenouille marchande 6: -479750059
+      Feu de camp 1: 697987697
+      Feu de camp 2: 742760437
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

@@ -49,6 +49,10 @@ public class PopUpEventForetController : MonoBehaviour {
     public GameObject voletNoirHaut;
     public GameObject voletNoirBas;
 
+    // Gameobject pour l'animation de l'evenement 3
+    public GameObject monstreGauche;
+    public GameObject monstreDroite;
+
     // Sons de la pop-up
     public AudioClip popupOpenSFXTrack;
     public AudioClip bushSFXTrack;
@@ -64,12 +68,16 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip splashSFXTrack;
     public AudioClip wellShakingSFXTrack;
     public AudioClip mimicBiteSFXTrack;
+    public AudioClip monsterAmbushSFXTrack;
+    public AudioClip monsterDeathSFXTrack;
+    public AudioClip wolfDeathSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
     public Sprite openChest;
     public Sprite openSuspiciousChest;
     public Sprite openTrapChest;
+    public Sprite whiteWolf;
 
     // Variable pour gerer les differents elements de la pop-up
     private int randomNumberEvent;
@@ -327,18 +335,24 @@ public class PopUpEventForetController : MonoBehaviour {
     }
 
     private void GenerateRandomEvent() {
-        randomNumberEvent = Random.Range(0, 2); // POUR REGLER SUR QUEL EVENT ON TOMBE
+        randomNumberEvent = Random.Range(0, 3);
         switch (randomNumberEvent) {
             case 0:
                 sujetPopUp.GetComponent<Image>().sprite = spriteList[4];
                 textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent1Intro");
-                texteChoice1.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionPunch");
+                texteChoice1.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionAttack");
                 texteChoice2.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionLeave");
                 break;
             case 1:
                 sujetPopUp.GetComponent<Image>().sprite = spriteList[5];
                 textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent2Intro");
                 texteChoice1.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionOpen");
+                texteChoice2.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionLeave");
+                break;
+            case 2:
+                sujetPopUp.GetComponent<Image>().sprite = whiteWolf;
+                textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent3Intro");
+                texteChoice1.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionObserve");
                 texteChoice2.text = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ActionLeave");
                 break;
         }
@@ -389,6 +403,10 @@ public class PopUpEventForetController : MonoBehaviour {
         spriteObjetEchange.GetComponent<Image>().DOFade(1f, 0.5f);
         fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosY(50, 1f, false);
         fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosX(-61, 1f, false);
+        monstreGauche.GetComponent<RectTransform>().DOAnchorPosX(-150, 1f, false);
+        monstreDroite.GetComponent<RectTransform>().DOAnchorPosX(150, 1f, false);
+        monstreGauche.GetComponent<Image>().DOFade(0f, 0.5f);
+        monstreDroite.GetComponent<Image>().DOFade(0f, 0.5f);
         cursor1.SetActive(true);
         cursor2.SetActive(false);
         this.gameObject.SetActive(false);
@@ -435,6 +453,30 @@ public class PopUpEventForetController : MonoBehaviour {
                         } else {
                             textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent2BadEnd");
                             StartEvent2FailureAnimation();
+                        }
+                        break;
+                    case 2: // Evenement aléatoire n°3 (Loup Blanc)
+                        if(randomSuccessEvent > 49) {
+                            if(randomRarityRate > 90) {
+                                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[2].Count);
+                                randomItem = GameManager.Instance.itemsTriRarete[2][randomItemNumber];
+                            } else if (randomRarityRate > 60) {
+                                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[1].Count);
+                                randomItem = GameManager.Instance.itemsTriRarete[1][randomItemNumber];
+                            } else {
+                                randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[0].Count);
+                                randomItem = GameManager.Instance.itemsTriRarete[0][randomItemNumber];
+                            }
+
+                            objetCoffre.GetComponent<Image>().sprite = randomItem.GetSprite();
+
+                            InventoryController.Instance.AddItem(randomItem);
+
+                            textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent3GoodEnd");
+                            StartEvent3SuccessAnimation();
+                        } else {
+                            textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "RandomEvent3BadEnd");
+                            StartEvent3FailureAnimation();
                         }
                         break;
                 }
@@ -617,6 +659,88 @@ public class PopUpEventForetController : MonoBehaviour {
         await conteneur.GetComponent<RectTransform>().DOShakeAnchorPos(1.0f, 5.0f, 5, 10f, false, true).AsyncWaitForCompletion();
 
         // APPLIQUER L'EFFET DE PERTE DES PV ICI, ENLEVER 2 POINTS DE VIES
+        StartWritingTextEnd();
+    }
+
+    // Animation de l'event aléatoire 3 si on reussit
+    private async void StartEvent3SuccessAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreDroite.GetComponent<Image>().DOFade(1f, 1f);
+        await monstreDroite.GetComponent<RectTransform>().DOAnchorPosX(50, 1f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreGauche.GetComponent<Image>().DOFade(1f, 1f);
+        await monstreGauche.GetComponent<RectTransform>().DOAnchorPosX(-50, 1f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreDroite.GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(50, 10), 15f, 3, 1.0f, false);
+        await monstreGauche.GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(-50, 10), 15f, 3, 1.0f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(dodgeSFXTrack, this.transform);
+        monstreDroite.GetComponent<RectTransform>().DOAnchorPosX(70, 0.35f, false);
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(30, 0.35f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(dodgeSFXTrack, this.transform);
+        monstreGauche.GetComponent<RectTransform>().DOAnchorPosX(-70, 0.35f, false);
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(-30, 0.35f, false).AsyncWaitForCompletion();
+
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(0, 0.35f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreDroite.GetComponent<RectTransform>().DOAnchorPosX(13, 0.35f, false);
+        await monstreGauche.GetComponent<RectTransform>().DOAnchorPosX(-13, 0.35f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(wolfDeathSFXTrack, this.transform);
+        monstreDroite.GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(13, 10), 5f, 6, 2.0f, false);
+        monstreGauche.GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(-13, 10), 5f, 6, 2.0f, false);
+        await sujetPopUp.GetComponent<Image>().DOFade(0f, 2f).AsyncWaitForCompletion();
+
+        monstreGauche.GetComponent<RectTransform>().DOAnchorPosX(150, 1f, false);
+        await monstreDroite.GetComponent<RectTransform>().DOAnchorPosX(-150, 1f, false).AsyncWaitForCompletion();
+
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 1.0f).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(fanfareSFXTrack, this.transform);
+        objetCoffre.GetComponent<Image>().DOFade(1f, 2f);
+        await objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(50, 2f, false).AsyncWaitForCompletion();
+
+        StartWritingTextEnd();
+    }
+
+    // Animation de l'event aléatoire 3 si on échoue
+    private async void StartEvent3FailureAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreDroite.GetComponent<Image>().DOFade(1f, 1f);
+        await monstreDroite.GetComponent<RectTransform>().DOAnchorPosX(50, 1f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreGauche.GetComponent<Image>().DOFade(1f, 1f);
+        await monstreGauche.GetComponent<RectTransform>().DOAnchorPosX(-50, 1f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterAmbushSFXTrack, this.transform);
+        monstreDroite.GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(50, 10), 15f, 3, 1.0f, false);
+        await monstreGauche.GetComponent<RectTransform>().DOJumpAnchorPos(new Vector2(-50, 15), 10f, 3, 1.0f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(punchSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(30, 0.35f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(punchSFXTrack, this.transform);
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(-30, 0.35f, false).AsyncWaitForCompletion();
+
+        await sujetPopUp.GetComponent<RectTransform>().DOAnchorPosX(0, 0.35f, false).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterDeathSFXTrack, this.transform);
+        await monstreDroite.GetComponent<Image>().DOFade(0f, 0.5f).AsyncWaitForCompletion();
+
+        SoundFXManager.Instance.PlaySoundFXClip(monsterDeathSFXTrack, this.transform);
+        await monstreGauche.GetComponent<Image>().DOFade(0f, 0.5f).AsyncWaitForCompletion();
+
         StartWritingTextEnd();
     }
 

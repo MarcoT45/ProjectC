@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cf496902abebb2d448914d7ef5127a5c
+guid: 5fa746c1aed6dec499dff72445a3b7be
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,49 +105,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Grenouille marchande 1
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bcf98fc2f24e5dd418470e6b84c66254
-      internalID: 847150245
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 2
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 96
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: fda497f73267d7540bdca6198a68e7dd
-      internalID: -1733611480
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 3
+      name: PNJ Monstre Champi
       rect:
         serializedVersion: 2
         x: 0
@@ -161,35 +119,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4034c83c22f010b4ba43c3a43901b6c9
-      internalID: -1148014558
+      spriteID: fb659c584bb48e547a592ac9a96fca21
+      internalID: 1729732438
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grenouille marchande 4
-      rect:
-        serializedVersion: 2
-        x: 32
-        y: 64
-        width: 32
-        height: 32
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 30b4be43181221b45a5aa3c04072a3d5
-      internalID: -1794898357
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Grenouille marchande 5
+      name: PNJ Dayo
       rect:
         serializedVersion: 2
         x: 0
@@ -203,18 +140,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f4e3916b37a738543bbb5fd29323279a
-      internalID: -1116645858
+      spriteID: 08baf98fbeb37fc4ead4fbd00a988475
+      internalID: -778220691
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Grenouille marchande 6
+      name: PNJ Loup Blanc
       rect:
         serializedVersion: 2
-        x: 32
-        y: 32
+        x: 0
+        y: 0
         width: 32
         height: 32
       alignment: 0
@@ -224,8 +161,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cdd509263d03f6945b3c5222b55e050e
-      internalID: -479750059
+      spriteID: 42b61e61759820c4690a0271bc96f838
+      internalID: 1044980150
       vertices: []
       indices: 
       edges: []
@@ -241,12 +178,9 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Grenouille marchande 1: 847150245
-      Grenouille marchande 2: -1733611480
-      Grenouille marchande 3: -1148014558
-      Grenouille marchande 4: -1794898357
-      Grenouille marchande 5: -1116645858
-      Grenouille marchande 6: -479750059
+      PNJ Dayo: -778220691
+      PNJ Loup Blanc: 1044980150
+      PNJ Monstre Champi: 1729732438
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

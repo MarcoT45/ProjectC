@@ -37,8 +37,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2833209753600
-    m_Localized: "This frog has a head you don\u2019t remember. Should you kick his
-      ass?"
+    m_Localized: You find your SENSEI meditating ! Should you attempt a surprise
+      attack ?
     m_Metadata:
       m_Items: []
   - m_Id: 3172851908608
@@ -67,7 +67,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 366679061561344
-    m_Localized: Punch
+    m_Localized: Attack
     m_Metadata:
       m_Items: []
   - m_Id: 1858138042400768
@@ -75,12 +75,12 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2152000212303872
-    m_Localized: You realize that a portion of your money is gone upon waking up.
+    m_Localized: When you wake up, you find a note stating 'TOO SLOW' and some of
+      your money is gone.
     m_Metadata:
       m_Items: []
   - m_Id: 2151991525900288
-    m_Localized: Upon searching the collapsed frog, you come across a small purse
-      that is full.
+    m_Localized: It was not meditation, but a nap. You still take his purse.
     m_Metadata:
       m_Items: []
   - m_Id: 2663634894716928
@@ -121,6 +121,22 @@ MonoBehaviour:
   - m_Id: 3676735832195072
     m_Localized: You find very good quality equipment. Sometimes curiosity pays off
       !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3965890977988608
+    m_Localized: Observe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3965972251017216
+    m_Localized: "Isn\u2019t this one of those famous monster hunters ?"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3967084085510144
+    m_Localized: You are very impressed by what you have just seen !
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3967072962215936
+    m_Localized: Not so strong apparently. You take his equipment as a memento.
     m_Metadata:
       m_Items: []
   references:

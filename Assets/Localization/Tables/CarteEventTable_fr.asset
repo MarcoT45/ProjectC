@@ -39,8 +39,8 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2833209753600
-    m_Localized: "Cette grenouille a une t\xEAte qui ne vous revient pas. Devriez-vous
-      lui p\xE9ter la gueule ?"
+    m_Localized: "Vous trouvez votre SENSEI en train de m\xE9diter ! Devriez-vous
+      tenter une attaque surprise ?"
     m_Metadata:
       m_Items: []
   - m_Id: 3172851908608
@@ -69,7 +69,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 366679061561344
-    m_Localized: Frapper
+    m_Localized: Attaquer
     m_Metadata:
       m_Items: []
   - m_Id: 1858138042400768
@@ -78,13 +78,13 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 2152000212303872
-    m_Localized: "\xC0 votre r\xE9veil, vous remarquez qu'une partie de votre argent
-      a disparu."
+    m_Localized: "\xC0 votre r\xE9veil, vous trouvez une note \"TROP LENT\" et une
+      partie de votre argent a disparu."
     m_Metadata:
       m_Items: []
   - m_Id: 2151991525900288
-    m_Localized: "En fouillant la grenouille sonn\xE9e, vous trouvez une petite bourse
-      pleine."
+    m_Localized: "Ce n'\xE9tait pas de la m\xE9ditation, mais une sieste. Vous prenez
+      quand m\xEAme sa bourse."
     m_Metadata:
       m_Items: []
   - m_Id: 2663634894716928
@@ -126,6 +126,24 @@ MonoBehaviour:
   - m_Id: 3676735832195072
     m_Localized: "Vous trouvez de l'\xE9quipement de tr\xE8s bonne qualit\xE9. Parfois
       la curiosit\xE9 paye !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3965890977988608
+    m_Localized: Observer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3965972251017216
+    m_Localized: Ne serait-ce pas l'un de ces fameux chasseurs de monstres ?
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3967084085510144
+    m_Localized: "Vous \xEAtes fortement impressionn\xE9 par ce que vous venez de
+      voir !"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3967072962215936
+    m_Localized: "Pas si fort que \xE7a apparemment. Vous prenez son \xE9quipement
+      en souvenir."
     m_Metadata:
       m_Items: []
   references:
