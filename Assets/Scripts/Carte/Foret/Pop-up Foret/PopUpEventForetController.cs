@@ -14,6 +14,7 @@ public class PopUpEventForetController : MonoBehaviour {
     public GameObject buissonDroite;
     public GameObject partieCentrale;
     public GameObject zoneTexteBas;
+    public GameObject zoneTouche;
     public GameObject sujetPopUp;
     public GameObject objetCoffre;
 
@@ -27,6 +28,28 @@ public class PopUpEventForetController : MonoBehaviour {
 
     // Texte dans la zone de texte de la pop-up
     public TextMeshProUGUI textePopUp;
+
+    // Gameobject & TextMesh pour la partie magasin
+    public GameObject fenetreMagasinGauche;
+    public GameObject marchandItemsConteneur;
+    public GameObject fenetreMagasinDroite;
+    public GameObject joueurItemsConteneur;
+    public GameObject fenetreMagasinInfoItem;
+    public GameObject itemPrefab;
+    public Sprite cadreItem;
+    public Sprite cadreItemSelected;
+    public TextMeshProUGUI nomObjetShop;
+    public GameObject rarityObjetShop;
+    public TextMeshProUGUI atkObjetShop;
+    public TextMeshProUGUI defObjetShop;
+    public TextMeshProUGUI vitObjetShop;
+    public TextMeshProUGUI chnObjetShop;
+    public TextMeshProUGUI descObjetShop;
+
+    private int marchandNbItem = 0;
+    private int joueurNbItem  = 0;
+    private int itemMarchandPosition = 0;
+    private int itemJoueurPosition = 0;
 
     // Gameobject & TextMesh pour la partie échange
     public GameObject fenetreInfoEchange;
@@ -71,6 +94,8 @@ public class PopUpEventForetController : MonoBehaviour {
     public AudioClip monsterAmbushSFXTrack;
     public AudioClip monsterDeathSFXTrack;
     public AudioClip wolfDeathSFXTrack;
+    public AudioClip buyingSellingSFXTrack;
+    public AudioClip cantBuySellSFXTrack;
 
     // La liste des images pour la pop-up
     public List<Sprite> spriteList = new List<Sprite>();
@@ -102,6 +127,12 @@ public class PopUpEventForetController : MonoBehaviour {
         if(ControlsManager.Instance.controlsState == ControlsState.CarteTradeWindow) {
             ChangeTradeItem();
             ConfirmTradeItem();
+        }
+
+        if(ControlsManager.Instance.controlsState == ControlsState.CarteShopWindow) {
+            ChangeShopItem();
+            ConfirmShopItem();
+            CloseShopItem();
         }
     }
 
@@ -277,6 +308,236 @@ public class PopUpEventForetController : MonoBehaviour {
         }
     }
 
+    private void ChangeShopItem() {
+        int val = 0;
+        GameObject encartItem;
+        ItemInfoShopController it;
+
+        if (ControlsManager.Instance.DeplacerPressed) {
+            val = (int) ControlsManager.Instance.DeplacerValue.x;
+            switch (val) {
+                case -1:
+                    if(itemMarchandPosition == 0) {
+                        if(marchandNbItem > 0) {
+                            if(itemJoueurPosition != 0) {
+                                encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                                encartItem.GetComponent<Image>().sprite = cadreItem;
+                                itemJoueurPosition = 0;
+                            }
+
+                            itemMarchandPosition = 1;
+                            encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                            encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                            it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                            SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+                            
+                            if(it.GetSellableInfo()) {
+                                AfficherInfosItemShop(it.GetItemInfo());
+                            } else {
+                                fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                            }
+                        }
+                    }
+                    break;
+                case 1:
+                    if(itemJoueurPosition == 0) {
+                        if(joueurNbItem > 0) {
+                            if(itemMarchandPosition != 0) {
+                                encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                                encartItem.GetComponent<Image>().sprite = cadreItem;
+                                itemMarchandPosition = 0;
+                            }
+
+                            itemJoueurPosition = 1;
+                            encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                            encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                            it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                            SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                            if(it.GetSellableInfo()) {
+                                AfficherInfosItemShop(it.GetItemInfo());
+                            } else {
+                                fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                            }
+                        }
+                    }
+                    break;
+            }
+
+            val = (int) ControlsManager.Instance.DeplacerValue.y;
+            switch (val) {
+                case -1:
+                    if(itemMarchandPosition != 0 && itemMarchandPosition != marchandNbItem) {
+                        encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItem;
+
+                        itemMarchandPosition++;
+                        encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                        it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                        SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                        if(it.GetSellableInfo()) {
+                            AfficherInfosItemShop(it.GetItemInfo());
+                        } else {
+                            fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                        }
+                    }
+
+                    if(itemJoueurPosition != 0 && itemJoueurPosition != joueurNbItem) {
+                        encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItem;
+
+                        itemJoueurPosition++;
+                        encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                        it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                        SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                        if(it.GetSellableInfo()) {
+                            AfficherInfosItemShop(it.GetItemInfo());
+                        } else {
+                            fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                        }
+                    }
+                    break;
+                case 1:
+                    if(itemMarchandPosition != 0 && itemMarchandPosition != 1) {
+                        encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItem;
+
+                        itemMarchandPosition--;
+                        encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                        it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                        SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                        if(it.GetSellableInfo()) {
+                            AfficherInfosItemShop(it.GetItemInfo());
+                        } else {
+                            fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                        }
+                    }
+
+                    if(itemJoueurPosition != 0 && itemJoueurPosition != 1) {
+                        encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItem;
+
+                        itemJoueurPosition--;
+                        encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                        encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                        it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                        SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                        if(it.GetSellableInfo()) {
+                            AfficherInfosItemShop(it.GetItemInfo());
+                        } else {
+                            fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void AfficherInfosItemShop(ItemData i) {
+        fenetreMagasinInfoItem.transform.DOScale(new Vector3(1, 1 ,1), 0.25f);
+
+        nomObjetShop.text = i.GetName().GetLocalizedString();
+        atkObjetShop.text = i.GetAttack().ToString();
+        defObjetShop.text = i.GetDefense().ToString();
+        vitObjetShop.text = i.GetSpeed().ToString();
+        chnObjetShop.text = i.GetLuck().ToString();
+        descObjetShop.text = i.GetDescription().GetLocalizedString();
+  
+        switch (i.GetRarity()) {
+            case 1:
+                rarityObjetShop.GetComponent<Image>().sprite = raritySpriteList[0];
+                break;
+            case 2:
+                rarityObjetShop.GetComponent<Image>().sprite = raritySpriteList[1];
+                break;
+            case 3:
+                rarityObjetShop.GetComponent<Image>().sprite = raritySpriteList[2];
+                break;
+        }
+    }
+
+    private void ConfirmShopItem() {
+        GameObject encartItem;
+        ItemInfoShopController it;
+
+        GameObject itemChildObjet;
+        ItemInfoShopController itemInfo;
+
+        if (ControlsManager.Instance.ValiderPressed) {
+            if(itemMarchandPosition != 0) {
+                encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                if(it.GetSellableInfo() && (GameManager.Instance.GetRunPlayerCoins() - it.GetItemInfo().GetPrice()) >= 0) {
+                    encartItem.GetComponent<Image>().sprite = cadreItem;
+                    itemMarchandPosition = 0;
+
+                    InventoryController.Instance.AddItem(it.GetItemInfo());
+
+                    joueurNbItem++;
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+joueurNbItem;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = it.GetItemInfo().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (it.GetItemInfo().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(it.GetItemInfo());
+
+                    GameManager.Instance.AddCoinsToRunPlayerCoins(it.GetItemInfo().GetPrice() * -1);
+                    it.SetSellableInfo(false);
+                    SoundFXManager.Instance.PlaySoundFXClip(buyingSellingSFXTrack, this.transform);
+                } else {
+                    SoundFXManager.Instance.PlaySoundFXClip(cantBuySellSFXTrack, this.transform);
+                }
+                
+                fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+            }
+
+            if(itemJoueurPosition != 0) {
+                encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                if(it.GetSellableInfo()) {
+                    encartItem.GetComponent<Image>().sprite = cadreItem;
+                    itemJoueurPosition = 0;
+
+                    if(it.GetEquip()) {
+                        EquipmentController.Instance.Unequip(it.GetItemInfo());
+                    }
+
+                    InventoryController.Instance.RemoveItem(it.GetItemInfo());
+
+                    GameManager.Instance.AddCoinsToRunPlayerCoins((int) (it.GetItemInfo().GetPrice() * 0.2f));
+                    it.SetSellableInfo(false);
+                    SoundFXManager.Instance.PlaySoundFXClip(buyingSellingSFXTrack, this.transform);
+                } else {
+                    SoundFXManager.Instance.PlaySoundFXClip(cantBuySellSFXTrack, this.transform);
+                }
+
+                fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+            }
+        }
+    }
+
+    private void CloseShopItem() {
+        if (ControlsManager.Instance.FermerPressed) {
+            ControlsManager.Instance.UpdateState(302);
+            CloseShopMenuAnimation();
+        }
+    }
+
     ////////////////////////////////// Partie pour les controles ////////////////////////////////////////
 
     public void GeneratePopUpEvent(Noeud n) {
@@ -409,6 +670,19 @@ public class PopUpEventForetController : MonoBehaviour {
         monstreDroite.GetComponent<Image>().DOFade(0f, 0.5f);
         cursor1.SetActive(true);
         cursor2.SetActive(false);
+
+        // On nettoie aussi les listes marchands au cas ou on a un autre marchand après un autre event
+        foreach (Transform child in marchandItemsConteneur.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        foreach (Transform child in joueurItemsConteneur.transform) {
+            GameObject.Destroy(child.gameObject);
+        }
+        marchandNbItem = 0;
+        joueurNbItem  = 0;
+        itemMarchandPosition = 0;
+        itemJoueurPosition = 0;
+
         this.gameObject.SetActive(false);
         ControlsManager.Instance.UpdateState(300);
     }
@@ -420,6 +694,9 @@ public class PopUpEventForetController : MonoBehaviour {
         int randomItemNumber;
         int randomRarityRate = Random.Range(0, 101);
         ItemData randomItem;
+
+        GameObject popUpControls = GameObject.Find("Zone des touches");
+        PopUpControlsController p = (PopUpControlsController) popUpControls.GetComponent(typeof(PopUpControlsController));
 
         switch (eventType) {
             case 1: // Evenement aléatoire
@@ -486,13 +763,118 @@ public class PopUpEventForetController : MonoBehaviour {
                 StartRestAnimation();
                 break;
             case 4: // Magasin
-                Debug.Log("Action: magasin en travaux !");
-                ControlsManager.Instance.UpdateState(301);
+                GameObject itemChildObjet;
+                ItemInfoShopController itemInfo;
+                int j = 1;
 
-                // FAIRE LA PARTIE MAGASIN DE LA POP-UP
-                // REFLECHIR A COMMENT CA MARCHE ET AUX CONTROLES
-                // NE PAS OUBLIER LE MESSAGE SI ON A PAS ASSEZ D'ARGENT POUR ACHETER
+                // On genere 3 items pour le marchand
+                for (int i = 1; i < 4; i++) {
+                    randomRarityRate = Random.Range(0, 101);
 
+                    if(randomRarityRate > 90) {
+                        randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[2].Count);
+                        randomItem = GameManager.Instance.itemsTriRarete[2][randomItemNumber];
+                    } else if (randomRarityRate > 60) {
+                        randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[1].Count);
+                        randomItem = GameManager.Instance.itemsTriRarete[1][randomItemNumber];
+                    } else {
+                        randomItemNumber = Random.Range(0, GameManager.Instance.itemsTriRarete[0].Count);
+                        randomItem = GameManager.Instance.itemsTriRarete[0][randomItemNumber];
+                    }
+
+                    itemChildObjet = Instantiate(itemPrefab, marchandItemsConteneur.transform);
+                    itemChildObjet.name = "Marchand Item "+i;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = randomItem.GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = randomItem.GetPrice().ToString();
+
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(randomItem);
+
+                    marchandNbItem++;
+                }
+
+                // On genere les encarts des items du joueur
+                if(EquipmentController.Instance.GetCasque() != null) {
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = EquipmentController.Instance.GetCasque().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (EquipmentController.Instance.GetCasque().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(EquipmentController.Instance.GetCasque());
+                    itemInfo.SetEquip(true);
+                    joueurNbItem++;
+                    j++;
+                }
+                if(EquipmentController.Instance.GetTorse() != null) {
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = EquipmentController.Instance.GetTorse().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (EquipmentController.Instance.GetTorse().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(EquipmentController.Instance.GetTorse());
+                    itemInfo.SetEquip(true);
+                    joueurNbItem++;
+                    j++;
+                }
+                if(EquipmentController.Instance.GetBottes() != null){
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = EquipmentController.Instance.GetBottes().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (EquipmentController.Instance.GetBottes().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(EquipmentController.Instance.GetBottes());
+                    itemInfo.SetEquip(true);
+                    joueurNbItem++;
+                    j++;
+                }
+                if(EquipmentController.Instance.GetArme() != null){
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = EquipmentController.Instance.GetArme().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (EquipmentController.Instance.GetArme().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(EquipmentController.Instance.GetArme());
+                    itemInfo.SetEquip(true);
+                    joueurNbItem++;
+                    j++;
+                }
+                if(EquipmentController.Instance.GetAccessoireJ() != null){
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = EquipmentController.Instance.GetAccessoireJ().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (EquipmentController.Instance.GetAccessoireJ().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(EquipmentController.Instance.GetAccessoireJ());
+                    itemInfo.SetEquip(true);
+                    joueurNbItem++;
+                    j++;
+                }
+                if(EquipmentController.Instance.GetAccessoireK() != null){
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = EquipmentController.Instance.GetAccessoireK().GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (EquipmentController.Instance.GetAccessoireK().GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(EquipmentController.Instance.GetAccessoireK());
+                    itemInfo.SetEquip(true);
+                    joueurNbItem++;
+                    j++;
+                }
+
+                foreach (ItemData item in InventoryController.Instance.GetItemList()) {
+                    itemChildObjet = Instantiate(itemPrefab, joueurItemsConteneur.transform);
+                    itemChildObjet.name = "Joueur Item "+j;
+                    itemChildObjet.transform.GetChild(0).GetComponent<Image>().sprite = item.GetSprite();
+                    itemChildObjet.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = (item.GetPrice()*0.2).ToString();
+                    itemInfo = (ItemInfoShopController) itemChildObjet.GetComponent(typeof(ItemInfoShopController));
+                    itemInfo.SetItemInfo(item);
+                    joueurNbItem++;
+                    j++;
+                }
+
+                textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "ShopEventEnd");
+                p.SetShopControls();
+                OpenShopMenuAnimation();
                 break;
             case 5: // Echange
                 allPlayerItems = new List<ItemData>();
@@ -536,6 +918,7 @@ public class PopUpEventForetController : MonoBehaviour {
                     textValue = LocalizationSettings.StringDatabase.GetLocalizedString("CarteEventTable", "TradeEventEnd");
                     tradeItemIndex = 0;
                     ChargerInfoTradeItem(tradeItemIndex);
+                    p.SetTradeControls();
                     OpenTradeMenuAnimation();
                 }
                 break;
@@ -768,6 +1151,32 @@ public class PopUpEventForetController : MonoBehaviour {
         StartWritingTextEnd();
     }
 
+    // Animation qui ouvre le menu magasin
+    private async void OpenShopMenuAnimation() {
+        await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
+        textePopUp.text = "";
+        zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-88, 0.5f, false);
+
+        fenetreMagasinGauche.GetComponent<RectTransform>().DOAnchorPosX(-88, 1f, false);
+        await fenetreMagasinDroite.GetComponent<RectTransform>().DOAnchorPosX(88, 1f, false).AsyncWaitForCompletion();
+
+        await zoneTouche.GetComponent<RectTransform>().DOAnchorPosY(-62.5f, 1f, false).AsyncWaitForCompletion();
+
+        ControlsManager.Instance.UpdateState(305);
+    }
+
+    // Animation qui ferme le menu magasin
+    private async void CloseShopMenuAnimation() {
+        zoneTouche.GetComponent<RectTransform>().DOAnchorPosY(-79.5f, 0.5f, false);
+
+        fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 1f);
+        fenetreMagasinGauche.GetComponent<RectTransform>().DOAnchorPosX(-166, 1f, false);
+        await fenetreMagasinDroite.GetComponent<RectTransform>().DOAnchorPosX(166, 1f, false).AsyncWaitForCompletion();
+
+        await zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-55, 0.5f, false).AsyncWaitForCompletion();
+        StartWritingTextEnd();
+    }
+
     // Animation lorsque l'on n'a pas d'item à échanger
     private async void StartTradeNoItemAnimation() {
         await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
@@ -779,15 +1188,19 @@ public class PopUpEventForetController : MonoBehaviour {
     private async void OpenTradeMenuAnimation() {
         await choiceWindow.transform.DOScale(new Vector3(0, 0 ,0), 0.5f).AsyncWaitForCompletion();
         textePopUp.text = "";
+        zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-88, 0.5f, false);
 
         fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosY(10, 1f, false);
         await fenetreInfoEchange.GetComponent<RectTransform>().DOAnchorPosX(67, 1f, false).AsyncWaitForCompletion();
+
+        await zoneTouche.GetComponent<RectTransform>().DOAnchorPosY(-62.5f, 1f, false).AsyncWaitForCompletion();
 
         ControlsManager.Instance.UpdateState(304);
     }
 
     // Animation lorsque l'on a au moins un item à échanger
     private async void StartTradeItemAnimation() {
+        zoneTouche.GetComponent<RectTransform>().DOAnchorPosY(-79.5f, 0.5f, false);
         flecheGaucheObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
         flecheDroiteObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
         fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosX(0, 1f, false);
@@ -805,6 +1218,8 @@ public class PopUpEventForetController : MonoBehaviour {
         SoundFXManager.Instance.PlaySoundFXClip(fanfareSFXTrack, this.transform);
         objetCoffre.GetComponent<Image>().DOFade(1f, 3f);
         await objetCoffre.GetComponent<RectTransform>().DOAnchorPosY(50, 3f, false).AsyncWaitForCompletion();
+
+        await zoneTexteBas.GetComponent<RectTransform>().DOAnchorPosY(-55, 0.5f, false).AsyncWaitForCompletion();
 
         StartWritingTextEnd();
     }

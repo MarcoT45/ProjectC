@@ -119,5 +119,6 @@ public enum ControlsState {
     CarteWaitingAnimation = 302,
     CarteLeaveWindow = 303,
     CarteTradeWindow = 304,
+    CarteShopWindow = 305,
     Combat = 400
 }

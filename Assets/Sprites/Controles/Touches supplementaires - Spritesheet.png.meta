@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 31ef383ad55a3554884ef2a4d884426e
+guid: 9ae2385057c096c4d80e364af73b33b7
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,13 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pop-up fond
+      name: Touche ZQSD
       rect:
         serializedVersion: 2
         x: 0
-        y: 112
-        width: 256
-        height: 144
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -119,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96de998daa2863f45a8ce0373eeba067
-      internalID: -697606979
+      spriteID: cbebe63d554bac24ca4fa4cc3814a40e
+      internalID: 2025896214
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pop-up centre
+      name: Touches Retour
       rect:
         serializedVersion: 2
-        x: 277
-        y: 185
-        width: 194
-        height: 57
+        x: 16
+        y: 0
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -140,71 +140,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7aa0501be8df7714fa69586bb960a4a1
-      internalID: 1542107869
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pop-up zone de texte
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 75
-        width: 254
-        height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 21951e03f58fa7843af9297cd9142ba0
-      internalID: 1090428791
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pop-up buisson
-      rect:
-        serializedVersion: 2
-        x: 307
-        y: 78
-        width: 130
-        height: 77
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: b6b49584b0858484e8e55624e0f7d651
-      internalID: 1435070556
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pop-up zone des touches
-      rect:
-        serializedVersion: 2
-        x: 1
-        y: 56
-        width: 254
-        height: 17
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4cda1fab0f5eb4749b868475d138819f
-      internalID: -673970508
+      spriteID: d09655f627e8a0a4abe752836de5cf15
+      internalID: 1070129975
       vertices: []
       indices: 
       edges: []
@@ -220,15 +157,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Pop-up Foret - Spritesheet_1: 177355877
-      Pop-up Foret - Spritesheet_2: 193033107
-      Pop-up Foret - Spritesheet_3: -159368212
-      Pop-up Foret - Spritesheet_4: 2141171549
-      Pop-up buisson: 1435070556
-      Pop-up centre: 1542107869
-      Pop-up fond: -697606979
-      Pop-up zone de texte: 1090428791
-      Pop-up zone des touches: -673970508
+      Touche ZQSD: 2025896214
+      Touches Retour: 1070129975
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

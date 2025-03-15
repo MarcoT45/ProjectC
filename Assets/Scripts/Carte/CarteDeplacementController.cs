@@ -49,16 +49,18 @@ public class CarteDeplacementController : MonoBehaviour {
     }
 
     public void ConfirmerDeplacement() {
-        SoundFXManager.Instance.PlaySoundFXClip(confirmerCarteSFXTrack, this.transform);
+        if(ControlsManager.Instance.controlsState == ControlsState.Carte) {
+            SoundFXManager.Instance.PlaySoundFXClip(confirmerCarteSFXTrack, this.transform);
 
-        GameObject tmpNode = GameObject.Find("Noeud "+ nextNodes[currentPos-1]);
-        tmpNode.GetComponent<FlashingController>().enabled = false;
+            GameObject tmpNode = GameObject.Find("Noeud "+ nextNodes[currentPos-1]);
+            tmpNode.GetComponent<FlashingController>().enabled = false;
 
-        NoeudController node = (NoeudController) tmpNode.GetComponent(typeof(NoeudController));
+            NoeudController node = (NoeudController) tmpNode.GetComponent(typeof(NoeudController));
 
-        GameObject carte = GameObject.Find("Carte Foret");
-        CarteForetController carteController = (CarteForetController) carte.GetComponent(typeof(CarteForetController));
-        carteController.MovePlayer(node.noeud);
+            GameObject carte = GameObject.Find("Carte Foret");
+            CarteForetController carteController = (CarteForetController) carte.GetComponent(typeof(CarteForetController));
+            carteController.MovePlayer(node.noeud);
+        }
     }
 
     private void Droite() {
@@ -130,17 +132,19 @@ public class CarteDeplacementController : MonoBehaviour {
     }
 
     public void OnMouseOverNode(int nodeId) {
-        if(currentPos != 0) {
-            UnshowPreviousNodeSelected(currentPos);
-        }
+        if(ControlsManager.Instance.controlsState == ControlsState.Carte) {
+            if(currentPos != 0) {
+                UnshowPreviousNodeSelected(currentPos);
+            }
 
-        for(int i = 0; i < nextNodes.Count; i++) {
-           if(nextNodes[i] == nodeId) {
-                currentPos = i+1;
-           }
-        }
+            for(int i = 0; i < nextNodes.Count; i++) {
+               if(nextNodes[i] == nodeId) {
+                    currentPos = i+1;
+               }
+            }
 
-        ShowCurrentNodeSelected();
+            ShowCurrentNodeSelected();
+        }
     }
 
 }

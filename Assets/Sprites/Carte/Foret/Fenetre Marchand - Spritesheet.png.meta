@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 31ef383ad55a3554884ef2a4d884426e
+guid: 40352ab26262f41438724466a30fc9e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -105,55 +105,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Pop-up fond
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 112
-        width: 256
-        height: 144
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 96de998daa2863f45a8ce0373eeba067
-      internalID: -697606979
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pop-up centre
-      rect:
-        serializedVersion: 2
-        x: 277
-        y: 185
-        width: 194
-        height: 57
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7aa0501be8df7714fa69586bb960a4a1
-      internalID: 1542107869
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Pop-up zone de texte
+      name: Fenetre Marchand
       rect:
         serializedVersion: 2
         x: 1
-        y: 75
-        width: 254
-        height: 32
+        y: 43
+        width: 74
+        height: 106
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -161,20 +119,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 21951e03f58fa7843af9297cd9142ba0
-      internalID: 1090428791
+      spriteID: f832c90a5a7374d469fa1c87671aca3d
+      internalID: -1001116114
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pop-up buisson
+      name: Fenetre Marchand Info Item
       rect:
         serializedVersion: 2
-        x: 307
-        y: 78
-        width: 130
-        height: 77
+        x: 76
+        y: 27
+        width: 100
+        height: 122
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -182,20 +140,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6b49584b0858484e8e55624e0f7d651
-      internalID: 1435070556
+      spriteID: 9731b11c513fc9d42819e12378c81f20
+      internalID: -1536589747
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Pop-up zone des touches
+      name: Cadre Item
       rect:
         serializedVersion: 2
-        x: 1
-        y: 56
-        width: 254
-        height: 17
+        x: 5
+        y: 22
+        width: 66
+        height: 20
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -203,8 +161,29 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4cda1fab0f5eb4749b868475d138819f
-      internalID: -673970508
+      spriteID: 5df2ddc7d12c0884fafdb14a7de14759
+      internalID: -919186560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "Cadre Item selectionn\xE9"
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 1
+        width: 66
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7a6179e4c5018b43a924d76c32c00b5
+      internalID: -1167236946
       vertices: []
       indices: 
       edges: []
@@ -220,15 +199,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Pop-up Foret - Spritesheet_1: 177355877
-      Pop-up Foret - Spritesheet_2: 193033107
-      Pop-up Foret - Spritesheet_3: -159368212
-      Pop-up Foret - Spritesheet_4: 2141171549
-      Pop-up buisson: 1435070556
-      Pop-up centre: 1542107869
-      Pop-up fond: -697606979
-      Pop-up zone de texte: 1090428791
-      Pop-up zone des touches: -673970508
+      Cadre Item: -919186560
+      "Cadre Item selectionn\xE9": -1167236946
+      Fenetre Marchand: -1001116114
+      Fenetre Marchand Info Item: -1536589747
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

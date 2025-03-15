@@ -127,6 +127,34 @@ MonoBehaviour:
     m_Key: RandomEvent3BadEnd
     m_Metadata:
       m_Items: []
+  - m_Id: 5133538059223040
+    m_Key: ShopNameMerchant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5133707337138176
+    m_Key: ShopNamePlayer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5961902240169984
+    m_Key: ControleDeplacement
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5961904056303616
+    m_Key: ControleConfirmer
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5961905566253056
+    m_Key: ControleQuitter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6209713250631680
+    m_Key: ShopEventEnd
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6343488768966656
+    m_Key: ShopItemSold
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
