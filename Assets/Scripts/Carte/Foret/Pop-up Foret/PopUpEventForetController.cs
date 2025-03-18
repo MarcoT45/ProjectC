@@ -64,6 +64,7 @@ public class PopUpEventForetController : MonoBehaviour {
     public GameObject spriteObjetEchange;
     public GameObject flecheGaucheObjetEchange;
     public GameObject flecheDroiteObjetEchange;
+    public GameObject isEquippedEchange;
 
     // La liste des images pour la rareté
     public List<Sprite> raritySpriteList = new List<Sprite>();
@@ -111,6 +112,7 @@ public class PopUpEventForetController : MonoBehaviour {
     private int choiceNumber = 1;
     private List<ItemData> allPlayerItems = new List<ItemData>();
     private int tradeItemIndex = 0;
+    private int tradeEquipCpt = 0;
 
     ////////////////////////////////// Partie pour les controles ////////////////////////////////////////
 
@@ -670,6 +672,7 @@ public class PopUpEventForetController : MonoBehaviour {
         monstreDroite.GetComponent<Image>().DOFade(0f, 0.5f);
         cursor1.SetActive(true);
         cursor2.SetActive(false);
+        isEquippedEchange.SetActive(false);
 
         // On nettoie aussi les listes marchands au cas ou on a un autre marchand après un autre event
         foreach (Transform child in marchandItemsConteneur.transform) {
@@ -880,29 +883,36 @@ public class PopUpEventForetController : MonoBehaviour {
                 allPlayerItems = new List<ItemData>();
 
                 int itemCount = 0;
+                tradeEquipCpt = 0;
 
                 if(EquipmentController.Instance.GetCasque() != null) {
                     itemCount++;
+                    tradeEquipCpt++;
                     allPlayerItems.Add(EquipmentController.Instance.GetCasque());
                 }
                 if(EquipmentController.Instance.GetTorse() != null) {
                     itemCount++;
+                    tradeEquipCpt++;
                     allPlayerItems.Add(EquipmentController.Instance.GetTorse());
                 }
                 if(EquipmentController.Instance.GetBottes() != null){
                     itemCount++;
+                    tradeEquipCpt++;
                     allPlayerItems.Add(EquipmentController.Instance.GetBottes());
                 }
                 if(EquipmentController.Instance.GetArme() != null){
                     itemCount++;
+                    tradeEquipCpt++;
                     allPlayerItems.Add(EquipmentController.Instance.GetArme());
                 }
                 if(EquipmentController.Instance.GetAccessoireJ() != null){
                     itemCount++;
+                    tradeEquipCpt++;
                     allPlayerItems.Add(EquipmentController.Instance.GetAccessoireJ());
                 }
                 if(EquipmentController.Instance.GetAccessoireK() != null){
                     itemCount++;
+                    tradeEquipCpt++;
                     allPlayerItems.Add(EquipmentController.Instance.GetAccessoireK());
                 }
 
@@ -963,6 +973,12 @@ public class PopUpEventForetController : MonoBehaviour {
             case 3:
                 rarityObjetEchange.GetComponent<Image>().sprite = raritySpriteList[2];
                 break;
+        }
+
+        if(index < tradeEquipCpt) {
+            isEquippedEchange.SetActive(true);
+        } else {
+            isEquippedEchange.SetActive(false);
         }
     }
 
@@ -1203,6 +1219,7 @@ public class PopUpEventForetController : MonoBehaviour {
         zoneTouche.GetComponent<RectTransform>().DOAnchorPosY(-79.5f, 0.5f, false);
         flecheGaucheObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
         flecheDroiteObjetEchange.GetComponent<Image>().DOFade(0f, 1f);
+        isEquippedEchange.SetActive(false);
         fenetreObjetEchange.GetComponent<RectTransform>().DOAnchorPosX(0, 1f, false);
         await fenetreInfoEchange.GetComponent<RectTransform>().DOAnchorPosX(190, 1f, false).AsyncWaitForCompletion();
 
