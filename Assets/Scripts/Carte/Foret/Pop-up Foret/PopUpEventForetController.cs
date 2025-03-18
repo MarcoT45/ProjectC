@@ -65,6 +65,7 @@ public class PopUpEventForetController : MonoBehaviour {
     public GameObject flecheGaucheObjetEchange;
     public GameObject flecheDroiteObjetEchange;
     public GameObject isEquippedEchange;
+    public ScrollRect tradeScrollRect;
 
     // La liste des images pour la rareté
     public List<Sprite> raritySpriteList = new List<Sprite>();
@@ -356,6 +357,7 @@ public class PopUpEventForetController : MonoBehaviour {
                             encartItem.GetComponent<Image>().sprite = cadreItemSelected;
                             it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
 
+                            tradeScrollRect.verticalNormalizedPosition = 1f - ((float) (itemJoueurPosition-1)/(float) (joueurNbItem-1));
                             SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
 
                             if(it.GetSellableInfo()) {
@@ -398,6 +400,7 @@ public class PopUpEventForetController : MonoBehaviour {
                         encartItem.GetComponent<Image>().sprite = cadreItemSelected;
                         it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
 
+                        tradeScrollRect.verticalNormalizedPosition = 1f - ((float) (itemJoueurPosition-1)/(float) (joueurNbItem-1));
                         SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
 
                         if(it.GetSellableInfo()) {
@@ -435,6 +438,7 @@ public class PopUpEventForetController : MonoBehaviour {
                         encartItem.GetComponent<Image>().sprite = cadreItemSelected;
                         it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
 
+                        tradeScrollRect.verticalNormalizedPosition = 1f - ((float) (itemJoueurPosition-1)/(float) (joueurNbItem-1));
                         SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
 
                         if(it.GetSellableInfo()) {

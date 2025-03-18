@@ -67,10 +67,10 @@ public class InventoryController : MonoBehaviour
         inventoryUI.InitializeInventoryUI(inventorySize);
 
         //------ A retirer plus tard
-        //foreach (ItemData item in GameManager.Instance.GetAllItems())
-        //{
-        //    AddItem(item);
-        //}
+        foreach (ItemData item in GameManager.Instance.GetAllItems())
+        {
+            AddItem(item);
+        }
         //------
     }
 
