@@ -109,6 +109,90 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 0
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc2ed442642eff048a94e1597b804bc8
+      internalID: -674894843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feu de camp 2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d11ebc63368206549b719af298bd6d94
+      internalID: -566056346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feu de camp 3
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5456e96d5d95b41b187a3b1fc98da1
+      internalID: 781687333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feu de camp 4
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e2e0e2017fc49345a5e0d68e411a3da
+      internalID: 1556207185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Feu de camp 5
+      rect:
+        serializedVersion: 2
+        x: 0
         y: 0
         width: 32
         height: 32
@@ -119,14 +203,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58b11b9d5a904e340a42c4a65df591fb
-      internalID: 697987697
+      spriteID: ac11dc0e423c0ae41a8600960e8ed4d1
+      internalID: -1756475357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Feu de camp 2
+      name: Feu de camp 6
       rect:
         serializedVersion: 2
         x: 32
@@ -140,8 +224,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6eb0919718f0614ea7df8d062e37588
-      internalID: 742760437
+      spriteID: a982b899fd2367e4f90ec9c1fe678026
+      internalID: -772303663
       vertices: []
       indices: 
       edges: []
@@ -157,8 +241,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Feu de camp 1: 697987697
-      Feu de camp 2: 742760437
+      Feu de camp 1: -566056346
+      Feu de camp 2: -566056346
+      Feu de camp 3: 781687333
+      Feu de camp 4: 1556207185
+      Feu de camp 5: -1756475357
+      Feu de camp 6: -772303663
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
