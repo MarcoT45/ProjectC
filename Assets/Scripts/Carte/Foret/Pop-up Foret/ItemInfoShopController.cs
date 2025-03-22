@@ -51,4 +51,16 @@ public class ItemInfoShopController : MonoBehaviour {
         }
     }
 
+    public void OnMouseOver() {
+        string[] subs = this.name.Split(' ');
+        GameObject popUpController = GameObject.Find("Pop Up Foret");
+        PopUpEventForetController pu = (PopUpEventForetController) popUpController.GetComponent(typeof(PopUpEventForetController));
+
+        if(this.name.Contains("Marchand")) {
+            pu.MouseChangeItemMarchand(int.Parse(subs[2]));
+        } else {
+            pu.MouseChangeItemJoueur(int.Parse(subs[2]));
+        }
+    }
+
 }

@@ -452,6 +452,94 @@ public class PopUpEventForetController : MonoBehaviour {
         }
     }
 
+    public void MouseChangeItemMarchand(int newIndex) {
+        GameObject encartItem;
+        ItemInfoShopController it;
+
+        if(itemMarchandPosition != newIndex) {
+            if(itemMarchandPosition == 0) {
+                if(itemJoueurPosition != 0) {
+                    encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                    encartItem.GetComponent<Image>().sprite = cadreItem;
+                    itemJoueurPosition = 0;
+                }
+
+                itemMarchandPosition = newIndex;
+                encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                if(it.GetSellableInfo()) {
+                    AfficherInfosItemShop(it.GetItemInfo());
+                } else {
+                    fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                }
+            } else {
+                encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                encartItem.GetComponent<Image>().sprite = cadreItem;
+
+                itemMarchandPosition = newIndex;
+                encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                if(it.GetSellableInfo()) {
+                    AfficherInfosItemShop(it.GetItemInfo());
+                } else {
+                    fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                }
+            }
+        }
+    }
+
+    public void MouseChangeItemJoueur(int newIndex) {
+        GameObject encartItem;
+        ItemInfoShopController it;
+
+        if(itemJoueurPosition != newIndex) {
+            if(itemJoueurPosition == 0) {
+                if(itemMarchandPosition != 0) {
+                    encartItem = GameObject.Find("Marchand Item "+ itemMarchandPosition);
+                    encartItem.GetComponent<Image>().sprite = cadreItem;
+                    itemMarchandPosition = 0;
+                }
+
+                itemJoueurPosition = newIndex;
+                encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                if(it.GetSellableInfo()) {
+                    AfficherInfosItemShop(it.GetItemInfo());
+                } else {
+                    fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                }
+            } else {
+                encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                encartItem.GetComponent<Image>().sprite = cadreItem;
+
+                itemJoueurPosition = newIndex;
+                encartItem = GameObject.Find("Joueur Item "+ itemJoueurPosition);
+                encartItem.GetComponent<Image>().sprite = cadreItemSelected;
+                it = (ItemInfoShopController) encartItem.GetComponent(typeof(ItemInfoShopController));
+
+                SoundFXManager.Instance.PlaySoundFXClip(selectChoiceSFXTrack, this.transform);
+
+                if(it.GetSellableInfo()) {
+                    AfficherInfosItemShop(it.GetItemInfo());
+                } else {
+                    fenetreMagasinInfoItem.transform.DOScale(new Vector3(0, 0 ,0), 0.25f);
+                }
+            }
+        }
+    }
+
     private void AfficherInfosItemShop(ItemData i) {
         fenetreMagasinInfoItem.transform.DOScale(new Vector3(1, 1 ,1), 0.25f);
 
