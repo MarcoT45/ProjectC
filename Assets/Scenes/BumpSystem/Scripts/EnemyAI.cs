@@ -14,8 +14,11 @@ public class EnemyAI : MonoBehaviour
     private float pathUpdateTimer = 0f;
 
     [Header("Pathfinding")]
-    public List<Vector3> currentPath;             // Le chemin calculé (en positions mondiales)
-    public int currentPathIndex = 0;
+    private GridManager2 gridManager;
+    private List<Node> path;
+    private int currentPathIndex = 0;
+    public float pathRefreshInterval = 0.5f;
+    private float pathRefreshTimer = 0f;
 
     [Header("Patrol")]
     public Vector3 patrolTarget;                  // Cible de patrouille aléatoire
@@ -30,17 +33,37 @@ public class EnemyAI : MonoBehaviour
     [HideInInspector]
     public Transform player;        // Référence au joueur (assignée dans Start)
 
+
+
     void Start()
     {
+        gridManager = FindObjectOfType<GridManager2>();
+
         player = GameObject.FindGameObjectWithTag("Player").transform;
         SetRandomPatrolTarget();
 
-        // Générer ou assigner la grille issue de la Tilemap
-        DijkstraPathfinder.Mapping(solTilemap, murTilemap);
     }
 
     void Update()
     {
+
+        pathRefreshTimer += Time.deltaTime;
+        if (pathRefreshTimer >= pathRefreshInterval)
+        {
+            path = AStarPathfinding.FindPath(gridManager, transform.position, player.position);
+            currentPathIndex = 0;
+            pathRefreshTimer = 0f;
+        }
+
+        // Vous pouvez ensuite déplacer l’ennemi le long du chemin calculé...
+        if (path != null && path.Count > 0 && currentPathIndex < path.Count)
+        {
+            Vector3 targetPosition = gridManager.solTilemap.CellToWorld(path[currentPathIndex].cellPosition);
+
+            // Appliquer un déplacement vers targetPosition
+        }
+
+        /*
         // Vérifier la distance et la ligne de vue pour passer en mode Chase
         float distanceToPlayer = Vector3.Distance(transform.position, player.position);
         if (distanceToPlayer <= chaseDistance && HasLineOfSight())
@@ -54,17 +77,6 @@ public class EnemyAI : MonoBehaviour
 
         if (currentState == EnemyState.Chase)
         {
-            pathUpdateTimer += Time.deltaTime;
-            if (pathUpdateTimer >= pathUpdateInterval)
-            {
-                // Calculer le chemin depuis la position actuelle de l'ennemi vers le joueur
-                if (grid != null)
-                {
-                    currentPath = DijkstraPathfinder.ComputePath(transform.position, player.position, grid, gridOrigin, cellSize);
-                    currentPathIndex = 0;
-                }
-                pathUpdateTimer = 0f;
-            }
         }
         else // Patrol
         {
@@ -72,7 +84,9 @@ public class EnemyAI : MonoBehaviour
             {
                 SetRandomPatrolTarget();
             }
-        }
+        }*/
+
+
     }
 
     // Renvoie vrai si aucune obstruction n'empêche la vue entre l'ennemi et le joueur

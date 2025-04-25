@@ -11,27 +11,27 @@ public static class BumpSystem
         float dotProduct = Vector2.Dot(enemy.forwardDirection, playerToEnemy);
 
 
-        Debug.Log($"EnemytoPlayer: {playerToEnemy}");
+       /* Debug.Log($"EnemytoPlayer: {playerToEnemy}");
         Debug.Log($"EnemyForward: {enemy.forwardDirection}");
-        Debug.Log($"Dot Product: {dotProduct}");
+        Debug.Log($"Dot Product: {dotProduct}");*/
 
         // Calcul des dégâts selon l'angle
         float damageMultiplier = 1f;
         if (dotProduct > 0.7f)
         {
-            Debug.Log(" Attaque de face !");
+            /*Debug.Log(" Attaque de face !");*/
             player.TakeDamage(enemy.damage); // Le joueur prend des dégâts
             player.ApplyKnockback(-playerToEnemy * 0.75f);
         }
         else if (dotProduct < -0.7f)
         {
-            Debug.Log(" Attaque dans le dos !");
+           /* Debug.Log(" Attaque dans le dos !");*/
             damageMultiplier = 2f;
             player.ApplyKnockback(-playerToEnemy * 0.1f);
         }
         else
         {
-            Debug.Log(" Attaque latérale !");
+           /* Debug.Log(" Attaque latérale !");*/
             damageMultiplier = 1.5f;
             player.ApplyKnockback(-playerToEnemy * 0.1f);
         }
@@ -46,6 +46,13 @@ public static class BumpSystem
         }
 
     }
+    public static void HandleHazard(Collision2D hazard, PlayerController player = null, EnemyController enemy = null, bool bumpBack = false)
+    {
+        Vector2 hazardToEnemy = (enemy.transform.position - hazard.transform.position).normalized;
+
+
+    }
+
     /*    public static void HandleBump(PlayerController player, EnemyController enemy)
         {
             Vector2 enemyToPlayer = (player.transform.position - enemy.transform.position).normalized;
@@ -77,6 +84,10 @@ public static class BumpSystem
             player.ApplyKnockback(-enemyToPlayer * 0.75f);
         }
     */
+
+
+    /*  Déplacé dans DashAbility
+    
     public static void HandleDash(PlayerController player)
     {
         if (!player.canDash)
@@ -117,6 +128,7 @@ public static class BumpSystem
         yield return new WaitForSeconds(player.dashCooldown);
         player.canDash = true;
     }
+    */
 
     private static Vector2 GetCardinalDirection(Vector2 v)
     {

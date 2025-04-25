@@ -4,6 +4,7 @@ using System.Collections;
 public class PlayerController : MonoBehaviour
 {
 
+
     [Header("Settings")]
     public float speed = 5f;
     public int damage = 10;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public bool canDash = true;
     [HideInInspector] public bool isDashing = false;
 
+    private bool isSpeedBoosted = false;    
     private bool isKnockedBack = false;
     private Vector2 currentVelocity = Vector2.zero;
     private SpriteRenderer spriteRenderer;
@@ -51,14 +53,15 @@ public class PlayerController : MonoBehaviour
         //Dash
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            BumpSystem.HandleDash(this);
+
+            // BumpSystem.HandleDash(this);
         }
 
         // Projectile
-        if (Input.GetKeyDown(KeyCode.E))
+      /*  if (Input.GetKeyDown(KeyCode.E))
         {
             FireProjectile();
-        }
+        }*/
     }
 
     void FixedUpdate()
@@ -149,6 +152,14 @@ public class PlayerController : MonoBehaviour
         if (projectileScript != null)
         {
             projectileScript.direction = forwardDirection;
+        }
+    }
+
+    private void ActivateSpeedBoost(float duration)
+    {
+        if (!isSpeedBoosted)
+        {
+           // StartCoroutine();
         }
     }
 }
