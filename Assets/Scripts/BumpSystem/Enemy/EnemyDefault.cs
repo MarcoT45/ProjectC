@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnemyDefault : EnemyAI
 {
+
     protected override void Awake()
     {
         base.Awake();
