@@ -8,7 +8,9 @@ public static class AStarPathfinding
     public static List<Node> FindPath(GridManager2 gridManager, Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = gridManager.GetNodeFromWorldPoint(startPos);
+        //Node targetNode = gridManager.GetNodeFromWorldPoint(targetPos);
         Node targetNode = gridManager.GetNodeFromWorldPoint(targetPos);
+
         if (startNode == null || targetNode == null) return null;
 
         List<Node> openSet = new List<Node>();

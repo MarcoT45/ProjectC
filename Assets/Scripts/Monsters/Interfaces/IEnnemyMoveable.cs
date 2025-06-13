@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface IEnnemyMoveable 
-{
+{/*
     public bool IsFacingRight { get; set; }
 
     void MoveEnnemy();
@@ -12,5 +12,5 @@ public interface IEnnemyMoveable
 
     bool CanEnnemyMove(Vector2 direction);
 
-    void CheckForLeftOrRightFacing(Vector2 direction);
+    void CheckForLeftOrRightFacing(Vector2 direction);*/
 }

@@ -443,7 +443,7 @@ public class CharacterController : MonoBehaviour, IShopCustomer, IDamageable
         //uiInventory.RefreshInventoryItems();
     }
 
-    public void Damage(float damage)
+    public void Damage(int damage)
     {
         CurrentHealth -= damage;
 

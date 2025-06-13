@@ -16,5 +16,6 @@ public class EnnemyState
     public virtual void EnterState() { }
     public virtual void ExitState() { }
     public virtual void FrameUpdate() { }
+    public virtual void FrameFixedUpdate() { }
     public virtual void AnnimationTriggerEvent(Ennemy.AnimationTriggerType triggerType) { }
 }

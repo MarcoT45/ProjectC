@@ -112,7 +112,7 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
 
     #region Health / Die functions
-    public void Damage(float damage)
+    public void Damage(int damage)
     {
         CurrentHealth -= damage;
 

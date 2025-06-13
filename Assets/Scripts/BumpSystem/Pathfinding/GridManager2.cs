@@ -48,6 +48,49 @@ public class GridManager2 : MonoBehaviour
         }
     }
 
+    //Retourne les Nodes walkables
+    public List<Node> GetAllWalkableNodes()
+    {
+        List<Node> nodes = new List<Node>();    
+        for (int x = 0; x < gridSize.x; x++)
+        {
+            for (int y = 0; y < gridSize.y; y++)
+            {
+                if (grid[x, y].walkable)
+                {
+                    nodes.Add(grid[x, y]);
+                }
+            }
+        }
+
+        return nodes;
+    }
+
+    public Vector3 FindRandomWalkableInRange(Vector3 enemyPosition, float range)
+    {
+        List<Node> walkableNodes = this.GetAllWalkableNodes();
+
+        if(walkableNodes.Count == 0) { return Vector3.zero; }
+
+        Node currentNode = this.GetNodeFromWorldPoint(enemyPosition);
+
+        int attempts = 0;
+        while(attempts < 10)
+        {
+            attempts++;
+            Node candidate = walkableNodes[Random.Range(0, walkableNodes.Count)];
+
+            float dist = Vector3.Distance(this.solTilemap.CellToWorld(candidate.cellPosition), enemyPosition);
+            
+            if(dist < range)
+            {
+                return this.solTilemap.CellToWorld(candidate.cellPosition);   
+            }
+        }
+
+        return Vector3.zero;
+    }
+
     // Convertit une World position en Node de la grille.
     public Node GetNodeFromWorldPoint(Vector3 worldPosition)
     {
@@ -55,6 +98,7 @@ public class GridManager2 : MonoBehaviour
         BoundsInt bounds = solTilemap.cellBounds;
         int x = cellPos.x - bounds.xMin;
         int y = cellPos.y - bounds.yMin;
+
         if (x >= 0 && x < gridSize.x && y >= 0 && y < gridSize.y)
         {
             return grid[x, y];
@@ -90,13 +134,14 @@ public class GridManager2 : MonoBehaviour
         return neighbors;
     }
 
-
+    //--------------------DEBUG--------------------------
     private void Start()
     {
 
-         LogGridArray();
+         //LogGridArray();
     }
 
+    //Fonction qui print le tableau de la grid
     private void LogGridArray()
     {
         string log = "";
@@ -105,10 +150,8 @@ public class GridManager2 : MonoBehaviour
         {
             for (int y = 0; y < gridSize.y; y++)
             {
-                //log += " " + "(" + x + "," + y + ")";
                 if (grid[x, y].walkable)
                 {
-                    //log += " "+CellToWorld(new Vector3Int(x,y,0)).ToString();
                     log += " 0";
                 }
                 else

@@ -1,0 +1,25 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class EnemyRangeDefault : EnemyAI
+{
+    protected override void Awake()
+    {
+        base.Awake();
+
+        IdleState = new EnemyIdleState(this, StateMachine);
+        ChasingState = new EnemyRangeChaseState(this, StateMachine);
+
+
+    }
+
+    protected override void Start()
+    {
+
+        this.gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager2>();
+
+        base.Start();
+    }
+
+}

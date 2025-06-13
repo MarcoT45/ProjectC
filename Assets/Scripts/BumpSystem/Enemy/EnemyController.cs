@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using Unity.VisualScripting;
 
+//Old => New : EnemyAi
 public class EnemyController : MonoBehaviour
 {
 /*
@@ -81,6 +82,34 @@ public class EnemyController : MonoBehaviour
              rb.velocity = (targetPosition - transform.position).normalized * speed;
             // rb.AddForce((targetPosition - transform.position).normalized * speed, ForceMode2D.Force);
 
+            Vector2 face = Vector2.zero;
+            for (int i = 0; i < 4; i++)
+            {
+                switch(i)
+                {
+                    case 0:
+                        face = Vector2.up;
+                        break;
+
+                    case 1:
+                        face = Vector2.down; 
+                        break;
+
+                    case 2:
+                        face = Vector2.right;
+                        break;
+
+                    case 3:
+                        face = Vector2.left;
+                        break;
+                }
+
+                if(Vector2.Dot(face, (targetPosition - transform.position).normalized) > 0)
+                {
+                    forwardDirection = face;
+                }
+            }
+
             // Si suffisamment proche du prochain point du chemin, on avance au suivant
             if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
             {
@@ -144,12 +173,28 @@ public class EnemyController : MonoBehaviour
 
         if (isKnockedBack)
         {
+            //Collision avec un mur
             if (collision.gameObject.CompareTag("Mur"))
             {
-                Debug.Log("Rebond !");
-                Vector2 direction = ((Vector2)this.transform.position - collision.GetContact(0).point).normalized;
-                ApplyKnockback(direction);
-                Debug.Log(direction);
+                Debug.Log("Collision Mur");
+                //Dégat à voir si en fonction du joueur ou du mur
+                TakeDamage(5);
+
+                //Code pour le rebond
+                //Vector2 direction = ((Vector2)this.transform.position - collision.GetContact(0).point).normalized;
+                //ApplyKnockback(direction);
+            }
+
+            //Collision avec autre ennemi
+            if (collision.gameObject.CompareTag("Ennemi"))
+            {
+                Debug.Log("Collision Ennemi");
+                EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+                if(enemy != null) 
+                {
+                    TakeDamage(enemy.damage);
+                    enemy.TakeDamage(this.damage);
+                }
             }
         }
     }

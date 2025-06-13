@@ -3,7 +3,7 @@ using System.Collections;
 
 public static class BumpSystem
 {
-    public static void HandleBump(PlayerController player, EnemyController enemy)
+    public static void HandleBump(PlayerController player, EnemyAI enemy)
     {
         //Calcul de l'angle de l'attaque
         Vector2 playerToEnemy = (enemy.transform.position - player.transform.position ).normalized;
@@ -20,7 +20,7 @@ public static class BumpSystem
         if (dotProduct > 0.7f)
         {
             /*Debug.Log(" Attaque de face !");*/
-            player.TakeDamage(enemy.damage); // Le joueur prend des dégâts
+            player.TakeDamage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
             player.ApplyKnockback(-playerToEnemy * 0.75f);
         }
         else if (dotProduct < -0.7f)
@@ -37,10 +37,10 @@ public static class BumpSystem
         }
 
         int finalDamage = (int)(player.damage * damageMultiplier);
-        enemy.TakeDamage(finalDamage);
+        enemy.Damage(finalDamage);
         enemy.ApplyKnockback(playerToEnemy);
 
-        if (enemy.health <= 0)
+        if (enemy.CurrentHealth <= 0)
         {
             GameObject.Destroy(enemy.gameObject);
         }

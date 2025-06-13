@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            EnemyController enemy = collision.gameObject.GetComponent<EnemyController>();
+            EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
             if (enemy != null)
             {
                 BumpSystem.HandleBump(this, enemy);
