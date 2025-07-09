@@ -86,6 +86,20 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void Collect(Collectible collectible)
+    {
+        switch (collectible.collectibleType)
+        {
+            case CollectibleType.Coin:
+                GameManager.Instance.AddCoinsToRunPlayerCoins( collectible.amount);
+                break;
+
+            case CollectibleType.Loot:
+                GameManager.Instance.AddCoinsToRunPlayerCoins(collectible.amount);
+                break;
+        }
+    }
+
     private void ShowImpact(Vector2 position)
     {
         GameObject impactEffect = GameObject.Instantiate(hitVFX, position, Quaternion.identity);

@@ -9,9 +9,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     [Header("Data")]
     public MonsterData monsterData;
     public float MaxHealth { get; set; }
-
     public float CurrentHealth { get; set; }
-
+    public int Coins { get; set; }
     public Vector2 forwardDirection;
     public float movementRange = 5f;
     public bool isAggroed = false;
@@ -339,6 +338,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     }
     #endregion
 
+
+    #region Collect
+    public void Collect(Collectible collectible)
+    {
+        if(collectible.collectibleType == CollectibleType.Coin)
+        {
+            this.Coins = this.Coins + collectible.amount;
+        }
+    }
+    #endregion
 
 
     #region Annimation Triggers
