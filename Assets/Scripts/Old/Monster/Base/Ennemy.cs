@@ -1,4 +1,10 @@
-using System.Collections;
+//  OLD FILE
+
+
+
+
+
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -27,8 +33,8 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     public bool IsFacingRight { get; set; }
 
-    /*public Tilemap murTileMap;
-    public Tilemap solTileMap;*/
+    *//*public Tilemap murTileMap;
+    public Tilemap solTileMap;*//*
 
     #region State Machine variables
 
@@ -77,17 +83,17 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     #endregion
 
     //Si on utilise les barres de vie au dessus du perso
-   /* public UnityEvent<float> OnChangeHealth;
-    public UnityEvent OnHit;*/
+   *//* public UnityEvent<float> OnChangeHealth;
+    public UnityEvent OnHit;*//*
 
 
     protected virtual void Awake()
     {
         StateMachine = new EnnemyStateMachine();
 
-        /* Mis dans les héritiers
+        *//* Mis dans les héritiers
         IdleState = new EnnemyIdleState(this, StateMachine);
-        ChasingState = new EnnemyChasingState(this, StateMachine);*/
+        ChasingState = new EnnemyChasingState(this, StateMachine);*//*
 
         movePoint.parent = null;
 
@@ -138,21 +144,21 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
         transform.position = Vector3.MoveTowards(transform.position, gridManager.CellToWorld(newCellTarget), monsterData.speed * Time.deltaTime);
     }
 
-/*    public void MoveEnnemyMovePoint(Vector2 direction)
+*//*    public void MoveEnnemyMovePoint(Vector2 direction)
     {
         movePoint.position += (Vector3)direction;
-    }*/
+    }*//*
 
     public bool CanEnnemyMove(Vector2 direction)
     {
-        /* Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
+        *//* Vector3Int gridPosition = solTileMap.WorldToCell(transform.position + (Vector3)direction);
 
          if (!solTileMap.HasTile(gridPosition) || murTileMap.HasTile(gridPosition))
          {
              return false;
          }
 
-         return true;*/
+         return true;*//*
 
         Vector3 position = (Vector3)transform.position + (Vector3)direction;
         Vector3Int gridPosition = gridManager.WorldToCell(position);
@@ -293,7 +299,7 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
     {
         StartCoroutine(HitFlash());
     }
-/*
+*//*
     public void OnTriggerEnter2D(Collider2D other)
     {
         Vector3 otherCell = Vector3.zero;
@@ -346,7 +352,7 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
         }
 
-    }*/
+    }*//*
 
 
     private IEnumerator HitFlash()
@@ -382,3 +388,4 @@ public abstract class Ennemy : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     #endregion
 }
+*/

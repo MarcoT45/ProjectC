@@ -1,4 +1,8 @@
-using System;
+//  OLD FILE
+
+
+
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -76,7 +80,7 @@ public class OrcAttackingState : EnnemyState
 
     }
 
-/*    private void Attack(Vector2 direction)
+*//*    private void Attack(Vector2 direction)
     {
 
         ennemy.transform.position = Vector3.MoveTowards(ennemy.transform.position, ennemy.movePoint.position, ennemy.monsterData.speed * 3 * Time.deltaTime);
@@ -99,6 +103,7 @@ public class OrcAttackingState : EnnemyState
             }
         }
 
-    }*/
+    }*//*
 
 }
+*/

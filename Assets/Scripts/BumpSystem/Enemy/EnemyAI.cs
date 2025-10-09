@@ -37,7 +37,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     private float pathUpdateTimer = 0f;
 
     [Header("Pathfinding")]
-    public GridManager2 gridManager;
+    public GridManager gridManager;
     //public Vector3 targetPosition;
     private List<Node> path;
     private int currentPathIndex = 0;
@@ -73,11 +73,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     #region Awake/Start/Update
     protected virtual void Awake()
     {
-        gridManager = FindObjectOfType<GridManager2>();
-
+        gridManager = FindObjectOfType<GridManager>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
         forwardDirection = Vector2.right;
         hitParticles = GetComponentInChildren<ParticleSystem>(); // Récupère le système de particules
 
@@ -89,6 +87,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     protected virtual void Start()
     {
+        player = GameObject.FindGameObjectWithTag("Player").transform;
         MaxHealth = monsterData.pv;
         CurrentHealth = MaxHealth;
 

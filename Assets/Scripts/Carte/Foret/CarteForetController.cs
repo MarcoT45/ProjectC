@@ -13,7 +13,7 @@ public class CarteForetController : MonoBehaviour {
     private Color blackColor = new Color (0f, 0f, 0f, 1f);
     private Color lightGreyColor = new Color (0.85f, 0.85f, 0.85f, 1f);
     private Color whiteColor = new Color (1f, 1f, 1f, 1f);
-    private Color greenColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1);
+    private Color greenColor = new Color(0.7450981f, 0.7372549f, 0.4156863f, 1f);
 
     private void Start() {
         List<Noeud> mapData = GameManager.Instance.GetMapData();
@@ -334,10 +334,22 @@ public class CarteForetController : MonoBehaviour {
 
     // On joue l'evenement du node ici ?
     private void PlayNodeEvent(Noeud noeud){
+
         if (noeud.eventNumber == 0 || noeud.eventNumber == 2 || noeud.eventNumber == 7) {
+
+            if (noeud.eventNumber == 0)
+            {
+                GameManager.Instance.SetLevelData(Random.Range(3, 5), Random.Range(3, 5), 5);
+            }
+
+            if (noeud.eventNumber == 2)
+            {
+                GameManager.Instance.SetLevelData(Random.Range(4, 6), Random.Range(4, 6), 10);
+            }
             SendDataToManager();
             ControlsManager.Instance.UpdateState(400);
             SceneManager.LoadScene(3);
+
         } else {
             PopUpEventForetController pu = (PopUpEventForetController) popup.GetComponent(typeof(PopUpEventForetController));
             ControlsManager.Instance.UpdateState(302);

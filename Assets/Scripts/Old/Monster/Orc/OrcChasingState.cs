@@ -1,4 +1,11 @@
-using System;
+//  OLD FILE
+
+
+
+
+
+
+/*using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -56,7 +63,7 @@ public class OrcChasingState : EnnemyState
         Vector3 targetTmp = target.transform.position;
         targetTmp = ennemy.gridManager.WorldToCell(targetTmp);
 
-/*        // ---Debug 
+*//*        // ---Debug 
         Debug.DrawRay(
                   start: ennemy.transform.position,
                   dir: targetPos - ennemyCellPos,
@@ -67,7 +74,7 @@ public class OrcChasingState : EnnemyState
                 start: ennemy.transform.position,
                 dir: direction * 5f,
                 color: Color.blue);
-        // ----*/
+        // ----*//*
 
         ManageAggro(targetTmp, ennemyCellPos);
     }
@@ -91,7 +98,7 @@ public class OrcChasingState : EnnemyState
 
             if (targetPos != ennemy.gridManager.WorldToCell(target.transform.position))
             {
-                /*Debug.Log("Reset target");*/
+                *//*Debug.Log("Reset target");*//*
                 targetPos = target.transform.position;
                 targetPos = ennemy.gridManager.WorldToCell(targetPos);
             }
@@ -124,7 +131,7 @@ public class OrcChasingState : EnnemyState
     // ---Mouvement du movePoint et de l'ennemi 
     public void ManageMovement()
     {
-        GridManager gridManager = ennemy.gridManager;
+        GridManagerNew gridManager = ennemy.gridManager;
         ennemy.MoveEnnemy();
 
         if (Vector3.Distance(ennemy.transform.position, gridManager.CellToWorld(ennemy.newCellTarget)) <= .05f)
@@ -135,7 +142,7 @@ public class OrcChasingState : EnnemyState
 
             if(gridManager.CanMoveOnCell(gridNextPosition))
             {
-                GridManager.CellData cellData = gridManager.GetCellData(gridNextPosition);
+                GridManagerNew.CellData cellData = gridManager.GetCellData(gridNextPosition);
 
                 if (gridManager.IsObjectOnCell(gridNextPosition))
                 {
@@ -205,3 +212,4 @@ public class OrcChasingState : EnnemyState
         }
     }
 }
+*/

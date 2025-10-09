@@ -5,7 +5,7 @@ using UnityEngine;
 public static class AStarPathfinding
 {
     //GridManager2 a changer de nom 
-    public static List<Node> FindPath(GridManager2 gridManager, Vector3 startPos, Vector3 targetPos)
+    public static List<Node> FindPath(GridManager gridManager, Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = gridManager.GetNodeFromWorldPoint(startPos);
         //Node targetNode = gridManager.GetNodeFromWorldPoint(targetPos);

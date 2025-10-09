@@ -498,6 +498,9 @@ public class GameManager : MonoBehaviour {
     // ********** PARTIE CARTE/MAP DE RUN ********** //
 
     private List<Noeud> mapData = new List<Noeud>();
+    public int levelMapSizeX = 0;
+    public int levelMapSizeY = 0;
+    public int levelNumberEnemy = 0;
 
     public List<Noeud> GetMapData() {
         return mapData;
@@ -511,4 +514,21 @@ public class GameManager : MonoBehaviour {
         mapData = new List<Noeud>();
     }
 
+    public void SetLevelData(int mapSizeX, int mapSizeY, int numberEnemy) {
+        levelMapSizeX = mapSizeX;
+        levelMapSizeY = mapSizeY;
+        levelNumberEnemy = numberEnemy;
+    }
+
+    public int GetLevelMapSizeX() {
+        return levelMapSizeX;
+    }
+
+    public int GetLevelMapSizeY() {
+        return levelMapSizeY;
+    }
+
+    public int GetLevelNumberEnemy() {
+        return levelNumberEnemy;
+    }
 }

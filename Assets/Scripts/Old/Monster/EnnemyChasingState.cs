@@ -1,4 +1,11 @@
-using DG.Tweening;
+
+//  OLD FILE
+
+
+
+
+
+/*using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -75,7 +82,7 @@ public class EnnemyChasingState : EnnemyState
 
             if (targetPos != ennemy.gridManager.WorldToCell(target.transform.position))
             {
-                /*Debug.Log("Reset target");*/
+                *//*Debug.Log("Reset target");*//*
                 targetPos = target.transform.position;
                 targetPos = ennemy.gridManager.WorldToCell(targetPos);
             }
@@ -86,7 +93,7 @@ public class EnnemyChasingState : EnnemyState
     // ---Mouvement du movePoint et de l'ennemi 
     public void ManageMovement()
     {
-        GridManager gridManager = ennemy.gridManager;
+        GridManagerNew gridManager = ennemy.gridManager;
         ennemy.MoveEnnemy();
 
         if (Vector3.Distance(ennemy.transform.position, gridManager.CellToWorld(ennemy.newCellTarget)) <= .05f)
@@ -97,7 +104,7 @@ public class EnnemyChasingState : EnnemyState
 
             if (gridManager.CanMoveOnCell(gridNextPosition))
             {
-                GridManager.CellData cellData = gridManager.GetCellData(gridNextPosition);
+                GridManagerNew.CellData cellData = gridManager.GetCellData(gridNextPosition);
 
                 if (gridManager.IsObjectOnCell(gridNextPosition))
                 {
@@ -188,3 +195,4 @@ public class EnnemyChasingState : EnnemyState
         base.AnnimationTriggerEvent(triggerType);
     }
 }
+*/

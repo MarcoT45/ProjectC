@@ -1,4 +1,10 @@
-using System.Collections;
+//  OLD FILE
+
+
+
+
+
+/*using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,3 +19,4 @@ public class Slime : Ennemy
         ChasingState = new EnnemyChasingState(this, StateMachine);
     }
 }
+*/

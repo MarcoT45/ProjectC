@@ -14,14 +14,14 @@ public class BookController : MonoBehaviour {
 
     // Pour pouvoir bloquer le déplacement du joueur
     public GameObject character;
-    private CharacterController charControl;
+    private PlayerController charControl;
 
     // Pour afficher la touche espace à presser et la pastille
     public GameObject spaceButton;
     public GameObject bookIcon;
 
     private void Start() {
-        charControl = (CharacterController) character.GetComponent(typeof(CharacterController));
+        charControl = (PlayerController) character.GetComponent(typeof(PlayerController));
     }
 
     private void FixedUpdate() {

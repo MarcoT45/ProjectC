@@ -75,6 +75,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -87,6 +88,7 @@ ScriptedImporter:
     defaultPivotSpace: 0
     defaultPivotAlignment: 7
     customPivotPosition: {x: 0.5, y: 0.5}
+    mosaicPadding: 4
     spritePadding: 0
     generateModelPrefab: 1
     generateAnimationClips: 1
@@ -226,40 +228,45 @@ ScriptedImporter:
     layerType: 0
     blendMode: 0
     cells:
-    - name: chatHub_Frame_0
+    - name: Frame_0
       frameIndex: 0
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
         width: 23
         height: 18
       spriteId: e30a90224f7aed8429bbba06d4cd7bc4
-    - name: chatHub_Frame_1
+    - name: Frame_1
       frameIndex: 1
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
         width: 23
         height: 19
       spriteId: eff3e23eb1968d14aa0870185244fd19
-    - name: chatHub_Frame_2
+    - name: Frame_2
       frameIndex: 2
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
         width: 23
         height: 19
       spriteId: 8d644da4e63006c41b69c637c779de07
-    - name: chatHub_Frame_3
+    - name: Frame_3
       frameIndex: 3
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
         width: 23
         height: 19
       spriteId: 165533dbe99843f4bba8a5495adbbaea
-    - name: chatHub_Frame_4
+    - name: Frame_4
       frameIndex: 4
+      additiveSortOrder: 0
       cellRect:
         x: 2
         y: 0
@@ -302,6 +309,7 @@ ScriptedImporter:
     crunchedCompression: 0
     allowsAlphaSplitting: 0
     androidETC2FallbackOverride: 0
+  generatePhysicsShape: 0
   secondarySpriteTextures: []
   spritePackingTag: 
   canvasSize: {x: 32, y: 32}

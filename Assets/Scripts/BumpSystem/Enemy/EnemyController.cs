@@ -15,7 +15,7 @@ public class EnemyController : MonoBehaviour
     private float pathUpdateTimer = 0f;*/
 
     [Header("Pathfinding")]
-    private GridManager2 gridManager;
+    private GridManager gridManager;
     private List<Node> path;
     private int currentPathIndex = 0;
     public float pathRefreshInterval = 0.5f;
@@ -43,7 +43,7 @@ public class EnemyController : MonoBehaviour
    
     void Awake()
     {
-        gridManager = FindObjectOfType<GridManager2>();
+        gridManager = FindObjectOfType<GridManager>();
 
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();

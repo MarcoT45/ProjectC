@@ -29,7 +29,7 @@ public class EnemyRangeChaseState : EnemyState
     private float lastShotTime = 0f;
 
 
-    private GridManager2 gridManager;
+    private GridManager gridManager;
 
     public EnemyRangeChaseState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
     {

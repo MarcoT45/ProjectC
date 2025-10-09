@@ -10,13 +10,13 @@ TagManager:
   - UI_Inventory
   - UI_Shop
   - UI_ShopItem
-  - Ennemi
   - Mur
   - Sol
   - Sortie
   - GridManager
   - Enemy
   - Collectible
+  - LevelExit
   layers:
   - Default
   - TransparentFX
@@ -32,7 +32,7 @@ TagManager:
   - Sol
   - Items
   - UI_Menu
-  - 
+  - Background
   - 
   - 
   - 
@@ -51,6 +51,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 1049988279
+    locked: 0
   - name: Sol
     uniqueID: 344073627
     locked: 0

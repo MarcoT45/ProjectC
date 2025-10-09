@@ -18,7 +18,7 @@ public class EnemyDefault : EnemyAI
     protected override void Start()
     {
 
-        this.gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager2>();
+        this.gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager>();
 
         base.Start();
     }

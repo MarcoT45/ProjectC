@@ -1,4 +1,10 @@
-using DG.Tweening;
+//  OLD FILE
+
+
+
+
+
+/*using DG.Tweening;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -95,7 +101,7 @@ public class EnemyRangeChasingState : EnnemyState
 
             if (targetPos != ennemy.gridManager.WorldToCell(target.transform.position))
             {
-                /*Debug.Log("Reset target");*/
+                *//*Debug.Log("Reset target");*//*
                 targetPos = target.transform.position;
                 targetPos = ennemy.gridManager.WorldToCell(targetPos);
             }
@@ -118,9 +124,9 @@ public class EnemyRangeChasingState : EnnemyState
 
             //Player détecté et ennemi reste à une certaine distance
 
-         /*   Debug.Log(IsPlayerAligned(playerGridPosition));
+         *//*   Debug.Log(IsPlayerAligned(playerGridPosition));
             Debug.Log(directionToPlayer.magnitude <= safeRange);
-            Debug.Log(Time.time - lastShotTime >= fireRate);*/
+            Debug.Log(Time.time - lastShotTime >= fireRate);*//*
             if (IsPlayerAligned(playerGridPosition) && directionToPlayer.magnitude <= safeRange && Time.time - lastShotTime >= fireRate)
             {
                 //Debug.Log("Shoot");
@@ -136,42 +142,6 @@ public class EnemyRangeChasingState : EnnemyState
                 //Debug.Log("Move");
                 MoveATowardsPlayer();
             }
-
-/*
-            direction = ennemy.FindNextCell(direction, targetPos);
-            Vector3 nextPosition = ennemy.transform.position + (Vector3)direction;
-            Vector3Int gridNextPosition = gridManager.WorldToCell(nextPosition);
-
-            if (gridManager.CanMoveOnCell(gridNextPosition))
-            {
-                GridManager.CellData cellData = gridManager.GetCellData(gridNextPosition);
-
-                //Move
-
-                if (Time.time > ennemy.LastUsedTimeMove + ennemy.coolDownMove)
-                {
-
-                    ennemy.lastPosition = ennemy.gridManager.WorldToCell(ennemy.transform.position);
-
-                    ennemy.newCellTarget = gridNextPosition;
-
-                    //changement de place sur la grid du gridManager
-                    var currentCell = ennemy.gridManager.GetCellData(ennemy.lastPosition);
-                    currentCell.containedInCell = null;
-
-                    var targetCell = ennemy.gridManager.GetCellData(ennemy.newCellTarget);
-                    targetCell.containedInCell = ennemy.gameObject;
-
-                    UnityEngine.Object.Instantiate(ennemy.stepVFXPrefab, ennemy.gridManager.CellToWorld(ennemy.lastPosition), Quaternion.identity);
-
-                    //Debug
-                    //ennemy.gridManager.DebugCellWithObjects();
-                    ennemy.movePoint.transform.position = ennemy.gridManager.CellToWorld(ennemy.newCellTarget);
-                    //------
-
-                    ennemy.LastUsedTimeMove = Time.time;
-                }
-            }*/
 
         }
     }
@@ -249,7 +219,7 @@ public class EnemyRangeChasingState : EnnemyState
 
         if (gridManager.CanMoveOnCell(gridNextPosition))
         {
-            GridManager.CellData cellData = gridManager.GetCellData(gridNextPosition);
+            GridManagerNew.CellData cellData = gridManager.GetCellData(gridNextPosition);
 
             //Move
 
@@ -300,3 +270,4 @@ public class EnemyRangeChasingState : EnnemyState
         base.AnnimationTriggerEvent(triggerType);
     }
 }
+*/

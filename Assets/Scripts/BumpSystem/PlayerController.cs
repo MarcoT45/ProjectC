@@ -32,14 +32,37 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentVelocity = Vector2.zero;
     private SpriteRenderer spriteRenderer;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         forwardDirection = Vector2.right;
     }
 
-    void Update()
+    public void OnEnable()
+    {
+        
+    }
+
+    public void OnDisable()
+    {
+        
+    }
+
+    private void Start()
+    {
+        // Assigner la caméra principale pour suivre le joueur
+        if ( Camera.main.GetComponent<CameraFollow>() != null)
+        {
+            Camera.main.GetComponent<CameraFollow>().target = this.transform;
+        }
+        else
+        {
+            Camera.main.gameObject.AddComponent<CameraFollow>().target = this.transform;
+        }
+    }
+
+    private void Update()
     {
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
