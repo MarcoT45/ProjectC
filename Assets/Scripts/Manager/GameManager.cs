@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
     // En bas la partie jeu
 
     // Variables globales du jeu
-    public bool GameIsPaused = false;
+    public bool GameIsPaused { get; private set; }
 
     // Variables informations joueur
     private int startCoins = 0;
@@ -493,6 +493,14 @@ public class GameManager : MonoBehaviour {
     public void SetRunTimerIsActive(bool timerIsActive)
     {
         this.runTimerIsActive = timerIsActive;
+    }
+    
+    public void PauseGame(bool paused)
+    {
+        GameIsPaused = paused;
+        Time.timeScale = paused ? 0f : 1f; //Met en pause le temps dans le jeu
+        //Quand on met en pause, on coupe aussi le son ( quand il y en aura )   
+        AudioListener.pause = paused;
     }
 
     // ********** PARTIE CARTE/MAP DE RUN ********** //

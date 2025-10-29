@@ -32,15 +32,20 @@ MonoBehaviour:
     m_WaitForCompletion: 0
     m_LocalVariables: []
   discovered: 1
-  attack: 0
-  defense: 1
-  speed: 1
-  luck: 0
   descriptionEffect: 
   price: 120
   rarity: 2
   sprite: {fileID: 25435196, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
   type: 2
+  stats:
+    pv: 0
+    atk: 0
+    def: 3
+    spd: 2
+    crit: 0
+    poids: 0
+    luck: 0
+  passiveEffect: {fileID: 0}
   references:
     version: 2
     RefIds: []

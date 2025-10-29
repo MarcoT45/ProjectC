@@ -3,12 +3,10 @@ using System.Collections;
 
 public class PlayerController : MonoBehaviour
 {
-
+    [HideInInspector] public PlayerStats playerStats;
+    [HideInInspector] public EquipmentController equipment;
 
     [Header("Settings")]
-    public float speed = 5f;
-    public int damage = 10;
-    public int health = 100;
 
     public float dashForce = 8f;
     public float dashDuration = 0.2f;
@@ -32,11 +30,14 @@ public class PlayerController : MonoBehaviour
     private Vector2 currentVelocity = Vector2.zero;
     private SpriteRenderer spriteRenderer;
 
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         forwardDirection = Vector2.right;
+        playerStats = GetComponent<PlayerStats>();
+        equipment = GetComponent<EquipmentController>();
     }
 
     public void OnEnable()
@@ -64,13 +65,27 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
+        // Ne rien faire si le jeu est en pause
+        if (GameManager.Instance.GameIsPaused)
+            return;
 
-        movement = new Vector2(moveX, moveY).normalized;
-        if (movement != Vector2.zero)
+        // Mouvement avec le ControlsManager
+        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub || ControlsManager.Instance.controlsState == ControlsState.Combat)
         {
-            forwardDirection = movement;
+            if( ControlsManager.Instance.DeplacerHold)
+            {
+                float moveX = ControlsManager.Instance.DeplacerValue.x;
+                float moveY = ControlsManager.Instance.DeplacerValue.y;
+                movement = new Vector2(moveX, moveY).normalized;
+                if (movement != Vector2.zero)
+                {
+                    forwardDirection = movement;
+                }
+            }
+            else
+            {
+                movement = Vector2.zero;
+            }
         }
 
         //Dash
@@ -91,8 +106,8 @@ public class PlayerController : MonoBehaviour
     {
         if (!isDashing && !isKnockedBack)
         {
-            currentVelocity = Vector2.Lerp(currentVelocity, movement * speed, 0.1f);
-            rb.velocity = movement * speed;
+            currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd , 0.1f);
+            rb.velocity = movement * playerStats.totalStats.spd;
         }
     }
 
@@ -115,6 +130,8 @@ public class PlayerController : MonoBehaviour
         {
             case CollectibleType.Coin:
                 GameManager.Instance.AddCoinsToRunPlayerCoins( collectible.amount);
+                // Déclencher les passifs liés à la collecte de pièces
+                this.equipment.TriggerPassives(EquipmentTriggerType.OnPickup, collectible.gameObject, 0);
                 break;
 
             case CollectibleType.Loot:
@@ -131,9 +148,9 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int amount)
     {
-        health -= amount;
+        playerStats.totalStats.pv -= amount;
         //StartCoroutine(BlinkRoutine());
-        if (health <= 0)
+        if (playerStats.totalStats.pv <= 0)
         {
             Destroy(gameObject);
         }

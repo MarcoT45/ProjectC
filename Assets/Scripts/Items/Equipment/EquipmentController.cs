@@ -22,14 +22,20 @@ public class EquipmentController : MonoBehaviour
         }
         DontDestroyOnLoad(this.gameObject);
 
+        // Appels supplémentaires non dépendante de la partie Singleton
+        totalStats.Clear();
     }
     #endregion
 
     private InventoryController inventory;
     private ItemData[] currentEquipement;
+    private CharacterStats totalStats = new CharacterStats();
 
     public delegate void OnEquipmentChanged(ItemData newItem, ItemData oldItem);
     public static event OnEquipmentChanged onEquipmentChanged;
+
+    public delegate void OnStatsChanged();
+    public static event OnStatsChanged onStatsChanged;
 
     public void OnEnable()
     {
@@ -49,7 +55,20 @@ public class EquipmentController : MonoBehaviour
         int numSlots = System.Enum.GetNames(typeof(ItemType)).Length;
         currentEquipement = new ItemData[numSlots];
     }
-    
+
+    public void Update()
+    {
+        //Press E to equip an item for testing
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (inventory.GetItemList().Count > 0)
+            {
+                Debug.Log("Equip first item in inventory: " + inventory.GetItemList()[0].GetName());
+                Equip(inventory.GetItemList()[0]);
+            }
+        }
+    }
+
     public void HandleDrop(DraggableItem draggableItem)
     {
         Transform parent = draggableItem.originalParent;
@@ -114,8 +133,8 @@ public class EquipmentController : MonoBehaviour
         }
 
         currentEquipement[equipSlot] = newItem;
-
         inventory.RemoveItem(newItem);
+        RecalculateStats();
 
         //On trigger le delegate / ?.invoke pour savoir si des méthode y sont rattachées
         onEquipmentChanged?.Invoke(newItem, oldItem);
@@ -134,6 +153,7 @@ public class EquipmentController : MonoBehaviour
                 ItemData oldItem = currentEquipement[indexEquipmentType];
 
                 inventory.AddItem(oldItem);
+                RecalculateStats();
 
                 onEquipmentChanged?.Invoke(null, oldItem);
                 currentEquipement[indexEquipmentType] = null;
@@ -145,6 +165,46 @@ public class EquipmentController : MonoBehaviour
         {
             Debug.Log("index erreur "+ indexEquipmentType);
         }
+    }
+
+    public void TriggerPassives(EquipmentTriggerType trigger, GameObject context = null, float value = 0f)
+    {
+        foreach (ItemData item in currentEquipement)
+        {
+            if (item != null && item.passiveEffects != null)
+            {
+                foreach(EquipmentPassive passive in item.passiveEffects)
+                {
+                    if(passive != null)
+                    {
+                        passive.ApplyEffect(this.gameObject, trigger, context, value);
+                    }
+                }
+            }
+        }
+    }
+
+    public CharacterStats GetTotalStats()
+    {
+        return totalStats;
+    }
+    private void RecalculateStats()
+    {
+        totalStats.Clear();
+        foreach (var item in currentEquipement)
+        {
+            if (item != null)
+            {
+                totalStats.Add(item.stats);
+            }
+        }
+
+        onStatsChanged?.Invoke();
+    }
+
+    public ItemData[] GetCurrentEquipement()
+    {
+        return currentEquipement;
     }
 
     public ItemData GetCasque() {
@@ -186,7 +246,7 @@ public class EquipmentController : MonoBehaviour
 
     public void ResetCurrentHitCounter() {
         if(currentEquipement[(int) ItemType.Arme] != null) {
-            currentHitCounter = (int) currentEquipement[(int) ItemType.Arme].GetAttack();
+            currentHitCounter = (int) currentEquipement[(int) ItemType.Arme].GetStats().atk;
         } else {
             currentHitCounter = 0;
         }

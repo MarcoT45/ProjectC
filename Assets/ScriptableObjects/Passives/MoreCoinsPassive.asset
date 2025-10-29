@@ -9,14 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 148d3df82af20b54fb30672418cb7813, type: 3}
-  m_Name: Player
+  m_Script: {fileID: 11500000, guid: 159026e62c3b93044b314ccc4ab7f724, type: 3}
+  m_Name: MoreCoinsPassive
   m_EditorClassIdentifier: 
-  stats:
-    pv: 10
-    atk: 3
-    def: 3
-    spd: 2
-    crit: 0
-    poids: 0
-    luck: 0
+  icon: {fileID: 0}
+  description: 
+  coinsToAdd: 1

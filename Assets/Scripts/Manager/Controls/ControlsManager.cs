@@ -114,6 +114,8 @@ public enum ControlsState {
     CharacterHub = 5,
     Dialogue = 6,
     DialogueChoice = 7,
+    PauseMenu = 10,
+    Inventaire = 100,
     Carte = 300,
     CarteChoiceWindow = 301,
     CarteWaitingAnimation = 302,

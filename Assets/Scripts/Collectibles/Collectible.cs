@@ -36,7 +36,7 @@ public class Collectible : MonoBehaviour
     {
         if( collision.CompareTag("Player")  )
         {
-            PlayerController playerController = GetComponent<PlayerController>();
+            PlayerController playerController = collision.gameObject.GetComponent<PlayerController>();
             if (playerController != null)
             {
                 playerController.Collect(this);
@@ -47,7 +47,7 @@ public class Collectible : MonoBehaviour
 
         if (collision.CompareTag("Enemy"))
         {
-            EnemyAI enemyAI = GetComponent<EnemyAI>();
+            EnemyAI enemyAI = collision.gameObject.GetComponent<EnemyAI>();
             if (enemyAI != null)
             {
                 enemyAI.Collect(this);

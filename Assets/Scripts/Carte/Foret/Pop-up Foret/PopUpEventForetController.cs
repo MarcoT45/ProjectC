@@ -544,10 +544,10 @@ public class PopUpEventForetController : MonoBehaviour {
         fenetreMagasinInfoItem.transform.DOScale(new Vector3(1, 1 ,1), 0.25f);
 
         nomObjetShop.text = i.GetName().GetLocalizedString();
-        atkObjetShop.text = i.GetAttack().ToString();
-        defObjetShop.text = i.GetDefense().ToString();
-        vitObjetShop.text = i.GetSpeed().ToString();
-        chnObjetShop.text = i.GetLuck().ToString();
+        atkObjetShop.text = i.GetStats().atk.ToString();
+        defObjetShop.text = i.GetStats().def.ToString();
+        vitObjetShop.text = i.GetStats().spd.ToString();
+        chnObjetShop.text = i.GetStats().luck.ToString();
         descObjetShop.text = i.GetDescription().GetLocalizedString();
   
         switch (i.GetRarity()) {
@@ -1049,10 +1049,10 @@ public class PopUpEventForetController : MonoBehaviour {
     private void ChargerInfoTradeItem(int index) {
         spriteObjetEchange.GetComponent<Image>().sprite = allPlayerItems[index].GetSprite();
         nomObjetEchange.text = allPlayerItems[index].GetName().GetLocalizedString();
-        atkObjetEchange.text = allPlayerItems[index].GetAttack().ToString();
-        defObjetEchange.text = allPlayerItems[index].GetDefense().ToString();
-        vitObjetEchange.text = allPlayerItems[index].GetSpeed().ToString();
-        chnObjetEchange.text = allPlayerItems[index].GetLuck().ToString();
+        atkObjetEchange.text = allPlayerItems[index].GetStats().atk.ToString();
+        defObjetEchange.text = allPlayerItems[index].GetStats().def.ToString();
+        vitObjetEchange.text = allPlayerItems[index].GetStats().spd.ToString();
+        chnObjetEchange.text = allPlayerItems[index].GetStats().luck.ToString();
         descObjetEchange.text = allPlayerItems[index].GetDescription().GetLocalizedString();
   
         switch (allPlayerItems[index].GetRarity()) {

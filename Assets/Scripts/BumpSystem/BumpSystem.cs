@@ -21,6 +21,7 @@ public static class BumpSystem
         {
             /*Debug.Log(" Attaque de face !");*/
             player.TakeDamage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
+            
             player.ApplyKnockback(-playerToEnemy * 0.75f);
         }
         else if (dotProduct < -0.7f)
@@ -36,10 +37,20 @@ public static class BumpSystem
             player.ApplyKnockback(-playerToEnemy * 0.1f);
         }
 
-        int finalDamage = (int)(player.damage * damageMultiplier);
+        // Application des dégâts à l'ennemi
+        int finalDamage = (int)(player.playerStats.totalStats.atk * damageMultiplier);
         enemy.Damage(finalDamage);
+
+        // Trigger des passifs de l'équipement du joueur ( OnHit )
+        if (player.equipment != null)
+        {
+            player.equipment.TriggerPassives(EquipmentTriggerType.OnHit, enemy.gameObject, finalDamage);
+        }
+
+        // Application du knockback à l'ennemi
         enemy.ApplyKnockback(playerToEnemy);
 
+        // Vérification de la mort de l'ennemi
         if (enemy.CurrentHealth <= 0)
         {
             GameObject.Destroy(enemy.gameObject);

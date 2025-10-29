@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,12 @@ public class UIInventory : MonoBehaviour
 
     [SerializeField]
     private RectTransform contentPanel;
+
+    [SerializeField]
+    private Transform statPanel;
+
+    [SerializeField]
+    private GameObject statPrefab;
 
     private List<UIInventoryItem> listUiItems = new List<UIInventoryItem>();
 
@@ -36,6 +43,7 @@ public class UIInventory : MonoBehaviour
         DraggableItem.onItemEndDrag += UpdateInventoryUI;
         UIInventoryItem.onItemDroppedOn += HandleSwap;
         UIInventoryItem.onItemClicked += HandleClick;
+        EquipmentController.onStatsChanged += UpdateStatPanel;
         UpdateInventoryUI();
 
     }
@@ -76,6 +84,29 @@ public class UIInventory : MonoBehaviour
 
             index++;
         }
+    }
+
+    public void UpdateStatPanel()
+    {
+        if (statPanel.transform.childCount > 0)
+        {
+            foreach (Transform child in statPanel.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+
+        CharacterStats equipmentStats = EquipmentController.Instance.GetTotalStats();
+
+        //Boucler sur les stats et les afficher
+        foreach (var stat in equipmentStats)
+        {
+            GameObject statGO = Instantiate(statPrefab, statPanel);
+            statGO.transform.SetParent(statPanel);
+            TMP_Text text = statGO.GetComponent<TMP_Text>();
+            text.text = $"{stat.Key}: {stat.Value.ToString()}";
+        }
+
     }
 
     public void ResetAll()

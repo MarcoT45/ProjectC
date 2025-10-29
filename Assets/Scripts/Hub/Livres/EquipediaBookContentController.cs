@@ -198,10 +198,10 @@ public class EquipediaBookContentController : MonoBehaviour {
             numeroItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetNumero().ToString();
             nameItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetName().GetLocalizedString();
             priceItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetPrice().ToString();
-            attackItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetAttack().ToString();
-            defenseItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetDefense().ToString();
-            speedItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetSpeed().ToString();
-            luckItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetLuck().ToString();
+            attackItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetStats().atk.ToString();
+            defenseItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetStats().def.ToString();
+            speedItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetStats().spd.ToString();
+            luckItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetStats().luck.ToString();
             descriptionItem.text = catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetDescription().GetLocalizedString();
             Image icon = (Image) typeItem.GetComponent(typeof(Image));
             icon.sprite = typeItemSprite[(int) catalogInfo[(currentPage-1)*12 + numberSelected - 1].GetItemType()];

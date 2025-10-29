@@ -1,7 +1,9 @@
- using System.Collections;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class InventoryController : MonoBehaviour
 {
@@ -11,26 +13,21 @@ public class InventoryController : MonoBehaviour
 
     private void Awake()
     {
+        Debug.Log("InventoryController Awake - Setting up Singleton Instance");
         if (instance != null && instance != this)
         {
+            Debug.LogWarning("Multiple instances of InventoryController detected. Destroying duplicate.");
             Destroy(this.gameObject);
             return;
         }
-        else
-        {
-            instance = this;
-        }
+
+        instance = this;
         DontDestroyOnLoad(this.gameObject);
 
-        // Appels supplémentaires non dépendante de la partie Singleton
-        playerInput = new PlayerMovement();
-        menuOpenCloseAction = playerInput.Main.MenuOpenClose;
     }
     #endregion
 
-    private List<ItemData> items;
-    public bool isMenuOpenCloseInputPressed;
-
+    public List<ItemData> items;
     public int inventorySize = 30;
 
     [SerializeField]
@@ -38,9 +35,6 @@ public class InventoryController : MonoBehaviour
 
     [SerializeField]
     private UIInventoryDescription inventoryDescriptionUI;
-
-    private PlayerMovement playerInput;
-    private InputAction menuOpenCloseAction;
 
     public delegate void OnInventoryChanged();
     public static event OnInventoryChanged onInventoryChanged;
@@ -50,42 +44,48 @@ public class InventoryController : MonoBehaviour
         UIInventory.onSwapItems += HandleSwapItems;
         UIInventory.onDescriptionRequested += UpdateDescription;
         //EquipmentController.onEquipmentChanged += HandleEquipmentChange;
-        playerInput.Enable();
     }
+
 
     private void OnDisable()
     {
         UIInventory.onSwapItems -= HandleSwapItems;
         UIInventory.onDescriptionRequested -= UpdateDescription;
         //EquipmentController.onEquipmentChanged -= HandleEquipmentChange;
-        playerInput.Disable();
     }
 
     public void Start()
     {
+        Debug.Log("InventoryController Start - Initializing Inventory");
         items = new List<ItemData>();
         inventoryUI.InitializeInventoryUI(inventorySize);
 
+        //Vérification de l'instance de GameManager
+        if ( GameManager.Instance == null)
+        {
+            Debug.LogError("GameManager instance is null. Cannot load items into inventory.");
+            return;
+        }
+
         //------ A retirer plus tard
-        //foreach (ItemData item in GameManager.Instance.GetAllItems())
-        //{
-        //    AddItem(item);
-        //}
+        foreach (ItemData item in GameManager.Instance.GetAllItems())
+        {
+            AddItem(item);
+        }
         //------
     }
 
     public void Update()
     {
-        isMenuOpenCloseInputPressed = menuOpenCloseAction.triggered;
-        if (isMenuOpenCloseInputPressed)
+        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub ||
+            ControlsManager.Instance.controlsState == ControlsState.Combat || 
+            ControlsManager.Instance.controlsState == ControlsState.Inventaire )
         {
-            if (inventoryUI.isActiveAndEnabled == false)
+            if (ControlsManager.Instance.InventairePressed)
             {
-                inventoryUI.Show();
-            }
-            else
-            {
-                inventoryUI.Hide();
+                Debug.Log("Inventory Toggle Pressed");
+                //ControlsState previousControlsState = ControlsManager.Instance.controlsState;
+                ToggleInventoryUI();
             }
         }
     }
@@ -140,5 +140,21 @@ public class InventoryController : MonoBehaviour
             AddItem(oldItem);
         }
 
+    }
+
+    public void ToggleInventoryUI()
+    {
+        if (inventoryUI.isActiveAndEnabled == false)
+        {
+            inventoryUI.Show();
+            ControlsManager.Instance.controlsState = ControlsState.Inventaire;
+        }
+        else
+        {
+            inventoryUI.Hide();
+            ControlsManager.Instance.controlsState = ControlsState.CharacterHub;
+        }
+
+        Debug.Log("Controls State: " + ControlsManager.Instance.controlsState);
     }
 }

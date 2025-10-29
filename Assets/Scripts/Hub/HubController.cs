@@ -6,7 +6,7 @@ using UnityEngine.Tilemaps;
 
 public class HubController : MonoBehaviour {
 
-    [SerializeField] private Tilemap sortieTileMap;
+   // [SerializeField] private Tilemap sortieTileMap;
     public LayerMask layerSortie;
     public GameObject character;
 
@@ -14,6 +14,8 @@ public class HubController : MonoBehaviour {
 
     private void Start() {
         MusicManager.Instance.PlayMusicClip(hubTrack);
+        ControlsManager.Instance.controlsState = ControlsState.CharacterHub;
+        Debug.Log("Controls State set to CharacterHub");
     }
 
     private void Update() {
@@ -22,10 +24,10 @@ public class HubController : MonoBehaviour {
             SceneManager.LoadScene(2);
         }*/
 
-        Vector3Int gridPosition = sortieTileMap.WorldToCell(character.transform.position);
+      /*  Vector3Int gridPosition = sortieTileMap.WorldToCell(character.transform.position);
         if (sortieTileMap.HasTile(gridPosition))
         {
             SceneManager.LoadScene(2);
-        }
+        }*/
     }
 }

@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 855895281463053770}
   - component: {fileID: 855895281463053771}
   - component: {fileID: 855895281463053768}
-  - component: {fileID: 855895281463053769}
   m_Layer: 8
   m_Name: CharacterOld
   m_TagString: Player
@@ -84,39 +83,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &855895281463053769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855895281463053772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 556048dd1a8d5ff41a0de06bd8f46ed7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridManager: {fileID: 0}
-  coolDownAttack: 1.5
-  coolDownMove: 0.75
-  slashVFXPrefab: {fileID: 232882041438868369, guid: b4a384b46cec011489fab73702fa0ab7, type: 3}
-  stepVFXPrefab: {fileID: 3783731512881812128, guid: 54fbcdda40795e34c932593c3919156f, type: 3}
-  moveSpeed: 10
-  movePoint: {fileID: 5412985059654518024}
-  pushBackDistance: 1
-  pushBackSpeed: 3
-  tintFadeSpeed: 0.25
-  tintColor: {r: 0.7735849, g: 0.105820596, b: 0.105820596, a: 1}
-  stopMovement:
-    serializedVersion: 2
-    m_Bits: 64
-  data: {fileID: 11400000, guid: 92befdcae854f544d8e86167c63f6021, type: 2}
-  stats:
-    pv: 0
-    atk: 0
-    def: 0
-    vitesse: 0
-    luck: 0
 --- !u!1 &2082885413344839581
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,6 +171,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 1113647231
   m_SortingOrder: 1

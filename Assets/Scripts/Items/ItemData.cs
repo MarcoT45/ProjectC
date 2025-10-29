@@ -6,6 +6,7 @@ using UnityEngine.Localization;
 [CreateAssetMenu(fileName = "New ItemData", menuName = "ScriptableObjects/Items/ItemData")]
 public class ItemData : ScriptableObject
 {
+    [Header("Infos")]
     [SerializeField]
     private int numero;
     [SerializeField]
@@ -15,14 +16,6 @@ public class ItemData : ScriptableObject
     [SerializeField]
     private bool discovered;
     [SerializeField]
-    private float attack;
-    [SerializeField]
-    private float defense;
-    [SerializeField]
-    private float speed;
-    [SerializeField]
-    private float luck;
-    [SerializeField]
     [TextArea]
     private string descriptionEffect;
     [SerializeField]
@@ -31,10 +24,14 @@ public class ItemData : ScriptableObject
     private int rarity;
     [SerializeField]
     private Sprite sprite;
-
     [SerializeField]
     private ItemType type;
 
+    [Header("Stats")]
+    public CharacterStats stats;
+
+    [Header("Passif")]
+    public List<EquipmentPassive> passiveEffects;
 
     public ItemData()
     {
@@ -66,20 +63,8 @@ public class ItemData : ScriptableObject
         this.discovered = d;
     }
 
-    public float GetAttack() {
-        return this.attack;
-    }
-
-    public float GetDefense() {
-        return this.defense;
-    }
-
-    public float GetSpeed() {
-        return this.speed;
-    }
-
-    public float GetLuck() {
-        return this.luck;
+    public CharacterStats GetStats() {
+        return this.stats;
     }
 
     public int GetPrice()
