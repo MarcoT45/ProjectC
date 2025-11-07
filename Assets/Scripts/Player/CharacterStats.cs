@@ -4,25 +4,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout de l'implémentation de l'interface IEnumerable
+public struct CharacterStats : IEnumerable<KeyValuePair<string, float>> // Ajout de l'implémentation de l'interface IEnumerable
 {
 
-    [Header("Stats visibles")]
-    public int pv;
-    public int atk;
-    public int def;
-    public int spd;
-    public int crit;
-    public int poids;
-    public int luck; // crit pour pièces en %
+    [Header("Stats")]
+    public float pv;
+    public float atk;
+    public float def;
+    public float spd;
+    public float crit;
+    public float poids;
+    public float luck; // crit pour pièces en %
 
-    //Amené à évoluer => passif fait différement
-  /*  [Header("Stats invisibles / passifs")]
-    public int magicResist;
-    public int vampirism;
-    public int deflectDamage;
-    public int bonusCoins; // bonus pièces fixe 
-    public int spdOutOfCombat; // bonus spd hors combat*/
+    //A voir si on garde le bouclier commme stat visible ou pas
+    public float shield;
 
     public void Clear()
     {
@@ -33,6 +28,7 @@ public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout d
         crit = 0;
         poids = 0;
         luck = 0;
+        shield = 0;
     }
 
     public void Add(CharacterStats statsToAdd)
@@ -44,13 +40,14 @@ public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout d
         crit += statsToAdd.crit;
         poids += statsToAdd.poids;
         luck += statsToAdd.luck;
+        shield += statsToAdd.shield;
     }
 
-    public static readonly string[] StatNames = { "HP", "ATK", "DEF", "SPD", "CRIT", "WGHT", "LUCK" };
+    public static readonly string[] StatNames = { "HP", "ATK", "DEF", "SPD", "CRIT", "WGHT", "LUCK", "SHLD" };
 
     public int Count => StatNames.Length;
 
-    public int this[int index]
+    public float this[int index]
     {
         get
         {
@@ -63,6 +60,7 @@ public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout d
                 4 => crit,
                 5 => poids,
                 6 => luck,
+                7 => shield,    
                 _ => throw new IndexOutOfRangeException("Invalid stat index"),
             };
         }
@@ -91,6 +89,9 @@ public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout d
                 case 6:
                     luck = value;
                     break;
+                case 7:
+                    shield = value;
+                    break;
                 default:
                     throw new IndexOutOfRangeException("Invalid stat index");
             }
@@ -98,11 +99,11 @@ public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout d
     }
 
     // Permet: foreach (var kv in stats) { var name = kv.Key; var value = kv.Value; }
-    public IEnumerator<KeyValuePair<string, int>> GetEnumerator()
+    public IEnumerator<KeyValuePair<string, float>> GetEnumerator()
     {
         for (int i = 0; i < Count; i++)
         {
-            yield return new KeyValuePair<string, int>(StatNames[i], this[i]);
+            yield return new KeyValuePair<string, float>(StatNames[i], this[i]);
         }
     }
 
@@ -111,9 +112,9 @@ public struct CharacterStats : IEnumerable<KeyValuePair<string, int>> // Ajout d
         return GetEnumerator();
     }
 
-    public int[] ToArray()
+    public float[] ToArray()
     {
-        var a = new int[Count];
+        var a = new float[Count];
         for (int i = 0; i < Count; i++)
         {
             a[i] = this[i];

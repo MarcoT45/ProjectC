@@ -52,13 +52,14 @@ public class EquipmentController : MonoBehaviour
     public void Start()
     {
         inventory = InventoryController.Instance;
-        int numSlots = System.Enum.GetNames(typeof(ItemType)).Length;
+        //Initialisation du tableau d'équipement avec le nombre de slots défini par l'énum ItemType + 1 pour gérer le cas des accessoires
+        int numSlots = System.Enum.GetNames(typeof(ItemType)).Length + 1;
         currentEquipement = new ItemData[numSlots];
     }
 
     public void Update()
     {
-        //Press E to equip an item for testing
+       /* //Press E to equip an item for testing
         if (Input.GetKeyDown(KeyCode.E))
         {
             if (inventory.GetItemList().Count > 0)
@@ -66,7 +67,7 @@ public class EquipmentController : MonoBehaviour
                 Debug.Log("Equip first item in inventory: " + inventory.GetItemList()[0].GetName());
                 Equip(inventory.GetItemList()[0]);
             }
-        }
+        }*/
     }
 
     public void HandleDrop(DraggableItem draggableItem)
@@ -119,10 +120,22 @@ public class EquipmentController : MonoBehaviour
 
     public void Equip(ItemData newItem)
     {
+        Debug.Log("EquipementController: Equip " + newItem.GetName());
+
         //Récupère l'index de la valeur de l'enum. ex: Casque = 1
         int equipSlot = (int) newItem.GetItemType();
 
         ItemData oldItem = null;
+
+        //Gestion des accessoires (2 emplacements)
+        if (equipSlot == (int) ItemType.Accessoire)
+        {
+            //Si le premier emplacement est pris, on essaye le second
+            if (currentEquipement[equipSlot] != null && currentEquipement[equipSlot + 1] == null)
+            {
+                equipSlot++;
+            }
+        }
 
         //Si il y a déjà un equipement, on ajoute l'ancien dans l'inventaire
         if (currentEquipement[equipSlot] != null)
@@ -138,6 +151,7 @@ public class EquipmentController : MonoBehaviour
 
         //On trigger le delegate / ?.invoke pour savoir si des méthode y sont rattachées
         onEquipmentChanged?.Invoke(newItem, oldItem);
+        onStatsChanged?.Invoke();
 
         ResetCurrentHitCounter();
     }
@@ -156,6 +170,7 @@ public class EquipmentController : MonoBehaviour
                 RecalculateStats();
 
                 onEquipmentChanged?.Invoke(null, oldItem);
+                onStatsChanged?.Invoke();
                 currentEquipement[indexEquipmentType] = null;
 
                 ResetCurrentHitCounter();

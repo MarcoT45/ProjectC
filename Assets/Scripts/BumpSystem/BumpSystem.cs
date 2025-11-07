@@ -10,29 +10,30 @@ public static class BumpSystem
         playerToEnemy = GetCardinalDirection(playerToEnemy);
         float dotProduct = Vector2.Dot(enemy.forwardDirection, playerToEnemy);
 
-
-       /* Debug.Log($"EnemytoPlayer: {playerToEnemy}");
-        Debug.Log($"EnemyForward: {enemy.forwardDirection}");
-        Debug.Log($"Dot Product: {dotProduct}");*/
-
         // Calcul des dégâts selon l'angle
         float damageMultiplier = 1f;
         if (dotProduct > 0.7f)
         {
-            /*Debug.Log(" Attaque de face !");*/
-            player.TakeDamage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
-            
+            //Attaque de face 
+            player.Damage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
+
+            // Trigger des passifs de l'équipement du joueur ( OnHit )
+            if (player.equipment != null)
+            {
+                player.equipment.TriggerPassives(EquipmentTriggerType.OnHitTaken, enemy.gameObject, (int)enemy.monsterData.atk);
+            }
+
             player.ApplyKnockback(-playerToEnemy * 0.75f);
         }
         else if (dotProduct < -0.7f)
         {
-           /* Debug.Log(" Attaque dans le dos !");*/
+            //Attaque dans le dos 
             damageMultiplier = 2f;
             player.ApplyKnockback(-playerToEnemy * 0.1f);
         }
         else
         {
-           /* Debug.Log(" Attaque latérale !");*/
+            //Attaque de côté
             damageMultiplier = 1.5f;
             player.ApplyKnockback(-playerToEnemy * 0.1f);
         }
@@ -49,6 +50,9 @@ public static class BumpSystem
 
         // Application du knockback à l'ennemi
         enemy.ApplyKnockback(playerToEnemy);
+
+        // Entrée en combat
+        GameManager.Instance.EnterCombat();
 
         // Vérification de la mort de l'ennemi
         if (enemy.CurrentHealth <= 0)

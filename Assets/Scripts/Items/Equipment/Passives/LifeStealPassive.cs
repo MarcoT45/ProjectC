@@ -29,7 +29,7 @@ public class LifeStealPassive : EquipmentPassive
             float lifeToHeal = value * lifeStealPercentage;
             //Arrondir au nombre entier au-dessus
             lifeToHeal = Mathf.Round(lifeToHeal);
-            user.GetComponent<PlayerStats>()?.Heal(lifeToHeal);
+            user.GetComponent<PlayerController>()?.Heal(lifeToHeal);
 
             Debug.Log($"LifeStealPassive: Healed {lifeToHeal} health. Damaged {value}");
         }

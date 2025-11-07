@@ -5,7 +5,8 @@ using System;
 using System.Globalization;
 
 public class GameManager : MonoBehaviour {
-    
+
+    #region Singleton
     private static GameManager instance = null;
     public static GameManager Instance => instance;
 
@@ -19,6 +20,7 @@ public class GameManager : MonoBehaviour {
 
         DontDestroyOnLoad(this.gameObject);
     }
+    #endregion
 
     // En haut le singleton 
     // En bas la partie jeu
@@ -66,6 +68,12 @@ public class GameManager : MonoBehaviour {
     private float runTimer;
     private bool runTimerIsActive;
 
+    //Variables relatives au combat
+    [SerializeField] private float outOfCombatTimerDuration = 2f;
+    private float outOfCombatTimer = 0f;
+    private bool inCombat = false;
+    public bool InCombat => inCombat;
+
     public void Start() {
         string filePath = Application.persistentDataPath + "/ConeyCatchingSaveData.json";
         if (!System.IO.File.Exists(filePath)) {
@@ -94,6 +102,15 @@ public class GameManager : MonoBehaviour {
         if(this.runTimerIsActive)
         {
             this.runTimer = this.runTimer + Time.deltaTime;
+        }
+
+        // Gestion du timer hors combat
+        if(!inCombat) return;
+
+        outOfCombatTimer -= Time.deltaTime;
+        if(outOfCombatTimer <= 0f)
+        {
+            ExitCombat();
         }
     }
 
@@ -154,6 +171,7 @@ public class GameManager : MonoBehaviour {
         this.startCoins = coins;
     }
 
+    #region Items / Montres
     public void TriItemsParRarete()
     {
         List<ItemData> rarete1 = new List<ItemData>();
@@ -223,7 +241,9 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+    #endregion
 
+    #region Statistiques Globales Joueur Getter/Setter
     public int GetStatNbRunMade() {
         return this.statNbRunMade;
     }
@@ -494,7 +514,28 @@ public class GameManager : MonoBehaviour {
     {
         this.runTimerIsActive = timerIsActive;
     }
-    
+
+    #endregion
+
+    #region Combat Management
+
+    public void EnterCombat()
+    {
+        outOfCombatTimer = outOfCombatTimerDuration;
+
+        if (!inCombat)
+        {
+            inCombat = true;
+        }
+    }
+
+    public void ExitCombat()
+    {
+        inCombat = false;
+    }
+
+    #endregion
+
     public void PauseGame(bool paused)
     {
         GameIsPaused = paused;
@@ -504,6 +545,7 @@ public class GameManager : MonoBehaviour {
     }
 
     // ********** PARTIE CARTE/MAP DE RUN ********** //
+    #region Fonctions et variables de la map
 
     private List<Noeud> mapData = new List<Noeud>();
     public int levelMapSizeX = 0;
@@ -539,4 +581,6 @@ public class GameManager : MonoBehaviour {
     public int GetLevelNumberEnemy() {
         return levelNumberEnemy;
     }
+
+    #endregion
 }

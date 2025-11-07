@@ -26,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     }
     #endregion
 
-
+    [SerializeField] private GameObject dialogueBox;
     [SerializeField] private TextMeshProUGUI nameText;
     [SerializeField] private TextMeshProUGUI dialogueBoxText;
     [SerializeField] private ChoiceBox choiceBox;
@@ -52,7 +52,7 @@ public class DialogueManager : MonoBehaviour
         // On désactive tout
         dialogueEnded = false;
         isTyping = false;
-        gameObject.SetActive(false);
+        dialogueBox.SetActive(false);
     }
     
     public void DisplayDialogue(DialogueText dialogueText, Action<int> onChoiceSelected = null)
@@ -107,9 +107,9 @@ public class DialogueManager : MonoBehaviour
     private void StartDialogue(DialogueText dialogueText)
     {
         //Active GO
-        if(!gameObject.activeSelf)
+        if(!dialogueBox.activeSelf)
         {
-            gameObject.SetActive(true);
+            dialogueBox.SetActive(true);
         }
 
         //Update le nom
@@ -129,9 +129,9 @@ public class DialogueManager : MonoBehaviour
 
         dialogueEnded = false;
 
-        if(gameObject.activeSelf)
+        if(dialogueBox.activeSelf)
         {
-            gameObject.SetActive(false);
+            dialogueBox.SetActive(false);
         }
 
     }

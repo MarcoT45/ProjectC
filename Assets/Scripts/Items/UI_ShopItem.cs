@@ -56,7 +56,6 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        Debug.Log(itemData.GetName());
         bool bought = false ;
         if(!cardBackIsActive)
         {
@@ -82,11 +81,26 @@ public class UI_ShopItem : MonoBehaviour, IPointerClickHandler
             cardFront.SetActive(false);
         }
     }
+    public bool TryBuyItem(ItemData itemData)
+    {
+        int playercoins = GameManager.Instance.GetRunPlayerCoins();
 
-    private bool TryBuyItem(ItemData itemData)
+        IShopCustomer shopCustomer = GameObject.FindWithTag("Player").GetComponent<IShopCustomer>();
+
+        if (playercoins >= itemData.GetPrice() && InventoryController.Instance.GetItemList().Count < InventoryController.Instance.inventorySize)
+        {
+            shopCustomer.BuyItem(itemData);
+
+            return true;
+        }
+
+        return false;
+    }
+
+/*    private bool TryBuyItem(ItemData itemData)
     {
         UI_Shop ui_shop = GameObject.FindWithTag("UI_Shop").GetComponent<UI_Shop>();
         
         return ui_shop.TryBuyItem(itemData);
-    }
+    }*/
 }

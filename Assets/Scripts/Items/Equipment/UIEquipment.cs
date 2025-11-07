@@ -32,6 +32,7 @@ public class UIEquipment : MonoBehaviour
 
     public void RefreshUI(ItemData newEquipment, ItemData oldEquipment)
     {
+
         ItemType type = ItemType.Casque;
         if(newEquipment != null)
         {
@@ -63,7 +64,8 @@ public class UIEquipment : MonoBehaviour
                 break;
 
             case ItemType.Accessoire:
-                accessorySlot.SetData(newEquipment);
+                accessorySlot.SetData(EquipmentController.Instance.GetAccessoireJ());
+                accessorySlot2.SetData(EquipmentController.Instance.GetAccessoireK());
                 break;
         }
     }

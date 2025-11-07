@@ -51,6 +51,7 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler/*, IDropHandl
             }
             else if(eventData.clickCount == 2)
             {
+                Debug.Log("UIInventoryItem: OnPointerClick - double click to equip " + itemData.GetName());
                 EquipmentController.Instance.Equip(itemData);
             }
         }

@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
 {
     [HideInInspector] public PlayerStats playerStats;
     [HideInInspector] public EquipmentController equipment;
@@ -31,6 +31,12 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
 
+    // IDamageable implementation ( à voir si utile )
+    public float MaxHealth { get; set; }
+    public float CurrentHealth { get; set; }
+    public float MaxShield { get; set; }
+    public float CurrenShield { get; set; }
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -38,16 +44,6 @@ public class PlayerController : MonoBehaviour
         forwardDirection = Vector2.right;
         playerStats = GetComponent<PlayerStats>();
         equipment = GetComponent<EquipmentController>();
-    }
-
-    public void OnEnable()
-    {
-        
-    }
-
-    public void OnDisable()
-    {
-        
     }
 
     private void Start()
@@ -61,6 +57,12 @@ public class PlayerController : MonoBehaviour
         {
             Camera.main.gameObject.AddComponent<CameraFollow>().target = this.transform;
         }
+
+        //Stats initiales
+        MaxHealth = playerStats.totalStats.pv;
+        CurrentHealth = MaxHealth;
+        MaxShield = playerStats.totalStats.shield;
+        CurrenShield = MaxShield;
     }
 
     private void Update()
@@ -88,18 +90,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        //Dash
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-
-            // BumpSystem.HandleDash(this);
-        }
-
-        // Projectile
-      /*  if (Input.GetKeyDown(KeyCode.E))
-        {
-            FireProjectile();
-        }*/
     }
 
     void FixedUpdate()
@@ -131,7 +121,7 @@ public class PlayerController : MonoBehaviour
             case CollectibleType.Coin:
                 GameManager.Instance.AddCoinsToRunPlayerCoins( collectible.amount);
                 // Déclencher les passifs liés à la collecte de pièces
-                this.equipment.TriggerPassives(EquipmentTriggerType.OnPickup, collectible.gameObject, 0);
+                EquipmentController.Instance.TriggerPassives(EquipmentTriggerType.OnPickup, collectible.gameObject, 0);
                 break;
 
             case CollectibleType.Loot:
@@ -145,12 +135,31 @@ public class PlayerController : MonoBehaviour
         GameObject impactEffect = GameObject.Instantiate(hitVFX, position, Quaternion.identity);
         GameObject.Destroy(impactEffect, 0.2f);
     }
-
-    public void TakeDamage(int amount)
+    public void Heal(float amount)
     {
-        playerStats.totalStats.pv -= amount;
+        CurrentHealth += (int)amount;
+        //Clamp la vie actuelle à la vie max
+        CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
+    }
+
+    public void Damage(int amount)
+    {
+        if( CurrenShield > 0)
+        {
+            //Deux façons de gérer les dégâts sur le bouclier : soit on enlève 1 point de bouclier par attaque,
+            //soit on enlève autant de points que de dégâts reçus
+            //A voir ce qui est le plus intéressant en termes de gameplay
+            int shieldDamage = Mathf.Min(1, (int)CurrenShield);
+            //int shieldDamage = Mathf.Min(amount, (int)CurrenShield);
+
+            CurrenShield -= shieldDamage;
+        }else
+        {
+            CurrentHealth -= (int)amount;
+        }
+
         //StartCoroutine(BlinkRoutine());
-        if (playerStats.totalStats.pv <= 0)
+        if (CurrentHealth <= 0)
         {
             Destroy(gameObject);
         }
@@ -184,36 +193,18 @@ public class PlayerController : MonoBehaviour
         isKnockedBack = false;
     }
 
-    private IEnumerator BlinkRoutine()
+    public void BuyItem(ItemData itemData)
     {
-        for (int i = 0; i < 3; i++)
-        {
-            spriteRenderer.enabled = false;
-            yield return new WaitForSeconds(0.1f);
-            spriteRenderer.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-        }
+        GameManager.Instance.SetRunPlayerCoins(GameManager.Instance.GetRunPlayerCoins() - itemData.GetPrice());
+        InventoryController.Instance.AddItem(itemData);
+       //uiInventory.RefreshInventoryItems();
     }
 
-    private void FireProjectile()
+    public void Die()
     {
-        // Le projectile apparaît à une courte distance devant le joueur
-        Vector3 spawnPos = transform.position + (Vector3)(forwardDirection.normalized * 0.5f);
-        // Instantiate le projectile
-        GameObject proj = Instantiate(projectilePrefab, spawnPos, Quaternion.identity);
-        // Récupère le script Projectile pour définir sa direction
-        Projectile projectileScript = proj.GetComponent<Projectile>();
-        if (projectileScript != null)
-        {
-            projectileScript.direction = forwardDirection;
-        }
-    }
+        Destroy(gameObject);
 
-    private void ActivateSpeedBoost(float duration)
-    {
-        if (!isSpeedBoosted)
-        {
-           // StartCoroutine();
-        }
+        //Changer de scène ou afficher un écran de fin de jeu
+        //Changer état du ControlsManager
     }
 }

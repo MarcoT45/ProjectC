@@ -36,7 +36,7 @@ MonoBehaviour:
   price: 200
   rarity: 3
   sprite: {fileID: -1911702155, guid: 222149e45bd9b6044bdda24c73fa3a5f, type: 3}
-  type: 4
+  type: 3
   stats:
     pv: 0
     atk: 4
@@ -45,7 +45,7 @@ MonoBehaviour:
     crit: 0
     poids: 0
     luck: 0
-  passiveEffect: {fileID: 0}
+  passiveEffects: []
   references:
     version: 2
     RefIds: []

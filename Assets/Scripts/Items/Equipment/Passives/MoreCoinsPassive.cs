@@ -14,7 +14,8 @@ public class MoreCoinsPassive : EquipmentPassive
 
     public override void ApplyEffect(GameObject user, EquipmentTriggerType trigger, GameObject context, float value = 0)
     {
-        if (trigger == EquipmentTriggerType.OnPickup && context != null)
+        Debug.Log("MoreCoinsPassive: ApplyEffect called.");
+        if (trigger == EquipmentTriggerType.OnPickup  && context != null)
         {
             GameManager.Instance.AddCoinsToRunPlayerCoins(coinsToAdd);
 

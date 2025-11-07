@@ -13,6 +13,7 @@ public class BarreJoueurController : MonoBehaviour {
     public GameObject spriteAccessoireK;
     
     private void Update() {
+        // Met à jour le nombre de pièces et les icônes des équipements
         this.nbCoinsText.text = GameManager.Instance.GetRunPlayerCoins().ToString();
 
         if(EquipmentController.Instance.GetArme() != null) {
@@ -33,8 +34,6 @@ public class BarreJoueurController : MonoBehaviour {
             this.spriteAccessoireJ.SetActive(false);
         }
 
-        // ON NE GERE PAS 2 ACCESSOIRES POUR LE MOMENT
-        /*
         if(EquipmentController.Instance.GetAccessoireK() != null) {
             Image k = (Image) spriteAccessoireK.GetComponent(typeof(Image));
             k.sprite = EquipmentController.Instance.GetAccessoireK().GetSprite();
@@ -42,7 +41,6 @@ public class BarreJoueurController : MonoBehaviour {
         } else {
             this.spriteAccessoireK.SetActive(false);
         }
-        */
     }
 
 }

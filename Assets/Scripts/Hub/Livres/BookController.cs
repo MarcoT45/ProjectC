@@ -68,12 +68,12 @@ public class BookController : MonoBehaviour {
 
     public void OpenBook() {
         isOpening = true;
-        charControl.OnDisable();
+        ControlsManager.Instance.UpdateState(5);
     }
 
     public void CloseBook() {
         isClosing = true;
-        charControl.OnEnable();
+        ControlsManager.Instance.UpdateState(5);
     }
 
     private void OnTriggerEnter2D(Collider2D other) {

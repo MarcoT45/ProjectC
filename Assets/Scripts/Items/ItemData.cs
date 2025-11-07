@@ -33,6 +33,9 @@ public class ItemData : ScriptableObject
     [Header("Passif")]
     public List<EquipmentPassive> passiveEffects;
 
+    [Header("Actif")]
+    public Ability activeAbility;
+
     public ItemData()
     {
         numero = 0;
@@ -93,6 +96,6 @@ public enum ItemType
     Casque,
     Torse,
     Bottes,
+    Arme,
     Accessoire,
-    Arme
 }

@@ -10,11 +10,6 @@ public class PlayerStats : MonoBehaviour
     [Header("Current Stats")]
     public CharacterStats totalStats; // Stats totales (base + équipement)
 
-    private EquipmentController equipmentController;
-
-    public int currentHealth;
-
-
     public void OnEnable()
     {
         EquipmentController.onStatsChanged += RecalculateTotalStats;
@@ -25,14 +20,14 @@ public class PlayerStats : MonoBehaviour
         EquipmentController.onStatsChanged -= RecalculateTotalStats;
     }
 
-    private void Awake()
+    private void Start()
     {
-        equipmentController = GetComponent<EquipmentController>();
         RecalculateTotalStats();
     }
 
     public void RecalculateTotalStats()
     {
+        Debug.Log("Recalcule Total Stats");
         totalStats.Clear();
 
         // Ajouter les stats de base
@@ -40,16 +35,9 @@ public class PlayerStats : MonoBehaviour
 
 
         // Ajouter les stats de l'équipement
-        if (equipmentController != null && equipmentController.GetCurrentEquipement() != null)
-        {
-            foreach (var item in equipmentController.GetCurrentEquipement())
-            {
-                if (item != null)
-                {
-                    totalStats.Add(item.stats);
-                }
-            }
-        }
+        totalStats.Add(EquipmentController.Instance.GetTotalStats());
+
+
     }
 
     public CharacterStats GetTotalStats()
@@ -57,10 +45,4 @@ public class PlayerStats : MonoBehaviour
         return totalStats;
     }
 
-    public void Heal(float amount)
-    {
-        totalStats.pv += (int)amount;
-        // Optionally clamp to max health if you have a max health stat
-        // totalStats.pv = Mathf.Min(totalStats.pv, maxHealth);
-    }
 }

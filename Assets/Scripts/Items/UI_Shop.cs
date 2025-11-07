@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static UnityEditor.Progress;
 
 public class UI_Shop : MonoBehaviour
 {
     private Transform shopContainer;
     private IShopCustomer shopCustomer;
 
-   /* [SerializeField] private GameObject shopItemTemplate;*/
+    /* [SerializeField] private GameObject shopItemTemplate;*/
+    [SerializeField] private GameObject shopUI;
     [SerializeField] private UI_ShopItem shopItem1;
     [SerializeField] private UI_ShopItem shopItem2;
     [SerializeField] private UI_ShopItem shopItem3;
@@ -43,7 +43,7 @@ public class UI_Shop : MonoBehaviour
 
     }
 
-    public bool TryBuyItem(ItemData itemData)
+/*    public bool TryBuyItem(ItemData itemData)
     {
         int playercoins = GameManager.Instance.GetRunPlayerCoins();
 
@@ -55,19 +55,20 @@ public class UI_Shop : MonoBehaviour
         }
 
         return false;
-    }
+    }*/
 
 
     public void Show(IShopCustomer shopCustomer)
     {
-        Debug.Log("show");
+        //Montrer l'UI du shop
         this.shopCustomer = shopCustomer;
-        transform.GetChild(0).gameObject.SetActive(true);
+        shopUI.SetActive(true);
 
     }
 
     public void Hide()
     {
-        transform.GetChild(0).gameObject.SetActive(false);
+        shopUI.SetActive(false);
+        ControlsManager.Instance.UpdateState(5);
     }
 }

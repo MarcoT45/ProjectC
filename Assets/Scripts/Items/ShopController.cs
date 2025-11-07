@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class ShopController : NPC, ITalkable
 {
@@ -105,26 +104,6 @@ public class ShopController : NPC, ITalkable
 
     }
 
-//Plus nécessaire pour le moment
-/*
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        IShopCustomer shopCustomer = other.GetComponent<IShopCustomer>();
-        if(shopCustomer != null )
-        {
-            uiShop.Show(shopCustomer);
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        IShopCustomer shopCustomer = other.GetComponent<IShopCustomer>();
-        if (shopCustomer != null)
-        {
-            uiShop.Hide();
-        }
-    }*/
-
     public override void Interact()
     {
         Talk(dialogueText);
@@ -147,11 +126,16 @@ public class ShopController : NPC, ITalkable
         {
             //Acheter
             case 0:
-                ControlsManager.Instance.UpdateState(5);
+                Debug.Log("Opening shop UI");
+                ControlsManager.Instance.UpdateState(110);
 
                 if (shopCustomer != null)
                 {
                     uiShop.Show(shopCustomer);
+                }else
+                {
+                    Debug.LogWarning("No IShopCustomer found on the player.");
+                    ControlsManager.Instance.UpdateState(5);
                 }
                 break;
 
