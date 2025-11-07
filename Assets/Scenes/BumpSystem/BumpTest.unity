@@ -5166,7 +5166,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1113379922
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5181,7 +5181,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   items:
   - {fileID: 11400000, guid: f02e1e87da320ee4ab30129545a78233, type: 2}
-  isMenuOpenCloseInputPressed: 0
   inventorySize: 30
   inventoryUI: {fileID: 0}
   inventoryDescriptionUI: {fileID: 0}

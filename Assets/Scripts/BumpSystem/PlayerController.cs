@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour
         switch (collectible.collectibleType)
         {
             case CollectibleType.Coin:
-                GameManager.Instance.AddCoinsToRunPlayerCoins( collectible.amount);
+                GameManager.Instance.AddCoinsToRunPlayerCoins(collectible.amount);
                 // Déclencher les passifs liés à la collecte de pièces
                 this.equipment.TriggerPassives(EquipmentTriggerType.OnPickup, collectible.gameObject, 0);
                 break;
