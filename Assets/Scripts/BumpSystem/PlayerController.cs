@@ -119,7 +119,7 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
         switch (collectible.collectibleType)
         {
             case CollectibleType.Coin:
-                GameManager.Instance.AddCoinsToRunPlayerCoins( collectible.amount);
+                GameManager.Instance.AddCoinsToRunPlayerCoins(collectible.amount);
                 // Déclencher les passifs liés à la collecte de pièces
                 EquipmentController.Instance.TriggerPassives(EquipmentTriggerType.OnPickup, collectible.gameObject, 0);
                 break;
