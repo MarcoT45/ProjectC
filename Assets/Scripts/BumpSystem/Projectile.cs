@@ -35,9 +35,16 @@ public class Projectile : MonoBehaviour
             }
         }
         // Quel que soit l'objet touché (sauf le joueur), détruire le projectile
-        if (!other.CompareTag("Player"))
+        if (other.CompareTag("Enemy") || other.CompareTag("Mur"))
         {
-            Destroy(gameObject);
+            OnDestroy();
         }
+    }
+
+    public void OnDestroy()
+    {
+        // Optionnel : Ajouter un effet visuel ou sonore lors de la destruction du projectile
+        if(gameObject != null)
+            Destroy(gameObject);
     }
 }

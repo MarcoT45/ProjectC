@@ -90,6 +90,26 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
             }
         }
 
+        //Mettre à jour MaxHealth et MaxShield en fonction des stats totales si elles ont changées
+        if (MaxHealth != playerStats.totalStats.pv)
+        {
+            MaxHealth = playerStats.totalStats.pv;
+
+            if( CurrentHealth >= MaxHealth)
+            {
+                CurrentHealth = MaxHealth;
+            }
+        }
+        if (MaxShield != playerStats.totalStats.shield)
+        {
+            MaxShield = playerStats.totalStats.shield;
+
+            if (CurrenShield >= MaxShield)
+            {
+                CurrenShield = MaxShield;
+            }
+        }
+
     }
 
     void FixedUpdate()
@@ -153,9 +173,15 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
             //int shieldDamage = Mathf.Min(amount, (int)CurrenShield);
 
             CurrenShield -= shieldDamage;
-        }else
+            //clamp le bouclier actuel à 0
+            CurrenShield = Mathf.Max(CurrenShield, 0);
+
+        }
+        else
         {
             CurrentHealth -= (int)amount;
+            //clamp la vie actuelle à 0
+            CurrentHealth = Mathf.Max(CurrentHealth, 0);
         }
 
         //StartCoroutine(BlinkRoutine());

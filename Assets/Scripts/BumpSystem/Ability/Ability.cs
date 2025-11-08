@@ -15,9 +15,9 @@ public abstract class Ability : ScriptableObject
     public float cooldownTime;
     public float activeTime;
 
-    public float cooldownTimeRemaining;
-    public float activeTimeRemaining;
-    public AbilityState stateAbility = AbilityState.ready;
+    public float CooldownTimeRemaining { get; set; }
+    public float ActiveTimeRemaining { get; set; }
+    public AbilityState StateAbility { get; set; } = AbilityState.ready;
 
     public abstract void Activate(GameObject parent);
     public abstract void BeginCooldown(GameObject parent);

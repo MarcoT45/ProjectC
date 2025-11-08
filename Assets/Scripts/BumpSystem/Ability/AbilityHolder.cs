@@ -72,43 +72,43 @@ public class AbilityHolder : MonoBehaviour
     private void UpdateAbilityState(AbilitySlot slot)
     {
         Ability ability = slot.ability;
-        switch (slot.ability.stateAbility)
+        switch (slot.ability.StateAbility)
         {
             case Ability.AbilityState.ready:
                 if (GetTrinketPressed(slot.trinketIndex))
                 {
                     Debug.Log("Ability activated");
                     ability.Activate(this.gameObject);
-                    ability.stateAbility = Ability.AbilityState.active;
-                    ability.activeTimeRemaining = ability.activeTime;
+                    ability.StateAbility = Ability.AbilityState.active;
+                    ability.ActiveTimeRemaining = ability.activeTime;
                 }
                 break;
 
             case Ability.AbilityState.active:
 
-                if (ability.activeTimeRemaining > 0)
+                if (ability.ActiveTimeRemaining > 0)
                 {
-                    Debug.Log("Ability active time remaining: " + ability.activeTime);
-                    ability.activeTimeRemaining -= Time.deltaTime;
+                    //Debug.Log("Ability active time remaining: " + ability.activeTime);
+                    ability.ActiveTimeRemaining -= Time.deltaTime;
                 }
                 else
                 {
                     Debug.Log("Ability cooldown started");
                     ability.BeginCooldown(this.gameObject);
-                    ability.stateAbility = Ability.AbilityState.cooldown;
-                    ability.cooldownTimeRemaining = ability.cooldownTime;
+                    ability.StateAbility = Ability.AbilityState.cooldown;
+                    ability.CooldownTimeRemaining = ability.cooldownTime;
                 }
                 break;
 
             case Ability.AbilityState.cooldown:
 
-                if (ability.cooldownTimeRemaining > 0)
+                if (ability.CooldownTimeRemaining > 0)
                 {
-                    ability.cooldownTimeRemaining -= Time.deltaTime;
+                    ability.CooldownTimeRemaining -= Time.deltaTime;
                 }
                 else
                 {
-                    ability.stateAbility = Ability.AbilityState.ready;
+                    ability.StateAbility = Ability.AbilityState.ready;
                 }
                 break;
         }

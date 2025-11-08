@@ -45,7 +45,9 @@ MonoBehaviour:
     crit: 0
     poids: 0
     luck: 0
+    shield: 0
   passiveEffects: []
+  activeAbility: {fileID: 11400000, guid: 2280154fe21968e41a964b00d307b972, type: 2}
   references:
     version: 2
     RefIds: []
