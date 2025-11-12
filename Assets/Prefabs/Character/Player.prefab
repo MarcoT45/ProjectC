@@ -79,7 +79,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1401154020, guid: b4bbd606832d834448c7a25a3b9d783b, type: 3}
+  m_Sprite: {fileID: 1785479825, guid: b4bbd606832d834448c7a25a3b9d783b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -166,8 +166,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 984916e126b10b44bb7bcae3ba0de478, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 32
-  ability: {fileID: 11400000, guid: 2280154fe21968e41a964b00d307b972, type: 2}
+  abilitySlots: []
 --- !u!114 &3994457246013022085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +188,7 @@ MonoBehaviour:
     crit: 0
     poids: 0
     luck: 0
-  currentHealth: 0
+    shield: 0
 --- !u!1 &3994457247235387136
 GameObject:
   m_ObjectHideFlags: 0
