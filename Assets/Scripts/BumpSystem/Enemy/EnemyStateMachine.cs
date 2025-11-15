@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyStateMachine
-{
-    public EnemyState CurrentEnemyState {  get; set; }
+public class EnemyStateMachine {
+    
+    public EnemyState CurrentEnemyState { get; set; }
 
-    public void Initialize( EnemyState startingState)
+    public void Initialize(EnemyState startingState)
     {
         CurrentEnemyState = startingState;
         CurrentEnemyState.EnterState();
-
     }
 
     public void ChangeState(EnemyState newState)
@@ -19,4 +18,5 @@ public class EnemyStateMachine
         CurrentEnemyState = newState;
         CurrentEnemyState.EnterState();
     }
+
 }

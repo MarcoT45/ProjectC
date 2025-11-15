@@ -9,13 +9,9 @@ public class EnemyIdleState : EnemyState
     private Vector2 direction;
     private float aggroRange = 4f;
 
-    public EnemyIdleState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
-    {
+    public EnemyIdleState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
 
-    }
-
-    public override void EnterState()
-    { 
+    public override void EnterState() { 
         base.EnterState();
 
         Debug.Log("Idle"); 
@@ -24,17 +20,14 @@ public class EnemyIdleState : EnemyState
         //targetPosition = GetRandomPointInCircle();
         GetRandomPointInCircle();
         enemy.OnIdleDestinationReached +=  GetRandomPointInCircle;
-
     }
 
-    public override void ExitState()
-    {
+    public override void ExitState() {
         base.ExitState();
         enemy.OnIdleDestinationReached -= GetRandomPointInCircle;
     }
 
-    public override void FrameUpdate()
-    {
+    public override void FrameUpdate() {
         base.FrameUpdate();
         
         //Le monstre ne voit que devant lui en idle
@@ -53,14 +46,13 @@ public class EnemyIdleState : EnemyState
         enemy.Move(targetPosition);
     }
 
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
-    {
+    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
         base.AnnimationTriggerEvent(triggerType);
     }
 
-    private void GetRandomPointInCircle()
-    {
+    private void GetRandomPointInCircle() {
        //return enemy.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * enemy.movementRange;
        targetPosition =  enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
     }
+
 }
