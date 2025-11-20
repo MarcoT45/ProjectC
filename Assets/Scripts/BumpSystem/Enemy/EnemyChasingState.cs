@@ -16,10 +16,7 @@ public class EnemyChasingState : EnemyState
     private float aggroRange = 4f;
 
 
-    public EnemyChasingState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy,enemyStateMachine)
-    {
-
-    }
+    public EnemyChasingState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy,enemyStateMachine) {}
 
     public override void EnterState()
     {
@@ -91,8 +88,9 @@ public class EnemyChasingState : EnemyState
             }
         }
     }
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
-    {
+
+    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
         base.AnnimationTriggerEvent(triggerType);
     }
+
 }
