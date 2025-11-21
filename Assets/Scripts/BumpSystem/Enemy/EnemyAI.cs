@@ -73,7 +73,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     #region Awake/Start/Update
     protected virtual void Awake()
     {
-        gridManager = FindObjectOfType<GridManager>();
+        gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         forwardDirection = Vector2.right;
@@ -243,8 +243,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
 
     #region VFX functions 
-    public void ApplyKnockback(Vector2 direction)
+    public virtual void ApplyKnockback(Vector2 direction)
     {
+        Debug.Log("Applying Knockback to Enemy");
         rb.velocity = Vector2.zero;
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
         //Debug.Log("Knockback Applied: " + rb.velocity);
