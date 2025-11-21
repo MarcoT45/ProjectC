@@ -5,9 +5,9 @@ using UnityEngine.Tilemaps;
 
 public class GridManager : MonoBehaviour
 {
-    public Tilemap solTilemap;            //  Tilemap de la scène
+    public Tilemap solTilemap;            //  Tilemap de la scÃ¨ne
     public Tilemap murTilemap;
-    public float cellSize = 1f;        // Dans la plupart des cas, 1 unité = 1 case
+    public float cellSize = 1f;        // Dans la plupart des cas, 1 unitÃ© = 1 case
 
     [HideInInspector]
     public Vector2Int gridSize;        // Taille de la grille (en cases)
@@ -16,22 +16,22 @@ public class GridManager : MonoBehaviour
 
     void GenerateGrid()
     {
-        // On récupère les bornes de la Tilemap
+        // On rÃ©cupÃ¨re les bornes de la Tilemap
         solTilemap.CompressBounds();
         BoundsInt bounds = solTilemap.cellBounds;
         gridSize = new Vector2Int(bounds.size.x, bounds.size.y);
         grid = new Node[gridSize.x, gridSize.y];
 
-        // Pour chaque cellule de la Tilemap, on crée un node.
-        // Ici, on considère qu'une tile présente signifie "marchable".
+        // Pour chaque cellule de la Tilemap, on crÃ©e un node.
+        // Ici, on considÃ¨re qu'une tile prÃ©sente signifie "marchable".
         for (int x = 0; x < gridSize.x; x++)
         {
             for (int y = 0; y < gridSize.y; y++)
             {
-                // Convertir l’index de la grille en position de cell dans la Tilemap
+                // Convertir lâ€™index de la grille en position de cell dans la Tilemap
                 Vector3Int cellPos = new Vector3Int(x + bounds.xMin, y + bounds.yMin, 0);
 
-                // Par exemple, une tile existe => marcher (true); sinon, c’est un mur (false)
+                // Par exemple, une tile existe => marcher (true); sinon, câ€™est un mur (false)
                 bool walkable = false;
                 if (solTilemap.GetTile(cellPos) != null && murTilemap.GetTile(cellPos) == null)
                 {
@@ -67,11 +67,8 @@ public class GridManager : MonoBehaviour
 
         if(walkableNodes.Count == 0) { return Vector3.zero; }
 
-        Node currentNode = this.GetNodeFromWorldPoint(enemyPosition);
-
         int attempts = 0;
-        while(attempts < 10)
-        {
+        while(attempts < 10) {
             attempts++;
             Node candidate = walkableNodes[Random.Range(0, walkableNodes.Count)];
 
@@ -79,7 +76,7 @@ public class GridManager : MonoBehaviour
             
             if(dist < range)
             {
-                return this.solTilemap.CellToWorld(candidate.cellPosition);   
+                return this.solTilemap.CellToWorld(candidate.cellPosition);
             }
         }
 
@@ -130,13 +127,16 @@ public class GridManager : MonoBehaviour
     }
 
     //--------------------DEBUG--------------------------
-    private void Start()
+
+    // J'ai passÃ© la fonction Start en Awake, car je ne veux pas que l'ennemi rush au Vector zero
+    // Comme ca elle s'execute au chargement de la scene
+    private void Awake()
     {
-        //Dans le start pour s'assurer que la tilemap est bien générée avant (MapBuilder)
+        //Dans le start pour s'assurer que la tilemap est bien gÃ©nÃ©rÃ©e avant (MapBuilder)
         GenerateGrid();
     }
 
-    //Debug : Affiche la grille dans la scène
+    //Debug : Affiche la grille dans la scÃ¨ne
     private void OnDrawGizmos()
     {
         if (grid != null)

@@ -110,64 +110,52 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     #region Move
     // Déplace l'ennemi le long du chemin calculé
-    public void Move(Vector3 targetPosition)
-    {
+    public void Move(Vector3 targetPosition) {
+
         if (isKnockedBack) return;
 
         pathRefreshTimer += Time.deltaTime;
-        if (pathRefreshTimer >= pathRefreshInterval)
-        {
+        if (pathRefreshTimer >= pathRefreshInterval) {
             path = AStarPathfinding.FindPath(gridManager, transform.position, targetPosition);
             currentPathIndex = 0;
             pathRefreshTimer = 0f;
-
-            //Debug.Log("Path count : " + path.Count);
         }
 
-        if (path != null && path.Count > 0 && currentPathIndex < path.Count)
-        {
+        if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
             // Appliquer un déplacement vers targetPosition
             rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed;
             // rb.AddForce((targetTmpPosition - transform.position).normalized * speed, ForceMode2D.Force);
 
-            Vector2 face = Vector2.zero;
-            for (int i = 0; i < 4; i++)
-            {
-                switch (i)
-                {
-                    case 0:
-                        face = Vector2.up;
-                        break;
+            // Pour changer la direction ou l'ennemi regarde
+            float upValue, downValue, rightValue, leftValue = 0f;
 
-                    case 1:
-                        face = Vector2.down;
-                        break;
+            upValue = Vector2.Dot(Vector2.up, (targetTmpPosition - transform.position).normalized);
+            downValue = Vector2.Dot(Vector2.down, (targetTmpPosition - transform.position).normalized);
+            rightValue = Vector2.Dot(Vector2.right, (targetTmpPosition - transform.position).normalized);
+            leftValue = Vector2.Dot(Vector2.left, (targetTmpPosition - transform.position).normalized);
 
-                    case 2:
-                        face = Vector2.right;
-                        break;
+            float maxValue = Mathf.Max(upValue, downValue, rightValue, leftValue);
 
-                    case 3:
-                        face = Vector2.left;
-                        break;
-                }
-
-                if (Vector2.Dot(face, (targetTmpPosition - transform.position).normalized) > 0)
-                {
-                    forwardDirection = face;
-                }
+            if (maxValue == upValue) {
+                forwardDirection = Vector2.up;
+            } else if (maxValue == downValue) {
+                forwardDirection = Vector2.down;
+            } else if (maxValue == rightValue) {
+                forwardDirection = Vector2.right;
+            } else if (maxValue == leftValue) {
+                forwardDirection = Vector2.left;
+            } else {
+                forwardDirection = Vector2.zero;
             }
 
             // Si suffisamment proche du prochain point du chemin, on avance au suivant
-            if (Vector3.Distance(transform.position, targetTmpPosition) < 0.1f)
-            {
+            if (Vector3.Distance(transform.position, targetTmpPosition) < 0.1f) {
                 currentPathIndex++;
 
                 // Arrivé à destination ?
-                if (currentPathIndex >= path.Count)
-                {
+                if (currentPathIndex >= path.Count) {
                     path = null;
                     currentPathIndex = 0;
 
@@ -175,6 +163,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
                     OnIdleDestinationReached?.Invoke();
                 }
             }
+        } else if (path != null && currentPathIndex == path.Count) {
+            // DANS LE CAS OU L'ENNEMI SE COINCE DANS UN MUR SANS QU'ON AIT PU ATTEINDRE LA DISTANCE REQUISE
+            path = null;
+            currentPathIndex = 0;
+
+            // Notifier le comportement idle
+            OnIdleDestinationReached?.Invoke();
         }
     }
     #endregion

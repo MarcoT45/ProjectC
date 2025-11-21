@@ -37,8 +37,7 @@ public class EnemyIdleState : EnemyState
         if (enemy.isAggroed)
         {
             //Tween animation du saut
-            enemy.transform.DOLocalJump(enemy.transform.position, 1f, 1, 0.5f)
-                 .SetEase(Ease.InOutQuint);
+            enemy.transform.DOLocalJump(enemy.transform.position, 1f, 1, 0.5f).SetEase(Ease.InOutQuint);
             enemy.StateMachine.ChangeState(enemy.ChasingState);
         }
 
@@ -52,7 +51,7 @@ public class EnemyIdleState : EnemyState
 
     private void GetRandomPointInCircle() {
        //return enemy.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * enemy.movementRange;
-       targetPosition =  enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
+       targetPosition = enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
     }
 
 }
