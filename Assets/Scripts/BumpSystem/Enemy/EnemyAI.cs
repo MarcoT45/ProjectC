@@ -69,10 +69,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     public Action OnIdleDestinationReached;
 
-
     #region Awake/Start/Update
-    protected virtual void Awake()
-    {
+
+    protected virtual void Awake() {
         gridManager = FindObjectOfType<GridManager>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -85,8 +84,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         material = spriteRenderer.material;
     }
 
-    protected virtual void Start()
-    {
+    protected virtual void Start() {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         MaxHealth = monsterData.pv;
         CurrentHealth = MaxHealth;
@@ -94,21 +92,21 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         StateMachine.Initialize(IdleState);
     }
 
-    protected virtual void Update()
-    {
+    protected virtual void Update() {
         //Juste pour voir où il regarde
         Debug.DrawRay(transform.position, forwardDirection, Color.blue);
 
         StateMachine.CurrentEnemyState.FrameUpdate();
     }
 
-    protected virtual void FixedUpdate()
-    {
+    protected virtual void FixedUpdate() {
         StateMachine.CurrentEnemyState.FrameFixedUpdate();
     }
+
     #endregion
 
     #region Move
+
     // Déplace l'ennemi le long du chemin calculé
     public void Move(Vector3 targetPosition) {
 
@@ -172,26 +170,22 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             OnIdleDestinationReached?.Invoke();
         }
     }
+
     #endregion
 
     #region Collision functions
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Player")) {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null)
-            {
+            if (player != null) {
                 PlayHitEffect(collision.GetContact(0).point);
             }
         }
 
-        if (isKnockedBack)
-        {
+        if (isKnockedBack) {
             //-------------- Collision avec un mur ( rétiré pour le moment ) 
-            /*if (collision.gameObject.CompareTag("Mur"))
-            {
+            /*if (collision.gameObject.CompareTag("Mur")) {
                 Debug.Log("Collision Mur");
                 //Dégat à voir si en fonction du joueur ou du mur
                 Damage(5);
@@ -203,12 +197,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             //---------------
 
             //---------------- Collision avec autre ennemi ( rétiré pour le moment ) 
-            /*if (collision.gameObject.CompareTag("Ennemi"))
-            {
+            /*if (collision.gameObject.CompareTag("Ennemi")) {
                 Debug.Log("Collision Ennemi");
                 EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
-                if (enemy != null)
-                {
+                if (enemy != null) {
                     Damage((int)enemy.monsterData.atk);
                     enemy.Damage((int)this.monsterData.atk);
                 }
@@ -216,30 +208,30 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             //---------------
         }
     }
+
     #endregion
 
     #region Health / Die functions
-    public void Damage(int damage)
-    {
+
+    public void Damage(int damage) {
         CurrentHealth -= damage;
         StartCoroutine(BlinkRoutine());
 
-        if (CurrentHealth <= 0f)
-        {
+        if (CurrentHealth <= 0f) {
             Die();
         }
     }
 
-    public void Die()
-    {
+    public void Die() {
         Destroy(gameObject);
     }
+
     #endregion
 
 
-    #region VFX functions 
-    public void ApplyKnockback(Vector2 direction)
-    {
+    #region VFX functions
+
+    public void ApplyKnockback(Vector2 direction) {
         rb.velocity = Vector2.zero;
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
         //Debug.Log("Knockback Applied: " + rb.velocity);
@@ -249,8 +241,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     }
 
-    private IEnumerator KnockbackCoroutine(Vector2 direction)
-    {
+    private IEnumerator KnockbackCoroutine(Vector2 direction) {
         isKnockedBack = true;
 
         yield return new WaitForSeconds(knockbackDuration);
@@ -259,10 +250,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         isKnockedBack = false;
     }
 
-    private IEnumerator BlinkRoutine()
-    {
-        for (int i = 0; i < 3; i++)
-        {
+    private IEnumerator BlinkRoutine() {
+        for (int i = 0; i < 3; i++) {
             spriteRenderer.enabled = false;
             yield return new WaitForSeconds(0.1f);
             spriteRenderer.enabled = true;
@@ -270,21 +259,19 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         }
     }
 
-    private void PlayHitEffect(Vector2 hitPosition)
-    {
-        if (hitParticles != null)
-        {
+    private void PlayHitEffect(Vector2 hitPosition) {
+        if (hitParticles != null) {
             hitParticles.transform.position = hitPosition; // Positionne les particules au point de contact
             hitParticles.Play(); // Lance l'effet
         }
     }
+
     #endregion
 
+    #region Aggro functions
 
-    #region Aggro functions 
     // Renvoie vrai si aucune obstruction n'empêche la vue entre l'ennemi et le joueur
-    public bool HasLineOfSight(Vector2 lineOfSightDirection)
-    {
+    public bool HasLineOfSight(Vector2 lineOfSightDirection) {
         float viewAngle = 30f;
         int raycount = 3;
         //Vector2 lineOfSightDirection = (player.position - transform.position).normalized;
@@ -292,8 +279,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         float startAngle = -viewAngle / 2f;
         float angleIncrement = viewAngle / (raycount - 1);
 
-        for (int i = 0; i < raycount; i++)
-        {
+        for (int i = 0; i < raycount; i++) {
             float angle = startAngle + angleIncrement * i;
             Vector2 rayDirection = RotateVector(lineOfSightDirection, angle);
 
@@ -305,23 +291,17 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             //if (hit.collider == null || hit.collider.CompareTag("Player"))
             Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.red);
 
-            if (hit.collider != null)
-            { 
-                if (hit.collider.CompareTag("Player"))
-                {
+            if (hit.collider != null) {
+                if (hit.collider.CompareTag("Player") || hit.collider.transform.parent.CompareTag("Player")) {
                     Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.green);
                     return true;
                 }
             }
-
-
         }
-
         return false;
     }
 
-    public Vector2 RotateVector(Vector2 v, float angleDegrees)
-    {
+    public Vector2 RotateVector(Vector2 v, float angleDegrees) {
         float rad = angleDegrees * Mathf.Deg2Rad;
         float cos  = Mathf.Cos(rad);
         float sin = Mathf.Sin(rad);
@@ -330,33 +310,31 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             v.x * sin + v.y * cos
         );
     }
+
     #endregion
 
-
     #region Collect
-    public void Collect(Collectible collectible)
-    {
-        if(collectible.collectibleType == CollectibleType.Coin)
-        {
+
+    public void Collect(Collectible collectible) {
+        if(collectible.collectibleType == CollectibleType.Coin) {
             this.Coins = this.Coins + collectible.amount;
         }
     }
-    #endregion
 
+    #endregion
 
     #region Annimation Triggers
 
-    protected virtual void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
-    {
-        //StateMachine.CurrentEnnemyState.AnnimationTriggerEvent(triggerType);
+    protected virtual void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
+        //StateMachine.CurrentEnnemyState.AnimationTriggerEvent(triggerType);
     }
 
-    public enum AnimationTriggerType
-    {
+    public enum AnimationTriggerType {
         Idle,
         EnnemyDamaged,
         PlayFootStepSound
     }
 
     #endregion
+
 }

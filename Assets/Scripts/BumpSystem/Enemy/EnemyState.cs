@@ -16,6 +16,6 @@ public class EnemyState {
     public virtual void ExitState() { }
     public virtual void FrameUpdate() { }
     public virtual void FrameFixedUpdate() { }
-    public virtual void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) { }
+    public virtual void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) { }
 
 }

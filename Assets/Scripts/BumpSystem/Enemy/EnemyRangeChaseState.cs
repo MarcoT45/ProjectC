@@ -233,9 +233,9 @@ public class EnemyRangeChaseState : EnemyState
             }
         }
     }
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
+    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
     {
-        base.AnnimationTriggerEvent(triggerType);
+        base.AnimationTriggerEvent(triggerType);
     }
 
 }

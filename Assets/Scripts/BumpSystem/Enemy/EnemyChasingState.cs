@@ -1,11 +1,10 @@
 using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
-public class EnemyChasingState : EnemyState
-{
+public class EnemyChasingState : EnemyState {
+
     private GameObject target;
     private Vector3 targetPosition;
     private Vector2 direction;
@@ -15,11 +14,9 @@ public class EnemyChasingState : EnemyState
     private bool timerIsRunning = false;
     private float aggroRange = 4f;
 
-
     public EnemyChasingState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy,enemyStateMachine) {}
 
-    public override void EnterState()
-    {
+    public override void EnterState() {
         base.EnterState();
 
         Debug.Log("Chasing");
@@ -28,60 +25,43 @@ public class EnemyChasingState : EnemyState
         //Changer par le player du GM, autre façon de faire avec le joueur comme direction
         target = GameObject.FindWithTag("Player");
         targetPosition = target.transform.position;
-
         timeRemaining = aggroDuration;
-
     }
 
-    public override void FrameUpdate()
-    {
+    public override void FrameUpdate() {
         base.FrameUpdate();
 
         ManageAggro(targetPosition);
-
         //Mouvement
         enemy.Move(targetPosition);
-
-
     }
-    private void ManageAggro(Vector3 playerCellPostion)
-    {
+
+    private void ManageAggro(Vector3 playerCellPostion) {
         TimerAggro();
         Vector2 lineOfSightDirection = (enemy.player.position - enemy.transform.position).normalized;
         enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
 
         //Update de la position que si vision sur le joueur
-        if(enemy.isAggroed )
-        {
+        if(enemy.isAggroed) {
             targetPosition = target.transform.position;
         }
 
-        if (enemy.isAggroed || timeRemaining > 0)
-        {
-
-            if (enemy.isAggroed && timerIsRunning)
-            {
+        if (enemy.isAggroed || timeRemaining > 0) {
+            if (enemy.isAggroed && timerIsRunning) {
                 timerIsRunning = false;
                 timeRemaining = aggroDuration;
-            }
-            else
-            {
+            } else {
                 timerIsRunning = true;
             }
         }
     }
 
 
-    public void TimerAggro()
-    {
-        if(timerIsRunning)
-        {
-            if(timeRemaining > 0)
-            {
+    public void TimerAggro() {
+        if(timerIsRunning) {
+            if(timeRemaining > 0) {
                 timeRemaining -= Time.deltaTime;
-            }
-            else
-            {
+            } else {
                 enemy.StateMachine.ChangeState(enemy.IdleState);
                 timeRemaining = 0;
                 timerIsRunning = false;
@@ -89,8 +69,8 @@ public class EnemyChasingState : EnemyState
         }
     }
 
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
-        base.AnnimationTriggerEvent(triggerType);
+    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
+        base.AnimationTriggerEvent(triggerType);
     }
 
 }

@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyIdleState : EnemyState
-{
+public class EnemyIdleState : EnemyState {
+    
     private Vector3 targetPosition;
     private Vector2 direction;
     private float aggroRange = 4f;
@@ -45,8 +45,8 @@ public class EnemyIdleState : EnemyState
         enemy.Move(targetPosition);
     }
 
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
-        base.AnnimationTriggerEvent(triggerType);
+    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
+        base.AnimationTriggerEvent(triggerType);
     }
 
     private void GetRandomPointInCircle() {
