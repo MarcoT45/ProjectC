@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using System;
 
-public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
-{
+public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
+
     [Header("Data")]
     public MonsterData monsterData;
     public float MaxHealth { get; set; }
@@ -22,7 +22,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     [Header("Hit variables")]
     private bool isKnockedBack = false;
-    public float knockbackDuration = 0.3f;
+    public float knockbackDuration = 0.5f;
     public float knockbackForce = 3f;
     private ParticleSystem hitParticles;
     protected Material material;
@@ -56,9 +56,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     //Mis dans les héritiers
 
     public EnemyState IdleState { get; set; }
-
     public EnemyState ChasingState { get; set; }
-    public EnemyState AttackingState { get; set; }
+    public EnemyState LookingState { get; set; }
 
     #endregion
 
@@ -122,9 +121,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
-            // Appliquer un déplacement vers targetPosition
-            rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed;
-            // rb.AddForce((targetTmpPosition - transform.position).normalized * speed, ForceMode2D.Force);
+            // Appliquer un déplacement vers targetPosition, (x1.5 si ennemy en mode aggro)
+            if (isAggroed) {
+                rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * 1.5f;
+            } else {
+                rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed;
+            }
 
             // Pour changer la direction ou l'ennemi regarde
             float upValue, downValue, rightValue, leftValue = 0f;
@@ -157,8 +159,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
                     path = null;
                     currentPathIndex = 0;
 
-                    // Notifier le comportement idle
-                    OnIdleDestinationReached?.Invoke();
+                    // L'ennemi peut soit continuer à se balader soit regarder autour de lui (80/20)
+                    int lookingIdlingRandom = UnityEngine.Random.Range(1, 101);
+                    if(lookingIdlingRandom > 80) {
+                        rb.velocity = Vector2.zero;
+                        this.StateMachine.ChangeState(LookingState);
+                    } else {
+                        // Notifier le comportement idle
+                        OnIdleDestinationReached?.Invoke();
+                    }
                 }
             }
         } else if (path != null && currentPathIndex == path.Count) {
@@ -166,8 +175,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             path = null;
             currentPathIndex = 0;
 
-            // Notifier le comportement idle
-            OnIdleDestinationReached?.Invoke();
+            // L'ennemi peut soit continuer à se balader soit regarder autour de lui (80/20)
+            int lookingIdlingRandom = UnityEngine.Random.Range(1, 101);
+            if(lookingIdlingRandom > 80) {
+                rb.velocity = Vector2.zero;
+                this.StateMachine.ChangeState(LookingState);
+            } else {
+                // Notifier le comportement idle
+                OnIdleDestinationReached?.Invoke();
+            }
         }
     }
 
@@ -245,8 +261,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         isKnockedBack = true;
 
         yield return new WaitForSeconds(knockbackDuration);
-
         rb.velocity = Vector2.zero;
+        this.StateMachine.ChangeState(ChasingState);
+
         isKnockedBack = false;
     }
 

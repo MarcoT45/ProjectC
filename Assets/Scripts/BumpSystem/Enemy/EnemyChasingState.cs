@@ -1,13 +1,12 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class EnemyChasingState : EnemyState {
 
     private GameObject target;
     private Vector3 targetPosition;
-    private Vector2 direction;
 
     private float aggroDuration = 5f;
     private float timeRemaining;
@@ -21,7 +20,6 @@ public class EnemyChasingState : EnemyState {
 
         Debug.Log("Chasing");
 
-        direction = Vector2.zero;
         //Changer par le player du GM, autre façon de faire avec le joueur comme direction
         target = GameObject.FindWithTag("Player");
         targetPosition = target.transform.position;
@@ -55,7 +53,6 @@ public class EnemyChasingState : EnemyState {
             }
         }
     }
-
 
     public void TimerAggro() {
         if(timerIsRunning) {
