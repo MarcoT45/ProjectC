@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-public class EnemyRangeChaseState : EnemyState
-{
+
+public class EnemyRangeChaseState : EnemyState {
+
     private GameObject target;
     private Vector3 targetPosition;
-    private Vector2 direction;
     private Vector3 currentPosition;
 
     private float aggroDuration;
@@ -28,21 +28,15 @@ public class EnemyRangeChaseState : EnemyState
     private float fireRate;
     private float lastShotTime = 0f;
 
-
     private GridManager gridManager;
 
-    public EnemyRangeChaseState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
-    {
+    public EnemyRangeChaseState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
 
-    }
-
-    public override void EnterState()
-    {
+    public override void EnterState() {
         base.EnterState();
 
         Debug.Log("Chasing");
 
-        direction = Vector2.zero;
         //Changer par le player du GM, autre façon de faire avec le joueur comme direction
         target = GameObject.FindWithTag("Player");
         targetPosition = target.transform.position;
@@ -59,157 +53,114 @@ public class EnemyRangeChaseState : EnemyState
         attackCoolDown = enemy.attackCoolDown;
         fireRate = enemy.fireRate;
         gridManager = enemy.gridManager;
-
     }
-    public override void FrameUpdate()
-    {
+
+    public override void FrameUpdate() {
         base.FrameUpdate();
 
         currentPosition = enemy.transform.position;
-
         Vector3 targetTmp = target.transform.position;
-
         ManageAggro(targetTmp, currentPosition);
-
         ManageMovement();
-
     }
 
-    private void ManageAggro(Vector3 playerCellPostion, Vector3 enemyCellPosition)
-    {
+    private void ManageAggro(Vector3 playerCellPostion, Vector3 enemyCellPosition) {
         TimerAggro();
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
         enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
 
 
         //Update de la position que si vision sur le joueur
-        if (enemy.isAggroed)
-        {
+        if (enemy.isAggroed) {
             targetPosition = target.transform.position;
         }
 
-        if (enemy.isAggroed || timeRemaining > 0)
-        {
-
-            if (enemy.isAggroed && timerIsRunning)
-            {
+        if (enemy.isAggroed || timeRemaining > 0) {
+            if (enemy.isAggroed && timerIsRunning) {
                 timerIsRunning = false;
                 timeRemaining = aggroDuration;
-            }
-            else
-            {
+            } else {
                 timerIsRunning = true;
             }
         }
     }
 
-
     // ---Mouvement du movePoint et de l'ennemi 
-    public void ManageMovement()
-    {
-
+    public void ManageMovement() {
         Vector3 directionToPlayer = targetPosition - currentPosition;
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
 
-        if (enemy.HasLineOfSight(lineOfSightDirection) && directionToPlayer.magnitude <= safeRange && Time.time - lastShotTime >= fireRate)
-        {
+        if (enemy.HasLineOfSight(lineOfSightDirection) && directionToPlayer.magnitude <= safeRange && Time.time - lastShotTime >= fireRate) {
             Debug.Log("Shoot");
             Shoot();
-        }
-        else if (directionToPlayer.magnitude <= safeRange)
-        {
+        } else if (directionToPlayer.magnitude <= safeRange) {
             Debug.Log("Move away");
             MoveAwayFromPlayer();
-
-        }
-        else if(!isMovingAway) 
-        {
+        } else if(!isMovingAway) {
             Debug.Log("Move");
             MoveTowardsPlayer();
         }
-
     }
 
-    private void MoveTowardsPlayer()
-    {
+    private void MoveTowardsPlayer() {
         enemy.Move(targetPosition);
     }
 
-    private void MoveAwayFromPlayer()
-    {
-        //isMovingAway = true;
+    private void MoveAwayFromPlayer() {
         Vector3 awayFromPlayer = currentPosition - (targetPosition - currentPosition);
         Vector3 nextMove = GetBestMove(awayFromPlayer);
-        Move(nextMove);
+        MoveAway(nextMove);
     }
 
-    private void Move(Vector3 nextMove)
-    {
+    private void MoveAway(Vector3 nextMove) {
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
-        rb.velocity = nextMove.normalized * enemy.monsterData.speed;
+        rb.velocity = nextMove.normalized * enemy.monsterData.speed * 1.5f; // En mode combat donc toujours en boost
 
-        Vector2 face = Vector2.zero;
-        for (int i = 0; i < 4; i++)
-        {
-            switch (i)
-            {
-                case 0:
-                    face = Vector2.up;
-                    break;
+        // Pour changer la direction ou l'ennemi regarde
+        // Je ne sais pas si c'est nécessaire, vu que la lineofsight de l'ennemi est géré par l'aggro, ce qui fait qu'il suit le joueur même en reculant
+        float upValue, downValue, rightValue, leftValue = 0f;
 
-                case 1:
-                    face = Vector2.down;
-                    break;
+        upValue = Vector2.Dot(Vector2.up, (targetPosition - enemy.transform.position).normalized);
+        downValue = Vector2.Dot(Vector2.down, (targetPosition - enemy.transform.position).normalized);
+        rightValue = Vector2.Dot(Vector2.right, (targetPosition - enemy.transform.position).normalized);
+        leftValue = Vector2.Dot(Vector2.left, (targetPosition - enemy.transform.position).normalized);
 
-                case 2:
-                    face = Vector2.right;
-                    break;
+        float maxValue = Mathf.Max(upValue, downValue, rightValue, leftValue);
 
-                case 3:
-                    face = Vector2.left;
-                    break;
-            }
-
-            if (Vector2.Dot(face, nextMove.normalized) > 0)
-            {
-                enemy.forwardDirection = face;
-            }
+        if (maxValue == upValue) {
+            enemy.forwardDirection = Vector2.up;
+        } else if (maxValue == downValue) {
+            enemy.forwardDirection = Vector2.down;
+        } else if (maxValue == rightValue) {
+            enemy.forwardDirection = Vector2.right;
+        } else if (maxValue == leftValue) {
+            enemy.forwardDirection = Vector2.left;
+        } else {
+            enemy.forwardDirection = Vector2.zero;
         }
-/*
-        if (Vector3.Distance(currentPosition, nextMove) < 0.1f)
-        {
-            isMovingAway = false;
-        }*/
     }
 
-    private Vector3 GetBestMove(Vector3 awayFromPlayer)
-    {
+    private Vector3 GetBestMove(Vector3 awayFromPlayer) {
         Vector3 bestMove = currentPosition;
         float shortestDistance = float.MaxValue;
 
         Node currentNode =  gridManager.GetNodeFromWorldPoint(bestMove);
 
-        foreach (Node neighbor in gridManager.GetNeighbors(currentNode))
-        {
-            if (!neighbor.walkable )
+        foreach (Node neighbor in gridManager.GetNeighbors(currentNode)) {
+            if (!neighbor.walkable)
                 continue;
             
             float distance = Vector3Int.Distance(neighbor.cellPosition, Vector3Int.FloorToInt(awayFromPlayer));
-            if (distance < shortestDistance)
-            {
+            if (distance < shortestDistance) {
                 shortestDistance = distance;
                 bestMove = neighbor.cellPosition;
             }
         } 
-
         return bestMove;
     }
 
-
-    private void Shoot()
-    {
-        if (Time.time - lastShotTime >= fireRate)
-        {
+    private void Shoot() {
+        if (Time.time - lastShotTime >= fireRate) {
             lastShotTime = Time.time;
             GameObject projectile = UnityEngine.Object.Instantiate(enemy.projectilePrefab, firePoint.position, Quaternion.identity);
 
@@ -217,24 +168,19 @@ public class EnemyRangeChaseState : EnemyState
         }
     }
 
-    public void TimerAggro()
-    {
-        if (timerIsRunning)
-        {
-            if (timeRemaining > 0)
-            {
+    public void TimerAggro() {
+        if (timerIsRunning) {
+            if (timeRemaining > 0) {
                 timeRemaining -= Time.deltaTime;
-            }
-            else
-            {
+            } else {
                 enemy.StateMachine.ChangeState(enemy.IdleState);
                 timeRemaining = 0;
                 timerIsRunning = false;
             }
         }
     }
-    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
-    {
+
+    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
         base.AnimationTriggerEvent(triggerType);
     }
 
