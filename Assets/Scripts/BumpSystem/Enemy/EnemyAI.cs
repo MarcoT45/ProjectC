@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using System;
 
-public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
-{
+public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
+
     [Header("Data")]
     public MonsterData monsterData;
     public float MaxHealth { get; set; }
@@ -22,7 +22,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     [Header("Hit variables")]
     private bool isKnockedBack = false;
-    public float knockbackDuration = 0.3f;
+    public float knockbackDuration = 0.5f;
     public float knockbackForce = 3f;
     private ParticleSystem hitParticles;
     protected Material material;
@@ -56,9 +56,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
     //Mis dans les héritiers
 
     public EnemyState IdleState { get; set; }
-
     public EnemyState ChasingState { get; set; }
-    public EnemyState AttackingState { get; set; }
+    public EnemyState LookingState { get; set; }
 
     #endregion
 
@@ -69,8 +68,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     public Action OnIdleDestinationReached;
 
-
     #region Awake/Start/Update
+
     protected virtual void Awake()
     {
         gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager>();
@@ -85,8 +84,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         material = spriteRenderer.material;
     }
 
-    protected virtual void Start()
-    {
+    protected virtual void Start() {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         MaxHealth = monsterData.pv;
         CurrentHealth = MaxHealth;
@@ -94,21 +92,21 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         StateMachine.Initialize(IdleState);
     }
 
-    protected virtual void Update()
-    {
+    protected virtual void Update() {
         //Juste pour voir où il regarde
         Debug.DrawRay(transform.position, forwardDirection, Color.blue);
 
         StateMachine.CurrentEnemyState.FrameUpdate();
     }
 
-    protected virtual void FixedUpdate()
-    {
+    protected virtual void FixedUpdate() {
         StateMachine.CurrentEnemyState.FrameFixedUpdate();
     }
+
     #endregion
 
     #region Move
+
     // Déplace l'ennemi le long du chemin calculé
     public void Move(Vector3 targetPosition) {
 
@@ -124,9 +122,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
-            // Appliquer un déplacement vers targetPosition
-            rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed;
-            // rb.AddForce((targetTmpPosition - transform.position).normalized * speed, ForceMode2D.Force);
+            // Appliquer un déplacement vers targetPosition, (x1.5 si ennemy en mode aggro)
+            if (isAggroed) {
+                rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * 1.5f;
+            } else {
+                rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed;
+            }
 
             // Pour changer la direction ou l'ennemi regarde
             float upValue, downValue, rightValue, leftValue = 0f;
@@ -159,8 +160,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
                     path = null;
                     currentPathIndex = 0;
 
-                    // Notifier le comportement idle
-                    OnIdleDestinationReached?.Invoke();
+                    // L'ennemi peut soit continuer à se balader soit regarder autour de lui (80/20)
+                    int lookingIdlingRandom = UnityEngine.Random.Range(1, 101);
+                    if(lookingIdlingRandom > 80) {
+                        rb.velocity = Vector2.zero;
+                        this.StateMachine.ChangeState(LookingState);
+                    } else {
+                        // Notifier le comportement idle
+                        OnIdleDestinationReached?.Invoke();
+                    }
                 }
             }
         } else if (path != null && currentPathIndex == path.Count) {
@@ -168,30 +176,33 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             path = null;
             currentPathIndex = 0;
 
-            // Notifier le comportement idle
-            OnIdleDestinationReached?.Invoke();
+            // L'ennemi peut soit continuer à se balader soit regarder autour de lui (80/20)
+            int lookingIdlingRandom = UnityEngine.Random.Range(1, 101);
+            if(lookingIdlingRandom > 80) {
+                rb.velocity = Vector2.zero;
+                this.StateMachine.ChangeState(LookingState);
+            } else {
+                // Notifier le comportement idle
+                OnIdleDestinationReached?.Invoke();
+            }
         }
     }
+
     #endregion
 
     #region Collision functions
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Player")) {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
-            if (player != null)
-            {
+            if (player != null) {
                 PlayHitEffect(collision.GetContact(0).point);
             }
         }
 
-        if (isKnockedBack)
-        {
+        if (isKnockedBack) {
             //-------------- Collision avec un mur ( rétiré pour le moment ) 
-            /*if (collision.gameObject.CompareTag("Mur"))
-            {
+            /*if (collision.gameObject.CompareTag("Mur")) {
                 Debug.Log("Collision Mur");
                 //Dégat à voir si en fonction du joueur ou du mur
                 Damage(5);
@@ -203,12 +214,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             //---------------
 
             //---------------- Collision avec autre ennemi ( rétiré pour le moment ) 
-            /*if (collision.gameObject.CompareTag("Ennemi"))
-            {
+            /*if (collision.gameObject.CompareTag("Ennemi")) {
                 Debug.Log("Collision Ennemi");
                 EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
-                if (enemy != null)
-                {
+                if (enemy != null) {
                     Damage((int)enemy.monsterData.atk);
                     enemy.Damage((int)this.monsterData.atk);
                 }
@@ -216,24 +225,24 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             //---------------
         }
     }
+
     #endregion
 
     #region Health / Die functions
-    public void Damage(int damage)
-    {
+
+    public void Damage(int damage) {
         CurrentHealth -= damage;
         StartCoroutine(BlinkRoutine());
 
-        if (CurrentHealth <= 0f)
-        {
+        if (CurrentHealth <= 0f) {
             Die();
         }
     }
 
-    public void Die()
-    {
+    public void Die() {
         Destroy(gameObject);
     }
+
     #endregion
 
 
@@ -250,20 +259,18 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
 
     }
 
-    private IEnumerator KnockbackCoroutine(Vector2 direction)
-    {
+    private IEnumerator KnockbackCoroutine(Vector2 direction) {
         isKnockedBack = true;
 
         yield return new WaitForSeconds(knockbackDuration);
-
         rb.velocity = Vector2.zero;
+        this.StateMachine.ChangeState(ChasingState);
+
         isKnockedBack = false;
     }
 
-    private IEnumerator BlinkRoutine()
-    {
-        for (int i = 0; i < 3; i++)
-        {
+    private IEnumerator BlinkRoutine() {
+        for (int i = 0; i < 3; i++) {
             spriteRenderer.enabled = false;
             yield return new WaitForSeconds(0.1f);
             spriteRenderer.enabled = true;
@@ -271,21 +278,19 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         }
     }
 
-    private void PlayHitEffect(Vector2 hitPosition)
-    {
-        if (hitParticles != null)
-        {
+    private void PlayHitEffect(Vector2 hitPosition) {
+        if (hitParticles != null) {
             hitParticles.transform.position = hitPosition; // Positionne les particules au point de contact
             hitParticles.Play(); // Lance l'effet
         }
     }
+
     #endregion
 
+    #region Aggro functions
 
-    #region Aggro functions 
     // Renvoie vrai si aucune obstruction n'empêche la vue entre l'ennemi et le joueur
-    public bool HasLineOfSight(Vector2 lineOfSightDirection)
-    {
+    public bool HasLineOfSight(Vector2 lineOfSightDirection) {
         float viewAngle = 30f;
         int raycount = 3;
         //Vector2 lineOfSightDirection = (player.position - transform.position).normalized;
@@ -293,8 +298,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
         float startAngle = -viewAngle / 2f;
         float angleIncrement = viewAngle / (raycount - 1);
 
-        for (int i = 0; i < raycount; i++)
-        {
+        for (int i = 0; i < raycount; i++) {
             float angle = startAngle + angleIncrement * i;
             Vector2 rayDirection = RotateVector(lineOfSightDirection, angle);
 
@@ -306,23 +310,17 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             //if (hit.collider == null || hit.collider.CompareTag("Player"))
             Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.red);
 
-            if (hit.collider != null)
-            { 
-                if (hit.collider.CompareTag("Player"))
-                {
+            if (hit.collider != null) {
+                if (hit.collider.CompareTag("Player") || hit.collider.transform.parent.CompareTag("Player")) {
                     Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.green);
                     return true;
                 }
             }
-
-
         }
-
         return false;
     }
 
-    public Vector2 RotateVector(Vector2 v, float angleDegrees)
-    {
+    public Vector2 RotateVector(Vector2 v, float angleDegrees) {
         float rad = angleDegrees * Mathf.Deg2Rad;
         float cos  = Mathf.Cos(rad);
         float sin = Mathf.Sin(rad);
@@ -331,33 +329,31 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable
             v.x * sin + v.y * cos
         );
     }
+
     #endregion
 
-
     #region Collect
-    public void Collect(Collectible collectible)
-    {
-        if(collectible.collectibleType == CollectibleType.Coin)
-        {
+
+    public void Collect(Collectible collectible) {
+        if(collectible.collectibleType == CollectibleType.Coin) {
             this.Coins = this.Coins + collectible.amount;
         }
     }
-    #endregion
 
+    #endregion
 
     #region Annimation Triggers
 
-    protected virtual void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
-    {
-        //StateMachine.CurrentEnnemyState.AnnimationTriggerEvent(triggerType);
+    protected virtual void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
+        //StateMachine.CurrentEnnemyState.AnimationTriggerEvent(triggerType);
     }
 
-    public enum AnimationTriggerType
-    {
+    public enum AnimationTriggerType {
         Idle,
         EnnemyDamaged,
         PlayFootStepSound
     }
 
     #endregion
+
 }

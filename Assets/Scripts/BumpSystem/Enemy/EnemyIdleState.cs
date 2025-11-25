@@ -1,12 +1,11 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class EnemyIdleState : EnemyState
-{
+public class EnemyIdleState : EnemyState {
+    
     private Vector3 targetPosition;
-    private Vector2 direction;
     private float aggroRange = 4f;
 
     public EnemyIdleState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
@@ -16,8 +15,6 @@ public class EnemyIdleState : EnemyState
 
         Debug.Log("Idle"); 
 
-        direction = Vector2.zero;
-        //targetPosition = GetRandomPointInCircle();
         GetRandomPointInCircle();
         enemy.OnIdleDestinationReached +=  GetRandomPointInCircle;
     }
@@ -45,8 +42,8 @@ public class EnemyIdleState : EnemyState
         enemy.Move(targetPosition);
     }
 
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
-        base.AnnimationTriggerEvent(triggerType);
+    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
+        base.AnimationTriggerEvent(triggerType);
     }
 
     private void GetRandomPointInCircle() {

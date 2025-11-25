@@ -10,14 +10,15 @@ public class BossAI : EnemyAI
     public bool isInPhaseTwo = false; // Indique si le boss est en phase 2
 
     // -------- Cooldowns & Patterns --------
-    [Header("Attack Patterns")]
-    public float attackCooldown = 3f; // Temps entre les attaques
-    private float attackTimer = 0f;
+    [Header("Global Cooldowns")]
+    public float globalCooldown = 5f;      // Cooldown global entre les attaques
+    private float cooldownTimer = 0f;
+
 
     // -------- Attaques Spéciales --------
-/*    [Header("Special Attacks")]
-    public BossAttack[] phaseOneAttacks; // Attaques de la phase 1
-    public BossAttack[] phaseTwoAttacks; // Attaques de la phase 2*/
+    /*    [Header("Special Attacks")]
+        public BossAttack[] phaseOneAttacks; // Attaques de la phase 1
+        public BossAttack[] phaseTwoAttacks; // Attaques de la phase 2*/
 
     protected override void Start()
     {
@@ -28,6 +29,8 @@ public class BossAI : EnemyAI
     protected override void Update()
     {
         base.Update();
+
+        cooldownTimer -= Time.deltaTime;
     }
 
 
@@ -48,6 +51,28 @@ public class BossAI : EnemyAI
             // Logique pour changer les attaques et comportements du boss
             Debug.Log("Le boss est passé en phase 2 !");
         }
+    }
+
+    public bool IsCooldownComplete()
+    {
+        return cooldownTimer <= 0f;
+    }
+
+    public void ResetCooldown()
+    {
+        cooldownTimer = globalCooldown;
+    }
+
+    public float GetPlayerDistance()
+    {
+        if (player != null)
+        {
+            float distanceToPlayer = Vector2.Distance(transform.position, player.position);
+
+            return distanceToPlayer;
+        }
+
+        return Mathf.Infinity;
     }
 
 }

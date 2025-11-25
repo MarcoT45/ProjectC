@@ -11547,17 +11547,75 @@ MonoBehaviour:
     m_Bits: 0
   phaseSwitchHealthThreshold: 0.5
   isInPhaseTwo: 0
-  attackCooldown: 3
+  globalCooldown: 2
   rootPrefab: {fileID: 692151984948551259, guid: 364d380a729db1c45abc0f2cdbecb985, type: 3}
+  slamCircle: {fileID: 1847119755}
+  slamCone: {fileID: 1847119754}
+  rootAttack: {fileID: 1847119756}
+  coneMinDistance: 3
+  coneMaxDistance: 6
+  circleDistance: 2
+  attackInProgress: 0
+--- !u!114 &1847119754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847119752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 32a98541b640a7446a9ffc32f065302c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  windUpTime: 0.5
+  slamDuration: 0.2
+  slamEffectPrefab: {fileID: 0}
+  coneAngle: 60
+  coneRange: 5
+--- !u!114 &1847119755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847119752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6de37ed4f0eec5f40a508db0f99f0638, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  radius: 3
+  windUpTime: 0.5
+  slamDuration: 0.2
+  slamEffectPrefab: {fileID: 0}
+--- !u!114 &1847119756
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847119752}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72239faee89d7d94798e4ba52818f9fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 1
+  radius: 3
+  windUpTime: 0.5
+  slamDuration: 0.2
+  slamEffectPrefab: {fileID: 0}
   numberOfWaves: 3
   waveRadius:
-  - 3
+  - 2
   - 4
   - 6
-  rootsPerWave: 12
+  rootsPerWave: 6
   timeBetweenWaves: 1
   rootLifetime: 0.7
-  attackInProgress: 0
 --- !u!1001 &3994457246013022077
 PrefabInstance:
   m_ObjectHideFlags: 0

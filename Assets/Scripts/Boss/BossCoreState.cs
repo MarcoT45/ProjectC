@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class BossCoreState : EnemyState
 {
-    private float timer = 0f;
-    private float delay = 2f;
     private Boss1 boss;
 
     public BossCoreState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine){}
@@ -25,15 +23,13 @@ public class BossCoreState : EnemyState
     public override void FrameUpdate() {
         base.FrameUpdate();
 
-        timer += Time.deltaTime;
-
-        if (timer >= delay) {
-            timer = 0f;
-            enemyStateMachine.ChangeState(boss.AttackingState);
-        }
-
         // Vérifie la transition de phase du boss à chaque frame
         boss.CheckPhaseTransition();
+
+        // Vérifie si le boss peut attaquer
+        if (boss.IsCooldownComplete()) {
+            boss.StateMachine.ChangeState(boss.AttackingState);
+        }
 
     }
 

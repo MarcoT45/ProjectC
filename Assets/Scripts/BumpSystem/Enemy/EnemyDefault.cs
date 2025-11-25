@@ -9,6 +9,7 @@ public class EnemyDefault : EnemyAI {
 
         IdleState = new EnemyIdleState(this, StateMachine);
         ChasingState = new EnemyChasingState(this, StateMachine);
+        LookingState = new EnemyLookingState(this, StateMachine);
     }
 
     protected override void Start() {

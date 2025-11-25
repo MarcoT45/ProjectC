@@ -16,25 +16,14 @@ public class BossAttackState: EnemyState
 
         base.EnterState();
 
-        // Récupérer la référence au Boss1&
-       // boss = enemy.gameObject.GetComponent<Boss1>(); 
-       boss = enemy as Boss1;
-        Debug.Log("boss component retrieved: " + boss.name);
+        // Récupérer la référence au Boss1
+        boss = enemy as Boss1;
 
         if (boss == null)
         {
             Debug.LogError("BossAttackState: Boss1 component not found on the enemy GameObject.");
             enemyStateMachine.ChangeState(enemy.IdleState);
         }
-
-        // Vérifier si une attaque est déjà en cours
-        if (boss.attackInProgress)
-        {
-            Debug.Log("Attack already in progress, returning to Idle State.");
-            enemyStateMachine.ChangeState(enemy.IdleState);
-        }
-
-        boss.StartCoroutine(boss.RootAttack());
 
     }
 
@@ -47,6 +36,43 @@ public class BossAttackState: EnemyState
     public override void FrameUpdate()
     {
         base.FrameUpdate();
+
+        if (!boss.IsCooldownComplete())return;
+
+        float distanceToPlayer = boss.GetPlayerDistance();
+
+        //Priorité 1 : Attaque de proximité en cercle
+        if (distanceToPlayer <= boss.circleDistance)
+        {
+            Debug.Log("Performing Circle Slam Attack " + distanceToPlayer);
+            boss.slamCircle.PerformSlam(() =>
+            {
+                // Callback une fois l'attaque terminée
+                boss.ResetCooldown();
+                enemyStateMachine.ChangeState(enemy.IdleState);
+            });
+        }
+
+        //Priorité 2 : Attaque en cône
+        if (distanceToPlayer > boss.coneMinDistance && distanceToPlayer <= boss.coneMaxDistance)
+        {
+            Debug.Log("Performing Cone Slam Attack " + distanceToPlayer);
+            boss.slamCone.PerformSlam(() =>
+            {
+                // Callback une fois l'attaque terminée
+                boss.ResetCooldown();
+                enemyStateMachine.ChangeState(enemy.IdleState);
+            });
+        }
+
+        //Priotrité 3 : Attaque de racines en 
+        boss.rootAttack.PerformAttack(() =>
+        {
+            // Callback une fois l'attaque terminée
+            Debug.Log("Root Attack Finished");
+            boss.ResetCooldown();
+            enemyStateMachine.ChangeState(enemy.IdleState);
+        });
     }
 
     public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
