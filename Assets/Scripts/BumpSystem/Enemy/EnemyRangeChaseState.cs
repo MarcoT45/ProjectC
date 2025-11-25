@@ -19,10 +19,6 @@ public class EnemyRangeChaseState : EnemyState {
     private float attackTimeRemaining;
     private bool attackTimeIsRuning = false;
 
-    private bool isMovingAway = false;
-    private bool isMovingToTarget = false;
-    private bool isShooting = false;
-
     //Tir de projectiles
     public Transform firePoint;
     private float fireRate;
@@ -90,15 +86,18 @@ public class EnemyRangeChaseState : EnemyState {
         Vector3 directionToPlayer = targetPosition - currentPosition;
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
 
-        if (enemy.HasLineOfSight(lineOfSightDirection) && directionToPlayer.magnitude <= safeRange && Time.time - lastShotTime >= fireRate) {
+        if (enemy.HasLineOfSight(lineOfSightDirection) && directionToPlayer.magnitude <= safeRange + 0.1f && Time.time - lastShotTime >= fireRate) {
             Debug.Log("Shoot");
             Shoot();
-        } else if (directionToPlayer.magnitude <= safeRange) {
+        } else if (directionToPlayer.magnitude <= safeRange - 0.1f) {
             Debug.Log("Move away");
             MoveAwayFromPlayer();
-        } else if(!isMovingAway) {
+        } else if(directionToPlayer.magnitude >= safeRange + 0.1f) {
             Debug.Log("Move");
             MoveTowardsPlayer();
+        } else if (directionToPlayer.magnitude >= safeRange - 0.1f && directionToPlayer.magnitude <= safeRange + 0.1f) { // Pour regler le tremblement
+            Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
+            rb.velocity = Vector2.zero;
         }
     }
 
@@ -115,29 +114,6 @@ public class EnemyRangeChaseState : EnemyState {
     private void MoveAway(Vector3 nextMove) {
         Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
         rb.velocity = nextMove.normalized * enemy.monsterData.speed * 1.5f; // En mode combat donc toujours en boost
-
-        // Pour changer la direction ou l'ennemi regarde
-        // Je ne sais pas si c'est nécessaire, vu que la lineofsight de l'ennemi est géré par l'aggro, ce qui fait qu'il suit le joueur même en reculant
-        float upValue, downValue, rightValue, leftValue = 0f;
-
-        upValue = Vector2.Dot(Vector2.up, (targetPosition - enemy.transform.position).normalized);
-        downValue = Vector2.Dot(Vector2.down, (targetPosition - enemy.transform.position).normalized);
-        rightValue = Vector2.Dot(Vector2.right, (targetPosition - enemy.transform.position).normalized);
-        leftValue = Vector2.Dot(Vector2.left, (targetPosition - enemy.transform.position).normalized);
-
-        float maxValue = Mathf.Max(upValue, downValue, rightValue, leftValue);
-
-        if (maxValue == upValue) {
-            enemy.forwardDirection = Vector2.up;
-        } else if (maxValue == downValue) {
-            enemy.forwardDirection = Vector2.down;
-        } else if (maxValue == rightValue) {
-            enemy.forwardDirection = Vector2.right;
-        } else if (maxValue == leftValue) {
-            enemy.forwardDirection = Vector2.left;
-        } else {
-            enemy.forwardDirection = Vector2.zero;
-        }
     }
 
     private Vector3 GetBestMove(Vector3 awayFromPlayer) {
