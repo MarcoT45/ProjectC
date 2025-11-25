@@ -28,12 +28,12 @@ public class BossCoreState : EnemyState
 
         // Vérifie si le boss peut attaquer
         if (boss.IsCooldownComplete()) {
-            boss.StateMachine.ChangeState(boss.AttackingState);
+           // boss.StateMachine.ChangeState(boss.AttackingState);
         }
 
     }
 
-    public override void AnnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
-        base.AnnimationTriggerEvent(triggerType);
+    public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
+        base.AnimationTriggerEvent(triggerType);
     }
 }
