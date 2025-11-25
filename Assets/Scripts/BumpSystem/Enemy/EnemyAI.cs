@@ -58,6 +58,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public EnemyState IdleState { get; set; }
     public EnemyState ChasingState { get; set; }
     public EnemyState LookingState { get; set; }
+    public EnemyState AttackingState { get; set; }
 
     #endregion
 

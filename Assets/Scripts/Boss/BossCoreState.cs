@@ -28,7 +28,7 @@ public class BossCoreState : EnemyState
 
         // Vérifie si le boss peut attaquer
         if (boss.IsCooldownComplete()) {
-           // boss.StateMachine.ChangeState(boss.AttackingState);
+            boss.StateMachine.ChangeState(boss.AttackingState);
         }
 
     }
