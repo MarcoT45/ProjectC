@@ -18684,8 +18684,8 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: 1.8125
+    y: 0.4277778
     width: 1
     height: 1
   near clip plane: 0.3
@@ -19729,7 +19729,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2107141488
 Transform:
   m_ObjectHideFlags: 0
@@ -20091,7 +20091,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867899, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Size.x

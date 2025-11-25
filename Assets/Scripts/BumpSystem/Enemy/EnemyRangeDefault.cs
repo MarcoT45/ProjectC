@@ -9,6 +9,7 @@ public class EnemyRangeDefault : EnemyAI {
         
         IdleState = new EnemyIdleState(this, StateMachine);
         ChasingState = new EnemyRangeChaseState(this, StateMachine);
+        LookingState = new EnemyLookingState(this, StateMachine);
     }
 
     protected override void Start() {
