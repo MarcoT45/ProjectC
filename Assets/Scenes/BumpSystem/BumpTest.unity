@@ -19853,13 +19853,13 @@ MonoBehaviour:
   isAggroed: 0
   aggroDuration: 2
   attackCoolDown: 0
-  fireRate: 3
+  fireRate: 1.75
   knockbackDuration: 0.3
   knockbackForce: 3
   tintColor: {r: 0, g: 0, b: 0, a: 0}
   tintFadeSpeed: 0.25
-  chaseDistance: 5
-  safeRange: 3
+  chaseDistance: 6
+  safeRange: 4
   pathUpdateInterval: 0.5
   gridManager: {fileID: 1216903047}
   pathRefreshInterval: 0.5
@@ -19997,6 +19997,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1655816236}
     m_Modifications:
     - target: {fileID: 3994457246091314368, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 3994457246091314368, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
@@ -20058,7 +20062,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3994457247235387138, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_Radius
-      value: 0.7
+      value: 0.65
       objectReference: {fileID: 0}
     - target: {fileID: 3994457247235387138, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_Offset.x
@@ -20066,7 +20070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3994457247235387138, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_Offset.y
-      value: -0.3
+      value: -0.25
       objectReference: {fileID: 0}
     - target: {fileID: 3994457247235387389, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: attractionSpeed
@@ -20091,15 +20095,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867899, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Size.x
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Size.y
-      value: 0.5
+      value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Offset.x
@@ -20115,11 +20119,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867903, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -2.46
+      value: -3
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867903, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.64
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867903, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_LocalPosition.z
