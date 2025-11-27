@@ -37,7 +37,7 @@ public class ControlsManager : MonoBehaviour {
     private InputAction fermer;
     private InputAction inventaire;
     private InputAction actionSpeciale;
-    private InputAction camera;
+    private InputAction cameraC;
 
     public Vector2 DeplacerValue { get; private set; }
     public bool DeplacerPressed { get; private set; }
@@ -68,9 +68,9 @@ public class ControlsManager : MonoBehaviour {
         FermerPressed = fermer.WasPressedThisFrame();
         InventairePressed = inventaire.WasPressedThisFrame();
         ActionSpecialePressed = actionSpeciale.WasPressedThisFrame();
-        CameraValue = camera.ReadValue<Vector2>();
-        CameraPressed = camera.WasPressedThisFrame();
-        CameraHold = camera.IsPressed();
+        CameraValue = cameraC.ReadValue<Vector2>();
+        CameraPressed = cameraC.WasPressedThisFrame();
+        CameraHold = cameraC.IsPressed();
     }
 
     private void SetupInputActions() {
@@ -82,7 +82,7 @@ public class ControlsManager : MonoBehaviour {
         fermer = playerInput.actions["Fermer"];
         inventaire = playerInput.actions["Inventaire"];
         actionSpeciale = playerInput.actions["Action Speciale"];
-        camera = playerInput.actions["Camera"];
+        cameraC = playerInput.actions["Camera"];
     }
 
     public string GetCurrentDevice() {

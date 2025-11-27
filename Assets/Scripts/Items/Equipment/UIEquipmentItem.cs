@@ -12,7 +12,7 @@ public class UIEquipmentItem : MonoBehaviour, IPointerClickHandler/*, IDropHandl
     private ItemData itemData;
 
     public delegate void OnEquipmentDrop(DraggableItem dragItem);
-    public static event OnEquipmentDrop onEquipmentDrop;
+    public static OnEquipmentDrop onEquipmentDrop; // public static event OnEquipmentDrop onEquipmentDrop;
 
     public void Awake()
     {

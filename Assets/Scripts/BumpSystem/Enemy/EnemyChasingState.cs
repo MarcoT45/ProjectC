@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
 
 public class EnemyChasingState : EnemyState {
 
@@ -11,14 +10,11 @@ public class EnemyChasingState : EnemyState {
     private float aggroDuration = 5f;
     private float timeRemaining;
     private bool timerIsRunning = false;
-    private float aggroRange = 4f;
 
     public EnemyChasingState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy,enemyStateMachine) {}
 
     public override void EnterState() {
         base.EnterState();
-
-        Debug.Log("Chasing");
 
         //Changer par le player du GM, autre façon de faire avec le joueur comme direction
         target = GameObject.FindWithTag("Player");

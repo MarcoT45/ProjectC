@@ -6,14 +6,11 @@ using DG.Tweening;
 public class EnemyIdleState : EnemyState {
     
     private Vector3 targetPosition;
-    private float aggroRange = 4f;
 
     public EnemyIdleState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
 
     public override void EnterState() { 
         base.EnterState();
-
-        Debug.Log("Idle"); 
 
         GetRandomPointInCircle();
         enemy.OnIdleDestinationReached +=  GetRandomPointInCircle;
@@ -31,15 +28,14 @@ public class EnemyIdleState : EnemyState {
         Vector2 lineOfSightDirection = enemy.forwardDirection;
         enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
 
-        if (enemy.isAggroed)
-        {
+        if (enemy.isAggroed) {
             //Tween animation du saut
             enemy.transform.DOLocalJump(enemy.transform.position, 1f, 1, 0.5f).SetEase(Ease.InOutQuint);
             enemy.StateMachine.ChangeState(enemy.ChasingState);
         }
 
         //Mouvement
-        enemy.Move(targetPosition);
+        enemy.Move(enemy.idleTargetPosition);
     }
 
     public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
@@ -47,8 +43,7 @@ public class EnemyIdleState : EnemyState {
     }
 
     private void GetRandomPointInCircle() {
-       //return enemy.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * enemy.movementRange;
-       targetPosition = enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
+        enemy.idleTargetPosition = enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
     }
 
 }

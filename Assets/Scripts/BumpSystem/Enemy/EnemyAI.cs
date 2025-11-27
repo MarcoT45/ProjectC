@@ -19,7 +19,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public float fireRate;
     private SpriteRenderer spriteRenderer;
 
-
     [Header("Hit variables")]
     private bool isKnockedBack = false;
     public float knockbackDuration = 0.5f;
@@ -29,16 +28,14 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     [SerializeField] protected Color tintColor;
     [SerializeField] protected float tintFadeSpeed = 0.25f;
 
-
     [Header("AI Settings")]
     public float chaseDistance = 5f; // Distance à partir de laquelle on passe en mode Chase / = aggroRange
     public float safeRange; // Distance à laquelle l'ia se considere safe
     public float pathUpdateInterval = 0.5f; // Fréquence de mise à jour du pathfinding en Chase
-    private float pathUpdateTimer = 0f;
 
     [Header("Pathfinding")]
     public GridManager gridManager;
-    //public Vector3 targetPosition;
+    public Vector3 idleTargetPosition;
     private List<Node> path;
     private int currentPathIndex = 0;
     public float pathRefreshInterval = 0.5f;
@@ -71,8 +68,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #region Awake/Start/Update
 
-    protected virtual void Awake()
-    {
+    protected virtual void Awake() {
         gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager>();
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -108,14 +104,18 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #region Move
 
+    public void SetIdleTargetPosition(Vector3 newTarget) {
+        this.idleTargetPosition = newTarget;
+    }
+
     // Déplace l'ennemi le long du chemin calculé
-    public void Move(Vector3 targetPosition) {
+    public void Move(Vector3 idleTargetPosition) {
 
         if (isKnockedBack) return;
 
         pathRefreshTimer += Time.deltaTime;
         if (pathRefreshTimer >= pathRefreshInterval) {
-            path = AStarPathfinding.FindPath(gridManager, transform.position, targetPosition);
+            path = AStarPathfinding.FindPath(gridManager, transform.position, idleTargetPosition);
             currentPathIndex = 0;
             pathRefreshTimer = 0f;
         }
@@ -123,7 +123,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
-            // Appliquer un déplacement vers targetPosition, (x1.5 si ennemy en mode aggro)
+            // Appliquer un déplacement vers idleTargetPosition, (x1.5 si ennemy en mode aggro)
             if (isAggroed) {
                 rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * 1.5f;
             } else {

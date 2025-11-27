@@ -10,7 +10,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     [HideInInspector]
 
     LayerMask originalLayer;
-    Camera camera;
+    Camera cameraC;
     Vector3 originalPosition;
     public Transform originalParent;
 
@@ -22,7 +22,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
     private void Start()
     {
-        camera = Camera.main;
+        cameraC = Camera.main;
         originalLayer = this.gameObject.layer;
         image = this.gameObject.GetComponent<Image>();
         originalPosition = transform.position;
@@ -58,7 +58,7 @@ public class DraggableItem : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     {
 
         Vector3 mousePosition = new Vector3(Input.mousePosition.x, Input.mousePosition.y, 0);
-        transform.position = camera.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y , camera.nearClipPlane));
+        transform.position = cameraC.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y , cameraC.nearClipPlane));
     }
 
     public void OnEndDrag(PointerEventData eventData)

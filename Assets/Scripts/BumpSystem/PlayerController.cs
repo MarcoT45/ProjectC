@@ -24,8 +24,7 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
     [HideInInspector] public  Vector2 forwardDirection;
     [HideInInspector] public bool canDash = true;
     [HideInInspector] public bool isDashing = false;
-
-    private bool isSpeedBoosted = false;    
+   
     private bool isKnockedBack = false;
     private Vector2 currentVelocity = Vector2.zero;
     private SpriteRenderer spriteRenderer;

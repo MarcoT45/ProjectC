@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class EnemyRangeChaseState : EnemyState {
@@ -12,12 +11,7 @@ public class EnemyRangeChaseState : EnemyState {
     private float aggroDuration;
     private float timeRemaining;
     private bool timerIsRunning = false;
-    private float aggroRange;
     private float safeRange;
-
-    private float attackCoolDown;
-    private float attackTimeRemaining;
-    private bool attackTimeIsRuning = false;
 
     //Tir de projectiles
     public Transform firePoint;
@@ -31,22 +25,14 @@ public class EnemyRangeChaseState : EnemyState {
     public override void EnterState() {
         base.EnterState();
 
-        Debug.Log("Chasing");
-
         //Changer par le player du GM, autre façon de faire avec le joueur comme direction
         target = GameObject.FindWithTag("Player");
         targetPosition = target.transform.position;
-
         timeRemaining = aggroDuration;
-
-        attackTimeRemaining = attackCoolDown;
-        attackTimeIsRuning = true;
 
         firePoint = enemy.transform;
         aggroDuration = enemy.aggroDuration;
-        aggroRange = enemy.chaseDistance;
         safeRange = enemy.safeRange;
-        attackCoolDown = enemy.attackCoolDown;
         fireRate = enemy.fireRate;
         gridManager = enemy.gridManager;
     }
@@ -87,13 +73,10 @@ public class EnemyRangeChaseState : EnemyState {
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
 
         if (enemy.HasLineOfSight(lineOfSightDirection) && directionToPlayer.magnitude <= safeRange + 0.1f && Time.time - lastShotTime >= fireRate) {
-            Debug.Log("Shoot");
             Shoot();
         } else if (directionToPlayer.magnitude <= safeRange - 0.1f) {
-            Debug.Log("Move away");
             MoveAwayFromPlayer();
         } else if(directionToPlayer.magnitude >= safeRange + 0.1f) {
-            Debug.Log("Move");
             MoveTowardsPlayer();
         } else if (directionToPlayer.magnitude >= safeRange - 0.1f && directionToPlayer.magnitude <= safeRange + 0.1f) { // Pour regler le tremblement
             Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();

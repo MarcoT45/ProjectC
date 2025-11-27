@@ -8,7 +8,6 @@ public class ChoiceBox : MonoBehaviour
 {
     [SerializeField] GameObject choiceTextPrefab;
 
-    private bool choiceSelected;
     private List<ChoiceText> choiceTextList = new List<ChoiceText>();
     private int currentChoice;
     private Action<int> choiceAction;
@@ -23,7 +22,6 @@ public class ChoiceBox : MonoBehaviour
         GameObject choiceTextObj;
 
         gameObject.SetActive(true);  
-        choiceSelected = false;
         currentChoice = 0;
         
         //Détruire les choix existant
@@ -74,7 +72,6 @@ public class ChoiceBox : MonoBehaviour
             //Validation du choix
             if (ControlsManager.Instance.ValiderPressed)
             {
-                choiceSelected = true;
                 OnChoiceSelected();
             }
         }

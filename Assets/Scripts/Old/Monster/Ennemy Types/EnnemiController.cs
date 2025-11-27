@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnnemiController : MonoBehaviour
-{
-    private bool isHurt;
+public class EnnemiController : MonoBehaviour {
+
     private SpriteRenderer spriteRenderer;
     private Material material;
     [SerializeField] private float pushBackSpeed;
@@ -13,28 +12,14 @@ public class EnnemiController : MonoBehaviour
 
     public MonsterData monsterData;
 
-    void Awake()
-    {
+    void Awake() {
         spriteRenderer = this.gameObject.GetComponentInChildren<SpriteRenderer>();
         material = spriteRenderer.material;
-        isHurt = false;
     }
 
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
+    private void OnTriggerEnter2D(Collider2D other) {
         Vector3 direction = other.transform.position - transform.position;
-        if (other.gameObject.CompareTag("Player"))
-        {
-            isHurt = true;
+        if (other.gameObject.CompareTag("Player")) {
             Vector3 pushBack = direction.normalized * -1;
             transform.position += pushBack;
 
@@ -42,16 +27,13 @@ public class EnnemiController : MonoBehaviour
         }
     }
 
-
-    private IEnumerator HitFlash()
-    {
+    private IEnumerator HitFlash() {
         material.SetColor("_Tint", tintColor);
         Color tempColor;
         tempColor = tintColor;
 
         float time = 0f;
-        while (time < tintFadeSpeed)
-        {
+        while (time < tintFadeSpeed) {
             time += Time.deltaTime;
             tempColor.a = Mathf.Lerp(tintColor.a, 0f, (time / tintFadeSpeed));
             material.SetColor("_Tint", tempColor);

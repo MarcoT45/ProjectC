@@ -42,10 +42,10 @@ public class DialogueManager : MonoBehaviour
     public float typingSpeed = 10f;
 
     public delegate void OnStartDialog();
-    public static event OnStartDialog onStartDialog;
+    // public static event OnStartDialog onStartDialog;
 
     public delegate void OnEndDialog();
-    public static event OnEndDialog onEndDialog;
+    // public static event OnEndDialog onEndDialog;
 
     public void Start()
     {

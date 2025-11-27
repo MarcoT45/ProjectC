@@ -12,7 +12,7 @@ public class UIInventoryItem : MonoBehaviour, IPointerClickHandler/*, IDropHandl
     private ItemData itemData;
 
     public delegate void OnItemDroppedOn(UIInventoryItem uiItem, DraggableItem draggedItem);
-    public static event OnItemDroppedOn onItemDroppedOn;
+    public static OnItemDroppedOn onItemDroppedOn; // public static event OnItemDroppedOn onItemDroppedOn;
 
     public delegate void OnItemClicked(UIInventoryItem uiItem);
     public static event OnItemClicked onItemClicked;
