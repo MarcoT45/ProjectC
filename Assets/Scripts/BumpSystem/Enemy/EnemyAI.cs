@@ -194,6 +194,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     #region Collision functions
 
     private void OnCollisionEnter2D(Collision2D collision) {
+
+        // Pour bloquer les collisions entre les ennemies
+        if (collision.gameObject.CompareTag("Enemy")) {
+            Physics2D.IgnoreCollision(collision.collider, GetComponent<Collider2D>());
+        }
+
+        // Si on rentre en contact avec le joueur
         if (collision.gameObject.CompareTag("Player")) {
             PlayerController player = collision.gameObject.GetComponent<PlayerController>();
             if (player != null) {

@@ -13128,6 +13128,7 @@ MonoBehaviour:
   safeRange: 4
   pathUpdateInterval: 0.5
   gridManager: {fileID: 1216903047}
+  idleTargetPosition: {x: 0, y: 0, z: 0}
   pathRefreshInterval: 0.5
   slashVFXPrefab: {fileID: 0}
   stepVFXPrefab: {fileID: 0}
@@ -18843,8 +18844,8 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: 1.8125
+    y: 0.4166667
     width: 1
     height: 1
   near clip plane: 0.3
@@ -20022,6 +20023,7 @@ MonoBehaviour:
   safeRange: 4
   pathUpdateInterval: 0.5
   gridManager: {fileID: 1216903047}
+  idleTargetPosition: {x: 0, y: 0, z: 0}
   pathRefreshInterval: 0.5
   slashVFXPrefab: {fileID: 0}
   stepVFXPrefab: {fileID: 0}
