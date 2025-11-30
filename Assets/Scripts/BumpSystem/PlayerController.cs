@@ -1,8 +1,8 @@
 using UnityEngine;
 using System.Collections;
 
-public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
-{
+public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
+
     [HideInInspector] public PlayerStats playerStats;
     [HideInInspector] public EquipmentController equipment;
 
@@ -36,8 +36,7 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
     public float MaxShield { get; set; }
     public float CurrenShield { get; set; }
 
-    private void Awake()
-    {
+    private void Awake() {
         rb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         forwardDirection = Vector2.right;
@@ -45,15 +44,11 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
         equipment = GetComponent<EquipmentController>();
     }
 
-    private void Start()
-    {
+    private void Start() {
         // Assigner la caméra principale pour suivre le joueur
-        if ( Camera.main.GetComponent<CameraFollow>() != null)
-        {
+        if ( Camera.main.GetComponent<CameraFollow>() != null) {
             Camera.main.GetComponent<CameraFollow>().target = this.transform;
-        }
-        else
-        {
+        } else {
             Camera.main.gameObject.AddComponent<CameraFollow>().target = this.transform;
         }
 
@@ -64,107 +59,82 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
         CurrenShield = MaxShield;
     }
 
-    private void Update()
-    {
+    private void FixedUpdate() {
         // Ne rien faire si le jeu est en pause
         if (GameManager.Instance.GameIsPaused)
             return;
 
         // Mouvement avec le ControlsManager
-        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub || ControlsManager.Instance.controlsState == ControlsState.Combat)
-        {
-            if( ControlsManager.Instance.DeplacerHold)
-            {
+        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub || ControlsManager.Instance.controlsState == ControlsState.Combat) {
+            if(ControlsManager.Instance.DeplacerHold) {
                 float moveX = ControlsManager.Instance.DeplacerValue.x;
                 float moveY = ControlsManager.Instance.DeplacerValue.y;
                 movement = new Vector2(moveX, moveY).normalized;
-                if (movement != Vector2.zero)
-                {
+                if (movement != Vector2.zero) {
                     forwardDirection = movement;
                 }
-            }
-            else
-            {
+            } else {
                 movement = Vector2.zero;
             }
         }
 
         //Mettre à jour MaxHealth et MaxShield en fonction des stats totales si elles ont changées
-        if (MaxHealth != playerStats.totalStats.pv)
-        {
+        if (MaxHealth != playerStats.totalStats.pv) {
             MaxHealth = playerStats.totalStats.pv;
-
-            if( CurrentHealth >= MaxHealth)
-            {
+            if( CurrentHealth >= MaxHealth) {
                 CurrentHealth = MaxHealth;
             }
         }
-        if (MaxShield != playerStats.totalStats.shield)
-        {
-            MaxShield = playerStats.totalStats.shield;
 
-            if (CurrenShield >= MaxShield)
-            {
+        if (MaxShield != playerStats.totalStats.shield) {
+            MaxShield = playerStats.totalStats.shield;
+            if (CurrenShield >= MaxShield) {
                 CurrenShield = MaxShield;
             }
         }
 
-    }
-
-    void FixedUpdate()
-    {
-        if (!isDashing && !isKnockedBack)
-        {
-            currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd , 0.1f);
+        if (!isDashing && !isKnockedBack) {
+            currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
             rb.velocity = movement * playerStats.totalStats.spd;
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("Enemy")) {
             EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
-            if (enemy != null)
-            {
+            if (enemy != null) {
                 BumpSystem.HandleBump(this, enemy);
                 ShowImpact(enemy.transform.position);
             }
         }
     }
 
-    public void Collect(Collectible collectible)
-    {
-        switch (collectible.collectibleType)
-        {
+    public void Collect(Collectible collectible) {
+        switch (collectible.collectibleType) {
             case CollectibleType.Coin:
                 GameManager.Instance.AddCoinsToRunPlayerCoins(collectible.amount);
                 // Déclencher les passifs liés à la collecte de pièces
                 EquipmentController.Instance.TriggerPassives(EquipmentTriggerType.OnPickup, collectible.gameObject, 0);
                 break;
-
             case CollectibleType.Loot:
                 GameManager.Instance.AddCoinsToRunPlayerCoins(collectible.amount);
                 break;
         }
     }
 
-    private void ShowImpact(Vector2 position)
-    {
+    private void ShowImpact(Vector2 position) {
         GameObject impactEffect = GameObject.Instantiate(hitVFX, position, Quaternion.identity);
         GameObject.Destroy(impactEffect, 0.2f);
     }
-    public void Heal(float amount)
-    {
+
+    public void Heal(float amount) {
         CurrentHealth += (int)amount;
         //Clamp la vie actuelle à la vie max
         CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
     }
 
-    public void Damage(int amount)
-    {
-        if( CurrenShield > 0)
-        {
+    public void Damage(int amount) {
+        if(CurrenShield > 0) {
             //Deux façons de gérer les dégâts sur le bouclier : soit on enlève 1 point de bouclier par attaque,
             //soit on enlève autant de points que de dégâts reçus
             //A voir ce qui est le plus intéressant en termes de gameplay
@@ -174,62 +144,51 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable
             CurrenShield -= shieldDamage;
             //clamp le bouclier actuel à 0
             CurrenShield = Mathf.Max(CurrenShield, 0);
-
-        }
-        else
-        {
+        } else {
             CurrentHealth -= (int)amount;
             //clamp la vie actuelle à 0
             CurrentHealth = Mathf.Max(CurrentHealth, 0);
         }
 
         //StartCoroutine(BlinkRoutine());
-        if (CurrentHealth <= 0)
-        {
+        if (CurrentHealth <= 0) {
             Destroy(gameObject);
         }
     }
 
-    public void ApplyKnockback(Vector2 direction)
-    {
-        if (!isDashing)
-        {
+    public void ApplyKnockback(Vector2 direction) {
+        if (!isDashing) {
             StartCoroutine(KnockbackCoroutine(direction));
         }
     }
 
-    private IEnumerator KnockbackCoroutine(Vector2 direction)
-    {
+    private IEnumerator KnockbackCoroutine(Vector2 direction) {
         isKnockedBack = true;
         rb.velocity = Vector2.zero;
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
         Debug.Log("direction.magnitude: " + direction.magnitude);
 
-        if (direction.magnitude < 0.5)
-        {
+        if (direction.magnitude < 0.5) {
             yield return new WaitForSeconds(knockbackDurationSide);
-        }
-        else
-        {
+        } else {
             yield return new WaitForSeconds(knockbackDurationFront);
         }
 
         isKnockedBack = false;
     }
 
-    public void BuyItem(ItemData itemData)
-    {
+    public void BuyItem(ItemData itemData) {
         GameManager.Instance.SetRunPlayerCoins(GameManager.Instance.GetRunPlayerCoins() - itemData.GetPrice());
         InventoryController.Instance.AddItem(itemData);
        //uiInventory.RefreshInventoryItems();
     }
 
-    public void Die()
-    {
+    public void Die() {
         Destroy(gameObject);
 
         //Changer de scène ou afficher un écran de fin de jeu
         //Changer état du ControlsManager
     }
+
 }
