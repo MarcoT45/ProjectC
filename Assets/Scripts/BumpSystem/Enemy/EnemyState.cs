@@ -6,6 +6,7 @@ public class EnemyState {
 
     protected EnemyAI enemy;
     protected EnemyStateMachine enemyStateMachine;
+    protected int animationHash;
 
     public EnemyState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) {
         this.enemy = enemy;

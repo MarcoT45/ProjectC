@@ -11,9 +11,9 @@ public class BossAttackRoots : MonoBehaviour
     [Header("Timing Settings")]
     public float windUpTime = 0.5f;       // Temps avant l'attaque
     public float slamDuration = 0.2f;     // Durée de l'attaque
-
+/*
     [Header("Effects")]
-    public GameObject slamEffectPrefab;   // Effet visuel de l'attaque
+    public GameObject slamEffectPrefab;   // Effet visuel de l'attaque*/
 
     [Header("Pattern Settings")]
     public int numberOfWaves = 3;         // Nombre de vagues de racines
@@ -30,14 +30,15 @@ public class BossAttackRoots : MonoBehaviour
         bossTransform = transform;
     }
 
-    public void PerformAttack(System.Action onFinished)
+    public void PerformAttack()
     {
         if (isAttacking)return;
-        StartCoroutine(RootAttack(onFinished));
+        Debug.Log("BossAttackRoots: Performing Root Attack");
+        StartCoroutine(RootAttack());
 
     }
 
-    public IEnumerator RootAttack(System.Action onFinished)
+    public IEnumerator RootAttack()
     {
         isAttacking = true;
 
@@ -51,7 +52,6 @@ public class BossAttackRoots : MonoBehaviour
             yield return new WaitForSeconds(timeBetweenWaves);
         }
         isAttacking = false;
-        onFinished?.Invoke();
     }
 
     public void SpawnRootsInWave(float radius)
