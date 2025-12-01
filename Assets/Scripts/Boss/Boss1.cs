@@ -15,6 +15,11 @@ public class Boss1 : BossAI
     public float coneMaxDistance = 6f;   // Distance maximale pour l'attaque en cône
     public float circleDistance = 2f;    // Distance pour l'attaque en cercle
 
+    // States for the Boss
+    public EnemyState SlamState { get; set; }
+    public EnemyState ThrustState { get; set; }
+    public EnemyState RootsState { get; set; }
+
     [HideInInspector] public bool attackInProgress = false;
 
     protected override void Awake()
@@ -23,6 +28,10 @@ public class Boss1 : BossAI
 
         IdleState = new BossCoreState(this, StateMachine);
         AttackingState = new BossAttackState(this, StateMachine);
+
+        SlamState = new BossSlamState(this, StateMachine);
+        ThrustState = new BossThrustState(this, StateMachine);
+        RootsState = new BossRootsState(this, StateMachine);
 
         chaseDistance = 15f;
     }

@@ -11,9 +11,14 @@ public class BossCoreState : EnemyState
     public override void EnterState() {
         base.EnterState();
 
-        boss = enemy.gameObject.GetComponent<Boss1>();
+        // Récupérer la référence au Boss1
+        boss = enemy as Boss1;
 
         Debug.Log("Boss Core State Entered");
+
+        // Démarrer animation de l'attaque de slam
+        this.animationHash = Animator.StringToHash("Idle");
+        boss.animator.SetInteger("StateID", animationHash);
     }
 
     public override void ExitState() {

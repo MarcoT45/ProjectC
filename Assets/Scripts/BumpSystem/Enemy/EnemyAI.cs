@@ -42,6 +42,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     private float pathRefreshTimer = 1f;
 
     [Header("VFX")]
+    public Animator animator;
     public GameObject slashVFXPrefab;
     public GameObject stepVFXPrefab;
     public GameObject projectilePrefab;

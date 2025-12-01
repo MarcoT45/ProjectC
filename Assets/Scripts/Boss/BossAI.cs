@@ -15,11 +15,6 @@ public class BossAI : EnemyAI
     private float cooldownTimer = 0f;
 
 
-    // -------- Attaques Spéciales --------
-    /*    [Header("Special Attacks")]
-        public BossAttack[] phaseOneAttacks; // Attaques de la phase 1
-        public BossAttack[] phaseTwoAttacks; // Attaques de la phase 2*/
-
     protected override void Start()
     {
         base.Start();

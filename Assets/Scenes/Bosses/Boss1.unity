@@ -11416,14 +11416,18 @@ PrefabInstance:
     - target: {fileID: 9097105037214867896, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 976597112, guid: 89e9a3d642a15cf47ac99a56be185da6, type: 3}
+      objectReference: {fileID: -493898896, guid: 8ff72e3295c5335449557d67ffc69663, type: 3}
     - target: {fileID: 9097105037214867897, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Mass
-      value: 100
+      value: 100000
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867897, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_BodyType
-      value: 2
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9097105037214867897, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
+      propertyPath: m_Simulated
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867899, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Name
@@ -11435,19 +11439,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Size.x
-      value: 2
+      value: 2.2516255
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Size.y
-      value: 2
+      value: 2.3660007
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Offset.x
-      value: 0
+      value: 0.12581277
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_Offset.y
-      value: 0
+      value: -0.18300033
       objectReference: {fileID: 0}
     - target: {fileID: 9097105037214867900, guid: 1183b9d075e659b41aadfd68cb9be2b7, type: 3}
       propertyPath: m_IsTrigger
@@ -11537,7 +11541,9 @@ MonoBehaviour:
   safeRange: 0
   pathUpdateInterval: 0.5
   gridManager: {fileID: 0}
+  idleTargetPosition: {x: 0, y: 0, z: 0}
   pathRefreshInterval: 0.5
+  animator: {fileID: 1847119757}
   slashVFXPrefab: {fileID: 0}
   stepVFXPrefab: {fileID: 0}
   projectilePrefab: {fileID: 0}
@@ -11552,8 +11558,8 @@ MonoBehaviour:
   slamCircle: {fileID: 1847119755}
   slamCone: {fileID: 1847119754}
   rootAttack: {fileID: 1847119756}
-  coneMinDistance: 3
-  coneMaxDistance: 6
+  coneMinDistance: 2
+  coneMaxDistance: 4
   circleDistance: 2
   attackInProgress: 0
 --- !u!114 &1847119754
@@ -11569,11 +11575,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  range: 3
   windUpTime: 0.5
   slamDuration: 0.2
-  slamEffectPrefab: {fileID: 0}
-  coneAngle: 60
-  coneRange: 5
 --- !u!114 &1847119755
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11587,10 +11591,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  radius: 3
+  range: 3
   windUpTime: 0.5
   slamDuration: 0.2
-  slamEffectPrefab: {fileID: 0}
 --- !u!114 &1847119756
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11607,7 +11610,6 @@ MonoBehaviour:
   radius: 3
   windUpTime: 0.5
   slamDuration: 0.2
-  slamEffectPrefab: {fileID: 0}
   numberOfWaves: 3
   waveRadius:
   - 2
@@ -11616,6 +11618,27 @@ MonoBehaviour:
   rootsPerWave: 6
   timeBetweenWaves: 1
   rootLifetime: 0.7
+--- !u!95 &1847119757
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1847119752}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a328090df4ca04a4f97631984b72c343, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3994457246013022077
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11625,7 +11648,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3994457246091314368, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3994457246091314372, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_Sprite

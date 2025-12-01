@@ -18,6 +18,7 @@ public class BossAttackState: EnemyState
 
         // Récupérer la référence au Boss1
         boss = enemy as Boss1;
+         
 
         if (boss == null)
         {
@@ -25,6 +26,7 @@ public class BossAttackState: EnemyState
             enemyStateMachine.ChangeState(enemy.IdleState);
         }
 
+        boss.attackInProgress = true;
     }
 
 
@@ -45,34 +47,21 @@ public class BossAttackState: EnemyState
         if (distanceToPlayer <= boss.circleDistance)
         {
             Debug.Log("Performing Circle Slam Attack " + distanceToPlayer);
-            boss.slamCircle.PerformSlam(() =>
-            {
-                // Callback une fois l'attaque terminée
-                boss.ResetCooldown();
-                enemyStateMachine.ChangeState(enemy.IdleState);
-            });
+            enemyStateMachine.ChangeState(boss.SlamState);
         }
 
-        //Priorité 2 : Attaque en cône
-        if (distanceToPlayer > boss.coneMinDistance && distanceToPlayer <= boss.coneMaxDistance)
+        //Priorité 2 : Attaque en avant
+        else if (distanceToPlayer > boss.coneMinDistance && distanceToPlayer <= boss.coneMaxDistance)
         {
             Debug.Log("Performing Cone Slam Attack " + distanceToPlayer);
-            boss.slamCone.PerformSlam(() =>
-            {
-                // Callback une fois l'attaque terminée
-                boss.ResetCooldown();
-                enemyStateMachine.ChangeState(enemy.IdleState);
-            });
+            enemyStateMachine.ChangeState(boss.ThrustState);
         }
-
-        //Priotrité 3 : Attaque de racines en 
-        boss.rootAttack.PerformAttack(() =>
+        else
         {
-            // Callback une fois l'attaque terminée
-            Debug.Log("Root Attack Finished");
-            boss.ResetCooldown();
-            enemyStateMachine.ChangeState(enemy.IdleState);
-        });
+            //Priotrité 3 : Attaque de racines en 
+            Debug.Log("Root Attack ");
+            enemyStateMachine.ChangeState(boss.RootsState);
+        }
     }
 
     public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType)
