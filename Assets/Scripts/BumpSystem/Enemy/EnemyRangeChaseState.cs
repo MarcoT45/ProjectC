@@ -103,7 +103,7 @@ public class EnemyRangeChaseState : EnemyState {
         Vector3 bestMove = currentPosition;
         float shortestDistance = float.MaxValue;
 
-        Node currentNode =  gridManager.GetNodeFromWorldPoint(bestMove);
+        Node currentNode = gridManager.GetNodeFromWorldPoint(bestMove);
 
         foreach (Node neighbor in gridManager.GetNeighbors(currentNode)) {
             if (!neighbor.walkable)

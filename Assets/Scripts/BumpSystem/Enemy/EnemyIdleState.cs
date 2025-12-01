@@ -5,8 +5,6 @@ using DG.Tweening;
 
 public class EnemyIdleState : EnemyState {
     
-    private Vector3 targetPosition;
-
     public EnemyIdleState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
 
     public override void EnterState() { 

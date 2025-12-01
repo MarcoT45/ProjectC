@@ -15,8 +15,6 @@ public class EnemyLookingState : EnemyState {
     public override void EnterState() { 
         base.EnterState();
 
-        Debug.Log("Looking");
-
         tmpLook = 0;
         timerIsRunning = false;
         timeRemaining = lookingDuration;

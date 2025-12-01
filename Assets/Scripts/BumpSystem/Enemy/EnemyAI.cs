@@ -60,7 +60,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     #endregion
 
     [HideInInspector]
-    public Transform player;        // Référence au joueur (assignée dans Start)
+    public Transform player;                     // Référence au joueur (assignée dans Start)
+    public Transform loot;                       // Référence au collectible visible
     public LayerMask wallLayerMask;
     private Rigidbody2D rb;
 
@@ -321,6 +322,34 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             if (hit.collider != null) {
                 if (hit.collider.CompareTag("Player") || hit.collider.transform.parent.CompareTag("Player")) {
                     Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.green);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Renvoie vrai si aucune obstruction n'empêche la vue entre l'ennemi et la Piece/Collectible
+    public bool HasLootInLineOfSight(Vector2 lineOfSightDirection) {
+        float viewAngle = 30f;
+        int raycount = 3;
+        float startAngle = -viewAngle / 2f;
+        float angleIncrement = viewAngle / (raycount - 1);
+
+        for (int i = 0; i < raycount; i++) {
+            float angle = startAngle + angleIncrement * i;
+            Vector2 rayDirection = RotateVector(lineOfSightDirection, angle);
+
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, chaseDistance, LayerMask.GetMask("Mur"));
+
+            // Si le raycast n'a rien touché ou touche directement le collectible, la ligne de vue est bonne
+            Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.red);
+
+            if (hit.collider != null) {
+                if (hit.collider.CompareTag("Collectible")) {
+                    Debug.Log("Je vois un collectible");
+                    loot = hit.collider.transform;
+                    Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.yellow);
                     return true;
                 }
             }
