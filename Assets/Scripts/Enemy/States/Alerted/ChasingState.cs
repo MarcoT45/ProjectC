@@ -1,0 +1,72 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class ChasingState : EnemyState {
+
+    private float alertDuration = 5f;
+    private float timeAlertRemaining;
+    private float attackCdRemaining;
+
+    public ChasingState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
+
+    public override void EnterState() { 
+        base.EnterState();
+
+        timeAlertRemaining = alertDuration;
+        attackCdRemaining = enemy.attackCoolDown;
+
+        enemy.speedBoostAlertMultiplicator = 1.5f;
+        enemy.OnMoveDestinationReached += OnDestinationReached;
+
+        enemy.bubbleSearch.SetActive(false);
+    }
+
+    public override void ExitState() {
+        base.ExitState();
+
+        enemy.speedBoostAlertMultiplicator = 1.0f;
+        enemy.OnMoveDestinationReached -= OnDestinationReached;
+    }
+
+    public override void FrameUpdate() {
+        base.FrameUpdate();
+
+        TimerAlert();
+        TimerAttack();
+
+        Vector2 lineOfSightDirection = (enemy.player.position - enemy.transform.position).normalized;
+        enemy.isSearching = enemy.SearchLineOfSight(lineOfSightDirection);
+        enemy.isAlerted = enemy.AlertLineOfSight(lineOfSightDirection);
+
+        if (enemy.isSearching || enemy.isAlerted) {
+            enemy.SetTargetPosition(enemy.playerSeachPosition);
+            timeAlertRemaining = alertDuration;
+        }
+
+        if (enemy.isAlerted && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) < 1f && attackCdRemaining < 0) {
+            enemy.StateMachine.ChangeState(enemy.AttackState);
+        } else {
+            enemy.Move();
+        }
+    }
+
+    public void TimerAlert() {
+        if(timeAlertRemaining > 0) {
+            timeAlertRemaining -= Time.deltaTime;
+        } else {
+            enemy.StateMachine.ChangeState(enemy.PatrolState);
+        }
+    }
+
+    public void TimerAttack() {
+        if(attackCdRemaining > 0) {
+            attackCdRemaining -= Time.deltaTime;
+        }
+    }
+
+    private void OnDestinationReached() {
+        enemy.StateMachine.ChangeState(enemy.AlertedLookingState);
+    }
+
+}

@@ -13,25 +13,26 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public int Coins { get; set; }
     public Vector2 forwardDirection;
     public float movementRange = 5f;
-    public bool isAggroed = false;
+    public bool isSearching = false;
+    public bool isAlerted = false;
     public float aggroDuration;
     public float attackCoolDown;
     public float fireRate;
     private SpriteRenderer spriteRenderer;
 
     [Header("Hit variables")]
-    private bool isKnockedBack = false;
+    public bool isKnockedBack = false;
     public float knockbackDuration = 0.5f;
     public float knockbackForce = 3f;
 
     [Header("AI Settings")]
-    public float chaseDistance = 5f; // Distance à partir de laquelle on passe en mode Chase / = aggroRange
-    public float safeRange; // Distance à laquelle l'ia se considere safe
+    public float alertDistance;             // Distance à partir de laquelle on passe en mode Chase / = aggroRange
+    public float safeRange;                 // Distance à laquelle l'ia se considere safe
     public float pathUpdateInterval = 0.5f; // Fréquence de mise à jour du pathfinding en Chase
 
     [Header("Pathfinding")]
     public GridManager gridManager;
-    public Vector3 idleTargetPosition;
+    private Vector3 targetPosition;
     private List<Node> path;
     private int currentPathIndex = 0;
     public float pathRefreshInterval = 0.5f;
@@ -49,24 +50,39 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #region State Machine variables
 
+    [Header("Bubble")]
+    public GameObject bubbleIdle;
+    public GameObject bubbleSearch;
+
     public EnemyStateMachine StateMachine { get; set; }
 
     //Mis dans les héritiers
 
-    public EnemyState IdleState { get; set; }
-    public EnemyState ChasingState { get; set; }
-    public EnemyState LookingState { get; set; }
-    public EnemyState AttackingState { get; set; }
+    public EnemyState PatrolState { get; set; }
+    public EnemyState PatrolIdleState { get; set; }
+    public EnemyState PatrolWalkState { get; set; }
+    public EnemyState SearchState { get; set; }
+    public EnemyState SearchLookUpState { get; set; }
+    public EnemyState SearchLookDownState { get; set; }
+    public EnemyState SearchLookLeftState { get; set; }
+    public EnemyState SearchLookRightState { get; set; }
+    public EnemyState SearchWalkState { get; set; }
+    public EnemyState AlertedState { get; set; }
+    public EnemyState AlertedLookingState { get; set; }
+    public EnemyState AttackState { get; set; }
 
     #endregion
 
-    [HideInInspector]
-    public Transform player;                     // Référence au joueur (assignée dans Start)
-    public Transform loot;                       // Référence au collectible visible
+    [HideInInspector] public Vector3 playerSeachPosition;               // Position ou le joueur a été vu dans le Search ou le Alert
+    [HideInInspector] public int searchLookCounter = 4;                 // Compteur du nombre de position ou l'ennemi peut regarder en SearchState
+    [HideInInspector] public float speedBoostAlertMultiplicator = 1.0f; // Multiplicateur de vitesse de déplacement de l'ennemi
+
+    [HideInInspector] public Transform player;  // Référence au joueur (assignée dans Start)
+    [HideInInspector] public Transform loot;    // Référence au collectible visible
     public LayerMask wallLayerMask;
     private Rigidbody2D rb;
 
-    public Action OnIdleDestinationReached;
+    public Action OnMoveDestinationReached;
 
     #region Awake/Start/Update
 
@@ -88,7 +104,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         MaxHealth = monsterData.pv;
         CurrentHealth = MaxHealth;
 
-        StateMachine.Initialize(IdleState);
+        StateMachine.Initialize(PatrolState);
     }
 
     protected virtual void Update() {
@@ -106,18 +122,18 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #region Move
 
-    public void SetIdleTargetPosition(Vector3 newTarget) {
-        this.idleTargetPosition = newTarget;
+    public void SetTargetPosition(Vector3 newTarget) {
+        this.targetPosition = newTarget;
     }
 
     // Déplace l'ennemi le long du chemin calculé
-    public void Move(Vector3 idleTargetPosition) {
+    public void Move() {
 
         if (isKnockedBack) return;
 
         pathRefreshTimer += Time.deltaTime;
         if (pathRefreshTimer >= pathRefreshInterval) {
-            path = AStarPathfinding.FindPath(gridManager, transform.position, idleTargetPosition);
+            path = AStarPathfinding.FindPath(gridManager, transform.position, this.targetPosition);
             currentPathIndex = 0;
             pathRefreshTimer = 0f;
         }
@@ -125,12 +141,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
-            // Appliquer un déplacement vers idleTargetPosition, (x1.5 si ennemy en mode aggro)
-            if (isAggroed) {
-                rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * 1.5f;
-            } else {
-                rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed;
-            }
+            rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * speedBoostAlertMultiplicator;
 
             // Pour changer la direction ou l'ennemi regarde
             float upValue, downValue, rightValue, leftValue = 0f;
@@ -162,32 +173,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
                 if (currentPathIndex >= path.Count) {
                     path = null;
                     currentPathIndex = 0;
-
-                    // L'ennemi peut soit continuer à se balader soit regarder autour de lui (80/20)
-                    int lookingIdlingRandom = UnityEngine.Random.Range(1, 101);
-                    if(lookingIdlingRandom > 80) {
-                        rb.velocity = Vector2.zero;
-                        this.StateMachine.ChangeState(LookingState);
-                    } else {
-                        // Notifier le comportement idle
-                        OnIdleDestinationReached?.Invoke();
-                    }
+                    rb.velocity = Vector2.zero;
+                    OnMoveDestinationReached.Invoke();
                 }
             }
         } else if (path != null && currentPathIndex == path.Count) {
-            // DANS LE CAS OU L'ENNEMI SE COINCE DANS UN MUR SANS QU'ON AIT PU ATTEINDRE LA DISTANCE REQUISE
+            // Dans le cas ou l'ennemi se coince dans un mur
             path = null;
             currentPathIndex = 0;
-
-            // L'ennemi peut soit continuer à se balader soit regarder autour de lui (80/20)
-            int lookingIdlingRandom = UnityEngine.Random.Range(1, 101);
-            if(lookingIdlingRandom > 80) {
-                rb.velocity = Vector2.zero;
-                this.StateMachine.ChangeState(LookingState);
-            } else {
-                // Notifier le comportement idle
-                OnIdleDestinationReached?.Invoke();
-            }
+            rb.velocity = Vector2.zero;
+            OnMoveDestinationReached.Invoke();
         }
     }
 
@@ -257,8 +252,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #endregion
 
+    #region VFX functions
 
-    #region VFX functions 
     public virtual void ApplyKnockback(Vector2 direction)
     {
         Debug.Log("Applying Knockback to Enemy");
@@ -276,7 +271,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
         yield return new WaitForSeconds(knockbackDuration);
         rb.velocity = Vector2.zero;
-        this.StateMachine.ChangeState(ChasingState);
 
         isKnockedBack = false;
     }
@@ -319,30 +313,25 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #region Aggro functions
 
-    // Renvoie vrai si aucune obstruction n'empêche la vue entre l'ennemi et le joueur
-    public bool HasLineOfSight(Vector2 lineOfSightDirection) {
+    // Renvoie vrai si l'ennemi apercoit le joueur dans la zone (rouge-bleu)
+    public bool SearchLineOfSight(Vector2 lineOfSightDirection) {
         float viewAngle = 30f;
         int raycount = 3;
-        //Vector2 lineOfSightDirection = (player.position - transform.position).normalized;
-
         float startAngle = -viewAngle / 2f;
         float angleIncrement = viewAngle / (raycount - 1);
 
         for (int i = 0; i < raycount; i++) {
             float angle = startAngle + angleIncrement * i;
             Vector2 rayDirection = RotateVector(lineOfSightDirection, angle);
+            RaycastHit2D hitSearch = Physics2D.Raycast(transform.position, rayDirection, (alertDistance + 2f), LayerMask.GetMask("Mur", "Player"));
 
-            //RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, chaseDistance, LayerMask.GetMask("Player"));
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, chaseDistance, LayerMask.GetMask("Mur", "Player"));
+            Debug.DrawRay(transform.position, rayDirection * (alertDistance + 2f), Color.blue);
+            Debug.DrawRay(transform.position, rayDirection * alertDistance, Color.red);
 
-
-            // Si le raycast n'a rien touché ou touche directement le joueur, la ligne de vue est bonne
-            //if (hit.collider == null || hit.collider.CompareTag("Player"))
-            Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.red);
-
-            if (hit.collider != null) {
-                if (hit.collider.CompareTag("Player") || hit.collider.transform.parent.CompareTag("Player")) {
-                    Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.green);
+            if (hitSearch.collider != null) {
+                if (hitSearch.collider.CompareTag("Player") || hitSearch.collider.transform.parent.CompareTag("Player")) {
+                    Debug.DrawRay(transform.position, rayDirection * (alertDistance + 2f), Color.green);
+                    playerSeachPosition = hitSearch.collider.transform.position;
                     return true;
                 }
             }
@@ -350,8 +339,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         return false;
     }
 
-    // Renvoie vrai si aucune obstruction n'empêche la vue entre l'ennemi et la Piece/Collectible
-    public bool HasLootInLineOfSight(Vector2 lineOfSightDirection) {
+    // Renvoie vrai si l'ennemi apercoit le joueur dans la zone (rouge seulement)
+    public bool AlertLineOfSight(Vector2 lineOfSightDirection) {
         float viewAngle = 30f;
         int raycount = 3;
         float startAngle = -viewAngle / 2f;
@@ -360,17 +349,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         for (int i = 0; i < raycount; i++) {
             float angle = startAngle + angleIncrement * i;
             Vector2 rayDirection = RotateVector(lineOfSightDirection, angle);
+            RaycastHit2D hitAlert = Physics2D.Raycast(transform.position, rayDirection, alertDistance, LayerMask.GetMask("Mur", "Player"));
 
-            RaycastHit2D hit = Physics2D.Raycast(transform.position, rayDirection, chaseDistance, LayerMask.GetMask("Mur"));
+            Debug.DrawRay(transform.position, rayDirection * (alertDistance + 2f), Color.blue);
+            Debug.DrawRay(transform.position, rayDirection * alertDistance, Color.red);
 
-            // Si le raycast n'a rien touché ou touche directement le collectible, la ligne de vue est bonne
-            Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.red);
-
-            if (hit.collider != null) {
-                if (hit.collider.CompareTag("Collectible")) {
-                    Debug.Log("Je vois un collectible");
-                    loot = hit.collider.transform;
-                    Debug.DrawRay(transform.position, rayDirection * chaseDistance, Color.yellow);
+            if (hitAlert.collider != null) {
+                if (hitAlert.collider.CompareTag("Player") || hitAlert.collider.transform.parent.CompareTag("Player")) {
+                    Debug.DrawRay(transform.position, rayDirection * alertDistance, Color.green);
+                    playerSeachPosition = hitAlert.collider.transform.position;
                     return true;
                 }
             }

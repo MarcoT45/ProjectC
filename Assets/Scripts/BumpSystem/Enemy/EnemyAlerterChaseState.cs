@@ -38,16 +38,16 @@ public class EnemyAlerterChaseState : EnemyState {
     private void ManageAggro(Vector3 playerCellPostion, Vector3 enemyCellPosition) {
         TimerAggro();
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
-        enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
+        //enemy.isAlerted = enemy.HasLineOfSight(lineOfSightDirection);
 
         //Update de la position que si vision sur le joueur
-        if (enemy.isAggroed) {
+        if (enemy.isAlerted) {
             targetPosition = target.transform.position;
             AlertEveryone(); // On attire tous les ennemis du niveau
         }
 
-        if (enemy.isAggroed || timeRemaining > 0) {
-            if (enemy.isAggroed && timerIsRunning) {
+        if (enemy.isAlerted || timeRemaining > 0) {
+            if (enemy.isAlerted && timerIsRunning) {
                 timerIsRunning = false;
                 timeRemaining = aggroDuration;
             } else {
@@ -61,7 +61,7 @@ public class EnemyAlerterChaseState : EnemyState {
 
         foreach (GameObject e in enemiesList) {
             EnemyAI en = (EnemyAI) e.GetComponent(typeof(EnemyAI));
-            en.SetIdleTargetPosition(targetPosition);
+            //en.SetIdleTargetPosition(targetPosition);
         }
     }
 
@@ -81,7 +81,7 @@ public class EnemyAlerterChaseState : EnemyState {
     }
 
     private void MoveTowardsPlayer() {
-        enemy.Move(targetPosition);
+        //enemy.Move(targetPosition);
     }
 
     private void MoveAwayFromPlayer() {
@@ -119,7 +119,7 @@ public class EnemyAlerterChaseState : EnemyState {
             if (timeRemaining > 0) {
                 timeRemaining -= Time.deltaTime;
             } else {
-                enemy.StateMachine.ChangeState(enemy.IdleState);
+                //enemy.StateMachine.ChangeState(enemy.IdleState);
                 timeRemaining = 0;
                 timerIsRunning = false;
             }

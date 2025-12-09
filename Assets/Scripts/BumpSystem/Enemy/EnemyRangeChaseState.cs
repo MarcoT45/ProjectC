@@ -49,16 +49,15 @@ public class EnemyRangeChaseState : EnemyState {
     private void ManageAggro(Vector3 playerCellPostion, Vector3 enemyCellPosition) {
         TimerAggro();
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
-        enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
-
+        //enemy.isAlerted = enemy.HasLineOfSight(lineOfSightDirection);
 
         //Update de la position que si vision sur le joueur
-        if (enemy.isAggroed) {
+        if (enemy.isAlerted) {
             targetPosition = target.transform.position;
         }
 
-        if (enemy.isAggroed || timeRemaining > 0) {
-            if (enemy.isAggroed && timerIsRunning) {
+        if (enemy.isAlerted || timeRemaining > 0) {
+            if (enemy.isAlerted && timerIsRunning) {
                 timerIsRunning = false;
                 timeRemaining = aggroDuration;
             } else {
@@ -72,6 +71,7 @@ public class EnemyRangeChaseState : EnemyState {
         Vector3 directionToPlayer = targetPosition - currentPosition;
         Vector2 lineOfSightDirection = (target.transform.position - enemy.transform.position).normalized;
 
+        /*
         if (enemy.HasLineOfSight(lineOfSightDirection) && directionToPlayer.magnitude <= safeRange + 0.1f && Time.time - lastShotTime >= fireRate) {
             Shoot();
         } else if (directionToPlayer.magnitude <= safeRange - 0.1f) {
@@ -82,10 +82,11 @@ public class EnemyRangeChaseState : EnemyState {
             Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
             rb.velocity = Vector2.zero;
         }
+        */
     }
 
     private void MoveTowardsPlayer() {
-        enemy.Move(targetPosition);
+        //enemy.Move(targetPosition);
     }
 
     private void MoveAwayFromPlayer() {
@@ -132,7 +133,7 @@ public class EnemyRangeChaseState : EnemyState {
             if (timeRemaining > 0) {
                 timeRemaining -= Time.deltaTime;
             } else {
-                enemy.StateMachine.ChangeState(enemy.IdleState);
+                enemy.StateMachine.ChangeState(enemy.PatrolState);
                 timeRemaining = 0;
                 timerIsRunning = false;
             }

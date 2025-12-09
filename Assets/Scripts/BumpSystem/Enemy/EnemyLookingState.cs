@@ -24,12 +24,12 @@ public class EnemyLookingState : EnemyState {
         base.FrameUpdate();
 
         Vector2 lineOfSightDirection = enemy.forwardDirection;
-        enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
+        // enemy.isAlerted = enemy.HasLineOfSight(lineOfSightDirection);
 
-        if (enemy.isAggroed) {
+        if (enemy.isAlerted) {
             //Tween animation du saut
             enemy.transform.DOLocalJump(enemy.transform.position, 1f, 1, 0.5f).SetEase(Ease.InOutQuint);
-            enemy.StateMachine.ChangeState(enemy.ChasingState);
+            //enemy.StateMachine.ChangeState(enemy.ChasingState);
         }
 
         ManageLooking();
@@ -54,7 +54,7 @@ public class EnemyLookingState : EnemyState {
                     enemy.forwardDirection = Vector2.left;
                     break;
                 case 4:
-                    enemy.StateMachine.ChangeState(enemy.IdleState);
+                    //enemy.StateMachine.ChangeState(enemy.IdleState);
                     break;
             }
 

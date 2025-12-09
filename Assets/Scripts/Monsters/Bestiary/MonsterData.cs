@@ -15,11 +15,11 @@ public class MonsterData : ScriptableObject
     
     public bool discovered;
     
-    public float pv;
+    public int pv;
     
-    public float atk;
+    public int atk;
     
-    public float def;
+    public int def;
     
     public float speed;
     

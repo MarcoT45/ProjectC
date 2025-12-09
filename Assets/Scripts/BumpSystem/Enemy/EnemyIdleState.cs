@@ -11,12 +11,12 @@ public class EnemyIdleState : EnemyState {
         base.EnterState();
 
         GetRandomPointInCircle();
-        enemy.OnIdleDestinationReached +=  GetRandomPointInCircle;
+        enemy.OnMoveDestinationReached +=  GetRandomPointInCircle;
     }
 
     public override void ExitState() {
         base.ExitState();
-        enemy.OnIdleDestinationReached -= GetRandomPointInCircle;
+        enemy.OnMoveDestinationReached -= GetRandomPointInCircle;
     }
 
     public override void FrameUpdate() {
@@ -24,16 +24,16 @@ public class EnemyIdleState : EnemyState {
         
         //Le monstre ne voit que devant lui en idle
         Vector2 lineOfSightDirection = enemy.forwardDirection;
-        enemy.isAggroed = enemy.HasLineOfSight(lineOfSightDirection);
+        //enemy.isAlerted = enemy.HasLineOfSight(lineOfSightDirection);
 
-        if (enemy.isAggroed) {
+        if (enemy.isAlerted) {
             //Tween animation du saut
             enemy.transform.DOLocalJump(enemy.transform.position, 1f, 1, 0.5f).SetEase(Ease.InOutQuint);
-            enemy.StateMachine.ChangeState(enemy.ChasingState);
+            //enemy.StateMachine.ChangeState(enemy.ChasingState);
         }
 
         //Mouvement
-        enemy.Move(enemy.idleTargetPosition);
+        //enemy.Move(enemy.idleTargetPosition);
     }
 
     public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
@@ -41,7 +41,7 @@ public class EnemyIdleState : EnemyState {
     }
 
     private void GetRandomPointInCircle() {
-        enemy.idleTargetPosition = enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
+        // enemy.idleTargetPosition = enemy.gridManager.FindRandomWalkableInRange(enemy.transform.position, enemy.chaseDistance);
     }
 
 }
