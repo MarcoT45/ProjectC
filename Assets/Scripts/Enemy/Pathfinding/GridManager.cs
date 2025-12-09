@@ -69,7 +69,8 @@ public class GridManager : MonoBehaviour {
             }
         }
 
-        return Vector3.zero;
+        // return Vector3.zero;
+        return enemyPosition;
     }
 
     // Convertit une World position en Node de la grille.

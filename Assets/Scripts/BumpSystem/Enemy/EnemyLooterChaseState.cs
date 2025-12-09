@@ -31,7 +31,7 @@ public class EnemyLooterChaseState : EnemyState {
 
         currentPosition = enemy.transform.position;
         ManageAggro(targetPosition);
-        enemy.Move(targetPosition);
+        //enemy.Move(targetPosition);
     }
 
     // Ici on va faire 2 cas, N°1 => Il voit une piece, N°2 => Il voit le joueur
@@ -47,6 +47,8 @@ public class EnemyLooterChaseState : EnemyState {
         }
         */
 
+        /*
+
         //Update de la position si vision sur le joueur
         if(enemy.HasLineOfSight(lineOfSightDirection)) {          // FAUT TROUVER UN CHEMIN QUI NE PASSE PAS PAR LE JOUEUR
             enemy.isAggroed = true;
@@ -61,6 +63,7 @@ public class EnemyLooterChaseState : EnemyState {
                 timerIsRunning = true;
             }
         }
+        */
     }
 
     private Vector3 GetFarthestMove() {
@@ -82,7 +85,7 @@ public class EnemyLooterChaseState : EnemyState {
             if(timeRemaining > 0) {
                 timeRemaining -= Time.deltaTime;
             } else {
-                enemy.StateMachine.ChangeState(enemy.LookingState);
+                //enemy.StateMachine.ChangeState(enemy.LookingState);
                 timeRemaining = 0;
                 timerIsRunning = false;
             }
