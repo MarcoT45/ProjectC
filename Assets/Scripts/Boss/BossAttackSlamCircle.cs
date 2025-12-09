@@ -40,8 +40,8 @@ public class BossAttackSlamCircle : MonoBehaviour
             PlayerController player = hitCollider.GetComponent<PlayerController>();
             if (player != null)
             {
-                Debug.Log("BossAttackSlamCircle hit player");
                 player.Damage(damage);
+                player.ApplyKnockback((player.transform.position - bossTransform.position).normalized);
             }
         }
 

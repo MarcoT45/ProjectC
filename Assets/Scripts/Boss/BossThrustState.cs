@@ -11,7 +11,6 @@ public class BossThrustState : EnemyState
 
     public override void EnterState()
     {
-        Debug.Log("Boss Thrust State Entered");
         base.EnterState();
         // Récupérer la référence au Boss1
         boss = enemy as Boss1;
@@ -25,8 +24,8 @@ public class BossThrustState : EnemyState
         timer = 0f;
 
         // Démarrer animation de l'attaque de thrust
-        this.animationHash = Animator.StringToHash("AttackThrust");
-        boss.animator.SetInteger("StateID", animationHash);
+        stateID = StateID.Thrust;
+        boss.animator.SetInteger("StateID", (int)stateID);
     }
     public override void FrameUpdate()
     {

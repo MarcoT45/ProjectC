@@ -38,8 +38,8 @@ public class BossAttackSlamCone : MonoBehaviour
             PlayerController player = hit.collider.GetComponent<PlayerController>();
             if (player != null)
             {
-                Debug.Log("BossAttackSlamCone hit player");
                 player.Damage(damage);
+                player.ApplyKnockback((player.transform.position - bossTransform.position).normalized);
             }
         }
     }

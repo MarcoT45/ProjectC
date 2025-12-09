@@ -12,7 +12,6 @@ public class BossAttackState: EnemyState
 
     public override void EnterState()
     {
-        Debug.Log("Boss Attack State Entered");
 
         base.EnterState();
 
@@ -46,20 +45,17 @@ public class BossAttackState: EnemyState
         //Priorité 1 : Attaque de proximité en cercle
         if (distanceToPlayer <= boss.circleDistance)
         {
-            Debug.Log("Performing Circle Slam Attack " + distanceToPlayer);
             enemyStateMachine.ChangeState(boss.SlamState);
         }
 
         //Priorité 2 : Attaque en avant
         else if (distanceToPlayer > boss.coneMinDistance && distanceToPlayer <= boss.coneMaxDistance)
         {
-            Debug.Log("Performing Cone Slam Attack " + distanceToPlayer);
             enemyStateMachine.ChangeState(boss.ThrustState);
         }
         else
         {
             //Priotrité 3 : Attaque de racines en 
-            Debug.Log("Root Attack ");
             enemyStateMachine.ChangeState(boss.RootsState);
         }
     }

@@ -57,7 +57,7 @@ public static class BumpSystem
         // Vérification de la mort de l'ennemi
         if (enemy.CurrentHealth <= 0)
         {
-            GameObject.Destroy(enemy.gameObject);
+            enemy.Die();
         }
 
     }
@@ -66,6 +66,49 @@ public static class BumpSystem
         Vector2 hazardToEnemy = (enemy.transform.position - hazard.transform.position).normalized;
 
 
+    }
+
+    public static void HandleAttackBoss(PlayerController player, BossAI boss)
+    {
+
+        //Calcul de l'angle de l'attaque
+        Vector2 playerToEnemy = (boss.transform.position - player.transform.position).normalized;
+        playerToEnemy = GetCardinalDirection(playerToEnemy);
+        float dotProduct = Vector2.Dot(boss.forwardDirection, playerToEnemy);
+
+        // Calcul des dégâts selon l'angle
+        float damageMultiplier = 1f;
+
+        //Pas de dégats au joueur lors d'une attaque de boss et pas de knockback
+        if (dotProduct < -0.7f)
+        {
+            //Attaque dans le dos 
+            damageMultiplier = 2f;
+        }
+        else
+        {
+            //Attaque de côté
+            damageMultiplier = 1.5f;
+        }
+
+        // Application des dégâts à l'ennemi
+        int finalDamage = (int)(player.playerStats.totalStats.atk * damageMultiplier);
+        boss.Damage(finalDamage);
+
+        // Trigger des passifs de l'équipement du joueur ( OnHit )
+        if (player.equipment != null)
+        {
+            player.equipment.TriggerPassives(EquipmentTriggerType.OnHit, boss.gameObject, finalDamage);
+        }
+
+        // Entrée en combat
+        GameManager.Instance.EnterCombat();
+
+        // Vérification de la mort de l'ennemi
+        if (boss.CurrentHealth <= 0)
+        {
+            boss.Die();
+        }
     }
 
     private static Vector2 GetCardinalDirection(Vector2 v)

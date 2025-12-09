@@ -23,10 +23,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     private bool isKnockedBack = false;
     public float knockbackDuration = 0.5f;
     public float knockbackForce = 3f;
-    private ParticleSystem hitParticles;
-    protected Material material;
-    [SerializeField] protected Color tintColor;
-    [SerializeField] protected float tintFadeSpeed = 0.25f;
 
     [Header("AI Settings")]
     public float chaseDistance = 5f; // Distance à partir de laquelle on passe en mode Chase / = aggroRange
@@ -46,6 +42,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public GameObject slashVFXPrefab;
     public GameObject stepVFXPrefab;
     public GameObject projectilePrefab;
+    private ParticleSystem hitParticles;
+    protected Material material;
+    [SerializeField] protected Color tintColor = Color.red;
+    [SerializeField] protected float tintFadeSpeed = 0.5f;
 
     #region State Machine variables
 
@@ -79,7 +79,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
         //Ennemy
         StateMachine = new EnemyStateMachine();
-        spriteRenderer = this.gameObject.GetComponentInChildren<SpriteRenderer>();
+        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
         material = spriteRenderer.material;
     }
 
@@ -242,7 +242,9 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     public void Damage(int damage) {
         CurrentHealth -= damage;
-        StartCoroutine(BlinkRoutine());
+
+        //StartCoroutine(BlinkRoutine());
+        StartCoroutine(HitFlash());
 
         if (CurrentHealth <= 0f) {
             Die();
@@ -286,6 +288,24 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             spriteRenderer.enabled = true;
             yield return new WaitForSeconds(0.1f);
         }
+    }
+
+
+    private IEnumerator HitFlash()
+    {
+        material.SetColor("_Tint", tintColor);
+        Color tempColor;
+        tempColor = tintColor;
+
+        float time = 0f;
+        while (time < tintFadeSpeed)
+        {
+            time += Time.deltaTime;
+            tempColor.a = Mathf.Lerp(tintColor.a, 0f, (time / tintFadeSpeed));
+            material.SetColor("_Tint", tempColor);
+            yield return null;
+        }
+
     }
 
     private void PlayHitEffect(Vector2 hitPosition) {

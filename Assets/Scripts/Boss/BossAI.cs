@@ -12,8 +12,11 @@ public class BossAI : EnemyAI
     // -------- Cooldowns & Patterns --------
     [Header("Global Cooldowns")]
     public float globalCooldown = 5f;      // Cooldown global entre les attaques
-    private float cooldownTimer = 0f;
 
+    public EnemyState TransitionState { get; set; }
+
+    private float cooldownTimer = 0f;
+    private bool isInvincible = false;
 
     protected override void Start()
     {
@@ -32,20 +35,19 @@ public class BossAI : EnemyAI
     public override void ApplyKnockback(Vector2 duration)
     {
         // Le boss n'est pas affecté par le knockback
-        Debug.Log("Boss ignores knockback.");
         return;
     }
 
-    public void CheckPhaseTransition()
+    public bool CheckPhaseTransition()
     {
         float hpRatio = CurrentHealth / MaxHealth;
 
         if (!isInPhaseTwo && hpRatio <=  phaseSwitchHealthThreshold)
         {
-            isInPhaseTwo = true;
-            // Logique pour changer les attaques et comportements du boss
-            Debug.Log("Le boss est passé en phase 2 !");
+            return true;
         }
+
+        return false;
     }
 
     public bool IsCooldownComplete()

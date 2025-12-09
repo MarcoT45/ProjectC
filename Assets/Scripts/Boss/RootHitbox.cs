@@ -4,14 +4,18 @@ using UnityEngine;
 
 public class RootHitbox : MonoBehaviour
 {
+    [HideInInspector]public int damage = 0;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        int damage = Mathf.RoundToInt(this.transform.parent.GetComponent<Boss1>().monsterData.atk);
-        if (collision.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
-            collision.GetComponent<PlayerController>().Damage(damage);
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.Damage(damage);
+            }
         }
     }
-
+     
 }

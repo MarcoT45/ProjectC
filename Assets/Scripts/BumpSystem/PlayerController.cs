@@ -16,9 +16,15 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
     public float knockbackDurationSide = 0.3f;
 
     [Header("VFX")]
-    public Rigidbody2D rb;
     public GameObject hitVFX;
     public GameObject projectilePrefab; // Prefab projectile
+
+    public bool isHurt;
+    protected Material material;
+    [SerializeField] protected float tintFadeSpeed = 0.5f;
+    [SerializeField] protected Color tintColor = Color.white;
+    public Rigidbody2D rb;
+
 
     [HideInInspector] public Vector2 movement;
     [HideInInspector] public  Vector2 forwardDirection;
@@ -38,7 +44,8 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = this.GetComponentInChildren<SpriteRenderer>();
+        material = spriteRenderer.material;
         forwardDirection = Vector2.right;
         playerStats = GetComponent<PlayerStats>();
         equipment = GetComponent<EquipmentController>();
@@ -65,23 +72,38 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
             return;
 
         // Mouvement avec le ControlsManager
-        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub || ControlsManager.Instance.controlsState == ControlsState.Combat) {
-            if(ControlsManager.Instance.DeplacerHold) {
+        if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub || ControlsManager.Instance.controlsState == ControlsState.Combat)
+        {
+            if (ControlsManager.Instance.DeplacerHold)
+            {
                 float moveX = ControlsManager.Instance.DeplacerValue.x;
                 float moveY = ControlsManager.Instance.DeplacerValue.y;
                 movement = new Vector2(moveX, moveY).normalized;
-                if (movement != Vector2.zero) {
+                if (movement != Vector2.zero)
+                {
                     forwardDirection = movement;
                 }
-            } else {
+            }
+            else
+            {
                 movement = Vector2.zero;
             }
+
+            if(isHurt) movement = Vector2.zero;
+        }
+
+        if (!isDashing && !isKnockedBack)
+        {
+            currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
+            rb.velocity = movement * playerStats.totalStats.spd;
         }
 
         //Mettre à jour MaxHealth et MaxShield en fonction des stats totales si elles ont changées
-        if (MaxHealth != playerStats.totalStats.pv) {
+        if (MaxHealth != playerStats.totalStats.pv)
+        {
             MaxHealth = playerStats.totalStats.pv;
-            if( CurrentHealth >= MaxHealth) {
+            if (CurrentHealth >= MaxHealth)
+            {
                 CurrentHealth = MaxHealth;
             }
         }
@@ -93,10 +115,6 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
             }
         }
 
-        if (!isDashing && !isKnockedBack) {
-            currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
-            rb.velocity = movement * playerStats.totalStats.spd;
-        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision) {
@@ -148,11 +166,14 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
             CurrentHealth -= (int)amount;
             //clamp la vie actuelle à 0
             CurrentHealth = Mathf.Max(CurrentHealth, 0);
+
+            isHurt = true;
+            StartCoroutine(HitFlash());
+
         }
 
-        //StartCoroutine(BlinkRoutine());
         if (CurrentHealth <= 0) {
-            Destroy(gameObject);
+            Die();
         }
     }
 
@@ -167,8 +188,6 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         rb.velocity = Vector2.zero;
         rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
 
-        Debug.Log("direction.magnitude: " + direction.magnitude);
-
         if (direction.magnitude < 0.5) {
             yield return new WaitForSeconds(knockbackDurationSide);
         } else {
@@ -176,6 +195,24 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         }
 
         isKnockedBack = false;
+    }
+    
+    private IEnumerator HitFlash()
+    {
+        material.SetColor("_Tint", tintColor);
+        Color tempColor;
+        tempColor = tintColor;
+
+        float time = 0f;
+        while (time < tintFadeSpeed)
+        {
+            time += Time.deltaTime;
+            tempColor.a = Mathf.Lerp(tintColor.a, 0f, (time / tintFadeSpeed));
+            material.SetColor("_Tint", tempColor);
+            yield return null;
+        }
+
+        isHurt = false;
     }
 
     public void BuyItem(ItemData itemData) {
@@ -191,4 +228,15 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         //Changer état du ControlsManager
     }
 
+
+    private void OnGUI()
+    {
+        GUIStyle gUIStyle = new GUIStyle();
+        gUIStyle.fontSize = 12;
+        gUIStyle.normal.textColor = Color.yellow;
+        float x = 10f;
+        float y = 10f;
+        
+        GUI.Label(new Rect(x,y,200,50), $"PLAYER HP: {this.CurrentHealth}", gUIStyle);
+    }
 }

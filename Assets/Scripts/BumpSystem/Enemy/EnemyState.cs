@@ -4,9 +4,19 @@ using UnityEngine;
 
 public class EnemyState {
 
+    public enum StateID {
+        Idle = 0,
+        Attacking = 10,
+        Slam = 11,
+        Thrust = 12,
+        Roots = 13,
+        Staggered = 20,
+        Dead = 30
+    }
+
     protected EnemyAI enemy;
     protected EnemyStateMachine enemyStateMachine;
-    protected int animationHash;
+    protected StateID stateID;
 
     public EnemyState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) {
         this.enemy = enemy;

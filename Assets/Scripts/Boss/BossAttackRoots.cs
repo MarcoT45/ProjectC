@@ -32,8 +32,7 @@ public class BossAttackRoots : MonoBehaviour
 
     public void PerformAttack()
     {
-        if (isAttacking)return;
-        Debug.Log("BossAttackRoots: Performing Root Attack");
+        if (isAttacking) return;
         StartCoroutine(RootAttack());
 
     }
@@ -74,6 +73,8 @@ public class BossAttackRoots : MonoBehaviour
 
             Boss1 boss = bossTransform.gameObject.GetComponent<Boss1>();
             GameObject root = Instantiate(boss.rootPrefab, spawnPosition, Quaternion.identity);
+            RootHitbox r = root.GetComponent<RootHitbox>();
+            r.damage = Mathf.FloorToInt(boss.monsterData.atk);
             root.transform.parent = this.transform;
 
             Destroy(root, rootLifetime);

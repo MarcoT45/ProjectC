@@ -14,11 +14,9 @@ public class BossCoreState : EnemyState
         // Récupérer la référence au Boss1
         boss = enemy as Boss1;
 
-        Debug.Log("Boss Core State Entered");
-
-        // Démarrer animation de l'attaque de slam
-        this.animationHash = Animator.StringToHash("Idle");
-        boss.animator.SetInteger("StateID", animationHash);
+        // Démarrer animation idle
+        stateID = StateID.Idle;
+        boss.animator.SetInteger("StateID", (int)stateID);
     }
 
     public override void ExitState() {
@@ -29,10 +27,14 @@ public class BossCoreState : EnemyState
         base.FrameUpdate();
 
         // Vérifie la transition de phase du boss à chaque frame
-        boss.CheckPhaseTransition();
+        if (!boss.CheckPhaseTransition())
+        {
+            boss.StateMachine.ChangeState(boss.TransitionState);
+        }
 
         // Vérifie si le boss peut attaquer
-        if (boss.IsCooldownComplete()) {
+        if (boss.IsCooldownComplete())
+        {
             boss.StateMachine.ChangeState(boss.AttackingState);
         }
 

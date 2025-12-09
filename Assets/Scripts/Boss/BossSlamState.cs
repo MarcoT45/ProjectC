@@ -11,7 +11,6 @@ public class BossSlamState : EnemyState
 
     public override void EnterState()
     {
-        Debug.Log("Boss Slam State Entered");
         base.EnterState();
         // Récupérer la référence au Boss1
         boss = enemy as Boss1;
@@ -25,8 +24,8 @@ public class BossSlamState : EnemyState
         timer = 0f;
 
         // Démarrer animation de l'attaque de slam
-        this.animationHash = Animator.StringToHash("AttackSlam");
-        boss.animator.SetInteger("StateID", animationHash);
+        stateID = StateID.Slam;
+        boss.animator.SetInteger("StateID", (int)stateID);
     }
     public override void FrameUpdate()
     {
