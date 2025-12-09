@@ -18,7 +18,7 @@ public class BossRootsState : EnemyState
         if (boss == null)
         {
             Debug.LogError("BossRootsState: Boss1 component not found on the enemy GameObject.");
-            enemyStateMachine.ChangeState(enemy.IdleState);
+            enemyStateMachine.ChangeState(enemy.PatrolIdleState);
         }
 
         timer = 0f;
@@ -41,7 +41,7 @@ public class BossRootsState : EnemyState
         var info = boss.animator.GetCurrentAnimatorStateInfo(0);
         if (info.IsName("AttackRoots") && info.normalizedTime >= 1.0f)
         {
-            enemyStateMachine.ChangeState(boss.IdleState);
+            enemyStateMachine.ChangeState(boss.PatrolIdleState);
         }
 
     }

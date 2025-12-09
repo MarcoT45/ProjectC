@@ -18,7 +18,7 @@ public class BossThrustState : EnemyState
         if (boss == null)
         {
             Debug.LogError("BossThrustState: Boss1 component not found on the enemy GameObject.");
-            enemyStateMachine.ChangeState(enemy.IdleState);
+            enemyStateMachine.ChangeState(enemy.PatrolIdleState);
         }
 
         timer = 0f;
@@ -41,7 +41,7 @@ public class BossThrustState : EnemyState
         var info = boss.animator.GetCurrentAnimatorStateInfo(0);
         if (info.IsName("AttackThrust") && info.normalizedTime >= 1.0f)
         {
-            enemyStateMachine.ChangeState(boss.IdleState);
+            enemyStateMachine.ChangeState(boss.PatrolIdleState);
         }
 
     }

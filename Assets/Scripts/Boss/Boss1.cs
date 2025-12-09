@@ -26,14 +26,14 @@ public class Boss1 : BossAI
     {
         base.Awake();
 
-        IdleState = new BossCoreState(this, StateMachine);
-        AttackingState = new BossAttackState(this, StateMachine);
+        PatrolIdleState = new BossCoreState(this, StateMachine);
+        AttackState = new BossAttackState(this, StateMachine);
 
         SlamState = new BossSlamState(this, StateMachine);
         ThrustState = new BossThrustState(this, StateMachine);
         RootsState = new BossRootsState(this, StateMachine);
 
-        chaseDistance = 15f;
+        alertDistance = 15f;
 
     }
 
