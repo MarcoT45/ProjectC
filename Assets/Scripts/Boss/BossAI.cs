@@ -7,7 +7,6 @@ public class BossAI : EnemyAI
     // -------- Général boss --------
     [Header("Boss Settings")]
     public float phaseSwitchHealthThreshold = 0.5f; // Seuil de santé pour changer de phase (50% par défaut)
-    public bool isInPhaseTwo = false; // Indique si le boss est en phase 2
 
     // -------- Cooldowns & Patterns --------
     [Header("Global Cooldowns")]
@@ -16,7 +15,8 @@ public class BossAI : EnemyAI
     public EnemyState TransitionState { get; set; }
 
     private float cooldownTimer = 0f;
-    private bool isInvincible = false;
+    public bool isInvincible = false;
+    public bool isInPhaseTwo = false; // Indique si le boss est en phase 2
 
     protected override void Start()
     {

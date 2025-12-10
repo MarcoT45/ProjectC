@@ -20,18 +20,24 @@ public class Boss1 : BossAI
     public EnemyState ThrustState { get; set; }
     public EnemyState RootsState { get; set; }
 
+    public EnemyState IdleP2State { get; set; }
+
     [HideInInspector] public bool attackInProgress = false;
 
     protected override void Awake()
     {
         base.Awake();
 
-        PatrolIdleState = new BossCoreState(this, StateMachine);
+        PatrolState = new BossCoreState(this, StateMachine);
         AttackState = new BossAttackState(this, StateMachine);
+        TransitionState = new BossTransitionState(this, StateMachine);
 
         SlamState = new BossSlamState(this, StateMachine);
         ThrustState = new BossThrustState(this, StateMachine);
         RootsState = new BossRootsState(this, StateMachine);
+
+        //P2
+        IdleP2State = new BossIdleP2State(this, StateMachine);  
 
         alertDistance = 15f;
 

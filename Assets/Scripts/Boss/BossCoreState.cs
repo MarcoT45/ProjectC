@@ -27,7 +27,7 @@ public class BossCoreState : EnemyState
         base.FrameUpdate();
 
         // Vérifie la transition de phase du boss à chaque frame
-        if (!boss.CheckPhaseTransition())
+        if (boss.CheckPhaseTransition())
         {
             boss.StateMachine.ChangeState(boss.TransitionState);
         }
@@ -43,4 +43,28 @@ public class BossCoreState : EnemyState
     public override void AnimationTriggerEvent(EnemyAI.AnimationTriggerType triggerType) {
         base.AnimationTriggerEvent(triggerType);
     }
+}
+
+
+public class BossIdleP2State : EnemyState
+{
+    private Boss1 boss;
+
+    public BossIdleP2State(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine)
+    {
+    }
+
+    public override void EnterState()
+    {
+        base.EnterState();
+        Debug.Log("IDLEP2");
+
+        // Récupérer la référence au Boss1
+        boss = enemy as Boss1;
+
+        // Démarrer animation idle
+        stateID = StateID.IdleP2;
+        boss.animator.SetInteger("StateID", (int)stateID);
+    }
+
 }

@@ -22,7 +22,7 @@ public class BossAttackState: EnemyState
         if (boss == null)
         {
             Debug.LogError("BossAttackState: Boss1 component not found on the enemy GameObject.");
-            enemyStateMachine.ChangeState(enemy.PatrolIdleState);
+            enemyStateMachine.ChangeState(enemy.PatrolState);
         }
 
         boss.attackInProgress = true;

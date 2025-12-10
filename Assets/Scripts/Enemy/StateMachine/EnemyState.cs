@@ -5,13 +5,22 @@ using UnityEngine;
 public class EnemyState {
 
     public enum StateID {
-        Idle = 0,
+        Idle = 0,         //Etats P1 0+
         Attacking = 10,
         Slam = 11,
         Thrust = 12,
         Roots = 13,
         Staggered = 20,
-        Dead = 30
+        Transition = 30,
+        Dead = 40,
+        IdleP2 = 100,     //Etats Phase2 100+
+        AttackingP2 = 110,
+        SlamP2 = 111,
+        ThrustP2 = 112,
+        RootsP2 = 113,
+        StaggeredP2 = 120,
+        TransitionP2 = 130,
+        DeadP2 = 140,
     }
 
     protected EnemyAI enemy;

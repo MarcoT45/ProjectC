@@ -12,13 +12,14 @@ public class BossRootsState : EnemyState
     public override void EnterState()
     {
         base.EnterState();
+
         // Récupérer la référence au Boss1
         boss = enemy as Boss1;
 
         if (boss == null)
         {
             Debug.LogError("BossRootsState: Boss1 component not found on the enemy GameObject.");
-            enemyStateMachine.ChangeState(enemy.PatrolIdleState);
+            enemyStateMachine.ChangeState(enemy.PatrolState);
         }
 
         timer = 0f;
@@ -41,7 +42,7 @@ public class BossRootsState : EnemyState
         var info = boss.animator.GetCurrentAnimatorStateInfo(0);
         if (info.IsName("AttackRoots") && info.normalizedTime >= 1.0f)
         {
-            enemyStateMachine.ChangeState(boss.PatrolIdleState);
+            enemyStateMachine.ChangeState(boss.PatrolState);
         }
 
     }
