@@ -611,6 +611,7 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
 --- !u!70 &117581648
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -15716,6 +15717,7 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
 --- !u!70 &775597440
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -16488,6 +16490,7 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
 --- !u!70 &989005574
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -25214,8 +25217,8 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
+    x: 1.8312501
+    y: 0.4166667
     width: 1
     height: 1
   near clip plane: 0.3
@@ -27331,6 +27334,7 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
 --- !u!1001 &86340792721915345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27390,6 +27394,10 @@ PrefabInstance:
       propertyPath: gridManager
       value: 
       objectReference: {fileID: 1216903047}
+    - target: {fileID: 86340791583717850, guid: 070a8be246a3d304188ace7b98a0a04c, type: 3}
+      propertyPath: slashVFXPrefab
+      value: 
+      objectReference: {fileID: 232882041438868369, guid: b70097be1d02d334c91d0dddb01c09a6, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 070a8be246a3d304188ace7b98a0a04c, type: 3}
 --- !u!1001 &3013624289533681005

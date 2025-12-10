@@ -80,7 +80,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     [HideInInspector] public Transform player;  // Référence au joueur (assignée dans Start)
     [HideInInspector] public Transform loot;    // Référence au collectible visible
     public LayerMask wallLayerMask;
-    private Rigidbody2D rb;
+    [HideInInspector] public Rigidbody2D rb;
 
     public Action OnMoveDestinationReached;
 

@@ -22,6 +22,8 @@ public class MonsterData : ScriptableObject
     public int def;
     
     public float speed;
+
+    public float portee;
     
     public Sprite sprite;
 

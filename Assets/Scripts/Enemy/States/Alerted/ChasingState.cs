@@ -44,8 +44,11 @@ public class ChasingState : EnemyState {
             timeAlertRemaining = alertDuration;
         }
 
-        if (enemy.isAlerted && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) < 1f && attackCdRemaining < 0) {
-            enemy.StateMachine.ChangeState(enemy.AttackState);
+        if (enemy.isAlerted && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) < enemy.monsterData.portee) {
+            enemy.rb.velocity = Vector2.zero;
+            if(attackCdRemaining < 0) {
+                enemy.StateMachine.ChangeState(enemy.AttackState);
+            }
         } else {
             enemy.Move();
         }
@@ -66,7 +69,9 @@ public class ChasingState : EnemyState {
     }
 
     private void OnDestinationReached() {
-        enemy.StateMachine.ChangeState(enemy.AlertedLookingState);
+        if (!enemy.isSearching || !enemy.isAlerted) {
+            enemy.StateMachine.ChangeState(enemy.AlertedLookingState);
+        }
     }
 
 }
