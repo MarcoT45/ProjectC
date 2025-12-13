@@ -14,7 +14,7 @@ public class ChasingState : EnemyState {
         base.EnterState();
 
         timeAlertRemaining = alertDuration;
-        attackCdRemaining = enemy.fireRate;
+        attackCdRemaining = enemy.attackCoolDown;
 
         enemy.speedBoostAlertMultiplicator = 1.5f;
         enemy.OnMoveDestinationReached += OnDestinationReached;
