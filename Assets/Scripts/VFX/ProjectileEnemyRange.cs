@@ -19,6 +19,8 @@ public class ProjectileEnemyRange : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collision) {
         if (collision.CompareTag("Player")) {
+            PlayerController player = collision.gameObject.GetComponent<PlayerController>();
+            player.Damage(1);
             Destroy(gameObject);
         } else if (collision.gameObject.layer == LayerMask.NameToLayer("Obstacle")) {
             Destroy(gameObject); // Le projectile s’arrête sur un obstacle

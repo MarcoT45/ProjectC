@@ -14,7 +14,7 @@ public class ChasingState : EnemyState {
         base.EnterState();
 
         timeAlertRemaining = alertDuration;
-        attackCdRemaining = enemy.attackCoolDown;
+        attackCdRemaining = enemy.fireRate;
 
         enemy.speedBoostAlertMultiplicator = 1.5f;
         enemy.OnMoveDestinationReached += OnDestinationReached;
@@ -44,7 +44,8 @@ public class ChasingState : EnemyState {
             timeAlertRemaining = alertDuration;
         }
 
-        if (enemy.isAlerted && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) < enemy.monsterData.portee) {
+        // Juste pour le test je remplace ce isAlerted par isSearching
+        if (enemy.isSearching && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) < enemy.monsterData.portee) {
             enemy.rb.velocity = Vector2.zero;
             if(attackCdRemaining < 0) {
                 enemy.StateMachine.ChangeState(enemy.AttackState);

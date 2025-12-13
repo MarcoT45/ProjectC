@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 79dc94425ccef944b9261561b375aad5, type: 3}
-  m_Name: 02 - Orc
+  m_Name: 03 - Archer
   m_EditorClassIdentifier: 
-  numero: 2
-  monsterName: Orc
-  description: Homme porc
+  numero: 3
+  monsterName: Archer
+  description: Archer ennemi
   discovered: 0
-  pv: 4
+  pv: 8
   atk: 1
   def: 0
-  speed: 10
-  portee: 1
-  sprite: {fileID: -945746118, guid: 6254551802b75d04c8b835ac7223f1ba, type: 3}
+  speed: 2
+  portee: 6
+  sprite: {fileID: 0}
