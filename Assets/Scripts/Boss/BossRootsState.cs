@@ -27,6 +27,7 @@ public class BossRootsState : EnemyState
         // Démarrer animation de l'attaque
         stateID = StateID.Roots;
         boss.animator.SetInteger("StateID", (int)stateID);
+        boss.attackInProgress = true;
     }
     public override void FrameUpdate()
     {
@@ -35,7 +36,6 @@ public class BossRootsState : EnemyState
         if (timer >= boss.slamCone.windUpTime && boss.attackInProgress)
         {
             boss.rootAttack.PerformAttack();
-            boss.attackInProgress = false;
         }
 
         //Vérifie la fin de l'animation

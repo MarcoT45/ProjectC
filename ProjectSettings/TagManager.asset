@@ -27,13 +27,13 @@ TagManager:
   - Mur
   - Sortie
   - Player
-  - Ennemi
+  - 
   - DraggableItem
   - Sol
   - Items
   - UI_Menu
   - Background
-  - 
+  - Effect
   - 
   - 
   - 
@@ -63,11 +63,11 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 1003546095
-    locked: 0
   - name: Mur
     uniqueID: 3321775671
+    locked: 0
+  - name: Player
+    uniqueID: 1003546095
     locked: 0
   - name: Items
     uniqueID: 4076037843

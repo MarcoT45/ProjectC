@@ -67,4 +67,14 @@ public class BossIdleP2State : EnemyState
         boss.animator.SetInteger("StateID", (int)stateID);
     }
 
+    public override void FrameUpdate()
+    {
+        base.FrameUpdate();
+        // Vérifie si le boss peut attaquer
+        if (boss.IsCooldownComplete())
+        {
+            boss.StateMachine.ChangeState(boss.AttackState);
+        }
+
+    }
 }

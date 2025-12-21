@@ -9,6 +9,7 @@ public class Boss1 : BossAI
     public BossAttackSlamCircle slamCircle; // Référence à l'attaque de slam en cercle
     public BossAttackSlamCone slamCone;     // Référence à l'attaque de slam en cône
     public BossAttackRoots rootAttack;       // Référence à l'attaque de racines
+    public LaserScript laserAttack;       // Référence à l'attaque de laser
 
     [Header("Distance Settings")]
     public float coneMinDistance = 3f;   // Distance minimale pour l'attaque en cône
@@ -21,6 +22,7 @@ public class Boss1 : BossAI
     public EnemyState RootsState { get; set; }
 
     public EnemyState IdleP2State { get; set; }
+    public EnemyState LaserState { get; set; }
 
     [HideInInspector] public bool attackInProgress = false;
 
@@ -37,7 +39,8 @@ public class Boss1 : BossAI
         RootsState = new BossRootsState(this, StateMachine);
 
         //P2
-        IdleP2State = new BossIdleP2State(this, StateMachine);  
+        IdleP2State = new BossIdleP2State(this, StateMachine);
+        LaserState = new BossLaserState(this, StateMachine);
 
         alertDistance = 15f;
 

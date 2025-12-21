@@ -26,6 +26,7 @@ public class BossAttackState: EnemyState
         }
 
         boss.attackInProgress = true;
+        Debug.Log("ENTER ATTACK STATE");
     }
 
 
@@ -40,23 +41,32 @@ public class BossAttackState: EnemyState
 
         if (!boss.IsCooldownComplete())return;
 
-        float distanceToPlayer = boss.GetPlayerDistance();
-
-        //Priorité 1 : Attaque de proximité en cercle
-        if (distanceToPlayer <= boss.circleDistance)
+        if(!boss.isInPhaseTwo)
         {
-            enemyStateMachine.ChangeState(boss.SlamState);
-        }
+            // Phase 1 
+            float distanceToPlayer = boss.GetPlayerDistance();
+        
+            //Priorité 1 : Attaque de proximité en cercle
+            if (distanceToPlayer <= boss.circleDistance)
+            {
+                enemyStateMachine.ChangeState(boss.SlamState);
+            }
 
-        //Priorité 2 : Attaque en avant
-        else if (distanceToPlayer > boss.coneMinDistance && distanceToPlayer <= boss.coneMaxDistance)
-        {
-            enemyStateMachine.ChangeState(boss.ThrustState);
+            //Priorité 2 : Attaque en avant
+            else if (distanceToPlayer > boss.coneMinDistance && distanceToPlayer <= boss.coneMaxDistance)
+            {
+                enemyStateMachine.ChangeState(boss.ThrustState);
+            }
+            else
+            {
+                //Priotrité 3 : Attaque de racines en 
+                enemyStateMachine.ChangeState(boss.RootsState);
+            }
         }
         else
         {
-            //Priotrité 3 : Attaque de racines en 
-            enemyStateMachine.ChangeState(boss.RootsState);
+            // Phase 2 : Attaque de laser
+            enemyStateMachine.ChangeState(boss.LaserState);
         }
     }
 

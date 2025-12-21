@@ -83,8 +83,18 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     [HideInInspector] public Rigidbody2D rb;
 
     public Action OnMoveDestinationReached;
+    public static int AliveEnemyCount = 0;
+    private PoolEnemy poolEnemy;
 
     #region Awake/Start/Update
+    private void OnEnable()
+    {
+        AliveEnemyCount++;
+    }
+    private void OnDisable()
+    {
+        AliveEnemyCount--;
+    }
 
     protected virtual void Awake() {
         gridManager = GameObject.FindWithTag("GridManager").GetComponent<GridManager>();
@@ -103,6 +113,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         MaxHealth = monsterData.pv;
         CurrentHealth = MaxHealth;
+        forwardDirection = Vector2.right;
 
         StateMachine.Initialize(PatrolState);
     }
@@ -247,7 +258,13 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     }
 
     public void Die() {
-        Destroy(gameObject);
+        if(poolEnemy != null) {
+            CurrentHealth = MaxHealth;
+            poolEnemy.HideEnemy(this.gameObject);
+        }else
+        {
+            Destroy(gameObject);
+        }
     }
 
     #endregion

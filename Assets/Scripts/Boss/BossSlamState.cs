@@ -26,6 +26,7 @@ public class BossSlamState : EnemyState
         // Démarrer animation de l'attaque de slam
         stateID = StateID.Slam;
         boss.animator.SetInteger("StateID", (int)stateID);
+        boss.attackInProgress = true;
     }
     public override void FrameUpdate()
     {
@@ -34,7 +35,6 @@ public class BossSlamState : EnemyState
         if (timer >= boss.slamCircle.windUpTime && boss.attackInProgress)
         {
             boss.slamCircle.DoSlam();
-            boss.attackInProgress = false;
         }
 
         //Vérifie la fin de l'animation

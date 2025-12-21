@@ -20,8 +20,6 @@ public class BossTransitionState : EnemyState
             enemyStateMachine.ChangeState(enemy.PatrolIdleState);
         }
 
-        boss.isInPhaseTwo = true;
-        boss.isInvincible = true;
 
         // Démarrer animation de transition
         stateID = StateID.Transition;
@@ -36,6 +34,9 @@ public class BossTransitionState : EnemyState
         if (info.IsName("PhaseTransition") && info.normalizedTime >= 1.0f)
         {
             enemyStateMachine.ChangeState(boss.IdleP2State);
+
+            boss.isInPhaseTwo = true;
+            boss.isInvincible = true;
         }
 
     }
