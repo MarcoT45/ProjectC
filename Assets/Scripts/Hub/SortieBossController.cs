@@ -7,11 +7,19 @@ using UnityEngine.SceneManagement;
 
 public class SortieBossController : MonoBehaviour
 {
+    public bool avecCutscene = false;
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Player")
         {
-            SceneManager.LoadScene(5);
+            if(avecCutscene)
+            {
+                SceneManager.LoadScene(6);
+            }
+            else
+            {
+                SceneManager.LoadScene(5);
+            }
         }
     }
 }

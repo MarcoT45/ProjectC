@@ -170,6 +170,7 @@ MonoBehaviour:
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}
 --- !u!1 &86340792424955051
 GameObject:
   m_ObjectHideFlags: 0

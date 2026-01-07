@@ -5010,23 +5010,33 @@ MonoBehaviour:
   monsterData: {fileID: 11400000, guid: 8a0d6e178b021514db56aa1bf6eefba7, type: 2}
   forwardDirection: {x: 0, y: 0}
   movementRange: 5
-  isAggroed: 0
+  isSearching: 0
+  isAlerted: 0
   aggroDuration: 2
   attackCoolDown: 0
   fireRate: 0
+  isKnockedBack: 0
   knockbackDuration: 0.3
   knockbackForce: 3
-  tintColor: {r: 0, g: 0, b: 0, a: 0}
-  tintFadeSpeed: 0.25
-  chaseDistance: 5
+  alertDistance: 0
   safeRange: 0
   pathUpdateInterval: 0.5
   gridManager: {fileID: 0}
   pathRefreshInterval: 0.5
+  animator: {fileID: 0}
   slashVFXPrefab: {fileID: 0}
   stepVFXPrefab: {fileID: 0}
   projectilePrefab: {fileID: 0}
+  tintColor: {r: 0, g: 0, b: 0, a: 0}
+  tintFadeSpeed: 0.25
+  bubbleIdle: {fileID: 0}
+  bubbleSearch: {fileID: 0}
+  playerSeachPosition: {x: 0, y: 0, z: 0}
+  searchLookCounter: 4
+  speedBoostAlertMultiplicator: 1
   player: {fileID: 0}
+  loot: {fileID: 0}
   wallLayerMask:
     serializedVersion: 2
     m_Bits: 0
+  rb: {fileID: 0}

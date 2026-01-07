@@ -21,7 +21,10 @@ EditorBuildSettings:
     path: Assets/Scenes/BumpSystem/BumpTest.unity
     guid: 58bcbc53481f02f47abfc4cf5237de2d
   - enabled: 1
-    path: Assets/Scenes/Bosses/Boss1.unity
+    path: Assets/Scenes/Bosses/Boss1 1.unity
+    guid: ce973d1d3de8c67499d97e779ff57963
+  - enabled: 1
+    path: Assets/Scenes/Bosses/CutsceneBoss1.unity
     guid: a5e6573bdb79d99418eeee8c9dec5bbe
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: c1f5c60933e12e1448fb1c52ff574c7e, type: 2}

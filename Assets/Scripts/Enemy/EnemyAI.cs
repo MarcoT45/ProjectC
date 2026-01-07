@@ -86,6 +86,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public static int AliveEnemyCount = 0;
     private PoolEnemy poolEnemy;
 
+    //Events
+    public event Action<int,int> OnHealthChanged;
+    public event Action OnDeath;
+
     #region Awake/Start/Update
     private void OnEnable()
     {
@@ -152,7 +156,10 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
-            rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * speedBoostAlertMultiplicator;
+            Vector2 direction = (targetTmpPosition - transform.position).normalized;
+            rb.MovePosition((Vector2) transform.position + (direction  * monsterData.speed * speedBoostAlertMultiplicator * Time.deltaTime));
+            //rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * speedBoostAlertMultiplicator;
+            //transform.position = Vector2.MoveTowards(transform.position, targetTmpPosition, monsterData.speed * speedBoostAlertMultiplicator * Time.deltaTime);
 
             // Pour changer la direction ou l'ennemi regarde
             float upValue, downValue, rightValue, leftValue = 0f;
@@ -249,10 +256,15 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public void Damage(int damage) {
         CurrentHealth -= damage;
 
-        //StartCoroutine(BlinkRoutine());
+        //Invoke l'action de changement de vie ( Ui barre de vie )  
+        OnHealthChanged?.Invoke((int)CurrentHealth, (int)MaxHealth);
+
         StartCoroutine(HitFlash());
 
         if (CurrentHealth <= 0f) {
+
+            //Invoke l'action de la mort ( UI barre de vie )
+            OnDeath?.Invoke();
             Die();
         }
     }
@@ -275,7 +287,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     {
         Debug.Log("Applying Knockback to Enemy");
         rb.velocity = Vector2.zero;
-        rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+        //rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+        transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, knockbackForce * Time.deltaTime);
         //Debug.Log("Knockback Applied: " + rb.velocity);
 
         // Debug.Log("Knockback Direction: " + direction); // Vérification

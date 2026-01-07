@@ -65,6 +65,10 @@ public class ChasingAtDistanceState : EnemyState {
         }
     }
 
+    public override void FrameFixedUpdate() {
+        base.FrameFixedUpdate();
+    }
+
     private Vector3 GetBestMove(Vector3 awayFromPlayer) {
         Vector3 bestMove = enemy.transform.position;
         float shortestDistance = float.MaxValue;

@@ -1,10 +1,15 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
 
     [HideInInspector] public PlayerStats playerStats;
     [HideInInspector] public EquipmentController equipment;
+
+    [Header("References")]
+    //public Transform firePoint; // Point d'origine des projectiles ( à définir si besoin)
+    public Animator animator;
 
     [Header("Settings")]
 
@@ -83,10 +88,13 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
                 {
                     forwardDirection = movement;
                 }
+
+                Animating(moveX, moveY);    
             }
             else
             {
                 movement = Vector2.zero;
+                Animating(movement.x, movement.y);
             }
 
             if(isHurt) movement = Vector2.zero;
@@ -96,6 +104,8 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         {
             currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
             rb.velocity = movement * playerStats.totalStats.spd;
+            //rb.MovePosition((Vector2)transform.position + (currentVelocity * Time.deltaTime));
+
         }
 
         //Mettre à jour MaxHealth et MaxShield en fonction des stats totales si elles ont changées
@@ -222,21 +232,36 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
     }
 
     public void Die() {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
+        // Destroy(gameObject);
 
         //Changer de scène ou afficher un écran de fin de jeu
         //Changer état du ControlsManager
     }
 
-
-    private void OnGUI()
+    private void Animating(float h, float v)
     {
-        GUIStyle gUIStyle = new GUIStyle();
-        gUIStyle.fontSize = 12;
-        gUIStyle.normal.textColor = Color.yellow;
-        float x = 10f;
-        float y = 10f;
-        
-        GUI.Label(new Rect(x,y,200,50), $"PLAYER HP: {this.CurrentHealth}", gUIStyle);
+        Vector2 movement = new Vector2(h, v);
+
+        if(movement.magnitude > 1f)
+        {
+            movement = movement.normalized;
+        }
+
+        movement = transform.InverseTransformDirection(movement);
+        animator.SetFloat("MoveX", movement.x);
+        animator.SetFloat("MoveY", movement.y);
     }
+
+    //DEBUG GUI POUR AFFICHER LA VIE DU PLAYER
+    /* private void OnGUI()
+     {
+         GUIStyle gUIStyle = new GUIStyle();
+         gUIStyle.fontSize = 12;
+         gUIStyle.normal.textColor = Color.yellow;
+         float x = 10f;
+         float y = 10f;
+
+         GUI.Label(new Rect(x,y,200,50), $"PLAYER HP: {this.CurrentHealth}", gUIStyle);
+     }*/
 }

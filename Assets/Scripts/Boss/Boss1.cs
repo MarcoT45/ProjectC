@@ -51,16 +51,16 @@ public class Boss1 : BossAI
         base.Start();
     }
 
+    //DEBUG GUI POUR AFFICHER LA VIE DU BOSS
+    /* private void OnGUI()
+     {
+         GUIStyle gUIStyle = new GUIStyle();
+         gUIStyle.fontSize = 12;
+         gUIStyle.normal.textColor = Color.red;
+         float x = 10f;
+         float y = 10f;
 
-    private void OnGUI()
-    {
-        GUIStyle gUIStyle = new GUIStyle();
-        gUIStyle.fontSize = 12;
-        gUIStyle.normal.textColor = Color.red;
-        float x = 10f;
-        float y = 10f;
-
-        GUI.Label(new Rect(x, y + 12, 200, 50), $"BOSS HP: {this.CurrentHealth}", gUIStyle);
-    }
+         GUI.Label(new Rect(x, y + 12, 200, 50), $"BOSS HP: {this.CurrentHealth}", gUIStyle);
+     }*/
 
 }

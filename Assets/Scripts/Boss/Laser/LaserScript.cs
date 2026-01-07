@@ -103,7 +103,6 @@ public class LaserScript : MonoBehaviour
 
     public bool IsSweepComplete()
     {
-        Debug.Log("Timer: " + timer + " / SweepDuration: " + sweepDuration);
         return timer >= sweepDuration;
     }
 

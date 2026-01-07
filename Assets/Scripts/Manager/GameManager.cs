@@ -1,8 +1,9 @@
+using DG.Tweening;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using System;
 using System.Globalization;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
@@ -95,6 +96,9 @@ public class GameManager : MonoBehaviour {
 
         TriItemsParRarete();
         ResetRun();
+
+        // Initialisation de DOTween
+        DOTween.Init();
     }
 
     private void Update()
