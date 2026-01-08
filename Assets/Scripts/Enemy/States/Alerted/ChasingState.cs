@@ -16,7 +16,7 @@ public class ChasingState : EnemyState {
         timeAlertRemaining = alertDuration;
         attackCdRemaining = enemy.attackCoolDown;
 
-        enemy.speedBoostAlertMultiplicator = 1.5f;
+        enemy.speedBoostAlertMultiplicator = 1.75f;
         enemy.OnMoveDestinationReached += OnDestinationReached;
 
         enemy.bubbleSearch.SetActive(false);
