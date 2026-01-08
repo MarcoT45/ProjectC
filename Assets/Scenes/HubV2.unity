@@ -35669,18 +35669,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3994457246013022079, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 69dd32297a6a4294d88c39a16943ef57, type: 2}
-    - target: {fileID: 3994457246091314371, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
-      propertyPath: abilityTrinket1
-      value: 
-      objectReference: {fileID: 11400000, guid: 2280154fe21968e41a964b00d307b972, type: 2}
-    - target: {fileID: 3994457246091314371, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
-      propertyPath: abilityTrinket2
-      value: 
-      objectReference: {fileID: 11400000, guid: 1b74d3d4e00714e4e8fef1586dc7ebab, type: 2}
     - target: {fileID: 3994457246091314375, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_RootOrder
       value: 4

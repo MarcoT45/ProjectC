@@ -102,8 +102,9 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
 
         if (!isDashing && !isKnockedBack)
         {
-            currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
-            rb.velocity = movement * playerStats.totalStats.spd;
+            //currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
+           // rb.velocity = movement * playerStats.totalStats.spd; 
+            rb.MovePosition((Vector2)transform.position + (movement * playerStats.totalStats.spd * Time.deltaTime));
             //rb.MovePosition((Vector2)transform.position + (currentVelocity * Time.deltaTime));
 
         }
