@@ -16,7 +16,8 @@ public class CameraFollowTarget : MonoBehaviour
     void Update()
     {
         startPos = transform.position;
-        transform.position = PixelPerfectClamp(target.transform.position, PixelsPerUnit);
+        transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
+        //transform.position = PixelPerfectClamp(target.transform.position, PixelsPerUnit);
     }
 
     private Vector3 PixelPerfectClamp(Vector3 moveVector, float pixelsPerUnit)

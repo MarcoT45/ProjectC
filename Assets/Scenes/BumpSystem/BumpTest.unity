@@ -20451,8 +20451,8 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 1.8312501
-    y: 0.4166667
+    x: 0
+    y: 0
     width: 1
     height: 1
   near clip plane: 0.3
@@ -20954,7 +20954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1619967674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.44406, y: 3.9549787, z: -1}
+  m_LocalPosition: {x: 4.4375, y: 3.9375, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -21033,6 +21033,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1655816236}
     m_Modifications:
+    - target: {fileID: 624974936119319174, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0625
+      objectReference: {fileID: 0}
+    - target: {fileID: 3314469868307310882, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 4662317059917044899, guid: f443efe462a15744884dd543fc613dbe, type: 3}
+    - target: {fileID: 3994457246013022079, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3994457246091314375, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_RootOrder
       value: 0

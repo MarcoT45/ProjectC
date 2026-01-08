@@ -58,10 +58,10 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
 
     private void Start() {
         // Assigner la caméra principale pour suivre le joueur
-        if ( Camera.main.GetComponent<CameraFollow>() != null) {
-            Camera.main.GetComponent<CameraFollow>().target = this.transform;
+        if ( Camera.main.GetComponent<CameraFollowTarget>() != null) {
+            Camera.main.GetComponent<CameraFollowTarget>().target = this.gameObject;
         } else {
-            Camera.main.gameObject.AddComponent<CameraFollow>().target = this.transform;
+            Camera.main.gameObject.AddComponent<CameraFollowTarget>().target = this.gameObject;
         }
 
         //Stats initiales

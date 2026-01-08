@@ -20,7 +20,7 @@ public class PatrolWalkState : EnemyState {
         enemy.OnMoveDestinationReached -= OnDestinationReached;
     }
 
-    public override void FrameUpdate() {
+    public override void FrameFixedUpdate() {
         base.FrameUpdate();
 
         Vector2 lineOfSightDirection = enemy.forwardDirection;
@@ -39,7 +39,7 @@ public class PatrolWalkState : EnemyState {
         if (enemy.isKnockedBack) {
             enemy.StateMachine.ChangeState(enemy.AlertedState);
         }
-    }
+    } 
 
     private void OnDestinationReached() {
         enemy.StateMachine.ChangeState(enemy.PatrolState);
