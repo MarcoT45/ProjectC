@@ -69,6 +69,7 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         CurrentHealth = MaxHealth;
         MaxShield = playerStats.totalStats.shield;
         CurrenShield = MaxShield;
+
     }
 
     private void FixedUpdate() {
@@ -102,11 +103,8 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
 
         if (!isDashing && !isKnockedBack)
         {
-            //currentVelocity = Vector2.Lerp(currentVelocity, movement * playerStats.totalStats.spd, 0.1f);
-           // rb.velocity = movement * playerStats.totalStats.spd; 
-            rb.MovePosition((Vector2)transform.position + (movement * playerStats.totalStats.spd * Time.deltaTime));
-            //rb.MovePosition((Vector2)transform.position + (currentVelocity * Time.deltaTime));
-
+            rb.velocity = movement * playerStats.totalStats.spd; 
+            //rb.MovePosition((Vector2)transform.position + (movement * playerStats.totalStats.spd * Time.deltaTime));
         }
 
         //Mettre à jour MaxHealth et MaxShield en fonction des stats totales si elles ont changées
