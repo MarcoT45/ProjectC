@@ -1,8 +1,9 @@
-using UnityEngine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Tilemaps;
-using System;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
@@ -11,19 +12,24 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
     public int Coins { get; set; }
-    public Vector2 forwardDirection;
+    [HideInInspector] public Vector2 forwardDirection;
     public float movementRange = 5f;
-    public bool isSearching = false;
-    public bool isAlerted = false;
+    [HideInInspector] public bool isSearching = false;
+    [HideInInspector] public bool isAlerted = false;
+    [HideInInspector] public bool isAttacking = false;
+    [HideInInspector] public bool isMoving = false;
+    [HideInInspector] public bool isInvincible = false;
+
     public float aggroDuration;
     public float attackCoolDown;
     public float fireRate;
     private SpriteRenderer spriteRenderer;
 
     [Header("Hit variables")]
-    public bool isKnockedBack = false;
+    [HideInInspector] public bool isKnockedBack = false;
     public float knockbackDuration = 0.5f;
     public float knockbackForce = 3f;
+    public AnimationCurve knockbackCurve;
 
     [Header("AI Settings")]
     public float alertDistance;             // Distance à partir de laquelle on passe en mode Chase / = aggroRange
@@ -70,6 +76,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public EnemyState AlertedState { get; set; }
     public EnemyState AlertedLookingState { get; set; }
     public EnemyState AttackState { get; set; }
+    public EnemyState StunState { get; set; }
 
     #endregion
 
@@ -154,10 +161,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         }
 
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
+            isMoving = true;
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
 
             Vector2 direction = (targetTmpPosition - transform.position).normalized;
-            rb.MovePosition((Vector2) transform.position + (direction  * monsterData.speed * speedBoostAlertMultiplicator * Time.deltaTime));
+            rb.MovePosition((Vector2) transform.position + (direction  * monsterData.speed * speedBoostAlertMultiplicator * Time.fixedDeltaTime));
             //rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * speedBoostAlertMultiplicator;
             //transform.position = Vector2.MoveTowards(transform.position, targetTmpPosition, monsterData.speed * speedBoostAlertMultiplicator * Time.deltaTime);
 
@@ -189,6 +197,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
                 // Arrivé à destination ?
                 if (currentPathIndex >= path.Count) {
+                    isMoving = false; 
                     path = null;
                     currentPathIndex = 0;
                     rb.velocity = Vector2.zero;
@@ -201,6 +210,46 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             currentPathIndex = 0;
             rb.velocity = Vector2.zero;
             OnMoveDestinationReached.Invoke();
+        }
+    }
+
+    public Vector2 GetSideVectorFromDirection(Vector2 direction)
+    {
+
+        //Dot Product où est le joueur par rapport à l'ennemi
+        float upWeight = Vector2.Dot(direction.normalized, this.transform.up);
+        float rightWeight = Vector2.Dot(direction.normalized, this.transform.right);
+
+        float upMag = Mathf.Abs(upWeight);
+        float rightMag = Mathf.Abs(rightWeight);
+
+        if (upMag >= rightMag)
+        {
+            //Le joueur est au dessus ou en dessous de l'ennemi
+            if (upWeight >= 0)
+            {
+                //Le joueur est au dessus
+                return Vector2.up;
+            }
+            else
+            {
+                //Le joueur est en dessous
+                return Vector2.down;
+            }
+        }
+        else
+        {
+            //Le joueur est à gauche ou à droite de l'ennemi
+            if (rightWeight >= 0)
+            {
+                //Le joueur est à droite
+                return Vector2.right;
+            }
+            else
+            {
+                //Le joueur est à gauche
+                return Vector2.left;
+            }
         }
     }
 
@@ -285,24 +334,61 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     public virtual void ApplyKnockback(Vector2 direction)
     {
-        Debug.Log("Applying Knockback to Enemy");
         rb.velocity = Vector2.zero;
-        //rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
-        transform.position = Vector2.MoveTowards(transform.position, (Vector2)transform.position + direction, knockbackForce * Time.deltaTime);
-        //Debug.Log("Knockback Applied: " + rb.velocity);
-
-        // Debug.Log("Knockback Direction: " + direction); // Vérification
-        StartCoroutine(KnockbackCoroutine(direction));
-
+        if (!isKnockedBack)
+        {
+            StartCoroutine(KnockbackCoroutine(direction));
+        }
     }
 
-    private IEnumerator KnockbackCoroutine(Vector2 direction) {
+    //OLD
+/*    private IEnumerator KnockbackCoroutine(Vector2 direction) {
         isKnockedBack = true;
+        Debug.Log("Knockback Started " + knockbackForce);
+        
+        //rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
+        rb.MovePosition((Vector2)transform.position + (direction * knockbackForce * Time.fixedDeltaTime));
 
         yield return new WaitForSeconds(knockbackDuration);
         rb.velocity = Vector2.zero;
 
         isKnockedBack = false;
+    }*/
+
+    private IEnumerator KnockbackCoroutine(Vector2 direction)
+    {
+        isKnockedBack = true;
+
+        Vector2 startPos = this.rb.position;
+        Vector2 targetPos = (Vector2)transform.position + direction * knockbackForce;
+
+        //Boucle pour vérifier chaque case entre la position de départ et la position cible. Pour les murs
+        for (int i = 1; i <= knockbackForce; i++)
+        {
+            Vector2 intermediatePos = (Vector2)transform.position + direction * i;
+            if (gridManager.GetNodeFromWorldPoint(intermediatePos).walkable == false)
+            {
+                targetPos = (Vector2)transform.position + direction * (i - 1);
+                break;
+            }
+        }
+
+        float elapsed = 0f;
+
+        while(elapsed < knockbackDuration)
+        {
+            float t = elapsed / knockbackDuration;
+            float curveValue = knockbackCurve.Evaluate(t);
+            Vector2 newPos = Vector2.Lerp(startPos, targetPos, curveValue);
+            rb.MovePosition(newPos);
+
+            elapsed += Time.fixedDeltaTime;
+            yield return new WaitForFixedUpdate();
+        }
+
+        rb.MovePosition(targetPos);
+        isKnockedBack = false;
+
     }
 
     private IEnumerator BlinkRoutine() {

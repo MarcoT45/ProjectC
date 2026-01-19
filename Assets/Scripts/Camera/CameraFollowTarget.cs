@@ -10,14 +10,18 @@ using UnityEngine;
 public class CameraFollowTarget : MonoBehaviour
 {
     public GameObject target;
-    public Vector3 startPos;
     public float PixelsPerUnit;
+
+    private Vector3 startPos;
+    //private Vector3 velocity;
 
     void Update()
     {
         startPos = transform.position;
+        //velocity = startPos;
         transform.position = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
         //transform.position = PixelPerfectClamp(target.transform.position, PixelsPerUnit);
+        //transform.position = Vector3.SmoothDamp(startPos, target.transform.position, ref velocity, 0.05f);
     }
 
     private Vector3 PixelPerfectClamp(Vector3 moveVector, float pixelsPerUnit)

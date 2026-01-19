@@ -25,7 +25,7 @@ public class BossAttackState: EnemyState
             enemyStateMachine.ChangeState(enemy.PatrolState);
         }
 
-        boss.attackInProgress = true;
+        boss.isAttacking = true;
         Debug.Log("ENTER ATTACK STATE");
     }
 

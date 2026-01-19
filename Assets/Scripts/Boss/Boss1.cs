@@ -24,8 +24,6 @@ public class Boss1 : BossAI
     public EnemyState IdleP2State { get; set; }
     public EnemyState LaserState { get; set; }
 
-    [HideInInspector] public bool attackInProgress = false;
-
     protected override void Awake()
     {
         base.Awake();

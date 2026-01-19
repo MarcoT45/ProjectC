@@ -26,8 +26,8 @@ public class EnemyAlerterChaseState : EnemyState {
         gridManager = enemy.gridManager;
     }
 
-    public override void FrameUpdate() {
-        base.FrameUpdate();
+    public override void FrameFixedUpdate() {
+        base.FrameFixedUpdate();
 
         currentPosition = enemy.transform.position;
         Vector3 targetTmp = target.transform.position;

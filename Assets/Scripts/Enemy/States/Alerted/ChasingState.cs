@@ -29,8 +29,8 @@ public class ChasingState : EnemyState {
         enemy.OnMoveDestinationReached -= OnDestinationReached;
     }
 
-    public override void FrameUpdate() {
-        base.FrameUpdate();
+    public override void FrameFixedUpdate() {
+        base.FrameFixedUpdate();
 
         TimerAlert();
         TimerAttack();
@@ -45,10 +45,10 @@ public class ChasingState : EnemyState {
         }
 
         // Juste pour le test je remplace ce isAlerted par isSearching
-        if (enemy.isSearching && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) < enemy.monsterData.portee) {
+        if (enemy.isSearching && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) <= enemy.monsterData.portee) {
             enemy.rb.velocity = Vector2.zero;
             if(attackCdRemaining < 0) {
-                enemy.StateMachine.ChangeState(enemy.AttackState);
+               // enemy.StateMachine.ChangeState(enemy.AttackState);
             }
         } else {
             enemy.Move();

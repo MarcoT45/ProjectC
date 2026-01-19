@@ -63,10 +63,16 @@ public class ChasingAtDistanceState : EnemyState {
             enemy.SetTargetPosition(lastSeen);
             enemy.Move();
         }
+
+        if (enemy.isKnockedBack)
+        {
+            enemy.StateMachine.ChangeState(enemy.StunState);
+        }
     }
 
     public override void FrameFixedUpdate() {
         base.FrameFixedUpdate();
+
     }
 
     private Vector3 GetBestMove(Vector3 awayFromPlayer) {

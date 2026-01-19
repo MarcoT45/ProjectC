@@ -26,13 +26,13 @@ public class BossThrustState : EnemyState
         // Démarrer animation de l'attaque de thrust
         stateID = StateID.Thrust;
         boss.animator.SetInteger("StateID", (int)stateID);
-        boss.attackInProgress = true;
+        boss.isAttacking = true;
     }
     public override void FrameUpdate()
     {
         base.FrameUpdate();
         timer += Time.deltaTime;
-        if (timer >= boss.slamCone.windUpTime && boss.attackInProgress)
+        if (timer >= boss.slamCone.windUpTime && boss.isAttacking)
         {
             boss.slamCone.DoSlam();
         }
@@ -48,7 +48,7 @@ public class BossThrustState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        boss.attackInProgress = false;
+        boss.isAttacking = false;
         boss.ResetCooldown();
     }
 }
@@ -79,7 +79,7 @@ public class BossLaserState : EnemyState
         base.FrameUpdate();
         timer += Time.deltaTime;
 
-        if (boss.attackInProgress && !boss.laserAttack.IsRunning)
+        if (boss.isAttacking && !boss.laserAttack.IsRunning)
         {
             bool left = boss.laserAttack.SidePlayer(boss.player);
             boss.laserAttack.ActivateLaser(left);
@@ -96,7 +96,7 @@ public class BossLaserState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        boss.attackInProgress = false;
+        boss.isAttacking = false;
         boss.ResetCooldown();
     }
 }

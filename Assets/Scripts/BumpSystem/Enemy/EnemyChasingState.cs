@@ -22,8 +22,8 @@ public class EnemyChasingState : EnemyState {
         timeRemaining = aggroDuration;
     }
 
-    public override void FrameUpdate() {
-        base.FrameUpdate();
+    public override void FrameFixedUpdate() {
+        base.FrameFixedUpdate();
 
         ManageAggro(targetPosition);
         //Mouvement

@@ -27,13 +27,13 @@ public class BossRootsState : EnemyState
         // Démarrer animation de l'attaque
         stateID = StateID.Roots;
         boss.animator.SetInteger("StateID", (int)stateID);
-        boss.attackInProgress = true;
+        boss.isAttacking = true;
     }
     public override void FrameUpdate()
     {
         base.FrameUpdate();
         timer += Time.deltaTime;
-        if (timer >= boss.slamCone.windUpTime && boss.attackInProgress)
+        if (timer >= boss.slamCone.windUpTime && boss.isAttacking)
         {
             boss.rootAttack.PerformAttack();
         }
@@ -49,7 +49,7 @@ public class BossRootsState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        boss.attackInProgress = false;
+        boss.isAttacking = false;
         boss.ResetCooldown();
     }
 }

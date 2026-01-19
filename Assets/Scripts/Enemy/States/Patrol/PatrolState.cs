@@ -16,8 +16,8 @@ public class PatrolState : EnemyState {
         base.ExitState();
     }
 
-    public override void FrameUpdate() {
-        base.FrameUpdate();
+    public override void FrameFixedUpdate() {
+        base.FrameFixedUpdate();
 
         int random = Random.Range(0, 100);
 
@@ -25,6 +25,10 @@ public class PatrolState : EnemyState {
             enemy.StateMachine.ChangeState(enemy.PatrolIdleState);
         } else {
             enemy.StateMachine.ChangeState(enemy.PatrolWalkState);
+        }
+
+        if(enemy.isKnockedBack) {
+            enemy.StateMachine.ChangeState(enemy.StunState);
         }
     }
 

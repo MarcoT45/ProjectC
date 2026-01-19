@@ -5,16 +5,21 @@ public static class BumpSystem
 {
     public static void HandleBump(PlayerController player, EnemyAI enemy)
     {
+        player.rb.velocity = Vector2.zero;
+        enemy.rb.velocity = Vector2.zero;
+
         //Calcul de l'angle de l'attaque
-        Vector2 playerToEnemy = (enemy.transform.position - player.transform.position ).normalized;
+        Vector2 playerToEnemy = ( player.transform.position  - enemy.transform.position).normalized;
         playerToEnemy = GetCardinalDirection(playerToEnemy);
         float dotProduct = Vector2.Dot(enemy.forwardDirection, playerToEnemy);
 
         // Calcul des dégâts selon l'angle
         float damageMultiplier = 1f;
+
         if (dotProduct > 0.7f)
         {
             //Attaque de face 
+           // Debug.Log("FACE");
             player.Damage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
 
             // Trigger des passifs de l'équipement du joueur ( OnHit )
@@ -23,33 +28,51 @@ public static class BumpSystem
                 player.equipment.TriggerPassives(EquipmentTriggerType.OnHitTaken, enemy.gameObject, (int)enemy.monsterData.atk);
             }
 
-            player.ApplyKnockback(-playerToEnemy * 0.75f);
+            player.ApplyKnockback(playerToEnemy);
         }
         else if (dotProduct < -0.7f)
         {
             //Attaque dans le dos 
-            damageMultiplier = 2f;
-            player.ApplyKnockback(-playerToEnemy * 0.1f);
+           // Debug.Log("DOS");
+            //damageMultiplier = 2f;
+
+            // Application du knockback à l'ennemi
+            if (!enemy.isAttacking)
+            {
+                //Debug.Log("BUMP ENEMY TAKES KNOCKBACK");
+                enemy.ApplyKnockback(-playerToEnemy);
+            }
+
+
         }
         else
         {
             //Attaque de côté
-            damageMultiplier = 1.5f;
-            player.ApplyKnockback(-playerToEnemy * 0.1f);
+            //Debug.Log("COTE");
+            //damageMultiplier = 1.5f;
+
+            // Application du knockback à l'ennemi
+            if (!enemy.isAttacking)
+            {
+                //Debug.Log("BUMP ENEMY TAKES KNOCKBACK");
+                enemy.ApplyKnockback(-playerToEnemy);
+            }
+
         }
 
         // Application des dégâts à l'ennemi
-        int finalDamage = (int)(player.playerStats.totalStats.atk * damageMultiplier);
-        enemy.Damage(finalDamage);
-
-        // Trigger des passifs de l'équipement du joueur ( OnHit )
-        if (player.equipment != null)
+        if (!enemy.isInvincible)
         {
-            player.equipment.TriggerPassives(EquipmentTriggerType.OnHit, enemy.gameObject, finalDamage);
-        }
+            //Debug.Log("BUMP ENEMY TAKES DAMAGE");
+            int finalDamage = (int)(player.playerStats.totalStats.atk * damageMultiplier);
+            enemy.Damage(finalDamage);
 
-        // Application du knockback à l'ennemi
-        enemy.ApplyKnockback(playerToEnemy);
+            // Trigger des passifs de l'équipement du joueur ( OnHit )
+            if (player.equipment != null)
+            {
+                player.equipment.TriggerPassives(EquipmentTriggerType.OnHit, enemy.gameObject, finalDamage);
+            }
+        }
 
         // Entrée en combat
         GameManager.Instance.EnterCombat();

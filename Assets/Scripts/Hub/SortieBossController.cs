@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,19 +8,12 @@ using UnityEngine.SceneManagement;
 
 public class SortieBossController : MonoBehaviour
 {
-    public bool avecCutscene = false;
+    public int sceneIndex = 0;
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.tag == "Player")
         {
-            if(avecCutscene)
-            {
-                SceneManager.LoadScene(6);
-            }
-            else
-            {
-                SceneManager.LoadScene(5);
-            }
+            SceneManager.LoadScene(sceneIndex);
         }
     }
 }

@@ -26,13 +26,13 @@ public class BossSlamState : EnemyState
         // Démarrer animation de l'attaque de slam
         stateID = StateID.Slam;
         boss.animator.SetInteger("StateID", (int)stateID);
-        boss.attackInProgress = true;
+        boss.isAttacking = true;
     }
     public override void FrameUpdate()
     {
         base.FrameUpdate();
         timer += Time.deltaTime;
-        if (timer >= boss.slamCircle.windUpTime && boss.attackInProgress)
+        if (timer >= boss.slamCircle.windUpTime && boss.isAttacking)
         {
             boss.slamCircle.DoSlam();
         }
@@ -48,7 +48,7 @@ public class BossSlamState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        boss.attackInProgress = false;
+        boss.isAttacking = false;
         boss.ResetCooldown();
     }
 }

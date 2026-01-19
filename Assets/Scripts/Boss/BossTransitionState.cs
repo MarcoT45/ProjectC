@@ -43,7 +43,7 @@ public class BossTransitionState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
-        boss.attackInProgress = false;
+        boss.isAttacking = false;
         boss.ResetCooldown();
     }
 }
