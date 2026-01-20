@@ -44,7 +44,7 @@ public class SearchLookRightState : EnemyState {
         }
 
         if (enemy.isKnockedBack) {
-            enemy.StateMachine.ChangeState(enemy.AlertedState);
+            enemy.StateMachine.ChangeState(enemy.StunState);
         }
     }
 

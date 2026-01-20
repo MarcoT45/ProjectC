@@ -21,8 +21,9 @@ public class EnemyMeleeDefault : EnemyAI {
         AlertedState = new ChasingState(this, StateMachine);
         AlertedLookingState = new ChasingLookingState(this, StateMachine);
 
-        AttackState = new AttackSlashState(this, StateMachine);
         StunState = new StunState(this, StateMachine);
+
+        AttackState = new AttackBumpState(this, StateMachine);
     }
 
     protected override void Start() {

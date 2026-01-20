@@ -26,10 +26,6 @@ public class PatrolState : EnemyState {
         } else {
             enemy.StateMachine.ChangeState(enemy.PatrolWalkState);
         }
-
-        if(enemy.isKnockedBack) {
-            enemy.StateMachine.ChangeState(enemy.StunState);
-        }
     }
 
 }

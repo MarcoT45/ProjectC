@@ -16,10 +16,12 @@ public static class BumpSystem
         // Calcul des dégâts selon l'angle
         float damageMultiplier = 1f;
 
-        if (dotProduct > 0.7f)
+        Debug.Log("DOT PRODUCT BUMP : " + dotProduct);
+
+        if (dotProduct >= 1f)
         {
+            Debug.Log("BUMP FRont ATTACK");
             //Attaque de face 
-           // Debug.Log("FACE");
             player.Damage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
 
             // Trigger des passifs de l'équipement du joueur ( OnHit )
@@ -30,17 +32,19 @@ public static class BumpSystem
 
             player.ApplyKnockback(playerToEnemy);
         }
-        else if (dotProduct < -0.7f)
+        else if (dotProduct <= -1f)
         {
             //Attaque dans le dos 
-           // Debug.Log("DOS");
             //damageMultiplier = 2f;
 
             // Application du knockback à l'ennemi
             if (!enemy.isAttacking)
             {
-                //Debug.Log("BUMP ENEMY TAKES KNOCKBACK");
                 enemy.ApplyKnockback(-playerToEnemy);
+            }
+            else
+            {
+                player.ApplyKnockback(enemy.forwardDirection);
             }
 
 
@@ -48,14 +52,17 @@ public static class BumpSystem
         else
         {
             //Attaque de côté
-            //Debug.Log("COTE");
+            Debug.Log("BUMP SIDE ATTACK");
             //damageMultiplier = 1.5f;
 
             // Application du knockback à l'ennemi
             if (!enemy.isAttacking)
             {
-                //Debug.Log("BUMP ENEMY TAKES KNOCKBACK");
                 enemy.ApplyKnockback(-playerToEnemy);
+            }
+            else
+            {
+                player.ApplyKnockback(enemy.forwardDirection);
             }
 
         }

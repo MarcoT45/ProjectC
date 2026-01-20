@@ -49,7 +49,7 @@ public class StunState : EnemyState
 
         if (!enemy.isKnockedBack)
         {
-            enemy.StateMachine.ChangeState(enemy.PatrolState);
+            enemy.StateMachine.ChangeState(enemy.AlertedState);
         }
     }
 

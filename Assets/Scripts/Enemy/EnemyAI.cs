@@ -75,8 +75,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public EnemyState SearchWalkState { get; set; }
     public EnemyState AlertedState { get; set; }
     public EnemyState AlertedLookingState { get; set; }
-    public EnemyState AttackState { get; set; }
     public EnemyState StunState { get; set; }
+    public EnemyState AttackState { get; set; }
 
     #endregion
 
@@ -341,19 +341,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         }
     }
 
-    //OLD
-/*    private IEnumerator KnockbackCoroutine(Vector2 direction) {
-        isKnockedBack = true;
-        Debug.Log("Knockback Started " + knockbackForce);
-        
-        //rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
-        rb.MovePosition((Vector2)transform.position + (direction * knockbackForce * Time.fixedDeltaTime));
-
-        yield return new WaitForSeconds(knockbackDuration);
-        rb.velocity = Vector2.zero;
-
-        isKnockedBack = false;
-    }*/
 
     private IEnumerator KnockbackCoroutine(Vector2 direction)
     {

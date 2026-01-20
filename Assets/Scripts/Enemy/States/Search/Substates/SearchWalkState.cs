@@ -37,7 +37,7 @@ public class SearchWalkState : EnemyState {
         enemy.Move();
 
         if (enemy.isKnockedBack) {
-            enemy.StateMachine.ChangeState(enemy.AlertedState);
+            enemy.StateMachine.ChangeState(enemy.StunState);
         }
     }
 

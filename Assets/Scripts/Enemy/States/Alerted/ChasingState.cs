@@ -20,6 +20,8 @@ public class ChasingState : EnemyState {
         enemy.OnMoveDestinationReached += OnDestinationReached;
 
         enemy.bubbleSearch.SetActive(false);
+
+        Debug.Log("ENTER CHASING STATE");
     }
 
     public override void ExitState() {
@@ -48,10 +50,14 @@ public class ChasingState : EnemyState {
         if (enemy.isSearching && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) <= enemy.monsterData.portee) {
             enemy.rb.velocity = Vector2.zero;
             if(attackCdRemaining < 0) {
-               // enemy.StateMachine.ChangeState(enemy.AttackState);
+                enemy.StateMachine.ChangeState(enemy.AttackState);
             }
         } else {
             enemy.Move();
+        }
+
+        if (enemy.isKnockedBack) {
+            enemy.StateMachine.ChangeState(enemy.StunState);
         }
     }
 

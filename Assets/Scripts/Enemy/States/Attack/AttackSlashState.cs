@@ -38,7 +38,7 @@ public class AttackSlashState : EnemyState {
     public override void FrameFixedUpdate() {
         base.FrameFixedUpdate();
 
-        AttackBump();
+        AttackSlash();
 
         Vector2 lineOfSightDirection = (enemy.player.position - enemy.transform.position).normalized;
         enemy.isSearching = enemy.SearchLineOfSight(lineOfSightDirection);
@@ -82,21 +82,5 @@ public class AttackSlashState : EnemyState {
                 enemy.StateMachine.ChangeState(enemy.AlertedState);
             }
         }
-    }
-
-    //BUMP TEST
-    public void AttackBump() {
-        Vector2 direction = enemy.player.position - enemy.transform.position;
-
-        Vector2 originPosition = enemy.transform.position;
-        Vector2 sideVector = enemy.GetSideVectorFromDirection(direction);
-        Vector2 targetPosition = (Vector2)originPosition + sideVector.normalized * enemy.monsterData.portee;
-
-        enemy.isInvincible = true;
-
-        Sequence mySequence = DOTween.Sequence();
-        mySequence.Append(enemy.transform.DOMove(targetPosition, 0.5f).SetEase(Ease.InOutQuint))
-                    .Append(enemy.transform.DOMove(originPosition, 0.2f).SetEase(Ease.Linear))
-                    .OnComplete(() => enemy.StateMachine.ChangeState(enemy.AlertedState));
     }
 }
