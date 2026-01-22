@@ -96,7 +96,7 @@ public class ChasingAtDistanceState : EnemyState {
 
     public void TimerAlert() {
         if(timeAlertRemaining > 0) {
-            timeAlertRemaining -= Time.deltaTime;
+            timeAlertRemaining -= Time.fixedDeltaTime;
         } else {
             enemy.StateMachine.ChangeState(enemy.PatrolState);
         }
@@ -104,7 +104,7 @@ public class ChasingAtDistanceState : EnemyState {
 
     public void TimerAttack() {
         if(attackCdRemaining > 0) {
-            attackCdRemaining -= Time.deltaTime;
+            attackCdRemaining -= Time.fixedDeltaTime;
         }
     }
 

@@ -16,11 +16,8 @@ public static class BumpSystem
         // Calcul des dégâts selon l'angle
         float damageMultiplier = 1f;
 
-        Debug.Log("DOT PRODUCT BUMP : " + dotProduct);
-
         if (dotProduct >= 1f)
         {
-            Debug.Log("BUMP FRont ATTACK");
             //Attaque de face 
             player.Damage((int)enemy.monsterData.atk); // Le joueur prend des dégâts
 
@@ -30,7 +27,7 @@ public static class BumpSystem
                 player.equipment.TriggerPassives(EquipmentTriggerType.OnHitTaken, enemy.gameObject, (int)enemy.monsterData.atk);
             }
 
-            player.ApplyKnockback(playerToEnemy);
+            player.ApplyKnockback(playerToEnemy, false);
         }
         else if (dotProduct <= -1f)
         {
@@ -38,39 +35,50 @@ public static class BumpSystem
             //damageMultiplier = 2f;
 
             // Application du knockback à l'ennemi
-            if (!enemy.isAttacking)
+      /*      if (enemy.attackType == EnemyAI.AttackType.Bump)
+            {*/
+                if (!enemy.isAttacking)
+                {
+                    enemy.ApplyKnockback(-playerToEnemy);
+                }
+                else
+                {
+                    player.ApplyKnockback(enemy.forwardDirection, false);
+                }
+         /*   }
+            else if(enemy.attackType == EnemyAI.AttackType.Slash)
             {
-                enemy.ApplyKnockback(-playerToEnemy);
-            }
-            else
-            {
-                player.ApplyKnockback(enemy.forwardDirection);
-            }
+                player.ApplyKnockback(playerToEnemy, true);
+            }*/
 
 
         }
         else
         {
             //Attaque de côté
-            Debug.Log("BUMP SIDE ATTACK");
             //damageMultiplier = 1.5f;
 
             // Application du knockback à l'ennemi
-            if (!enemy.isAttacking)
+           /* if (enemy.attackType == EnemyAI.AttackType.Bump)
+            {*/
+                if (!enemy.isAttacking)
+                {
+                    enemy.ApplyKnockback(-playerToEnemy);
+                }
+                else
+                {
+                    player.ApplyKnockback(enemy.forwardDirection, false);
+                }
+        /*    }
+            else if (enemy.attackType == EnemyAI.AttackType.Slash)
             {
-                enemy.ApplyKnockback(-playerToEnemy);
-            }
-            else
-            {
-                player.ApplyKnockback(enemy.forwardDirection);
-            }
-
+                player.ApplyKnockback(playerToEnemy, true);
+            }*/
         }
 
         // Application des dégâts à l'ennemi
         if (!enemy.isInvincible)
         {
-            //Debug.Log("BUMP ENEMY TAKES DAMAGE");
             int finalDamage = (int)(player.playerStats.totalStats.atk * damageMultiplier);
             enemy.Damage(finalDamage);
 
@@ -91,6 +99,33 @@ public static class BumpSystem
         }
 
     }
+
+    public static void AttackEnemy(PlayerController player, EnemyAI enemy)
+    {
+        Debug.Log("ATTACK ENEMY");
+        player.rb.velocity = Vector2.zero;
+        enemy.rb.velocity = Vector2.zero;
+
+        //Calcul de l'angle de l'attaque
+        Vector2 playerToEnemy = (player.transform.position - enemy.transform.position).normalized;
+        playerToEnemy = GetCardinalDirection(playerToEnemy);
+        float dotProduct = Vector2.Dot(enemy.forwardDirection, playerToEnemy);
+
+        // Le joueur prend des dégâts
+        player.Damage((int)enemy.monsterData.atk); 
+
+        // Trigger des passifs de l'équipement du joueur ( OnHit )
+        if (player.equipment != null)
+        {
+            player.equipment.TriggerPassives(EquipmentTriggerType.OnHitTaken, enemy.gameObject, (int)enemy.monsterData.atk);
+        }
+
+        player.ApplyKnockback(playerToEnemy, false);
+
+        // Entrée en combat
+        GameManager.Instance.EnterCombat();
+    }
+
     public static void HandleHazard(Collision2D hazard, PlayerController player = null, EnemyController enemy = null, bool bumpBack = false)
     {
         Vector2 hazardToEnemy = (enemy.transform.position - hazard.transform.position).normalized;

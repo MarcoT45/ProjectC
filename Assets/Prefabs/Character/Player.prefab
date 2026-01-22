@@ -122,7 +122,8 @@ MonoBehaviour:
   dashForce: 8
   dashDuration: 0.2
   dashCooldown: 1
-  knockbackForce: 3
+  knockbackForce: 2
+  knockbackForceWeak: 0.5
   knockbackDuration: 0.2
   knockbackCurve:
     serializedVersion: 2
@@ -152,7 +153,7 @@ MonoBehaviour:
   hitVFX: {fileID: 232882041438868369, guid: b4a384b46cec011489fab73702fa0ab7, type: 3}
   projectilePrefab: {fileID: 5473328513564299194, guid: 40956c2b73d8d6e4b86045fd252a9fcc, type: 3}
   tintFadeSpeed: 0.5
-  tintColor: {r: 1, g: 1, b: 1, a: 1}
+  tintColor: {r: 1, g: 0, b: 0, a: 1}
   rb: {fileID: 3994457246091314373}
   moveInput: {x: 0, y: 0}
   forwardDirection: {x: 0, y: 0}

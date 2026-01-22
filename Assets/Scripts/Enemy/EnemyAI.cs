@@ -7,8 +7,14 @@ using static UnityEngine.EventSystems.EventTrigger;
 
 public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
+    public enum AttackType {
+        Bump,
+        Slash
+    }   
+
     [Header("Data")]
     public MonsterData monsterData;
+    public AttackType attackType = AttackType.Bump;
     public float MaxHealth { get; set; }
     public float CurrentHealth { get; set; }
     public int Coins { get; set; }
@@ -19,11 +25,12 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     [HideInInspector] public bool isAttacking = false;
     [HideInInspector] public bool isMoving = false;
     [HideInInspector] public bool isInvincible = false;
+    [HideInInspector] public bool isCollidingWall = false;
 
     public float aggroDuration;
     public float attackCoolDown;
     public float fireRate;
-    private SpriteRenderer spriteRenderer;
+    public SpriteRenderer spriteRenderer;
 
     [Header("Hit variables")]
     [HideInInspector] public bool isKnockedBack = false;
@@ -271,31 +278,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
                 PlayHitEffect(collision.GetContact(0).point);
             }
         }
-
-        if (isKnockedBack) {
-            //-------------- Collision avec un mur ( rétiré pour le moment ) 
-            /*if (collision.gameObject.CompareTag("Mur")) {
-                Debug.Log("Collision Mur");
-                //Dégat à voir si en fonction du joueur ou du mur
-                Damage(5);
-
-                //Code pour le rebond
-                //Vector2 direction = ((Vector2)this.transform.position - collision.GetContact(0).point).normalized;
-                //ApplyKnockback(direction);
-            }*/
-            //---------------
-
-            //---------------- Collision avec autre ennemi ( rétiré pour le moment ) 
-            /*if (collision.gameObject.CompareTag("Ennemi")) {
-                Debug.Log("Collision Ennemi");
-                EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
-                if (enemy != null) {
-                    Damage((int)enemy.monsterData.atk);
-                    enemy.Damage((int)this.monsterData.atk);
-                }
-            }*/
-            //---------------
-        }
     }
 
     #endregion
@@ -335,10 +317,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     public virtual void ApplyKnockback(Vector2 direction)
     {
         rb.velocity = Vector2.zero;
-        if (!isKnockedBack)
-        {
-            StartCoroutine(KnockbackCoroutine(direction));
-        }
+        StartCoroutine(KnockbackCoroutine(direction));
     }
 
 
@@ -355,9 +334,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             Vector2 intermediatePos = (Vector2)transform.position + direction * i;
             if (gridManager.GetNodeFromWorldPoint(intermediatePos).walkable == false)
             {
+
                 targetPos = (Vector2)transform.position + direction * (i - 1);
                 break;
+
             }
+        }
+
+        if (targetPos == startPos)
+        {
+            isCollidingWall = true;   
         }
 
         float elapsed = 0f;
@@ -374,19 +360,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         }
 
         rb.MovePosition(targetPos);
-        isKnockedBack = false;
 
     }
-
-    private IEnumerator BlinkRoutine() {
-        for (int i = 0; i < 3; i++) {
-            spriteRenderer.enabled = false;
-            yield return new WaitForSeconds(0.1f);
-            spriteRenderer.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-        }
-    }
-
 
     private IEnumerator HitFlash()
     {
@@ -397,7 +372,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         float time = 0f;
         while (time < tintFadeSpeed)
         {
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             tempColor.a = Mathf.Lerp(tintColor.a, 0f, (time / tintFadeSpeed));
             material.SetColor("_Tint", tempColor);
             yield return null;

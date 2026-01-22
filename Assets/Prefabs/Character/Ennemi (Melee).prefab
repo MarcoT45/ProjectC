@@ -58,7 +58,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: ce98d525adf1c3f4eb8bfdb29a1944b1, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   monsterData: {fileID: 11400000, guid: 8a0d6e178b021514db56aa1bf6eefba7, type: 2}
+  attackType: 0
   forwardDirection: {x: 0, y: 0}
   movementRange: 5
   isSearching: 0
@@ -173,9 +174,11 @@ MonoBehaviour:
   isAttacking: 0
   isMoving: 0
   isInvincible: 0
+  isCollidingWall: 0
   aggroDuration: 2
   attackCoolDown: 1.5
   fireRate: 0
+  spriteRenderer: {fileID: 0}
   isKnockedBack: 0
   knockbackDuration: 0.2
   knockbackForce: 1
@@ -213,7 +216,7 @@ MonoBehaviour:
   stepVFXPrefab: {fileID: 0}
   projectilePrefab: {fileID: 0}
   tintColor: {r: 1, g: 1, b: 1, a: 1}
-  tintFadeSpeed: 0.25
+  tintFadeSpeed: 1
   bubbleIdle: {fileID: 86340792424955051}
   bubbleSearch: {fileID: 86340792892146871}
   playerSeachPosition: {x: 0, y: 0, z: 0}

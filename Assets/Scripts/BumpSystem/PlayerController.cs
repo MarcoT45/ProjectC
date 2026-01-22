@@ -18,7 +18,8 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
     public float dashForce = 8f;
     public float dashDuration = 0.2f;
     public float dashCooldown = 0.5f;
-    public float knockbackForce = 5f;
+    public float knockbackForce = 2f;
+    public float knockbackForceWeak = 0.5f;
     public float knockbackDuration = 0.2f;
     public AnimationCurve knockbackCurve;
     public float coolDownAttack = 0.5f;
@@ -154,38 +155,9 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         // Déplacement du RB
         if (ControlsManager.Instance.controlsState == ControlsState.CharacterHub || ControlsManager.Instance.controlsState == ControlsState.Combat)
         {
-
             Vector2 movement = moveInput * playerStats.totalStats.spd * Time.fixedDeltaTime;
             
-          /*  if (movement == Vector2.zero) return;
-
-            int hitCount = Physics2D.CapsuleCast(
-                rb.position + playerCollider.offset,
-                playerCollider.bounds.size,
-                CapsuleDirection2D.Vertical,
-                0f,
-                movement.normalized,
-                contactFilter,
-                hits,
-                movement.magnitude
-                );
-
-            if (hitCount == 0)
-            {
-                if (!isDashing && !isKnockedBack)
-                {*/
-                    rb.MovePosition((Vector2)transform.position + movement);
-           /*     }
-            }
-            else
-            {
-                //On avance jusqu'au mur
-                float allowedDistance = hits[0].distance - wallOffset;
-                if(allowedDistance > 0f)
-                {
-                    rb.MovePosition((Vector2)transform.position + (movement.normalized * allowedDistance));
-                }
-            }*/
+            rb.MovePosition((Vector2)transform.position + movement);
         }
     }
     
@@ -208,27 +180,6 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
             isAttacking = false;
         }
     }
-/*
-    private void OnCollisionStay2D(Collision2D collision)
-    {
-
-        timerAttack += Time.fixedDeltaTime;
-
-        if(timerAttack >= coolDownAttack)
-        {
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                EnemyAI enemy = collision.gameObject.GetComponent<EnemyAI>();
-                if (enemy != null)
-                {
-                    BumpSystem.HandleBump(this, enemy);
-                    ShowImpact(enemy.transform.position);
-                }
-            }
-
-            timerAttack = 0f;
-        }
-    }*/
 
     public void Collect(Collectible collectible) {
         switch (collectible.collectibleType) {
@@ -280,51 +231,41 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         }
     }
 
-    public void ApplyKnockback(Vector2 direction) {
+    public void ApplyKnockback(Vector2 direction, bool isKBWeak) {
 
         rb.velocity = Vector2.zero;
         if (!isDashing && !isKnockedBack) {
-            StartCoroutine(KnockbackCoroutine(direction));
+            StartCoroutine(KnockbackCoroutine(direction, isKBWeak));
         }
     }
 
-    //OLD
-    /* private IEnumerator KnockbackCoroutine(Vector2 direction)
-     {
-         Debug.Log("Applying Knockback to Coney");
-         isKnockedBack = true;
-         rb.velocity = Vector2.zero;
-         //rb.AddForce(direction * knockbackForce, ForceMode2D.Impulse);
-
-         rb.MovePosition((Vector2)transform.position + (movement * playerStats.totalStats.spd * Time.fixedDeltaTime));
-
-         if (direction.magnitude < 0.5) {
-             yield return new WaitForSeconds(knockbackDurationSide);
-         } else {
-             yield return new WaitForSeconds(knockbackDurationFront);
-         }
-
-         isKnockedBack = false;
-     }*/
-
-    private IEnumerator KnockbackCoroutine(Vector2 direction)
+    private IEnumerator KnockbackCoroutine(Vector2 direction, bool isKBWeak)
     {
 
         isKnockedBack = true;
 
         Vector2 startPos = this.rb.position;
-        Vector2 targetPos = (Vector2)transform.position + direction * knockbackForce;
+        Vector2 targetPos = startPos;
 
-        //Boucle pour vérifier chaque case entre la position de départ et la position cible. Pour les murs
-        for (int i = 1; i <= knockbackForce; i++)
+        if (isKBWeak)
         {
-            Vector2 intermediatePos = (Vector2)transform.position + direction * i;
-            if (gridManager.GetNodeFromWorldPoint(intermediatePos).walkable == false)
-            {
-                targetPos = (Vector2)transform.position + direction * (i - 1);
-                break;
-            }
+            targetPos = (Vector2)transform.position + direction * knockbackForceWeak;
         }
+        else
+        {
+            targetPos = (Vector2)transform.position + direction * knockbackForce;
+        }
+
+            //Boucle pour vérifier chaque case entre la position de départ et la position cible. Pour les murs
+            for (int i = 1; i <= knockbackForce; i++)
+            {
+                Vector2 intermediatePos = (Vector2)transform.position + direction * i;
+                if (gridManager.GetNodeFromWorldPoint(intermediatePos).walkable == false)
+                {
+                    targetPos = (Vector2)transform.position + direction * (i - 1);
+                    break;
+                }
+            }
 
         float elapsed = 0f;
 
@@ -353,7 +294,7 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
         float time = 0f;
         while (time < tintFadeSpeed)
         {
-            time += Time.deltaTime;
+            time += Time.fixedDeltaTime;
             tempColor.a = Mathf.Lerp(tintColor.a, 0f, (time / tintFadeSpeed));
             material.SetColor("_Tint", tempColor);
             yield return null;

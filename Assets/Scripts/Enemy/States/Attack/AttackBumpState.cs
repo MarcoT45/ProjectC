@@ -33,9 +33,10 @@ public class AttackBumpState : EnemyState
     {
         base.FrameFixedUpdate();
 
-        if (enemy.isSearching || enemy.isAlerted)
+        if (enemy.isKnockedBack && !enemy.isAttacking)
         {
-            enemy.SetTargetPosition(enemy.playerSeachPosition);
+            enemy.transform.DOKill();
+            enemy.StateMachine.ChangeState(enemy.StunState);
         }
 
         if (isAttackComplete)
@@ -51,10 +52,12 @@ public class AttackBumpState : EnemyState
         Vector2 originPosition = enemy.transform.position;
         Vector2 sideVector = enemy.GetSideVectorFromDirection(direction);
         Vector2 targetPosition = (Vector2)originPosition + sideVector.normalized * enemy.monsterData.portee;
-        
-        await enemy.transform.DOMove(targetPosition, 0.5f).SetEase(Ease.InOutQuint).AsyncWaitForCompletion();
+        enemy.forwardDirection = sideVector.normalized; 
+
+        await enemy.rb.DOMove(targetPosition, 0.4f).SetEase(Ease.InOutQuint).AsyncWaitForCompletion();
         enemy.isInvincible = false;
-        await enemy.transform.DOMove(originPosition, 0.2f).SetEase(Ease.Linear).AsyncWaitForCompletion();
+        enemy.isAttacking = false;
+        await enemy.rb.DOMove(originPosition, 0.5f).SetEase(Ease.Linear).AsyncWaitForCompletion();
 
         isAttackComplete = true;
     

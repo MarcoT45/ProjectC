@@ -23,7 +23,7 @@ public class EnemyMeleeDefault : EnemyAI {
 
         StunState = new StunState(this, StateMachine);
 
-        AttackState = new AttackBumpState(this, StateMachine);
+        AttackState = new AttackSlashState(this, StateMachine);
     }
 
     protected override void Start() {

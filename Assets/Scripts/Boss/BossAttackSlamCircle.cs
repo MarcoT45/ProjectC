@@ -41,7 +41,7 @@ public class BossAttackSlamCircle : MonoBehaviour
             if (player != null)
             {
                 player.Damage(damage);
-                player.ApplyKnockback((player.transform.position - bossTransform.position).normalized);
+                player.ApplyKnockback((player.transform.position - bossTransform.position).normalized, false);
             }
         }
 
