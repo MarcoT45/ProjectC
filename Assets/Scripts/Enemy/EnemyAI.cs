@@ -173,8 +173,6 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
             Vector2 direction = (targetTmpPosition - transform.position).normalized;
             rb.MovePosition((Vector2) transform.position + (direction  * monsterData.speed * speedBoostAlertMultiplicator * Time.fixedDeltaTime));
-            //rb.velocity = (targetTmpPosition - transform.position).normalized * monsterData.speed * speedBoostAlertMultiplicator;
-            //transform.position = Vector2.MoveTowards(transform.position, targetTmpPosition, monsterData.speed * speedBoostAlertMultiplicator * Time.deltaTime);
 
             // Pour changer la direction ou l'ennemi regarde
             float upValue, downValue, rightValue, leftValue = 0f;
@@ -199,7 +197,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             }
 
             // Si suffisamment proche du prochain point du chemin, on avance au suivant
-            if (Vector3.Distance(transform.position, targetTmpPosition) < 0.1f) {
+            if (Vector3.Distance(transform.position, targetTmpPosition) < 0.05f) {
                 currentPathIndex++;
 
                 // Arrivé à destination ?

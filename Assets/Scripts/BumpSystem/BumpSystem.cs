@@ -35,8 +35,8 @@ public static class BumpSystem
             //damageMultiplier = 2f;
 
             // Application du knockback à l'ennemi
-      /*      if (enemy.attackType == EnemyAI.AttackType.Bump)
-            {*/
+            if (enemy.attackType == EnemyAI.AttackType.Bump)
+            {
                 if (!enemy.isAttacking)
                 {
                     enemy.ApplyKnockback(-playerToEnemy);
@@ -45,12 +45,11 @@ public static class BumpSystem
                 {
                     player.ApplyKnockback(enemy.forwardDirection, false);
                 }
-         /*   }
-            else if(enemy.attackType == EnemyAI.AttackType.Slash)
+            }
+            else if (enemy.attackType == EnemyAI.AttackType.Slash)
             {
                 player.ApplyKnockback(playerToEnemy, true);
-            }*/
-
+            }
 
         }
         else
@@ -59,8 +58,8 @@ public static class BumpSystem
             //damageMultiplier = 1.5f;
 
             // Application du knockback à l'ennemi
-           /* if (enemy.attackType == EnemyAI.AttackType.Bump)
-            {*/
+            if (enemy.attackType == EnemyAI.AttackType.Bump)
+            {
                 if (!enemy.isAttacking)
                 {
                     enemy.ApplyKnockback(-playerToEnemy);
@@ -69,11 +68,11 @@ public static class BumpSystem
                 {
                     player.ApplyKnockback(enemy.forwardDirection, false);
                 }
-        /*    }
+            }
             else if (enemy.attackType == EnemyAI.AttackType.Slash)
             {
                 player.ApplyKnockback(playerToEnemy, true);
-            }*/
+            }
         }
 
         // Application des dégâts à l'ennemi

@@ -8,7 +8,6 @@ public static class AStarPathfinding
     public static List<Node> FindPath(GridManager gridManager, Vector3 startPos, Vector3 targetPos)
     {
         Node startNode = gridManager.GetNodeFromWorldPoint(startPos);
-        //Node targetNode = gridManager.GetNodeFromWorldPoint(targetPos);
         Node targetNode = gridManager.GetNodeFromWorldPoint(targetPos);
 
         if (startNode == null || targetNode == null) return null;
@@ -69,7 +68,7 @@ public static class AStarPathfinding
         while (currentNode != startNode)
         {
             //  /!\ Debug Affiche le chemin
-            Debug.DrawLine(currentNode.cellPosition, (currentNode.parent).cellPosition, Color.green, 1f);
+            Debug.DrawLine(currentNode.cellPosition + new Vector3(0.5f,0.5f,0), (currentNode.parent).cellPosition + new Vector3(0.5f, 0.5f, 0), Color.green, 1f);
 
             path.Add(currentNode);
             currentNode = currentNode.parent;

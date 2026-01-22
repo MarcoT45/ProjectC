@@ -58,7 +58,8 @@ public class AttackSlashState : EnemyState {
             }
         }
 
-        if (timerAttackDuration >= 3f) {
+        //Timer de l'attaque / A CHANGER POUR UNE ANIMATION
+        if (timerAttackDuration >= 1f) {
             timerAttackDuration = 0f;
             enemy.StateMachine.ChangeState(enemy.AlertedState);
         }
