@@ -30,8 +30,8 @@ public class ChasingAtDistanceState : EnemyState {
         enemy.OnMoveDestinationReached -= OnDestinationReached;
     }
 
-    public override void FrameUpdate() {
-        base.FrameUpdate();
+    public override void FrameFixedUpdate() {
+        base.FrameFixedUpdate();
 
         TimerAlert();
         TimerAttack();
@@ -46,7 +46,6 @@ public class ChasingAtDistanceState : EnemyState {
             timeAlertRemaining = alertDuration;
         }
 
-        
         Vector3 directionToPlayer = enemy.player.position - enemy.transform.position;
 
         if (enemy.isSearching && directionToPlayer.magnitude <= enemy.safeRange + 0.1f && attackCdRemaining < 0) {
@@ -64,15 +63,9 @@ public class ChasingAtDistanceState : EnemyState {
             enemy.Move();
         }
 
-        if (enemy.isKnockedBack)
-        {
+        if (enemy.isKnockedBack) {
             enemy.StateMachine.ChangeState(enemy.StunState);
         }
-    }
-
-    public override void FrameFixedUpdate() {
-        base.FrameFixedUpdate();
-
     }
 
     private Vector3 GetBestMove(Vector3 awayFromPlayer) {

@@ -24,8 +24,6 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
     public AnimationCurve knockbackCurve;
     public float coolDownAttack = 0.5f;
 
-    private float timerAttack = 0f;
-
     [Header("VFX")]
     public GameObject hitVFX;
     public GameObject projectilePrefab; // Prefab projectile
@@ -34,7 +32,6 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
     [SerializeField] protected float tintFadeSpeed = 0.5f;
     [SerializeField] protected Color tintColor = Color.white;
     public Rigidbody2D rb;
-
 
     [HideInInspector] public Vector2 moveInput;
     [HideInInspector] public  Vector2 forwardDirection;
@@ -46,7 +43,6 @@ public class PlayerController : MonoBehaviour, IShopCustomer, IDamageable {
     private Vector2 currentVelocity = Vector2.zero;
     private SpriteRenderer spriteRenderer;
 
-    private float wallOffset = 0.1f;
     private LayerMask wallLayerMask;
     private ContactFilter2D contactFilter;
     private RaycastHit2D[] hits = new RaycastHit2D[4];

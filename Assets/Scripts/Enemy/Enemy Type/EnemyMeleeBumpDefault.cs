@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMeleeDefault : EnemyAI {
+public class EnemyMeleeBumpDefault : EnemyAI {
 
     protected override void Awake() {
         base.Awake();
@@ -23,7 +23,7 @@ public class EnemyMeleeDefault : EnemyAI {
 
         StunState = new StunState(this, StateMachine);
 
-        AttackState = new AttackSlashState(this, StateMachine);
+        AttackState = new AttackBumpState(this, StateMachine);
     }
 
     protected override void Start() {
@@ -31,16 +31,4 @@ public class EnemyMeleeDefault : EnemyAI {
         base.Start();
     }
 
-
-    //DEBUG GUI POUR AFFICHER LA VIE
-    private void OnGUI()
-    {
-        GUIStyle gUIStyle = new GUIStyle();
-        gUIStyle.fontSize = 12;
-        gUIStyle.normal.textColor = Color.yellow;
-        float x = 10f;
-        float y = 10f;
-
-        GUI.Label(new Rect(x, y, 200, 50), $"ENEMY HP: {this.CurrentHealth}", gUIStyle);
-    }
 }

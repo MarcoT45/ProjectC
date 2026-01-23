@@ -20,8 +20,6 @@ public class ChasingState : EnemyState {
         enemy.OnMoveDestinationReached += OnDestinationReached;
 
         enemy.bubbleSearch.SetActive(false);
-
-        Debug.Log("ENTER CHASING STATE");
     }
 
     public override void ExitState() {

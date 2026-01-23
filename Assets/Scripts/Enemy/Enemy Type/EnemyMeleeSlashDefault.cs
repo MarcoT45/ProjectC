@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAlerterDefault : EnemyAI {
+public class EnemyMeleeSlashDefault : EnemyAI {
 
     protected override void Awake() {
         base.Awake();
@@ -18,12 +18,12 @@ public class EnemyAlerterDefault : EnemyAI {
         SearchLookRightState = new SearchLookRightState(this, StateMachine);
         SearchWalkState = new SearchWalkState(this, StateMachine);
 
-        AlertedState = new ChasingAtDistanceState(this, StateMachine);
+        AlertedState = new ChasingState(this, StateMachine);
         AlertedLookingState = new ChasingLookingState(this, StateMachine);
-        
+
         StunState = new StunState(this, StateMachine);
 
-        AttackState = new AttackAlertState(this, StateMachine);
+        AttackState = new AttackSlashState(this, StateMachine);
     }
 
     protected override void Start() {
@@ -31,4 +31,17 @@ public class EnemyAlerterDefault : EnemyAI {
         base.Start();
     }
 
+
+    //DEBUG GUI POUR AFFICHER LA VIE
+    private void OnGUI()
+    {
+        GUIStyle gUIStyle = new GUIStyle();
+        gUIStyle.fontSize = 12;
+        gUIStyle.normal.textColor = Color.yellow;
+        float x = 10f;
+        float y = 10f;
+
+        GUI.Label(new Rect(x, y, 200, 50), $"ENEMY HP: {this.CurrentHealth}", gUIStyle);
+    }
+    
 }

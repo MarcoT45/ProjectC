@@ -20,6 +20,8 @@ public class EnemyRangeDefault : EnemyAI {
 
         AlertedState = new ChasingAtDistanceState(this, StateMachine);
         AlertedLookingState = new ChasingLookingState(this, StateMachine);
+        
+        StunState = new StunState(this, StateMachine);
 
         AttackState = new AttackShootState(this, StateMachine);
     }

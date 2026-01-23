@@ -15,7 +15,7 @@ public class BossAI : EnemyAI
     public EnemyState TransitionState { get; set; }
 
     private float cooldownTimer = 0f;
-    public bool isInvincible = false;
+    // public bool isInvincible = false; // Je le mets en commentaire car il hérite déja de celui dans EnemyAI et ca crée un petit conflit
     public bool isInPhaseTwo = false; // Indique si le boss est en phase 2
 
     protected override void Start()

@@ -1,52 +1,51 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
-public class AttackBumpState : EnemyState
-{
+public class AttackBumpState : EnemyState {
+    
+    private Color originalColor;
     private bool isAttackComplete = false;
 
     public AttackBumpState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) { }
 
-    public override void EnterState()
-    {
+    public override void EnterState() {
         base.EnterState();
 
         isAttackComplete = false;
         enemy.isInvincible = true;
         enemy.isAttacking = true;
 
-        AttackBump();
+        originalColor = enemy.spriteRenderer.color;
+        enemy.spriteRenderer.DOColor(Color.red, 0.5f).OnComplete(() => {
+            enemy.spriteRenderer.DOColor(originalColor, 0.1f);
+        });
 
+        AttackBump();
     }
 
-    public override void ExitState()
-    {
+    public override void ExitState() {
         base.ExitState();
 
         enemy.isInvincible = false;
         enemy.isAttacking = false;
     }
 
-    public override void FrameFixedUpdate()
-    {
+    public override void FrameFixedUpdate() {
         base.FrameFixedUpdate();
 
-        if (enemy.isKnockedBack && !enemy.isAttacking)
-        {
+        if (enemy.isKnockedBack && !enemy.isAttacking) {
             enemy.transform.DOKill();
             enemy.StateMachine.ChangeState(enemy.StunState);
         }
 
-        if (isAttackComplete)
-        {
+        if (isAttackComplete) {
             enemy.StateMachine.ChangeState(enemy.AlertedState);
         }
     }
 
-    public async void AttackBump()
-    {
+    public async void AttackBump() {
         Vector2 direction = enemy.player.position - enemy.transform.position;
 
         Vector2 originPosition = enemy.transform.position;
@@ -60,7 +59,6 @@ public class AttackBumpState : EnemyState
         await enemy.rb.DOMove(originPosition, 0.5f).SetEase(Ease.Linear).AsyncWaitForCompletion();
 
         isAttackComplete = true;
-    
     }
 
 }

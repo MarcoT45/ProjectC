@@ -218,8 +218,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         }
     }
 
-    public Vector2 GetSideVectorFromDirection(Vector2 direction)
-    {
+    public Vector2 GetSideVectorFromDirection(Vector2 direction) {
 
         //Dot Product où est le joueur par rapport à l'ennemi
         float upWeight = Vector2.Dot(direction.normalized, this.transform.up);
@@ -228,30 +227,21 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         float upMag = Mathf.Abs(upWeight);
         float rightMag = Mathf.Abs(rightWeight);
 
-        if (upMag >= rightMag)
-        {
+        if (upMag >= rightMag) {
             //Le joueur est au dessus ou en dessous de l'ennemi
-            if (upWeight >= 0)
-            {
+            if (upWeight >= 0) {
                 //Le joueur est au dessus
                 return Vector2.up;
-            }
-            else
-            {
+            } else {
                 //Le joueur est en dessous
                 return Vector2.down;
             }
-        }
-        else
-        {
+        } else {
             //Le joueur est à gauche ou à droite de l'ennemi
-            if (rightWeight >= 0)
-            {
+            if (rightWeight >= 0) {
                 //Le joueur est à droite
                 return Vector2.right;
-            }
-            else
-            {
+            } else {
                 //Le joueur est à gauche
                 return Vector2.left;
             }
@@ -312,42 +302,34 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #region VFX functions
 
-    public virtual void ApplyKnockback(Vector2 direction)
-    {
+    public virtual void ApplyKnockback(Vector2 direction) {
         rb.velocity = Vector2.zero;
         StartCoroutine(KnockbackCoroutine(direction));
     }
 
 
-    private IEnumerator KnockbackCoroutine(Vector2 direction)
-    {
+    private IEnumerator KnockbackCoroutine(Vector2 direction) {
         isKnockedBack = true;
 
         Vector2 startPos = this.rb.position;
         Vector2 targetPos = (Vector2)transform.position + direction * knockbackForce;
 
         //Boucle pour vérifier chaque case entre la position de départ et la position cible. Pour les murs
-        for (int i = 1; i <= knockbackForce; i++)
-        {
+        for (int i = 1; i <= knockbackForce; i++) {
             Vector2 intermediatePos = (Vector2)transform.position + direction * i;
-            if (gridManager.GetNodeFromWorldPoint(intermediatePos).walkable == false)
-            {
-
+            if (gridManager.GetNodeFromWorldPoint(intermediatePos).walkable == false) {
                 targetPos = (Vector2)transform.position + direction * (i - 1);
                 break;
-
             }
         }
 
-        if (targetPos == startPos)
-        {
+        if (targetPos == startPos) {
             isCollidingWall = true;   
         }
 
         float elapsed = 0f;
 
-        while(elapsed < knockbackDuration)
-        {
+        while(elapsed < knockbackDuration) {
             float t = elapsed / knockbackDuration;
             float curveValue = knockbackCurve.Evaluate(t);
             Vector2 newPos = Vector2.Lerp(startPos, targetPos, curveValue);
@@ -358,24 +340,20 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         }
 
         rb.MovePosition(targetPos);
-
     }
 
-    private IEnumerator HitFlash()
-    {
+    private IEnumerator HitFlash() {
         material.SetColor("_Tint", tintColor);
         Color tempColor;
         tempColor = tintColor;
 
         float time = 0f;
-        while (time < tintFadeSpeed)
-        {
+        while (time < tintFadeSpeed) {
             time += Time.fixedDeltaTime;
             tempColor.a = Mathf.Lerp(tintColor.a, 0f, (time / tintFadeSpeed));
             material.SetColor("_Tint", tempColor);
             yield return null;
         }
-
     }
 
     private void PlayHitEffect(Vector2 hitPosition) {

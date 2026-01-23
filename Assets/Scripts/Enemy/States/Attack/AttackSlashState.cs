@@ -1,12 +1,12 @@
-using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public class AttackSlashState : EnemyState {
 
+    private Color originalColor;
     private float timerAttackDuration = 0f;
-    private Color originalColor;    
     private bool attackIsDone = false;  
     private Vector2 targetPosition;
 
@@ -25,14 +25,12 @@ public class AttackSlashState : EnemyState {
             enemy.spriteRenderer.DOColor(originalColor, 0.1f);
         });
 
-
         Vector2 direction = enemy.player.position - enemy.transform.position;
 
         Vector2 originPosition = enemy.transform.position;
         Vector2 sideVector = enemy.GetSideVectorFromDirection(direction);
         targetPosition = (Vector2)originPosition + sideVector.normalized * enemy.monsterData.portee;
         enemy.forwardDirection = sideVector.normalized;
-
     }
 
     public override void ExitState() {
@@ -40,7 +38,6 @@ public class AttackSlashState : EnemyState {
 
         enemy.isAttacking = false;
         enemy.attackType = EnemyAI.AttackType.Bump;
-
     }
 
     public override void FrameFixedUpdate() {
@@ -49,10 +46,8 @@ public class AttackSlashState : EnemyState {
         timerAttackDuration += Time.fixedDeltaTime;
 
         //Timer pour simuler l'animation d'attaque
-        if (timerAttackDuration > 0.5f)
-        {
-            if (!attackIsDone)
-            {
+        if (timerAttackDuration > 0.5f) {
+            if (!attackIsDone) {
                 AttackSlash();
                 attackIsDone = true;
             }
@@ -65,17 +60,13 @@ public class AttackSlashState : EnemyState {
         }
     }
 
-    public void AttackSlash()
-    {
+    public void AttackSlash() {
         //Vérification de la collision entre l'ennemi et le joueur
         Collider2D[] hits = Physics2D.OverlapCircleAll(targetPosition, 0.5f);
 
-        if (hits.Length > 0)
-        {
-            foreach (Collider2D hit in hits)
-            {
-                if (hit.CompareTag("Player"))
-                {
+        if (hits.Length > 0) {
+            foreach (Collider2D hit in hits) {
+                if (hit.CompareTag("Player")) {
                     PlayerController player = hit.GetComponent<PlayerController>();
                     BumpSystem.AttackEnemy(player, enemy);   
                 }
