@@ -198,7 +198,7 @@ GameObject:
   - component: {fileID: 3994457247235387139}
   - component: {fileID: 3994457247235387138}
   - component: {fileID: 3994457247235387389}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: MagnetZone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -233,9 +233,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.4}
+  m_Offset: {x: -0.03, y: 0.55}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.62
 --- !u!114 &3994457247235387389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -333,7 +333,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
-  m_SpriteSortPoint: 0
+  m_SpriteSortPoint: 1
 --- !u!95 &3994457246013022079
 Animator:
   serializedVersion: 5

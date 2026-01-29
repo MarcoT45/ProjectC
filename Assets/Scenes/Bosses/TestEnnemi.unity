@@ -290,6 +290,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ennemi (Melee)
       objectReference: {fileID: 0}
+    - target: {fileID: 3124909077712673750, guid: 070a8be246a3d304188ace7b98a0a04c, type: 3}
+      propertyPath: m_Radius
+      value: 0.36025316
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124909077712673750, guid: 070a8be246a3d304188ace7b98a0a04c, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.030000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 3124909077712673750, guid: 070a8be246a3d304188ace7b98a0a04c, type: 3}
+      propertyPath: m_Offset.y
+      value: 0.18974686
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 070a8be246a3d304188ace7b98a0a04c, type: 3}
 --- !u!1 &476159226

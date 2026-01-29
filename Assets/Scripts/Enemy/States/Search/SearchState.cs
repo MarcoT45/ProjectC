@@ -19,7 +19,7 @@ public class SearchState : EnemyState {
     public override void FrameUpdate() {
         base.FrameUpdate();
 
-        if (enemy.playerSeachPosition == new Vector3(1000, 1000, 1000)) {
+        if (enemy.playerSearchPosition == new Vector3(1000, 1000, 1000)) {
             if (enemy.searchLookCounter == 0) {
                 enemy.StateMachine.ChangeState(enemy.PatrolState);
             } else {

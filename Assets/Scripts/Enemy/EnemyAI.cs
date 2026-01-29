@@ -26,6 +26,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
     [HideInInspector] public bool isMoving = false;
     [HideInInspector] public bool isInvincible = false;
     [HideInInspector] public bool isCollidingWall = false;
+    [HideInInspector] public bool isDestinationReached = true;
 
     public float aggroDuration;
     public float attackCoolDown;
@@ -87,7 +88,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     #endregion
 
-    [HideInInspector] public Vector3 playerSeachPosition;               // Position ou le joueur a été vu dans le Search ou le Alert
+    [HideInInspector] public Vector3 playerSearchPosition;               // Position ou le joueur a été vu dans le Search ou le Alert
     [HideInInspector] public int searchLookCounter = 4;                 // Compteur du nombre de position ou l'ennemi peut regarder en SearchState
     [HideInInspector] public float speedBoostAlertMultiplicator = 1.0f; // Multiplicateur de vitesse de déplacement de l'ennemi
 
@@ -138,7 +139,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
     protected virtual void Update() {
         //Juste pour voir où il regarde
-        Debug.DrawRay(transform.position, forwardDirection, Color.blue);
+        Debug.DrawRay(transform.position, forwardDirection*10, Color.white);
 
         StateMachine.CurrentEnemyState.FrameUpdate();
     }
@@ -161,16 +162,16 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
         if (isKnockedBack) return;
 
         pathRefreshTimer += Time.deltaTime;
-        if (pathRefreshTimer >= pathRefreshInterval) {
+        if (pathRefreshTimer >= pathRefreshInterval && isDestinationReached) {
             path = AStarPathfinding.FindPath(gridManager, transform.position, this.targetPosition);
             currentPathIndex = 0;
             pathRefreshTimer = 0f;
+            isDestinationReached = false;
         }
 
         if (path != null && path.Count > 0 && currentPathIndex < path.Count) {
             isMoving = true;
             Vector3 targetTmpPosition = gridManager.CellToWorld(path[currentPathIndex].cellPosition);
-
             Vector2 direction = (targetTmpPosition - transform.position).normalized;
             rb.MovePosition((Vector2) transform.position + (direction  * monsterData.speed * speedBoostAlertMultiplicator * Time.fixedDeltaTime));
 
@@ -186,7 +187,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
 
             if (maxValue == upValue) {
                 forwardDirection = Vector2.up;
-            } else if (maxValue == downValue) {
+            } else if (maxValue == downValue) { 
                 forwardDirection = Vector2.down;
             } else if (maxValue == rightValue) {
                 forwardDirection = Vector2.right;
@@ -199,6 +200,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             // Si suffisamment proche du prochain point du chemin, on avance au suivant
             if (Vector3.Distance(transform.position, targetTmpPosition) < 0.05f) {
                 currentPathIndex++;
+                isDestinationReached = true;
 
                 // Arrivé à destination ?
                 if (currentPathIndex >= path.Count) {
@@ -214,6 +216,7 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             path = null;
             currentPathIndex = 0;
             rb.velocity = Vector2.zero;
+            isDestinationReached = true;
             OnMoveDestinationReached.Invoke();
         }
     }
@@ -385,7 +388,8 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             if (hitSearch.collider != null) {
                 if (hitSearch.collider.CompareTag("Player") || hitSearch.collider.transform.parent.CompareTag("Player")) {
                     Debug.DrawRay(transform.position, rayDirection * (alertDistance + 2f), Color.green);
-                    playerSeachPosition = hitSearch.collider.transform.position;
+                    Node node = gridManager.GetNodeFromWorldPoint(hitSearch.collider.transform.position);
+                    playerSearchPosition = gridManager.CellToWorld(node.cellPosition);
                     return true;
                 }
             }
@@ -405,13 +409,11 @@ public abstract class EnemyAI : MonoBehaviour, IDamageable, IEnnemyMoveable {
             Vector2 rayDirection = RotateVector(lineOfSightDirection, angle);
             RaycastHit2D hitAlert = Physics2D.Raycast(transform.position, rayDirection, alertDistance, LayerMask.GetMask("Mur", "Player"));
 
-            Debug.DrawRay(transform.position, rayDirection * (alertDistance + 2f), Color.blue);
-            Debug.DrawRay(transform.position, rayDirection * alertDistance, Color.red);
-
             if (hitAlert.collider != null) {
                 if (hitAlert.collider.CompareTag("Player") || hitAlert.collider.transform.parent.CompareTag("Player")) {
                     Debug.DrawRay(transform.position, rayDirection * alertDistance, Color.green);
-                    playerSeachPosition = hitAlert.collider.transform.position;
+                    Node node = gridManager.GetNodeFromWorldPoint(hitAlert.collider.transform.position);
+                    playerSearchPosition = gridManager.CellToWorld(node.cellPosition);
                     return true;
                 }
             }

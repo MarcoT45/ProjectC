@@ -41,8 +41,8 @@ public class ChasingAtDistanceState : EnemyState {
         enemy.isAlerted = enemy.AlertLineOfSight(lineOfSightDirection);
 
         if (enemy.isSearching || enemy.isAlerted) {
-            enemy.SetTargetPosition(enemy.playerSeachPosition);
-            lastSeen = enemy.playerSeachPosition;
+            enemy.SetTargetPosition(enemy.playerSearchPosition);
+            lastSeen = enemy.playerSearchPosition;
             timeAlertRemaining = alertDuration;
         }
 
@@ -52,7 +52,7 @@ public class ChasingAtDistanceState : EnemyState {
             enemy.rb.velocity = Vector2.zero;
             enemy.StateMachine.ChangeState(enemy.AttackState);
         } else if (enemy.isSearching && directionToPlayer.magnitude <= enemy.safeRange - 0.1f) {
-            enemy.SetTargetPosition(GetBestMove(enemy.transform.position - (enemy.playerSeachPosition - enemy.transform.position)));
+            enemy.SetTargetPosition(GetBestMove(enemy.transform.position - (enemy.playerSearchPosition - enemy.transform.position)));
             enemy.Move();
         } else if(enemy.isSearching && directionToPlayer.magnitude >= enemy.safeRange + 0.1f) {
             enemy.Move();

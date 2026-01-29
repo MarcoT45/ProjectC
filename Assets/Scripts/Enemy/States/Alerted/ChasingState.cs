@@ -7,6 +7,7 @@ public class ChasingState : EnemyState {
     private float alertDuration = 5f;
     private float timeAlertRemaining;
     private float attackCdRemaining;
+    private Vector3 targetPosition;
 
     public ChasingState(EnemyAI enemy, EnemyStateMachine enemyStateMachine) : base(enemy, enemyStateMachine) {}
 
@@ -18,6 +19,7 @@ public class ChasingState : EnemyState {
 
         enemy.speedBoostAlertMultiplicator = 1.75f;
         enemy.OnMoveDestinationReached += OnDestinationReached;
+        targetPosition = enemy.player.position;
 
         enemy.bubbleSearch.SetActive(false);
     }
@@ -35,22 +37,31 @@ public class ChasingState : EnemyState {
         TimerAlert();
         TimerAttack();
 
-        Vector2 lineOfSightDirection = (enemy.player.position - enemy.transform.position).normalized;
+        Vector2 lineOfSightDirection = (targetPosition - enemy.transform.position).normalized;
         enemy.isSearching = enemy.SearchLineOfSight(lineOfSightDirection);
         enemy.isAlerted = enemy.AlertLineOfSight(lineOfSightDirection);
 
-        if (enemy.isSearching || enemy.isAlerted) {
-            enemy.SetTargetPosition(enemy.playerSeachPosition);
+        if (enemy.isAlerted) {
+            enemy.SetTargetPosition(enemy.playerSearchPosition);
+            targetPosition = enemy.player.position;
             timeAlertRemaining = alertDuration;
+        }
+        else if(enemy.isSearching && !enemy.isAlerted)
+        {
+            targetPosition = enemy.playerSearchPosition;
         }
 
         // Juste pour le test je remplace ce isAlerted par isSearching
-        if (enemy.isSearching && Vector3.Distance(enemy.transform.position, enemy.playerSeachPosition) <= enemy.monsterData.portee) {
+        if (enemy.isSearching && Vector3.Distance(enemy.transform.position, enemy.playerSearchPosition) <= enemy.monsterData.portee)
+        {
             enemy.rb.velocity = Vector2.zero;
-            if(attackCdRemaining < 0) {
+            if (attackCdRemaining < 0)
+            {
                 enemy.StateMachine.ChangeState(enemy.AttackState);
             }
-        } else {
+        }
+        else
+        {
             enemy.Move();
         }
 

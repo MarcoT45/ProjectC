@@ -469,7 +469,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &93620434
 Transform:
   m_ObjectHideFlags: 0
@@ -509,6 +509,7 @@ MonoBehaviour:
   isMoving: 0
   isInvincible: 0
   isCollidingWall: 0
+  isDestinationReached: 1
   aggroDuration: 2
   attackCoolDown: 1.75
   fireRate: 1.75
@@ -553,7 +554,7 @@ MonoBehaviour:
   tintFadeSpeed: 1
   bubbleIdle: {fileID: 1958659355}
   bubbleSearch: {fileID: 466482874}
-  playerSeachPosition: {x: 0, y: 0, z: 0}
+  playerSearchPosition: {x: 0, y: 0, z: 0}
   searchLookCounter: 4
   speedBoostAlertMultiplicator: 1
   player: {fileID: 0}
@@ -899,6 +900,7 @@ MonoBehaviour:
   isMoving: 0
   isInvincible: 0
   isCollidingWall: 0
+  isDestinationReached: 1
   aggroDuration: 2
   attackCoolDown: 0
   fireRate: 0
@@ -925,7 +927,7 @@ MonoBehaviour:
   tintFadeSpeed: 0.25
   bubbleIdle: {fileID: 0}
   bubbleSearch: {fileID: 0}
-  playerSeachPosition: {x: 0, y: 0, z: 0}
+  playerSearchPosition: {x: 0, y: 0, z: 0}
   searchLookCounter: 4
   speedBoostAlertMultiplicator: 1
   player: {fileID: 0}
@@ -14149,7 +14151,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1203407226
 Transform:
   m_ObjectHideFlags: 0
@@ -14189,6 +14191,7 @@ MonoBehaviour:
   isMoving: 0
   isInvincible: 0
   isCollidingWall: 0
+  isDestinationReached: 1
   aggroDuration: 2
   attackCoolDown: 1.5
   fireRate: 0
@@ -14233,7 +14236,7 @@ MonoBehaviour:
   tintFadeSpeed: 1
   bubbleIdle: {fileID: 2041787656}
   bubbleSearch: {fileID: 1671921598}
-  playerSeachPosition: {x: 0, y: 0, z: 0}
+  playerSearchPosition: {x: 0, y: 0, z: 0}
   searchLookCounter: 4
   speedBoostAlertMultiplicator: 1
   player: {fileID: 0}
@@ -20650,8 +20653,8 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 1.803125
-    y: 0.4166667
+    x: 0
+    y: 0
     width: 1
     height: 1
   near clip plane: 0.3
@@ -21232,18 +21235,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1655816236}
     m_Modifications:
-    - target: {fileID: 624974936119319174, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3314469868307310882, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 4662317059917044899, guid: f443efe462a15744884dd543fc613dbe, type: 3}
-    - target: {fileID: 3994457246013022079, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3994457246091314375, guid: 07bf5b449634a194880cb683910ffb13, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -22530,7 +22521,7 @@ GameObject:
   - component: {fileID: 1978052672}
   - component: {fileID: 1978052676}
   - component: {fileID: 1978052675}
-  - component: {fileID: 1978052674}
+  - component: {fileID: 1978052677}
   - component: {fileID: 1978052673}
   m_Layer: 0
   m_Name: Ennemi (Melee - Bump)
@@ -22538,7 +22529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1978052672
 Transform:
   m_ObjectHideFlags: 0
@@ -22578,6 +22569,7 @@ MonoBehaviour:
   isMoving: 0
   isInvincible: 0
   isCollidingWall: 0
+  isDestinationReached: 1
   aggroDuration: 2
   attackCoolDown: 1.5
   fireRate: 0
@@ -22622,7 +22614,7 @@ MonoBehaviour:
   tintFadeSpeed: 1
   bubbleIdle: {fileID: 93177528}
   bubbleSearch: {fileID: 2068763428}
-  playerSeachPosition: {x: 0, y: 0, z: 0}
+  playerSearchPosition: {x: 0, y: 0, z: 0}
   searchLookCounter: 4
   speedBoostAlertMultiplicator: 1
   player: {fileID: 0}
@@ -22631,32 +22623,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   rb: {fileID: 0}
---- !u!61 &1978052674
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1978052671}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1.25}
-    newSize: {x: 1, y: 1.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 0.5}
-  m_EdgeRadius: 0
 --- !u!50 &1978052675
 Rigidbody2D:
   serializedVersion: 4
@@ -22730,6 +22696,22 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!58 &1978052677
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1978052671}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.023439884, y: 0.07487028}
+  serializedVersion: 2
+  m_Radius: 0.2969349
 --- !u!1001 &2013371669
 PrefabInstance:
   m_ObjectHideFlags: 0

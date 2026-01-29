@@ -23,6 +23,9 @@ public class StunState : EnemyState
     public override void ExitState()
     {
         base.ExitState();
+
+        enemy.playerSearchPosition = enemy.player.position;
+        enemy.SetTargetPosition(enemy.playerSearchPosition);
     }
 
     public override void FrameFixedUpdate()

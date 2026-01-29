@@ -45,7 +45,7 @@ public class AttackAlertState : EnemyState {
         enemy.isAlerted = enemy.AlertLineOfSight(lineOfSightDirection);
 
         if (enemy.isSearching || enemy.isAlerted) {
-            enemy.SetTargetPosition(enemy.playerSeachPosition);
+            enemy.SetTargetPosition(enemy.playerSearchPosition);
         }
     }
 
@@ -62,7 +62,7 @@ public class AttackAlertState : EnemyState {
 
         foreach (GameObject ene in enemiesList) {
             EnemyAI e = (EnemyAI) ene.GetComponent(typeof(EnemyAI));
-            e.SetTargetPosition(enemy.playerSeachPosition);
+            e.SetTargetPosition(enemy.playerSearchPosition);
         }
     }
 

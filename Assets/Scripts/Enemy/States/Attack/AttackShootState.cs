@@ -25,7 +25,7 @@ public class AttackShootState : EnemyState {
         });
 
         projectile = UnityEngine.Object.Instantiate(enemy.projectilePrefab, enemy.transform.position, Quaternion.identity);
-        projectile.GetComponent<ProjectileEnemyRange>().Initialize(enemy.playerSeachPosition - enemy.transform.position);
+        projectile.GetComponent<ProjectileEnemyRange>().Initialize(enemy.playerSearchPosition - enemy.transform.position);
         timeAnimationRemaining = 0.5f; // Il faudra mettre ici un script qui récupere le temps de l'animation d'attaque de l'ennemi pour matcher
         timerIsRunning = true;
     }
@@ -47,7 +47,7 @@ public class AttackShootState : EnemyState {
         enemy.isAlerted = enemy.AlertLineOfSight(lineOfSightDirection);
 
         if (enemy.isSearching || enemy.isAlerted) {
-            enemy.SetTargetPosition(enemy.playerSeachPosition);
+            enemy.SetTargetPosition(enemy.playerSearchPosition);
         }
     }
 
