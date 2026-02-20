@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4245062675580447475}
   m_Layer: 0
-  m_Name: SpawnPoints
+  m_Name: SpawnPoints (Player)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -271,7 +271,7 @@ Tilemap:
     second:
       serializedVersion: 2
       m_TileIndex: 1
-      m_TileSpriteIndex: 1
+      m_TileSpriteIndex: 7
       m_TileMatrixIndex: 0
       m_TileColorIndex: 0
       m_TileObjectToInstantiateIndex: 65535
@@ -806,8 +806,8 @@ Tilemap:
   m_TileSpriteArray:
   - m_RefCount: 8
     m_Data: {fileID: -453741654, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
-  - m_RefCount: 1
-    m_Data: {fileID: 659183146, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 8
     m_Data: {fileID: 296225549, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
   - m_RefCount: 3
@@ -818,8 +818,8 @@ Tilemap:
     m_Data: {fileID: 1419689756, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -776369794, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
-  - m_RefCount: 0
-    m_Data: {fileID: 0}
+  - m_RefCount: 1
+    m_Data: {fileID: 659183146, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
   - m_RefCount: 2
     m_Data: {fileID: -204882224, guid: edd31410ad380bb4ca88a0ad5bcb1803, type: 3}
   - m_RefCount: 2
